@@ -2623,7 +2623,8 @@ test(
     assert.equal(dependencies.includes('valence_push'), false, 'push transport is a native package opt-in');
     // The generated code is held to the analyzer's strictest setting, because an app's CI will be.
     execSync(`dart analyze --fatal-infos "${join(app, 'lib')}"`, { stdio: 'pipe' });
-    assert.match(execSync('flutter test', { cwd: app, encoding: 'utf8' }), /All tests passed/);
+    // flutter test throws on a failure; the line differs by reporter (GitHub Actions prints '🎉 N tests passed.').
+    assert.match(execSync('flutter test', { cwd: app, encoding: 'utf8' }), /All tests passed|\d+ tests passed/);
   },
 );
 
