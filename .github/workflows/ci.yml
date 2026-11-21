@@ -21,6 +21,11 @@ jobs:
         with:
           flutter-version: 3.44.2 # the package's minimum; puts dart on PATH for the codegen test
           cache: true
+      # The codegen test resolves its probe project offline, and the pack test runs the bridge's tsc.
+      - run: flutter pub get
+        working-directory: packages/valence
+      - run: npm ci
+        working-directory: packages/bridge
       - run: npm test
 
   bridge:

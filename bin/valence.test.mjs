@@ -9,7 +9,7 @@ import {
 } from 'node:fs';
 import test from 'node:test';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, sep } from 'node:path';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execSync, spawnSync } from 'node:child_process';
@@ -266,7 +266,7 @@ test('a root-level Flutter host gets a .gitattributes rule git actually applies'
 
 test('--web and --host are normalised to project-relative POSIX paths', async () => {
   const { root, keyDir } = project();
-  await quiet(() => run(['--root', root, '--yes', '--no-launch', '--key-dir', keyDir, '--web', join(root, 'web') + '\\', '--host', './mobile/']));
+  await quiet(() => run(['--root', root, '--yes', '--no-launch', '--key-dir', keyDir, '--web', join(root, 'web') + sep, '--host', './mobile/']));
   const cfg = JSON.parse(readFileSync(join(root, 'valence', 'valence.config.json'), 'utf8'));
   assert.equal(cfg.web.out, 'web/build');
   assert.equal(cfg.host.dir, 'mobile');
