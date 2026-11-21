@@ -1,8 +1,10 @@
 # Changelog
 
-## 0.4.0-beta.0 (2026-11-13)
+## 0.4.0-beta.0 (2026-11-21)
 
-The first public beta. Android is supported; iOS is experimental and untested.
+The first public beta. **Android is supported; iOS is experimental and untested,** and nothing has run on a
+physical phone yet, only the emulator. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.0)
+for a summary and the known limits.
 
 ### a link handler is told which arrival it got
 

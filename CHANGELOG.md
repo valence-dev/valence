@@ -1,8 +1,43 @@
 # Changelog
 
-## 0.4.0-beta.0 (2026-11-13)
+## 0.4.0-beta.0 (2026-11-21)
 
-The first public beta. Android is supported; iOS is experimental and untested.
+The first public beta. **Android is supported; iOS is experimental and untested.**
+
+### In short
+
+Valence lets a web app become a mobile app's interface. A small Flutter host ships through the stores
+once; after that, every UI release is a signed bundle that each phone downloads, verifies, tries and
+rolls back on its own if it fails to start. Data lives in native SQLite, so the app works offline and
+syncs incrementally when it can.
+
+**New in 0.4:**
+
+- **Two packages instead of generated code.** The host runtime is [`valence`](https://pub.dev/packages/valence)
+  on pub.dev and the web client is [`@getvalence/bridge`](https://www.npmjs.com/package/@getvalence/bridge)
+  on npm. Your `main.dart` is about twenty lines, and runtime fixes arrive as ordinary package updates.
+- **Your own backend and login.** The page hands the host a token; the host keeps it in the Android
+  Keystore, sends it on every sync, and will not mix one account's data with another's.
+- **Native capabilities:** deep links, local reminders, permissions, image sharing, connectivity and
+  lifecycle events, an offline REST cache, and a plugin directory. Remote push is opt-in through the
+  separate [`valence_push`](https://pub.dev/packages/valence_push) package, so Firebase is not in your app
+  unless you add it.
+- **Safer releases:** explicit update checks, a `ready()` that cannot commit a bundle that never rendered,
+  rollback that says when it cannot serve its replacement, and `valence doctor` for diagnosing a project.
+
+**Start:** `npm create valence@latest` in your web project, or read the
+[quick start](https://getvalence.dev/docs/getting-started/quick-start/).
+
+**Known limits, plainly:**
+
+- **Nothing has run on a physical phone yet.** Every Android run is on the emulator (API 36), and no app
+  has been through a store submission.
+- **iOS is experimental and untested.** The code paths exist; nobody has run them on Apple hardware.
+- **On Android, if the OS evicts the WebView's renderer under memory pressure, the app closes.** Your data
+  is safe, but the event counts against a release's trial, so start rollouts at 10%.
+- **Push is untested on a device** until a Firebase project exists.
+
+The detailed notes below are fix by fix, newest first.
 
 ### the startup phases now say what they normally cost
 
