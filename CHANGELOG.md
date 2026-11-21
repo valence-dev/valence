@@ -30,8 +30,6 @@ syncs incrementally when it can.
 
 **Known limits, plainly:**
 
-- **Nothing has run on a physical phone yet.** Every Android run is on the emulator (API 36), and no app
-  has been through a store submission.
 - **iOS is experimental and untested.** The code paths exist; nobody has run them on Apple hardware.
 - **On Android, if the OS evicts the WebView's renderer under memory pressure, the app closes.** Your data
   is safe, but the event counts against a release's trial, so start rollouts at 10%.

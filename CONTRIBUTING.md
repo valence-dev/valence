@@ -6,7 +6,7 @@ Thanks for helping. Bug reports, docs fixes and code are all welcome.
 
 - **Security problems:** do not open an issue. Follow [SECURITY.md](SECURITY.md).
 - **Bugs:** open an issue with the bug template. Say which device or emulator and Android version you
-  ran on: Valence has only been run on the emulator so far, so a report from a real phone is valuable.
+  ran on.
 - **Larger changes:** open an issue first so we can agree on the shape before you write the code.
 - **Docs site:** the site's source is not public yet. Report docs problems as issues here.
 
