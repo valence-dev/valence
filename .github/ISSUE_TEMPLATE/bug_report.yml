@@ -1,0 +1,41 @@
+name: Bug report
+description: Something in Valence does not work as documented
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. npm create valence@latest in a Vite app
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Valence version
+      description: Output of `node valence/valence.mjs version`, plus the `valence` and `@getvalence/bridge` versions.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: Emulator or real phone, model, and Android or iOS version.
+      placeholder: Pixel 7, Android 15 (real phone)
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "`valence doctor` output, or the relevant `adb logcat` lines. Remove tokens and keys."
+      render: text

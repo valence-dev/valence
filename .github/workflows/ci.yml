@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  cli:
+    name: CLI, wizard and generated code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22 # the client.ts test needs >= 22.18 (type stripping)
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.2 # the package's minimum; puts dart on PATH for the codegen test
+          cache: true
+      # The codegen test resolves its probe project offline, and the pack test runs the bridge's tsc.
+      - run: flutter pub get
+        working-directory: packages/valence
+      - run: npm ci
+        working-directory: packages/bridge
+      - run: npm test
+
+  bridge:
+    name: "@getvalence/bridge"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/bridge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  host:
+    name: valence and valence_push (Flutter)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.2
+          cache: true
+      - name: valence
+        working-directory: packages/valence
+        run: |
+          flutter pub get
+          flutter analyze --fatal-infos
+          flutter test
+      - name: valence_push
+        working-directory: packages/valence_push
+        run: |
+          flutter pub get
+          flutter analyze --fatal-infos
