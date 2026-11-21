@@ -6,11 +6,11 @@
   "author": "Bishal Pahari",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bishal-Pahari/valence.git"
+    "url": "git+https://github.com/valence-dev/valence.git"
   },
   "homepage": "https://getvalence.dev",
   "bugs": {
-    "url": "https://github.com/Bishal-Pahari/valence/issues"
+    "url": "https://github.com/valence-dev/valence/issues"
   },
   "type": "module",
   "bin": {

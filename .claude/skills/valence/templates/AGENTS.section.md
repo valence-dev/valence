@@ -7,7 +7,7 @@ This app follows the Valence architecture:
 - native SQLite for data;
 - a typed bridge between them.
 
-The spec is `valence` [contracts.md](https://github.com/Bishal-Pahari/valence/blob/main/.claude/skills/valence/references/contracts.md). Run `/valence doctor` after any change to the host, the bridge or the data layer.
+The spec is `valence` [contracts.md](https://github.com/valence-dev/valence/blob/main/.claude/skills/valence/references/contracts.md). Run `/valence doctor` after any change to the host, the bridge or the data layer.
 
 **Where a change goes:**
 

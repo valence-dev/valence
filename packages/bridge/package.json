@@ -6,12 +6,12 @@
   "author": "Bishal Pahari",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bishal-Pahari/valence.git",
+    "url": "git+https://github.com/valence-dev/valence.git",
     "directory": "packages/bridge"
   },
   "homepage": "https://getvalence.dev/docs/guides/bridge/",
   "bugs": {
-    "url": "https://github.com/Bishal-Pahari/valence/issues"
+    "url": "https://github.com/valence-dev/valence/issues"
   },
   "type": "module",
   "exports": {
