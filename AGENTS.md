@@ -20,6 +20,8 @@ Valence is an open-source architecture for shipping a web UI inside a Flutter ap
 | `docs/research.md` | Landscape research (2026-10-14): store policies quoted, OTA, SDUI and hybrid options, and the gap Valence fills. Not shipped in the npm package. |
 | *(separate repo)* `valence-site` | The website and the developer docs (Astro + Starlight), kept in their own repo next to this one. Its release console models contracts §2.3, §2.4 and §5.3, and its docs pages restate this spec: when behaviour changes here, update them there. |
 | `LICENSE` | MIT |
+| `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | How to contribute, conduct, and private vulnerability reporting |
+| `.github/` | CI (`npm test`, bridge typecheck and tests, `flutter analyze` and `flutter test` for both host packages), issue and PR templates |
 | `.gitattributes` | Keeps every file LF on every OS. The CLI and its tests compare bytes and hashes, so a CRLF checkout must not change them. |
 
 ## Rules

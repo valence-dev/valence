@@ -24,11 +24,12 @@ Valence is in beta. Only the latest `0.x` release gets security fixes.
 - Signing and verification: the canonical check order, signature handling, key handling and the keyring (`valence.mjs` and `contracts.md` §2).
 - The update state machine: anything that lets a bad bundle stick, skip its trial, or push a phone below its floor (§2.4).
 - The bridge trust boundary: the nonce, strict decoding, the navigation lock and the URL scheme allow-list (§3, §4, §7).
+- The packages: `valence`, `valence_push` and `@getvalence/bridge`, including the loopback server, the updater and the data layer (§3, §5).
 - Code generation: anything in a schema or config that can inject code into generated Dart or TypeScript.
 - The wizard and CLI: writing, deleting or publishing files outside what they should touch.
 - Flaws in the spec itself, even if no code implements them yet.
 
-The Flutter host in your app is generated from the spec and then belongs to your app. Report bugs in it here if the spec or the generator caused them.
+The host runtime (`valence` and `valence_push` on pub.dev) and the web client (`@getvalence/bridge` on npm) are in scope. Code your app adds around them is yours, but report it here if the spec, the packages or the generator led you into the flaw.
 
 ## Out of scope
 
