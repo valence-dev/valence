@@ -5,7 +5,7 @@ platform; Firebase delivery still needs a maintainer project. iOS is experimenta
 and untested. See [Remote push](https://getvalence.dev/docs/guides/remote-push/)
 for native setup, background callbacks, privacy, images and acceptance checks.
 
-Install `valence_push: ^0.4.0-beta.0` only in hosts that use remote push. Keep
+Install `valence_push: ^0.4.0-beta.1` only in hosts that use remote push. Keep
 `firebase_core: ^4.14.0` and `firebase_messaging: ^16.7.0` as direct app dependencies
 when importing them. Initialize Firebase, register the top-level background callback,
 then pass `createFirebasePush()` (import `package:valence_push/valence_push.dart`)

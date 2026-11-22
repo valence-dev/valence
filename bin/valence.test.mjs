@@ -37,7 +37,7 @@ function project({ flutter = true } = {}) {
     write(join(root, 'mobile', 'lib', 'main.dart'), 'void main() {}\n');
     // A Flutter plugin (no lib/main.dart) must not be taken for the app.
     write(join(root, 'packages', 'plugin', 'pubspec.yaml'), 'name: plugin\nflutter:\n  plugin: {}\n');
-    write(join(root, 'mobile', 'android', 'app', 'build.gradle.kts'), 'android {\n  defaultConfig {\n    applicationId = "com.acme.trail"\n  }\n}\n');
+    write(join(root, 'mobile', 'android', 'app', 'build.gradle.kts'), 'android {\n  compileOptions {\n  }\n  defaultConfig {\n    applicationId = "com.acme.trail"\n  }\n}\n');
   }
   return { root, keyDir: mkdtempSync(join(tmpdir(), 'mrw-keys-')) };
 }
@@ -144,6 +144,8 @@ test('init refuses a folder with no web app', async () => {
 test('doctor passes on a fresh setup (only warnings for not-yet-built things)', async () => {
   const { root, keyDir } = project();
   await quiet(() => run(['--root', root, '--yes', '--no-launch', '--key-dir', keyDir]));
+  // The wizard's codegen writes the desugaring a fresh host's first Android build needs (dogfood F-5).
+  assert.match(readFileSync(join(root, 'mobile', 'android', 'app', 'build.gradle.kts'), 'utf8'), /isCoreLibraryDesugaringEnabled = true[\s\S]*coreLibraryDesugaring\(/);
   const rows = await quiet(() => doctor({ root, keyDir }));
   assert.deepEqual(rows.filter(([s]) => s === 'FAIL'), []);
   assert.ok(rows.some(([s, name]) => s === 'WARN' && name === 'built-in bundle'));

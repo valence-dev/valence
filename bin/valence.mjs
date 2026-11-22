@@ -42,7 +42,7 @@ const CLI = new Set(['dev', 'keygen', 'codegen', 'bundle', 'verify', 'pointer', 
 // The two published runtimes the generated code imports. Their version is deliberately independent of
 // this CLI's: a fix to a runtime ships with "flutter pub upgrade" or "npm update", with no new wizard.
 // A test keeps it equal to both packages/*/ versions in this repo.
-const RUNTIME_VERSION = '0.4.0-beta.0';
+const RUNTIME_VERSION = '0.4.0-beta.1';
 const BRIDGE_PKG = '@getvalence/bridge';
 const HOST_PKG = 'valence';
 // pnpm, yarn and bun all take "add"; npm is the odd one.
@@ -409,6 +409,11 @@ async function init(o) {
       say(git ? green('✓') : yellow('!'), 'git', git ? 'repository found' : 'not a git repo (recommended before generating code)');
       if (!interactive() && !o.yes) warn('prompts', 'no terminal: using detected defaults (pass --app-id/--ota/--sync to set them)');
       console.log();
+      // Said before the prompts, not after (dogfood F-7): both URLs land in config.g.dart and in every signed
+      // bundle's CSP, so a guess here costs codegen, a host rebuild and re-signing later.
+      console.log(dim('  The app id and both URLs are compiled into the host and every signed bundle; changing them later'));
+      console.log(dim('  means codegen, a host rebuild and re-signing. Testing on an emulator first? Read'));
+      console.log(dim('  https://getvalence.dev/docs/guides/local-testing/ before you answer.\n'));
 
       const appId = await askValid(ask, 'App id', o.appId ?? detectAppId(root, existingHost, web.name), (v) => APP_ID_RE.test(v ?? ''), 'use reverse-domain form, e.g. com.company.app');
       const ota = await askValid(ask, 'OTA base URL (static host for signed bundles)', o.ota ?? 'https://ota.example.com', isUrl, 'must be an http(s) URL');
