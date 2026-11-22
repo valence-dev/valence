@@ -1440,6 +1440,22 @@ test('codegen writes Android core library desugaring and doctor fails without it
   assert.equal((await row())[0], 'FAIL');
 });
 
+test('doctor checks that pubspec.yaml declares the bundle assets', async () => {
+  const { root, cfg, key } = fixture();
+  codegen({ root, cfg });
+  const pubspec = join(root, cfg.host.dir, 'pubspec.yaml');
+  const row = async () => (await diagnose({ root, cfg })).find(([, n]) => n === 'bundle assets');
+  writeFileSync(pubspec, 'name: host\nflutter:\n  assets:\n    - assets/valence/builtin/\n');
+  // Not built yet: setup still to do, so a warning.
+  assert.equal((await row())[0], 'WARN');
+  bundle({ root, cfg, key, builtin: true, now: NOW });
+  const missing = await row();
+  assert.equal(missing[0], 'FAIL');
+  assert.match(missing[2], /does not declare assets\/valence\/builtin\/files\/; .*no bundle to serve/);
+  writeFileSync(pubspec, 'name: host\r\nflutter:\r\n  assets:\r\n    - assets/valence/builtin/\r\n    - "assets/valence/builtin/files/" # not recursive\r\n');
+  assert.equal((await row())[0], 'PASS');
+});
+
 test('doctor fails unsafe database names and browser/native origins with actionable fixes', async () => {
   const { root, cfg } = fixture();
   codegen({ root, cfg });

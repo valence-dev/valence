@@ -2,7 +2,7 @@
 
 ## 0.4.0-beta.1 (2026-11-22)
 
-The package description is shorter, to fit pub.dev's limit. No runtime changes. Android hosts still need core library desugaring; `valence codegen` now writes it for you. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.1).
+When the built-in bundle is missing from the app's assets, the startup error now says to declare `assets/valence/builtin/` and `builtin/files/` in `pubspec.yaml`, instead of leading with `requires.bridge`. The package description is shorter, to fit pub.dev's limit. Android hosts still need core library desugaring; `valence codegen` now writes it for you. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.1).
 
 ## 0.4.0-beta.0 (2026-11-21)
 

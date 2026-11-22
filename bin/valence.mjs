@@ -132,7 +132,11 @@ function inspectWeb(root, dir) {
   const routes = fw.routes.find((r) => existsSync(join(dir, r)));
   const pm = [dir, root].flatMap((d) => LOCKS.filter(([f]) => existsSync(join(d, f))).map(([, n]) => n))[0] ?? 'npm';
   const nextConfig = fw.dep === 'next' && readdirSync(dir).find((f) => /^next\.config\.(js|mjs|cjs|ts|mts)$/.test(f));
-  const staticExport = fw.dep !== 'next' || (!!nextConfig && /output\s*:\s*["']export["']/.test(readFileSync(join(dir, nextConfig), 'utf8')));
+  // `sv create` defaults to adapter-auto, which writes no static files, yet the wizard said "builds to
+  // build" with no warning. Same check as Next's output: 'export'.
+  const staticExport = fw.dep === 'next'
+    ? !!nextConfig && /output\s*:\s*["']export["']/.test(readFileSync(join(dir, nextConfig), 'utf8'))
+    : fw.dep !== '@sveltejs/kit' || !!deps['@sveltejs/adapter-static'];
   return { rank, dir: rel, framework: fw.name, version: String(deps[fw.dep]).replace(/^\D*/, ''), pm, name: pkg.name, out: at(fw.out), routes: routes && at(routes), lib: at(fw.lib), staticExport };
 }
 
@@ -404,7 +408,8 @@ async function init(o) {
       const git = tool('git status --porcelain', root) !== undefined;
       console.log(bold('  Detected'));
       ok('web app', `${web.dir}  ${web.framework} ${web.version} · ${web.pm} · builds to ${web.out}`);
-      if (!web.staticExport) warn('next.js', `no output: 'export' in next.config; add it so the build writes ${web.out}/ (valence needs static files)`);
+      if (!web.staticExport && web.framework === 'SvelteKit') warn('sveltekit', `no @sveltejs/adapter-static; install it with fallback: 'index.html' and set ssr = false in the root layout, so the build writes ${web.out}/ (valence needs static files)`);
+      else if (!web.staticExport) warn('next.js', `no output: 'export' in next.config; add it so the build writes ${web.out}/ (valence needs static files)`);
       say(existingHost ? green('✓') : dim('·'), 'flutter host', existingHost ? `${existingHost}/` : `${host}/ (Claude creates it)`);
       say(git ? green('✓') : yellow('!'), 'git', git ? 'repository found' : 'not a git repo (recommended before generating code)');
       if (!interactive() && !o.yes) warn('prompts', 'no terminal: using detected defaults (pass --app-id/--ota/--sync to set them)');

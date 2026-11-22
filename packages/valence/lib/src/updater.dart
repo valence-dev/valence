@@ -180,6 +180,8 @@ final class ValenceUpdater {
 
   /// Why the built-in bundle was refused, for the native error screen on an install with no `current`.
   String? _builtinFailure;
+  // True when the manifest could not be read at all, which is an undeclared asset, not a refusal.
+  bool _builtinMissing = false;
 
   /// The refusal already logged in this process, so a frozen install logs it once, not once per launch.
   String? _refusalLogged;
@@ -784,6 +786,16 @@ final class ValenceUpdater {
       // A fresh install of a broken store build. There is no bundle left to render an error in, so the
       // host's only honest move is a native screen naming the check that failed: a blank WebView is both
       // undebuggable and the worst possible shape for a guideline 4.2.3(ii) review (§2.4).
+      // An unreadable manifest is almost always pubspec.yaml, not check 5: Flutter asset directories are
+      // not recursive, and a new host has neither line. Leading with requires.bridge sent the reader the
+      // wrong way.
+      if (_builtinMissing) {
+        throw StateError(
+          'valence: no bundle to serve. The built-in bundle is not in the app: $_builtinFailure. '
+          'Declare both ${config.builtinAssetDir}/ and ${config.builtinAssetDir}/files/ under flutter: assets: '
+          'in pubspec.yaml (asset directories are not recursive), run "valence bundle --builtin", and rebuild.',
+        );
+      }
       throw StateError(
         'valence: no bundle to serve. The built-in bundle was refused: '
         '${_builtinFailure ?? 'it is missing from ${config.builtinAssetDir}'}. '
@@ -1210,9 +1222,11 @@ final class ValenceUpdater {
       signature = utf8.decode(await _readAsset('${config.builtinAssetDir}/manifest.json.sig'));
     } on Object catch (e) {
       _builtinFailure = 'it is missing from ${config.builtinAssetDir} ($e)';
+      _builtinMissing = true;
       _log('update: no built-in bundle in assets (${config.builtinAssetDir}): $e');
       return null;
     }
+    _builtinMissing = false;
     final ValenceManifest m;
     try {
       m = await checkManifest(
