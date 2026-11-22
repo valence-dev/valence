@@ -60,11 +60,13 @@ Runtime release versions stay aligned: `create-valence`, `@getvalence/bridge`, `
 The four are published separately and in this order, because the later ones depend on the earlier:
 
 ```
-cd packages/bridge && npm publish --access public                    # @getvalence/bridge (prepack builds dist/)
+cd packages/bridge && npm publish --access public --tag latest       # @getvalence/bridge (prepack builds dist/)
 cd packages/valence && flutter pub publish                           # valence
 cd packages/valence_push && flutter pub publish                      # optional Firebase transport, after valence
-npm publish --otp=<code>                                             # create-valence
+npm publish --tag latest                                             # create-valence
 ```
+
+npm refuses a prerelease version (`-beta.N`, `-rc.N`) without an explicit `--tag`. Use `--tag latest` while the betas are the only release, so `npm create valence@latest` gets the newest one; npm asks for a browser confirmation instead of `--otp`.
 
 Every release gets:
 
@@ -78,7 +80,7 @@ git push origin vX.Y.Z
 gh release create vX.Y.Z --notes-file <notes> [--prerelease]
 ```
 
-The maintainer runs the release: the merge, the version bump, `npm publish --otp=<code>`, the tags and pushing the site. Never publish or push from an agent session.
+The maintainer runs the release: the merge, the version bump, `npm publish --tag latest`, the tags and pushing the site. Never publish or push from an agent session.
 
 **Platform support, wherever it is stated:** Android is tested; **iOS is experimental and untested**, because there is no Apple hardware here. Keep the iOS parts of the spec; don't claim they are verified.
 
