@@ -1341,7 +1341,7 @@ test('doctor reports absent evidence as warnings, compatibility errors as failur
   assert.match((await listing())[2], /Android Gradle build absent/);
   writeFileSync(gradlePath, `android {\n  namespace = "x"\n  applicationId = "${cfg.appId}.android"\n}\n`);
   const wrong = await listing();
-  assert.equal(wrong[0], 'WARN');
+  assert.equal(wrong[0], 'FAIL'); // dogfood F-6: a WARN let the mismatch ship with doctor exiting 0
   assert.match(wrong[2], new RegExp(`applicationId is ${cfg.appId}\\.android`));
   assert.match(wrong[2], /a listing that does not exist/);
   writeFileSync(gradlePath, `android {\n  applicationId = "${cfg.appId}"\n}\n`);
@@ -1351,12 +1351,68 @@ test('doctor reports absent evidence as warnings, compatibility errors as failur
   cfg.store = { iosAppId: '123456789' };
   assert.match((await listing())[2], /iOS id 123456789 is untested here/);
   delete cfg.store;
+  cfg.nativeValue = ['offline', 'links'];
+  assert.ok((await diagnose({ root, cfg })).some(([s, n]) => s === 'WARN' && n === 'native value'));
+  // dogfood F-10: an honest empty mapping says the package owns the layer; it warns, never fails.
+  writeFileSync(join(root, '.valence', 'test-matrix.json'), JSON.stringify({ loopback: [] }));
+  const empty = (await diagnose({ root, cfg })).find(([, n]) => n === '§8 loopback');
+  assert.deepEqual(empty.slice(0, 2), ['WARN', '§8 loopback']);
+  assert.match(empty[2], /declared empty/);
   cfg.nativeValue = ['offline', 'offline'];
   assert.ok((await diagnose({ root, cfg })).some(([s, n]) => s === 'FAIL' && n === 'native value'));
   bundle({ root, cfg, key, builtin: true, now: NOW });
   const dart = join(root, cfg.host.dir, 'lib', 'valence', 'bridge.g.dart');
   writeFileSync(dart, readFileSync(dart, 'utf8').replace(/const hostBridgeVersion = \d+;/, 'const hostBridgeVersion = 1;'));
   assert.ok((await diagnose({ root, cfg })).some(([s, n]) => s === 'FAIL' && n === 'built-in compatibility'));
+});
+
+test('codegen writes Android core library desugaring and doctor fails without it (dogfood F-5)', async () => {
+  const { root, cfg } = fixture();
+  const app = join(root, cfg.host.dir, 'android', 'app');
+  mkdirSync(app, { recursive: true });
+  const kts = join(app, 'build.gradle.kts');
+  // The flutter create layout: compileOptions inside android, no top-level dependencies block.
+  const created = [
+    'android {',
+    '    compileOptions {',
+    '        sourceCompatibility = JavaVersion.VERSION_11',
+    '    }',
+    '    defaultConfig {',
+    `        applicationId = "${cfg.appId}"`,
+    '    }',
+    '}',
+    '',
+    'flutter {',
+    '    source = "../.."',
+    '}',
+    '',
+  ].join('\n');
+  writeFileSync(kts, created);
+  const row = async () => (await diagnose({ root, cfg })).find(([, n]) => n === 'Android desugaring');
+  assert.equal((await row())[0], 'FAIL');
+  assert.match((await row())[2], /isCoreLibraryDesugaringEnabled = true and coreLibraryDesugaring/);
+  const gen = codegen({ root, cfg });
+  assert.ok(gen.written.includes(kts));
+  const text = readFileSync(kts, 'utf8');
+  assert.match(text, /compileOptions \{\n {8}isCoreLibraryDesugaringEnabled = true\n {8}sourceCompatibility/);
+  assert.match(text, /\ndependencies \{\n {4}coreLibraryDesugaring\("com\.android\.tools:desugar_jdk_libs:2\.1\.4"\)\n\}\n$/);
+  assert.equal((await row())[0], 'PASS');
+  // Idempotent, and an existing dependencies block gains one line rather than a second block.
+  assert.ok(!codegen({ root, cfg }).written.includes(kts));
+  writeFileSync(kts, `${created}\ndependencies {\n    implementation("x:y:1")\n}\n`);
+  codegen({ root, cfg });
+  assert.equal(readFileSync(kts, 'utf8').match(/^dependencies \{/gm).length, 1);
+  assert.match(readFileSync(kts, 'utf8'), /dependencies \{\n {4}coreLibraryDesugaring\(/);
+  // Groovy hosts get the Groovy spelling.
+  rmSync(kts);
+  const groovy = join(app, 'build.gradle');
+  writeFileSync(groovy, 'android {\n    compileOptions {\n    }\n}\n');
+  codegen({ root, cfg });
+  assert.match(readFileSync(groovy, 'utf8'), /coreLibraryDesugaringEnabled true[\s\S]*coreLibraryDesugaring 'com\.android\.tools:desugar_jdk_libs:2\.1\.4'/);
+  // A layout the edit cannot place is reported, not guessed at.
+  writeFileSync(groovy, 'android {\n}\n');
+  assert.match(codegen({ root, cfg }).warnings.join(' '), /no compileOptions block/);
+  assert.equal((await row())[0], 'FAIL');
 });
 
 test('doctor fails unsafe database names and browser/native origins with actionable fixes', async () => {

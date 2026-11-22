@@ -19,7 +19,7 @@ code supplies both method and event availability tables.
 
 ## Configure the native host
 
-Add `valence_push: ^0.4.0-beta.0` to your host's dependencies. For this unreleased
+Add `valence_push: ^0.4.0-beta.1` to your host's dependencies. For this unreleased
 checkout, use a path dependency to `packages/valence_push` and override `valence`
 to the matching core checkout. Keep `firebase_core: ^4.14.0` and
 `firebase_messaging: ^16.7.0` as direct dependencies when your Dart code imports

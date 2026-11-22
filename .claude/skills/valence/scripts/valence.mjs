@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
 import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
-export const VALENCE_VERSION = '0.4.0-beta.0'; // keep equal to package.json "version" (tested)
+export const VALENCE_VERSION = '0.4.0-beta.1'; // keep equal to package.json "version" (tested)
 
 /// Where this copy of the CLI is, and what it contains.
 ///
@@ -1813,6 +1813,47 @@ export function genDartConfig(cfg, keyring) {
 // Formatters (dart format, prettier) only move whitespace and trailing commas; --check ignores both.
 const normalize = (t) => t.replace(/\s+/g, '').replace(/,([)\]}])/g, '$1');
 
+// `package:valence` depends on flutter_local_notifications unconditionally, and that plugin fails the
+// host's very first `flutter build apk` ("requires core library desugaring to be enabled for :app") until
+// the app module opts in — even with notifications.enabled false. Every new project hit it as a blocker
+// that names a plugin the developer never added (dogfood F-5), so codegen writes the two lines.
+const DESUGAR_LIB = 'com.android.tools:desugar_jdk_libs:2.1.4';
+const DESUGAR = {
+  'build.gradle.kts': { on: /isCoreLibraryDesugaringEnabled\s*=\s*true/, onLine: 'isCoreLibraryDesugaringEnabled = true', dep: /coreLibraryDesugaring\s*\(/, depLine: `coreLibraryDesugaring("${DESUGAR_LIB}")` },
+  'build.gradle': { on: /coreLibraryDesugaringEnabled\s*(=\s*)?true/, onLine: 'coreLibraryDesugaringEnabled true', dep: /coreLibraryDesugaring\s*[('"]/, depLine: `coreLibraryDesugaring '${DESUGAR_LIB}'` },
+};
+
+/// Where the host's app-module Gradle file is, its current text and what desugaring it still lacks.
+export function desugaring(root, cfg) {
+  for (const [name, d] of Object.entries(DESUGAR)) {
+    const file = join(root, cfg.host.dir, 'android', 'app', name);
+    if (!existsSync(file)) continue;
+    const text = readFileSync(file, 'utf8');
+    return { file, text, d, missing: [!d.on.test(text) && d.onLine, !d.dep.test(text) && d.depLine].filter(Boolean) };
+  }
+  return undefined;
+}
+
+// ponytail: a text edit, not a Gradle parser. It handles the `flutter create` layout (a compileOptions
+// block, an optional top-level dependencies block); anything else is left alone and reported, and
+// doctor's "Android desugaring" row keeps failing until a person adds the lines.
+function ensureDesugaring(root, cfg) {
+  const g = desugaring(root, cfg);
+  if (!g || !g.missing.length) return {};
+  let text = g.text;
+  if (!g.d.on.test(text)) {
+    if (!/^([ \t]*)compileOptions\s*\{/m.test(text)) return { warning: `${g.file} has no compileOptions block; add ${g.d.onLine} to it and ${g.d.depLine} to dependencies` };
+    text = text.replace(/^([ \t]*)compileOptions\s*\{/m, (m, ind) => `${m}\n${ind}    ${g.d.onLine}`);
+  }
+  if (!g.d.dep.test(text)) {
+    text = /^dependencies\s*\{/m.test(text)
+      ? text.replace(/^dependencies\s*\{/m, (m) => `${m}\n    ${g.d.depLine}`)
+      : `${text.replace(/\s*$/, '\n')}\ndependencies {\n    ${g.d.depLine}\n}\n`;
+  }
+  writeFileSync(g.file, text);
+  return { written: g.file };
+}
+
 export function codegen({ root, cfg, check = false }) {
   const p = paths(root, cfg);
   const { schema: raw, owners, namespaces } = loadPluginSchema(root, cfg);
@@ -1835,7 +1876,9 @@ export function codegen({ root, cfg, check = false }) {
     return { written: [], warnings };
   }
   for (const [f, text] of outputs) if (stale.includes(f)) writeFile(f, text);
-  return { written: stale, warnings };
+  const gradle = ensureDesugaring(root, cfg);
+  if (gradle.warning) warnings.push(gradle.warning);
+  return { written: gradle.written ? [...stale, gradle.written] : stale, warnings };
 }
 
 // ---------- CLI ----------
@@ -2210,10 +2253,17 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     const m = readFileSync(gradle, 'utf8').match(/applicationId\s*=?\s*["']([\w.]+)["']/);
     if (!m) return `no applicationId in ${relative(root, gradle)}; the Play listing id could not be compared with appId ${cfg.appId}`;
     if (m[1] !== cfg.appId) {
-      return `appId is ${cfg.appId} but the Android applicationId is ${m[1]}, so app.openStore and the §2.5 update screen send users to play.google.com/store/apps/details?id=${cfg.appId}, a listing that does not exist. Make them equal, or publish under the appId`;
+      // FAIL, not WARN (dogfood F-6): nothing writes applicationId, `flutter create` derives it from --org and
+      // the project name, and a WARN let the mismatch ship with doctor exiting 0.
+      throw new Error(`appId is ${cfg.appId} but the Android applicationId is ${m[1]}, so app.openStore and the §2.5 update screen send users to play.google.com/store/apps/details?id=${cfg.appId}, a listing that does not exist`);
     }
     return cfg.store?.iosAppId ? { msg: `${m[1]} on Play; iOS id ${cfg.store.iosAppId} is untested here` } : { msg: `${m[1]} on Play; no store.iosAppId, so app.openStore is E_UNSUPPORTED on iOS` };
   }, 'make valence.config.json appId equal to the Android applicationId in <host>/android/app/build.gradle.kts, or publish the app under the appId, then run codegen and rebuild the host');
+  await check('Android desugaring', () => {
+    const g = desugaring(root, cfg);
+    if (!g) return;
+    if (g.missing.length) throw new Error(`${relative(root, g.file)} lacks ${g.missing.join(' and ')}; flutter_local_notifications, which package:valence always depends on, fails the first Android build without them`);
+  }, `run valence codegen, which writes them, or add ${DESUGAR['build.gradle.kts'].onLine} to compileOptions and ${DESUGAR['build.gradle.kts'].depLine} to dependencies in <host>/android/app/build.gradle.kts`);
   await check('signing keys in Git', () => {
     if (insideGit(keyDir)) throw new Error('configured signing-key directory resolves inside a Git work tree');
     const repo = git(['rev-parse', '--show-toplevel'], childMs);
@@ -2290,11 +2340,11 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     return { msg: `${new URL(jar.origin).origin}: ${pair}; ${lifetime}` };
   }, 'set http.cookieJar.origin to one HTTPS origin that is also in http.origins (loopback may be cleartext for local testing), give csrf a cookie name and a header the host does not already control, then run codegen and ship a store build');
   await check('stack report', () => {
-    if (!existsSync(join(root, '.valence', 'stack-check.md'))) return 'missing .valence/stack-check.md; run the docs-scout phase';
+    if (!existsSync(join(root, '.valence', 'stack-check.md'))) return 'missing .valence/stack-check.md, the dated stack and store-policy check /valence init writes; run /valence doctor in Claude Code, or write it yourself (https://getvalence.dev/docs/reference/config/)';
     return 'report present; freshness and policy wording require review';
   });
   await check('native value', () => {
-    const allowed = new Set(['offline', 'notifications', 'widget', 'share', 'haptics', 'biometric']);
+    const allowed = new Set(['offline', 'notifications', 'widget', 'share', 'haptics', 'biometric', 'links']);
     if (cfg.nativeValue === undefined) return 'declare nativeValue using at least two §6 capabilities';
     if (!Array.isArray(cfg.nativeValue) || cfg.nativeValue.some((x) => !allowed.has(x))) throw new Error('invalid nativeValue capability');
     if (new Set(cfg.nativeValue).size < 2) throw new Error('nativeValue needs at least two distinct §6 capabilities');
@@ -2338,7 +2388,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
   const matrixPath = join(root, '.valence', 'test-matrix.json');
   let matrix = {};
   await check('test matrix', () => {
-    if (!existsSync(matrixPath)) return 'missing .valence/test-matrix.json; §8 coverage unverified';
+    if (!existsSync(matrixPath)) return 'missing .valence/test-matrix.json, which maps bridge, loopback, updater, store-sync and integration to your host test files; see https://getvalence.dev/docs/reference/config/';
     const candidate = readJson(matrixPath);
     if (!candidate || Array.isArray(candidate) || typeof candidate !== 'object') throw new Error('test matrix must be an object');
     if (Object.keys(candidate).some((id) => !['bridge', 'loopback', 'updater', 'store-sync', 'integration'].includes(id))) throw new Error('unknown test matrix ID');
@@ -2348,7 +2398,10 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     await check(`§8 ${id}`, () => {
       const files = matrix[id];
       if (files === undefined) return 'no mapped app wiring/device evidence; package invariants belong to package tests';
-      if (!Array.isArray(files) || !files.length) throw new Error('mapping must be a nonempty test-file array');
+      if (!Array.isArray(files)) throw new Error('mapping must be a test-file array');
+      // An honest "nothing app-owned here" (dogfood F-10): the package's own suite owns the layer's
+      // invariants. Still a WARN, because missing evidence never passes.
+      if (!files.length) return 'declared empty: no app-owned wiring to test; the package suite covers this layer';
       for (const file of files) {
         if (typeof file !== 'string' || !/^(test|integration_test)\/[A-Za-z0-9_./-]+_test\.dart$/.test(file) || file.split('/').includes('..')) throw new Error('mapping must name host-relative test files');
         // Say what happened. `realpathSync` on a deleted file throws `ENOENT ... lstat '<path>'`, which

@@ -1,8 +1,6 @@
 name: valence
-description: >-
-  The Flutter host runtime for Valence. A signed over-the-air web bundle on a loopback server, an
-  offline-first SQLite store with incremental sync, and a typed bridge generated from one schema.
-version: 0.4.0-beta.0
+description: Flutter host runtime for Valence. Signed over-the-air web UI, offline-first SQLite with sync, and a typed bridge from one schema.
+version: 0.4.0-beta.1
 repository: https://github.com/valence-dev/valence
 issue_tracker: https://github.com/valence-dev/valence/issues
 homepage: https://getvalence.dev

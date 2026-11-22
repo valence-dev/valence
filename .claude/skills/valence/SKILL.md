@@ -170,7 +170,7 @@ Spawn two `valence-builder` agents in a single message. **Each one owns only its
 
 **The host runtime is the `valence` package. Do not write it, and do not copy it in.** Everything §2, §3, §4.2, §5 and the WebView rules describe — the loopback server and its nonce, the canonical check order, the activation state machine and its rollback, signature and manifest verification, the SQLite store and the pragmas of §5.1, the seed import, sync and its lease, strict bridge decoding, the navigation lock, the Android back gesture, console capture — is inside it, with the §8 matrix as its own tests. A host that reimplements any of it is the bug this packaging removed.
 
-- Run `flutter create --org <reverse-domain of appId> --project-name <snake name> --platforms android,ios <host.dir>` if the project doesn't exist yet.
+- Run `flutter create --org <reverse-domain of appId> --project-name <snake name> --platforms android,ios <host.dir>` if the project doesn't exist yet. `flutter create` derives `applicationId` from `--org` and the project name, which is not `appId`: set `applicationId = "<appId>"` in `android/app/build.gradle.kts` (doctor fails a mismatch). Then run `node valence/valence.mjs codegen` again, which writes the Android core library desugaring lines the runtime needs before the first build.
 - `flutter pub add valence`. That is the whole dependency list for the runtime; the package pins the rest of the verified stack itself.
 - Write `lib/main.dart`, which is about twenty lines: open the runtime with the generated config, construct the handlers, and put `ValenceApp` at the root.
 
@@ -293,7 +293,7 @@ The steps below are for **OTA releases**.
 
 When the app ships local reminders, read contracts ?6.5 and the [setup guide](https://getvalence.dev/docs/guides/local-notifications/). Add notifications.enabled and a bundled status drawable, run codegen, merge templates/notifications.android.xml into the host manifest, enable core library desugaring and keep drawable/raw resources. Use inherited built-ins, read pending IDs with notify.pendingIds (schema 16) because a full queue of maximum-size requests exceeds the reply cap, reserve ID ranges alongside app-owned reminders, and record exact/inexact/blocked honestly. Install warm listeners before consuming notify.initial. Verify actual delivery, actions and cold taps, clock/timezone changes and reboot on Android. Initialization is passive; permission requests are explicit. iOS gets the delegate path and stays experimental and untested.
 
-The native dependency requires desugaring in every Android adopter, including disabled hosts. Pre-schema-11 custom notification and badge methods remain app-owned; preserve their shipped shapes. Only since-11+ declarations delegate to built-ins.
+The native dependency requires desugaring in every Android adopter, including disabled hosts. `valence codegen` writes the two Gradle lines after the host exists, so run codegen again once `flutter create` has made `android/`, and confirm doctor's `Android desugaring` row passes before the first build. Pre-schema-11 custom notification and badge methods remain app-owned; preserve their shipped shapes. Only since-11+ declarations delegate to built-ins.
 
 ## Doctor (read only)
 
@@ -383,8 +383,8 @@ For batch reads, use `data.getMany` (since 3, max 500 keys). Read outbox depth f
 
 | Item | Version | Note |
 |---|---|---|
-| `valence` (pub.dev) | 0.4.0-beta.0 | **The host runtime.** `flutter pub add valence`. It brings `webview_flutter`, `sqflite`, `path_provider`, `cryptography`, `crypto`, `http`, `url_launcher`, `connectivity_plus`, `flutter_secure_storage`, `permission_handler` and `device_info_plus` with it, so a host declares none of those itself. Needs Flutter 3.44 or later, and `minSdk 23` on Android (secure storage). Versioned independently of this CLI |
-| `@getvalence/bridge` (npm) | 0.4.0-beta.0 | **The web client.** ESM, zero runtime dependencies, Node 22.18+ to run its own tests. App code imports it through the generated `bridge.g.ts`, never directly |
+| `valence` (pub.dev) | 0.4.0-beta.1 | **The host runtime.** `flutter pub add valence`. It brings `webview_flutter`, `sqflite`, `path_provider`, `cryptography`, `crypto`, `http`, `url_launcher`, `connectivity_plus`, `flutter_secure_storage`, `permission_handler` and `device_info_plus` with it, so a host declares none of those itself. Needs Flutter 3.44 or later, and `minSdk 23` on Android (secure storage). Versioned independently of this CLI |
+| `@getvalence/bridge` (npm) | 0.4.0-beta.1 | **The web client.** ESM, zero runtime dependencies, Node 22.18+ to run its own tests. App code imports it through the generated `bridge.g.ts`, never directly |
 | Flutter / Dart | 3.47.7 / 3.13.5 (stable, 2026-10-08) | `sqflite` 2.4.4+2 needs Flutter 3.44 or later |
 | webview_flutter | 4.14.1 (2026-07-07) | **default WebView**. `flutter_inappwebview` has had no stable release since 6.1.5 (2024-10-08). `webview_flutter_android` 4.14.1 is still the newest ([pub.dev versions](https://pub.dev/packages/webview_flutter_android/versions), checked 2026-11-01) and exposes **no `onRenderProcessGone`**, so a renderer eviction kills the host process on Android (contracts §3, "Renderer loss"); a tripwire test fails when that changes |
 | sqflite | 2.4.4+2 (2026-10-13) | Local store, inside the `valence` package. Drift 2.35.2 is fine if the app already uses it for its own tables |

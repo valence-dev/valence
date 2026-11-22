@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0-beta.1 (2026-11-22)
+
+The package description is shorter, to fit pub.dev's limit. No runtime changes. Android hosts still need core library desugaring; `valence codegen` now writes it for you. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.1).
+
 ## 0.4.0-beta.0 (2026-11-21)
 
 The first public beta. **Android is supported; iOS is experimental and untested.** See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.0)

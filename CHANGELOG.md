@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.4.0-beta.1 (2026-11-22)
+
+A patch from building a fresh app with nothing but the public docs. **Android is supported; iOS is
+experimental and untested.**
+
+**What you might need to change in your host:**
+
+- **Android desugaring.** `valence codegen` now adds core library desugaring to
+  `android/app/build.gradle.kts` (or `build.gradle`) when it is missing. Without it a new host's first
+  `flutter build apk` failed with "Dependency ':flutter_local_notifications' requires core library
+  desugaring to be enabled". If you added the two lines yourself, nothing changes.
+- **`appId` and `applicationId`.** `valence doctor` now fails, instead of warning, when
+  `valence.config.json` `appId` differs from the Android `applicationId`. The forced-update screen and
+  `app.openStore` open the Play listing for `appId`, so a mismatch sends users to a listing that does
+  not exist. Make them equal.
+
+**Also:**
+
+- Doctor has a new `Android desugaring` row, and `links` is now an accepted `nativeValue` capability.
+- In `.valence/test-matrix.json`, an empty array means "no app-owned wiring at this layer". It is now a
+  warning instead of a failure. The warnings for a missing test matrix or stack report now say what the
+  file is and where it is documented.
+- The wizard says, before it asks, that the app id and both URLs are compiled into the host and every
+  signed bundle.
+- The `valence` package description is shorter, to fit pub.dev's limit.
+- Docs: a new "Before you build" step in the quick start, the seed rule for writable buckets, the
+  back-gesture limit for deep-link-opened views, the `.valence/` files doctor reads, offline testing
+  with `adb reverse`, and a reproducible SvelteKit build for free rollbacks.
+
 ## 0.4.0-beta.0 (2026-11-21)
 
 The first public beta. **Android is supported; iOS is experimental and untested.**
