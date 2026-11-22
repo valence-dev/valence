@@ -77,6 +77,12 @@ test('detects the web app, package manager, Flutter host and app id', () => {
     { dir: web.dir, framework: web.framework, pm: web.pm, out: web.out, lib: web.lib, routes: web.routes },
     { dir: 'web', framework: 'SvelteKit', pm: 'pnpm', out: 'web/build', lib: 'web/src/lib/valence', routes: 'web/src/routes' },
   );
+  // `sv create` defaults to adapter-auto, which writes no static files: the wizard must say so.
+  assert.equal(web.staticExport, false);
+  const pkgPath = join(root, 'web', 'package.json');
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
+  writeFileSync(pkgPath, JSON.stringify({ ...pkg, devDependencies: { ...pkg.devDependencies, '@sveltejs/adapter-static': '^4.0.0' } }));
+  assert.equal(detectWeb(root)[0].staticExport, true);
   assert.equal(detectHost(root), 'mobile');
   assert.equal(detectAppId(root, 'mobile', web.name), 'com.acme.trail');
   assert.equal(detectAppId(root, undefined, '@acme/trail-log'), 'com.traillog.app');

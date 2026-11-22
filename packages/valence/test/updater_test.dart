@@ -1330,6 +1330,21 @@ void main() {
       expect(state.builtinRefused, startsWith('50.1.'));
       expect(state.current, isNull);
     });
+
+    test('a built-in bundle missing from assets names pubspec.yaml, not check 5', () async {
+      // A new host that never declared the asset directories: the old message led with requires.bridge.
+      final state = ValenceState(installId: 'i');
+      final u = makeUpdater(state: state, assets: const {});
+      await expectLater(
+        u.activateForUiStart(),
+        throwsA(
+          isA<StateError>()
+              .having((e) => e.message, 'message', contains('is not in the app'))
+              .having((e) => e.message, 'message', contains('pubspec.yaml'))
+              .having((e) => e.message, 'message', isNot(contains('check 5'))),
+        ),
+      );
+    });
   });
 
   group('garbage collection (§2.4)', () {

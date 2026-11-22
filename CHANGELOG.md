@@ -18,7 +18,13 @@ experimental and untested.**
 
 **Also:**
 
-- Doctor has a new `Android desugaring` row, and `links` is now an accepted `nativeValue` capability.
+- Doctor has new `Android desugaring` and `bundle assets` rows, and `links` is now an accepted `nativeValue`
+  capability. `bundle assets` catches a `pubspec.yaml` that does not declare `assets/valence/builtin/` and
+  `builtin/files/`, which builds fine and then starts with "no bundle to serve".
+- When the built-in bundle is missing from the app, the host's error now says to declare the assets in
+  `pubspec.yaml`, instead of blaming `requires.bridge`.
+- The wizard warns when a SvelteKit app has no `@sveltejs/adapter-static`. `sv create` defaults to
+  `adapter-auto`, which writes no static files.
 - In `.valence/test-matrix.json`, an empty array means "no app-owned wiring at this layer". It is now a
   warning instead of a failure. The warnings for a missing test matrix or stack report now say what the
   file is and where it is documented.

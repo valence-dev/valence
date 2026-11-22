@@ -2367,6 +2367,22 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     if (new Set(cfg.nativeValue).size < 2) throw new Error('nativeValue needs at least two distinct §6 capabilities');
     return `declared ${cfg.nativeValue.join(', ')}; native setup and device evidence still need review`;
   });
+  // An undeclared asset directory builds fine and fails only on the device, with "no bundle to serve":
+  // Flutter asset directories are not recursive, so `builtin/` alone ships the manifest and no files.
+  // ponytail: a line match on `- <path>` in pubspec.yaml, not a YAML parser; a flavor-specific or
+  // generated asset list is reported as missing.
+  await check('bundle assets', () => {
+    const pubspec = join(host, 'pubspec.yaml');
+    if (!existsSync(pubspec)) return 'host pubspec missing; asset declarations not checked';
+    const declared = new Set([...readFileSync(pubspec, 'utf8').matchAll(/^\s*-\s*["']?([^"'\s#]+)["']?\s*(?:#.*)?$/gm)].map((m) => m[1]));
+    const needed = ['assets/valence/builtin/', 'assets/valence/builtin/files/', ...(existsSync(p.seed) ? ['assets/valence/seed.db'] : [])];
+    const missing = needed.filter((a) => !declared.has(a));
+    if (!missing.length) return;
+    const msg = `pubspec.yaml does not declare ${missing.join(', ')}; the build succeeds and the app starts with "no bundle to serve"`;
+    // Before the first `bundle --builtin` this is setup not done yet, which doctor reports as a warning.
+    if (!existsSync(join(p.builtin, 'manifest.json'))) return `${msg} once you build it`;
+    throw new Error(msg);
+  }, 'list each missing path under flutter: assets: in <host>/pubspec.yaml (asset directories are not recursive, so builtin/ and builtin/files/ are both needed), then rebuild');
   await check('built-in compatibility', () => {
     const manifestPath = join(host, 'assets', 'valence', 'builtin', 'manifest.json');
     if (!existsSync(manifestPath)) return 'built-in not built';
