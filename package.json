@@ -22,6 +22,7 @@
     ".claude/agents/valence-*.md",
     ".claude/skills/valence",
     "!.claude/skills/valence/scripts/*.test.mjs",
+    "!**/.omc/**",
     "AGENTS.md"
   ],
   "engines": {

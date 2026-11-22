@@ -257,6 +257,11 @@ test('the npm package ships the wizard, skill and agents, and no tests', () => {
     assert.ok(paths.includes(p), `missing ${p}`);
   }
   assert.ok(!paths.some((p) => p.endsWith('.test.mjs')), `tests packed: ${paths.filter((p) => p.endsWith('.test.mjs'))}`);
+  // Only files git tracks may ship: an untracked or ignored file in the skill folder (editor or agent
+  // session state) would otherwise reach npm and, through the installer, every user's project.
+  const tracked = new Set(execSync('git ls-files', { cwd: PKG, encoding: 'utf8' }).split(/\r?\n/));
+  const stray = paths.filter((p) => !tracked.has(p));
+  assert.deepEqual(stray, [], `untracked files packed: ${stray}`);
   const agents = paths.filter((p) => p.startsWith('.claude/agents/'));
   assert.ok(agents.length && agents.every((p) => p.startsWith('.claude/agents/valence-')), `only valence agents ship: ${agents}`);
 });
