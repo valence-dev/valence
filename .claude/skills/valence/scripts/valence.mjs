@@ -1819,17 +1819,29 @@ const normalize = (t) => t.replace(/\s+/g, '').replace(/,([)\]}])/g, '$1');
 // that names a plugin the developer never added (dogfood F-5), so codegen writes the two lines.
 const DESUGAR_LIB = 'com.android.tools:desugar_jdk_libs:2.1.4';
 const DESUGAR = {
-  'build.gradle.kts': { on: /isCoreLibraryDesugaringEnabled\s*=\s*true/, onLine: 'isCoreLibraryDesugaringEnabled = true', dep: /coreLibraryDesugaring\s*\(/, depLine: `coreLibraryDesugaring("${DESUGAR_LIB}")` },
-  'build.gradle': { on: /coreLibraryDesugaringEnabled\s*(=\s*)?true/, onLine: 'coreLibraryDesugaringEnabled true', dep: /coreLibraryDesugaring\s*[('"]/, depLine: `coreLibraryDesugaring '${DESUGAR_LIB}'` },
+  'build.gradle.kts': { on: /isCoreLibraryDesugaringEnabled\s*=\s*true/, off: /isCoreLibraryDesugaringEnabled\s*=\s*false/, onLine: 'isCoreLibraryDesugaringEnabled = true', dep: /coreLibraryDesugaring\s*\(/, depLine: `coreLibraryDesugaring("${DESUGAR_LIB}")` },
+  'build.gradle': { on: /coreLibraryDesugaringEnabled\s*(=\s*)?true/, off: /coreLibraryDesugaringEnabled\s*(=\s*)?false/, onLine: 'coreLibraryDesugaringEnabled true', dep: /coreLibraryDesugaring\s*[('"]/, depLine: `coreLibraryDesugaring '${DESUGAR_LIB}'` },
 };
 
-/// Where the host's app-module Gradle file is, its current text and what desugaring it still lacks.
+// Comments configure nothing, so a commented-out line must not count as present. The lookbehind keeps
+// the `//` inside a quoted URL such as "https://…".
+export const gradleCode = (text) => text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(?<![:"'])\/\/.*$/gm, '');
+
+/// Where the host's app-module Gradle file is, its current text, what desugaring it still lacks, and
+/// what is set wrongly: an explicit false, or a 1.x library, which fail the same build (§6.1).
 export function desugaring(root, cfg) {
   for (const [name, d] of Object.entries(DESUGAR)) {
     const file = join(root, cfg.host.dir, 'android', 'app', name);
     if (!existsSync(file)) continue;
     const text = readFileSync(file, 'utf8');
-    return { file, text, d, missing: [!d.on.test(text) && d.onLine, !d.dep.test(text) && d.depLine].filter(Boolean) };
+    const code = gradleCode(text);
+    const lib = /desugar_jdk_libs:(\d+)\./.exec(code);
+    const wrong = [
+      d.off.test(code) && 'core library desugaring is set to false',
+      lib && Number(lib[1]) < 2 && `desugar_jdk_libs ${lib[1]}.x is too old (2.x is required)`,
+    ].filter(Boolean);
+    const missing = [!d.on.test(code) && !d.off.test(code) && d.onLine, !d.dep.test(code) && d.depLine].filter(Boolean);
+    return { file, text, d, wrong, missing };
   }
   return undefined;
 }
@@ -1839,16 +1851,20 @@ export function desugaring(root, cfg) {
 // doctor's "Android desugaring" row keeps failing until a person adds the lines.
 function ensureDesugaring(root, cfg) {
   const g = desugaring(root, cfg);
-  if (!g || !g.missing.length) return {};
+  if (!g) return {};
+  // A value somebody set on purpose is reported, never overwritten.
+  if (g.wrong.length) return { warning: `${g.file}: ${g.wrong.join('; ')}; set ${g.d.onLine} and ${g.d.depLine}` };
+  if (!g.missing.length) return {};
   let text = g.text;
-  if (!g.d.on.test(text)) {
+  const eol = text.includes('\r\n') ? '\r\n' : '\n';
+  if (g.missing.includes(g.d.onLine)) {
     if (!/^([ \t]*)compileOptions\s*\{/m.test(text)) return { warning: `${g.file} has no compileOptions block; add ${g.d.onLine} to it and ${g.d.depLine} to dependencies` };
-    text = text.replace(/^([ \t]*)compileOptions\s*\{/m, (m, ind) => `${m}\n${ind}    ${g.d.onLine}`);
+    text = text.replace(/^([ \t]*)compileOptions\s*\{/m, (m, ind) => `${m}${eol}${ind}    ${g.d.onLine}`);
   }
-  if (!g.d.dep.test(text)) {
+  if (g.missing.includes(g.d.depLine)) {
     text = /^dependencies\s*\{/m.test(text)
-      ? text.replace(/^dependencies\s*\{/m, (m) => `${m}\n    ${g.d.depLine}`)
-      : `${text.replace(/\s*$/, '\n')}\ndependencies {\n    ${g.d.depLine}\n}\n`;
+      ? text.replace(/^dependencies\s*\{/m, (m) => `${m}${eol}    ${g.d.depLine}`)
+      : `${text.replace(/\s*$/, eol)}${eol}dependencies {${eol}    ${g.d.depLine}${eol}}${eol}`;
   }
   writeFileSync(g.file, text);
   return { written: g.file };
@@ -2250,7 +2266,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     const gradle = ['android/app/build.gradle.kts', 'android/app/build.gradle']
       .map((f) => join(host, f)).find((p) => existsSync(p));
     if (!gradle) return 'Android Gradle build absent; the Play listing id was not checked';
-    const m = readFileSync(gradle, 'utf8').match(/applicationId\s*=?\s*["']([\w.]+)["']/);
+    const m = gradleCode(readFileSync(gradle, 'utf8')).match(/applicationId\s*=?\s*["']([\w.]+)["']/);
     if (!m) return `no applicationId in ${relative(root, gradle)}; the Play listing id could not be compared with appId ${cfg.appId}`;
     if (m[1] !== cfg.appId) {
       // FAIL, not WARN (dogfood F-6): nothing writes applicationId, `flutter create` derives it from --org and
@@ -2261,7 +2277,8 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
   }, 'make valence.config.json appId equal to the Android applicationId in <host>/android/app/build.gradle.kts, or publish the app under the appId, then run codegen and rebuild the host');
   await check('Android desugaring', () => {
     const g = desugaring(root, cfg);
-    if (!g) return;
+    if (!g) return 'Android Gradle build absent; desugaring not checked';
+    if (g.wrong.length) throw new Error(`${relative(root, g.file)}: ${g.wrong.join('; ')}; flutter_local_notifications, which package:valence always depends on, fails the Android build`);
     if (g.missing.length) throw new Error(`${relative(root, g.file)} lacks ${g.missing.join(' and ')}; flutter_local_notifications, which package:valence always depends on, fails the first Android build without them`);
   }, `run valence codegen, which writes them, or add ${DESUGAR['build.gradle.kts'].onLine} to compileOptions and ${DESUGAR['build.gradle.kts'].depLine} to dependencies in <host>/android/app/build.gradle.kts`);
   await check('signing keys in Git', () => {
@@ -2401,7 +2418,11 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
       if (!Array.isArray(files)) throw new Error('mapping must be a test-file array');
       // An honest "nothing app-owned here" (dogfood F-10): the package's own suite owns the layer's
       // invariants. Still a WARN, because missing evidence never passes.
-      if (!files.length) return 'declared empty: no app-owned wiring to test; the package suite covers this layer';
+      if (!files.length) {
+        return id === 'integration'
+          ? 'declared empty: no device evidence; the package suite does not run on your device'
+          : 'declared empty: no app-owned wiring to test; the package suite covers this layer';
+      }
       for (const file of files) {
         if (typeof file !== 'string' || !/^(test|integration_test)\/[A-Za-z0-9_./-]+_test\.dart$/.test(file) || file.split('/').includes('..')) throw new Error('mapping must name host-relative test files');
         // Say what happened. `realpathSync` on a deleted file throws `ENOENT ... lstat '<path>'`, which

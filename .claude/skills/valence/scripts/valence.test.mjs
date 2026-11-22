@@ -1387,8 +1387,10 @@ test('codegen writes Android core library desugaring and doctor fails without it
     '}',
     '',
   ].join('\n');
-  writeFileSync(kts, created);
   const row = async () => (await diagnose({ root, cfg })).find(([, n]) => n === 'Android desugaring');
+  // Missing evidence never passes: no Gradle file yet is a WARN, not a PASS.
+  assert.deepEqual((await row()).slice(0, 3), ['WARN', 'Android desugaring', 'Android Gradle build absent; desugaring not checked']);
+  writeFileSync(kts, created);
   assert.equal((await row())[0], 'FAIL');
   assert.match((await row())[2], /isCoreLibraryDesugaringEnabled = true and coreLibraryDesugaring/);
   const gen = codegen({ root, cfg });
@@ -1403,6 +1405,29 @@ test('codegen writes Android core library desugaring and doctor fails without it
   codegen({ root, cfg });
   assert.equal(readFileSync(kts, 'utf8').match(/^dependencies \{/gm).length, 1);
   assert.match(readFileSync(kts, 'utf8'), /dependencies \{\n {4}coreLibraryDesugaring\(/);
+  // Commented-out lines count for nothing; CRLF files stay CRLF.
+  const crlf = `${created}// coreLibraryDesugaring("${'com.android.tools:desugar_jdk_libs:2.1.4'}")\n`.replace(/\n/g, '\r\n')
+    .replace('    compileOptions {', '    compileOptions {\r\n        // isCoreLibraryDesugaringEnabled = true');
+  writeFileSync(kts, crlf);
+  assert.equal((await row())[0], 'FAIL');
+  codegen({ root, cfg });
+  const fixed = readFileSync(kts, 'utf8');
+  assert.doesNotMatch(fixed.replace(/\r\n/g, ''), /\n/);
+  assert.match(fixed, /\r\n {8}isCoreLibraryDesugaringEnabled = true\r\n/);
+  assert.equal((await row())[0], 'PASS');
+  // A value set on purpose is reported and left alone: an explicit false, or a 1.x library.
+  for (const bad of [
+    created.replace('    compileOptions {', '    compileOptions {\n        isCoreLibraryDesugaringEnabled = false') + 'dependencies {\n    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")\n}\n',
+    created.replace('    compileOptions {', '    compileOptions {\n        isCoreLibraryDesugaringEnabled = true') + 'dependencies {\n    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")\n}\n',
+  ]) {
+    writeFileSync(kts, bad);
+    assert.match(codegen({ root, cfg }).warnings.join(' '), /set to false|1\.x is too old/);
+    assert.equal(readFileSync(kts, 'utf8'), bad);
+    assert.equal((await row())[0], 'FAIL');
+  }
+  // The applicationId comparison ignores a commented-out id above the real one.
+  writeFileSync(kts, created.replace('    defaultConfig {', '    // applicationId = "com.example.old"\n    defaultConfig {'));
+  assert.equal((await diagnose({ root, cfg })).find(([, n]) => n === 'store listing')[0], 'PASS');
   // Groovy hosts get the Groovy spelling.
   rmSync(kts);
   const groovy = join(app, 'build.gradle');

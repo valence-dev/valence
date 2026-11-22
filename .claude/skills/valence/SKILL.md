@@ -85,7 +85,7 @@ These are enforced by `valence.mjs`, the builder and the reviewer.
 6. **First launch works fully offline** from the built-in bundle plus `seed.db`, and never blocks on a download (§5.2, Apple guideline 4.2.3(ii)).
 7. **Durable state lives in native SQLite through the bridge.** The web app's localStorage and IndexedDB are only a cache (§3, origin note).
 8. **No CRDTs and no general two-way sync.** Server-published buckets are pulled, and user buckets use an outbox with last-writer-wins per key (§5.5).
-9. **The host must add real native value** (at least two §6 items), or Apple rejects it as a repackaged website (guideline 4.2). Two of the five — reminders and the home-screen widget — are **only as fresh as the last UI start**, because a background run cannot reach the WebView and the page owns the wording; say so where the app plans around them (§6, K F-30).
+9. **The host must add real native value** (at least two §6 items), or Apple rejects it as a repackaged website (guideline 4.2). Two of the six — reminders and the home-screen widget — are **only as fresh as the last UI start**, because a background run cannot reach the WebView and the page owns the wording; say so where the app plans around them (§6, K F-30).
 10. **Follow the target project's own AGENTS.md and CLAUDE.md** (formatter, import order, package manager) in every file you write there.
 
 ## Init
