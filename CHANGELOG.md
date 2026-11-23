@@ -121,8 +121,8 @@ native host to get the line.
 
 `publishHostFile` wrote a durable copy that nothing ever collected: not a restart, not an OTA
 commit or rollback, not bundle GC, not signing out. An app that published on every read of a row
-accumulated copies with no way back — one test app reached 10,155 files and 963 MiB against 224 KiB
-of real source media — and "Remove photo" could not honestly say it removed anything.
+accumulated copies with no way back — 10,155 files and 963 MiB against 224 KiB of real source media
+in one case — and "Remove photo" could not honestly say it removed anything.
 
 Two new native calls, both additive, with no schema bump and no bridge method:
 
@@ -189,8 +189,7 @@ own output attached as Flutter's.
 
 Every child command `doctor` spawns is bounded at 180 seconds, and the Git private-key scan walks every
 tracked and non-ignored file — so it grows with your repository, not with your app. In a large,
-long-lived checkout that bound was reached on a perfectly healthy app, three test iterations running,
-and the result was a `FAIL` row that had run no assertion and so said nothing about anything.
+long-lived checkout that bound was reached on a perfectly healthy app, and the result was a `FAIL` row that had run no assertion and so said nothing about anything.
 `--timeout <seconds>` moves the bound. It applies to each child command rather than to the run, the
 timeout row names the bound you set, and it takes an integer from 1 to 3600 — `0` is rejected because it
 means "no timeout" to Node, which is the unattributable hang the bound exists to prevent, and the
@@ -501,8 +500,8 @@ contracts §3 and the startup-diagnostics guide.
 
 ### four things an app has to get right that the spec only implied
 
-No behaviour change. Each of these cost a test app an iteration and was filed as a possible host defect
-first, which is the signal that the rule existed only in somebody's head.
+No behaviour change. Each of these looked like a host defect at first, which is the signal that the rule
+was not written down.
 
 - **Back closes your app if a view has no history entry** (contracts §3). `canGoBack()` sees History API
   entries and nothing else, so a detail screen switched on by component state leaves the back stack
@@ -542,8 +541,7 @@ said out loud, in the place you are standing when it matters:
   has no written-at column, so "oldest" does not exist yet and adding it is a database migration.
 
 Nothing to change in your app unless you hold a cache grant, in which case: write the retention rule.
-Found by the kundalini test app on its twentieth iteration, after adopting the cache for two buckets and
-trying to write exactly that rule.
+This came up when adopting the cache for two buckets and trying to write exactly that rule.
 
 ### the release warning names the events too
 
@@ -1562,7 +1560,7 @@ store release, because `lib/` changed.
   500 rows had no complete read at all.** And the damage was not a short list: a
   truncated list is indistinguishable from a short one, so a stored key that
   happened to fall outside the first page read as a key the device had never held.
-  One test app showed a first-run location chooser to a device that had been
+  An app showed a first-run location chooser to a device that had been
   configured for days, because the user's saved place was row 600 of 912. A prefix
   is not a general answer; those keys were GeoNames ids and one prefix covered
   about 900 of them.
