@@ -1176,8 +1176,8 @@ Schema 15 adds nullable builtins, persisted sync reason and signed pending urgen
 
 ### hardening the two newest trust boundaries
 
-Review of the combined feature merge found no broken security path in live development (R9) or native
-plugins (R10) — release builds really do exclude the dev server, and a plugin really cannot redefine a
+Review of the combined feature merge found no broken security path in live development or native
+plugins — release builds really do exclude the dev server, and a plugin really cannot redefine a
 built-in. These are the gaps around them.
 
 - **An event over the 256 KB cap is now dropped instead of sent.** Replies were measured and events were
@@ -1240,7 +1240,7 @@ Existing hosts remain supported; OTA cannot expand accepted origins. New
 `assetlinks` and `aasa` commands write website association documents for separate
 HTTPS hosting. iOS is experimental and untested. See [setup](docs/deep-links.md).
 
-### permissions (R3)
+### permissions
 
 - Added schema-9 permission checks, serialized foreground requests, app settings and resume changes. Hosts opt in with `permissions.kinds`, native declarations, codegen and a store build. Android checks preserve uncertain denial; iOS remains experimental and untested.
 
@@ -1251,7 +1251,7 @@ Schema 11 adds built-in local reminders: notify.schedule/cancel/pending/channels
 
 ### remote push
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device validation is blocked: needs Firebase project. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
 
 ### live development
 
@@ -1376,7 +1376,7 @@ not exist when the bundle was built.
 - OTA bundle bridge requirements now default to the recorded store baseline. Guard newer methods; explicitly pin lower if older store builds remain supported. Built-in/store defaults still use the current schema.
 - Compile ota.channel and generate opt-in BridgeHandlersDefaults for test doubles.
 - Run mechanical doctor diagnostics and mapped unit tests without an interactive session. Unexecuted evidence stays WARN.
-- Constrain path_provider_android to the pre-JNI range >=2.2.17 <2.3.0 while compatibility is validated (U-7, 2026-10-21).
+- Constrain path_provider_android to the pre-JNI range >=2.2.17 <2.3.0 while compatibility is validated (checked 2026-10-21).
 
 Newest first. One version for `create-valence`, `@getvalence/bridge` and the `valence` pub package.
 
@@ -1401,11 +1401,10 @@ haptic handler is a separate local package. Existing wire shapes stay unchanged.
 
 Call your API with `http.request` (schema 4): the host enforces compiled `http.origins` origins, attaches the stored token, and never follows redirects. Existing hosts need codegen and a store build to add the capability or origins. A reference Node REST-to-sync adapter demonstrates durable pagination, tombstones and idempotent pushes. iOS remains experimental and untested.
 
-Everything below is unpublished. Two headlines: an app can finally log a user
-in, and the runtime is two published packages instead of generated code. Under
-them are the test-week fixes, logged by four independent teams who built Android
-apps from the public docs and wrote down what broke. The version for this batch
-is the maintainer's call.
+Two headlines: an app can finally log a user in, and the runtime is two published
+packages instead of generated code. Under them are the test-week fixes, logged by
+four independent teams who built Android apps from the public docs and wrote down
+what broke.
 
 #### Logging a user in, at last
 
