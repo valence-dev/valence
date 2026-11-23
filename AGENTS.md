@@ -82,7 +82,7 @@ gh release create vX.Y.Z --notes-file <notes> [--prerelease]
 
 The maintainer runs the release: the merge, the version bump, `npm publish --tag latest`, the tags and pushing the site. Never publish or push from an agent session.
 
-**Platform support, wherever it is stated:** Android is tested; **iOS is experimental and untested**, because there is no Apple hardware here. Keep the iOS parts of the spec; don't claim they are verified.
+**Platform support, wherever it is stated:** Android is tested; **iOS is experimental and untested**. Say that and nothing more about why. Keep the iOS parts of the spec; don't claim they are verified.
 
 ## Roadmap (this order)
 

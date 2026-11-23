@@ -146,7 +146,7 @@ This writes `.well-known/apple-app-site-association` with `applinks` and `paths:
 ["*"]`. The 10-character prefix is your Apple Team ID. Serve it over HTTPS with
 JSON content type and no redirect. The example includes native setup for the
 placeholder domain `links.example.invalid`; it cannot verify against that domain.
-No Apple hardware has tested either custom schemes or Universal Links here.
+Custom schemes and Universal Links on iOS have not been tested yet.
 
 Primary setup references, checked 2026-10-22:
 [app_links](https://pub.dev/packages/app_links),

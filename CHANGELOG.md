@@ -65,7 +65,7 @@ syncs incrementally when it can.
 
 **Known limits, plainly:**
 
-- **iOS is experimental and untested.** The code paths exist; nobody has run them on Apple hardware.
+- **iOS is experimental and untested.** The code paths exist but have not been run yet.
 - **On Android, if the OS evicts the WebView's renderer under memory pressure, the app closes.** Your data
   is safe, but the event counts against a release's trial, so start rollouts at 10%.
 - **Push is untested on a device** until a Firebase project exists.
