@@ -154,7 +154,7 @@ link Firebase Messaging into that target, and use the supplied
 `com.apple.usernotifications.service`. Send `aps.mutable-content: 1` and
 `apns.fcm_options.image` with a URL including a supported file extension. A
 minimal extension plist is supplied next to the Swift template. Provision both
-targets in Xcode. These paths have not been built or tested on Apple hardware.
+targets in Xcode. These paths have not been built or tested yet.
 
 ## Wake sync without loading the UI
 

@@ -2,7 +2,7 @@
 
 **Keep the core. Swap the shell.** Your web app becomes your mobile app's interface. A small Flutter core ships through the stores once; every UI release after that is signed, tried on each phone and rolled back on its own if it fails. Data lives in native SQLite, so it works offline.
 
-> **Android today · iOS experimental.** Everything here has been built and run on Android. The iOS paths are specified and implemented but **nobody has run them**: there is no Apple hardware on the machines Valence is developed and tested on. Treat iOS as experimental and untested until that changes.
+> **Android today · iOS experimental.** Everything here has been built and run on Android. The iOS paths are specified and implemented but **nobody has run them yet**. Treat iOS as experimental and untested until that changes.
 
 Every UI change to a native app normally waits on App Store and Play review, and teams end up maintaining the same logic twice, once for the web and once for mobile. Valence fixes both:
 
@@ -168,7 +168,7 @@ host with a stub native WebView; Android device verification remains a separate 
 
 **Want Valence set up in your app?** Write to [hello@getvalence.dev](mailto:hello@getvalence.dev).
 
-**Android is tested. iOS is experimental and untested** — its rules are implemented and specified, but there is no Apple hardware here, so nothing about them is claimed as verified.
+**Android is tested. iOS is experimental and untested** — its rules are implemented and specified, but nothing about them is claimed as verified yet.
 
 **Not in scope:**
 
@@ -297,4 +297,4 @@ For API sessions that may survive restart, compiled `http.cookieJar.sessionCooki
 
 Revision 19 adds `bundle.check()` and `bundle.checked` so a page can request a check and learn when an offer needs a newer store host, even when no bundle becomes pending. [Explicit checks and completion](docs/bundle-checks.md).
 
-Sync lease acquisition dates its decision after the transactional database read, preventing a queued read from displacing a live sibling renewal (K F-83). Rebuild the native host; no schema or web-app change is required. See [the reproduction and validation](docs/lease-clock-read.md).
+Sync lease acquisition dates its decision after the transactional database read, preventing a queued read from displacing a live sibling renewal. Rebuild the native host; no schema or web-app change is required. See [the reproduction and validation](docs/lease-clock-read.md).

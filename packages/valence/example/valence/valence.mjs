@@ -2043,7 +2043,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     msg: `${VALENCE_VERSION}, build ${cliBuild()} (sha256 of valence.mjs, first 12) at ${cliPath()}; ` +
       'a different build with the same version generates different code, so compare this line between runs ' +
       'and run "npx create-valence update" when it moves. It digests this file only: contracts.md and ' +
-      'SKILL.md can change while it does not, so read the files "update" says it refreshed (K F-84)',
+      'SKILL.md can change while it does not, so read the files "update" says it refreshed',
   }), 'run "npx create-valence update" to replace the vendored CLI with the published one');
   await check('generated code', () => codegen({ root, cfg, check: true }).warnings.join(' ') || undefined);
   await check('native plugin registration', () => {

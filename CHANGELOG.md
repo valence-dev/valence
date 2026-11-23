@@ -65,7 +65,7 @@ syncs incrementally when it can.
 
 **Known limits, plainly:**
 
-- **iOS is experimental and untested.** The code paths exist; nobody has run them on Apple hardware.
+- **iOS is experimental and untested.** The code paths exist but have not been run yet.
 - **On Android, if the OS evicts the WebView's renderer under memory pressure, the app closes.** Your data
   is safe, but the event counts against a release's trial, so start rollouts at 10%.
 - **Push is untested on a device** until a Firebase project exists.
@@ -263,8 +263,7 @@ OS hands the host both things at once: the saved route *and* the intent. The hos
 route — the screen the user was last on — before your page existed, and your page then had to correct
 it. At best that is a visible flash of the wrong screen; if your router reads the initial URL once when
 it mounts, which most do, the user stays on the wrong screen and the tap appears to have done nothing.
-Kundalini saw exactly that on a device: a tapped reminder cold-started the app on a day read forty
-minutes earlier.
+On a test device, a tapped reminder cold-started the app on a screen from forty minutes earlier.
 
 Now the host checks the three launch mailboxes before the first page load and, if any of them holds a
 destination, opens `/` and leaves the destination to your page — which is the only place that can see
@@ -577,11 +576,9 @@ than revision 20 reads a three-field row as live with no owner and takes it over
 downgrade means the writer is gone — though it loses the pid; mutual exclusion is unaffected, because two
 hosts of different versions can never run at once.
 
-Until now `reason: "busy"` said a run had been refused and nothing could say by what. App-c spent four
-iterations capturing the same shape — a bounded `sync.now` answering busy twenty times after a reconnect,
-a WorkManager run cancelled a second in, a relaunch draining the queue first try — and every report said
-the same thing about itself: it cannot identify the owning operation and does not prove a lease-expiry
-violation. That is a diagnosability bug before it is a lease bug.
+Until now `reason: "busy"` said a run had been refused and nothing could say by what: a bounded
+`sync.now` answering busy twenty times after a reconnect, or a WorkManager run cancelled a second in, gave
+no way to tell which operation held the lease. That is a diagnosability bug before it is a lease bug.
 
 Both fields are null **exactly** when a run starting now would not be refused, which includes a lease the
 host is about to take over: past its two-minute expiry, dated in the future, or left by a process that is
