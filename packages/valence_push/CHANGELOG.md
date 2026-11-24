@@ -1,8 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.4.0-beta.2 (2026-11-24)
 
-No code changes. Remote push (FCM) was built and run on Android, end to end, with this package. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS is experimental and untested. The README now lists the three dependencies to add and links the updated [Remote push](https://getvalence.dev/docs/guides/remote-push/) guide.
+No code changes. Remote push (FCM) was built and run on Android, end to end, with this package. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS is experimental and untested. The README now lists the three dependencies to add and links the updated [Remote push](https://getvalence.dev/docs/guides/remote-push/) guide. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.2).
 
 ## 0.4.0-beta.1 (2026-11-22)
 

@@ -42,7 +42,7 @@ const CLI = new Set(['dev', 'keygen', 'codegen', 'bundle', 'verify', 'pointer', 
 // The two published runtimes the generated code imports. Their version is deliberately independent of
 // this CLI's: a fix to a runtime ships with "flutter pub upgrade" or "npm update", with no new wizard.
 // A test keeps it equal to both packages/*/ versions in this repo.
-const RUNTIME_VERSION = '0.4.0-beta.1';
+const RUNTIME_VERSION = '0.4.0-beta.2';
 const BRIDGE_PKG = '@getvalence/bridge';
 const HOST_PKG = 'valence';
 // pnpm, yarn and bun all take "add"; npm is the odd one.
