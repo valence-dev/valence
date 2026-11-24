@@ -1,5 +1,26 @@
 # Changelog
 
+## Unreleased (0.4.0-beta.2)
+
+Fixes from a second app built from the public docs alone: a shared expense list with Next.js, two-person
+sync, over-the-air releases, rollback, staged rollout and local reminders. Nothing in the runtime packages
+had to change, and nothing in your host has to change.
+
+- **Rollbacks with Next.js.** Next stamps a random build id into every page, so rebuilding the last good
+  commit changed about a third of the files and phones downloaded them again. The wizard now warns when
+  `next.config` has no `generateBuildId`, or `svelte.config` has no `kit.version.name`, and the releasing
+  guide shows the Next.js fix next to the SvelteKit one.
+- **`--requires-bridge` default.** The docs said it defaults to the schema version. It defaults to the
+  bridge version of your last `--store` build on an OTA build, as the CLI has done since 0.4.0-beta.0.
+  The options tables now say so, with an example.
+- **Docs.** The reminders guide now includes the full Android manifest block, explains that a batch of
+  `notify.schedule` calls takes seconds, shows how to unit-test a notification-enabled host on a desktop,
+  and how to read an Android `BIND APPLICATION ANR` for the reminder receiver. The rollback drill names
+  the log line to wait for at each step. The auth guide no longer says sync runs "every fifteen minutes":
+  your app schedules it, and Android treats that as a minimum. `web.declaredRoutes` is documented as
+  combined with the scanned routes, as the CLI does. The spec no longer tells a host to request
+  notification permission at startup.
+
 ## 0.4.0-beta.1 (2026-11-22)
 
 A patch from building a fresh app with nothing but the public docs. **Android is supported; iOS is
@@ -121,8 +142,8 @@ native host to get the line.
 
 `publishHostFile` wrote a durable copy that nothing ever collected: not a restart, not an OTA
 commit or rollback, not bundle GC, not signing out. An app that published on every read of a row
-accumulated copies with no way back — one test app reached 10,155 files and 963 MiB against 224 KiB
-of real source media — and "Remove photo" could not honestly say it removed anything.
+accumulated copies with no way back — 10,155 files and 963 MiB against 224 KiB of real source media
+in one case — and "Remove photo" could not honestly say it removed anything.
 
 Two new native calls, both additive, with no schema bump and no bridge method:
 
@@ -189,8 +210,7 @@ own output attached as Flutter's.
 
 Every child command `doctor` spawns is bounded at 180 seconds, and the Git private-key scan walks every
 tracked and non-ignored file — so it grows with your repository, not with your app. In a large,
-long-lived checkout that bound was reached on a perfectly healthy app, three test iterations running,
-and the result was a `FAIL` row that had run no assertion and so said nothing about anything.
+long-lived checkout that bound was reached on a perfectly healthy app, and the result was a `FAIL` row that had run no assertion and so said nothing about anything.
 `--timeout <seconds>` moves the bound. It applies to each child command rather than to the run, the
 timeout row names the bound you set, and it takes an integer from 1 to 3600 — `0` is rejected because it
 means "no timeout" to Node, which is the unattributable hang the bound exists to prevent, and the
@@ -501,8 +521,8 @@ contracts §3 and the startup-diagnostics guide.
 
 ### four things an app has to get right that the spec only implied
 
-No behaviour change. Each of these cost a test app an iteration and was filed as a possible host defect
-first, which is the signal that the rule existed only in somebody's head.
+No behaviour change. Each of these looked like a host defect at first, which is the signal that the rule
+was not written down.
 
 - **Back closes your app if a view has no history entry** (contracts §3). `canGoBack()` sees History API
   entries and nothing else, so a detail screen switched on by component state leaves the back stack
@@ -542,8 +562,7 @@ said out loud, in the place you are standing when it matters:
   has no written-at column, so "oldest" does not exist yet and adding it is a database migration.
 
 Nothing to change in your app unless you hold a cache grant, in which case: write the retention rule.
-Found by the kundalini test app on its twentieth iteration, after adopting the cache for two buckets and
-trying to write exactly that rule.
+This came up when adopting the cache for two buckets and trying to write exactly that rule.
 
 ### the release warning names the events too
 
@@ -1176,8 +1195,8 @@ Schema 15 adds nullable builtins, persisted sync reason and signed pending urgen
 
 ### hardening the two newest trust boundaries
 
-Review of the combined feature merge found no broken security path in live development (R9) or native
-plugins (R10) — release builds really do exclude the dev server, and a plugin really cannot redefine a
+Review of the combined feature merge found no broken security path in live development or native
+plugins — release builds really do exclude the dev server, and a plugin really cannot redefine a
 built-in. These are the gaps around them.
 
 - **An event over the 256 KB cap is now dropped instead of sent.** Replies were measured and events were
@@ -1240,7 +1259,7 @@ Existing hosts remain supported; OTA cannot expand accepted origins. New
 `assetlinks` and `aasa` commands write website association documents for separate
 HTTPS hosting. iOS is experimental and untested. See [setup](docs/deep-links.md).
 
-### permissions (R3)
+### permissions
 
 - Added schema-9 permission checks, serialized foreground requests, app settings and resume changes. Hosts opt in with `permissions.kinds`, native declarations, codegen and a store build. Android checks preserve uncertain denial; iOS remains experimental and untested.
 
@@ -1251,7 +1270,7 @@ Schema 11 adds built-in local reminders: notify.schedule/cancel/pending/channels
 
 ### remote push
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device validation is blocked: needs Firebase project. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
 
 ### live development
 
@@ -1376,7 +1395,7 @@ not exist when the bundle was built.
 - OTA bundle bridge requirements now default to the recorded store baseline. Guard newer methods; explicitly pin lower if older store builds remain supported. Built-in/store defaults still use the current schema.
 - Compile ota.channel and generate opt-in BridgeHandlersDefaults for test doubles.
 - Run mechanical doctor diagnostics and mapped unit tests without an interactive session. Unexecuted evidence stays WARN.
-- Constrain path_provider_android to the pre-JNI range >=2.2.17 <2.3.0 while compatibility is validated (U-7, 2026-10-21).
+- Constrain path_provider_android to the pre-JNI range >=2.2.17 <2.3.0 while compatibility is validated (checked 2026-10-21).
 
 Newest first. One version for `create-valence`, `@getvalence/bridge` and the `valence` pub package.
 
@@ -1401,11 +1420,10 @@ haptic handler is a separate local package. Existing wire shapes stay unchanged.
 
 Call your API with `http.request` (schema 4): the host enforces compiled `http.origins` origins, attaches the stored token, and never follows redirects. Existing hosts need codegen and a store build to add the capability or origins. A reference Node REST-to-sync adapter demonstrates durable pagination, tombstones and idempotent pushes. iOS remains experimental and untested.
 
-Everything below is unpublished. Two headlines: an app can finally log a user
-in, and the runtime is two published packages instead of generated code. Under
-them are the test-week fixes, logged by four independent teams who built Android
-apps from the public docs and wrote down what broke. The version for this batch
-is the maintainer's call.
+Two headlines: an app can finally log a user in, and the runtime is two published
+packages instead of generated code. Under them are the test-week fixes, logged by
+four independent teams who built Android apps from the public docs and wrote down
+what broke.
 
 #### Logging a user in, at last
 
@@ -1563,7 +1581,7 @@ store release, because `lib/` changed.
   500 rows had no complete read at all.** And the damage was not a short list: a
   truncated list is indistinguishable from a short one, so a stored key that
   happened to fall outside the first page read as a key the device had never held.
-  One test app showed a first-run location chooser to a device that had been
+  An app showed a first-run location chooser to a device that had been
   configured for days, because the user's saved place was row 600 of 912. A prefix
   is not a general answer; those keys were GeoNames ids and one prefix covered
   about 900 of them.

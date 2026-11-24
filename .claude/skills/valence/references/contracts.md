@@ -288,6 +288,7 @@ An urgent release must not be a rollback blind spot. The method is reachable onl
 - Re-release the last good web commit with `valence bundle`. That gives it a new, higher seq.
 - Pointing the channel at an older seq only cancels pending downloads (step 1 of §2.3). Devices that already committed the bad bundle stay on it until something newer arrives.
 - Devices still trying a bad bundle revert on their own.
+- The re-release is only free on the wire if the web build is reproducible, because files are fetched by hash. Next.js stamps a random build id and SvelteKit a build timestamp into their output unless `generateBuildId` / `kit.version.name` is pinned (to the git commit, for example). The wizard warns when the detected framework's setting is missing.
 
 **Backups.** Exclude all of `<appSupport>/valence/` from device backups:
 
@@ -370,7 +371,7 @@ the Android **`applicationId`**: they are independently editable, so `doctor`'s 
 compares them and warns, because a mismatch sends a forced-update screen's only control to a listing
 that does not exist.
 
-R31 regression matrix: unauthenticated/wrong-app/wrong-seq/below-floor and
+Mandatory-update regression matrix: unauthenticated/wrong-app/wrong-seq/below-floor and
 malformed policies never block; incompatibility reports the needed version;
 mandatory blocking survives offline restart, preserves activation/data and is
 withdrawn only by a higher signed seq; legacy schemas retain rejected; store URLs
@@ -527,7 +528,7 @@ If the web app has modal state of its own it wants the gesture for, the host can
 - If rebinding fails, rotate the port and the nonce and reload the page. The old page must not keep running against a port we no longer own.
 - *Residual risk:* between a reclaim and the rebind, a lazy chunk request could be answered by another process. The upgrade path is request interception (`WKURLSchemeHandler` on iOS, `WebViewAssetLoader` on Android) once webview_flutter exposes it, or a small platform plugin. Until then, keep the startup route's chunks preloaded.
 
-### Renderer loss (S5)
+### Renderer loss
 
 The WebView does not run in our process. Its content process is a separate, lower-priority process, and
 under memory pressure the OS kills that one first — while the host is still alive with its server, its
@@ -635,7 +636,7 @@ intermittent failure.
 ---
 
 
-### 3.1 Debug development server (R9)
+### 3.1 Debug development server
 
 A debug build also enables Android WebView inspection for `chrome://inspect`. Profile and release never do: the call sits behind `kDebugMode`, so the page, its bridge and its data are not exposed to a USB-attached browser in anything a user can install.
 
@@ -681,17 +682,17 @@ Package scripts are trusted local code. Stop the command to stop its child. Sign
 The initial CLI supports Vite-compatible dev arguments (including Vite-based frameworks);
 other frameworks can start their own server and use the printed Flutter define directly.
 
-R9 matrix: nonce before scripts; no-cache; HMR WebSocket round-trip; reserved host routes;
+Regression rows: nonce before scripts; no-cache; HMR WebSocket round-trip; reserved host routes;
 denied methods, redirects and credential forwarding; dev does not commit or fail trials;
 release AOT built with a dev define excludes the upstream URL and proxy implementation.
-R21 regressions: default loopback binding and emulator command; off-device address/hostname
+Dev server binding regressions: default loopback binding and emulator command; off-device address/hostname
 refusal before child launch; explicit LAN opt-in through the wizard, all-interface binding
 and full-privilege warning; lookalike/malformed hosts rejected without an implicit DNS grant.
 
 
 ## 4. Typed bridge
 
-### Schema 15 returned-field additions (R17)
+### Schema 15 returned-field additions
 
 Schema 15 adds only nullable returned fields: `AppInfo.builtins: int?`,
 `SyncStatus.reason: string?`, and `BundleStatus.urgent: bool?`. Existing fields
@@ -699,7 +700,7 @@ and method shapes retain their meanings. Older schemas omit these fields from
 generated delegations; newer pages on older hosts receive null/missing values.
 The store baseline remains unchanged until a store release records the new host.
 
-### Schema 16: `notify.pendingIds` (R28)
+### Schema 16: `notify.pendingIds`
 
 Schema 16 adds one method, `notify.pendingIds() -> int[]`, and changes nothing that shipped.
 `notify.pending`'s fields keep the meanings they have always had.
@@ -752,7 +753,7 @@ the stored reason and the returned result use the same lease-held classification
 An app needing an acknowledgement tied to
 one authenticated bucket must still track its explicit scoped check.
 
-### Revision 20 returned-field additions (S9)
+### Revision 20 returned-field additions
 
 `SyncStatus.leaseKind: string?` and `SyncStatus.leaseAgeMs: int?` say which run holds the §5.6 sync lease
 and for how long, so a `busy` reply can be acted on rather than only observed. Both are nullable grown
@@ -1248,7 +1249,7 @@ the bridge nonce. The reference example grants cleartext native HTTP only to loo
 Headers must be an object of string values with valid HTTP names and printable ASCII values.
 The page cannot supply Authorization, Proxy-*, Sec-*, Cookie, Cookie2, Host, Origin, Referer,
 Connection, Content-Length, Transfer-Encoding, Upgrade, TE, Trailer, Expect, Accept-Encoding or
-Keep-Alive (case insensitive). The host obtains the R1 token per request, with
+Keep-Alive (case insensitive). The host obtains the stored auth token per request, with
 `ValenceConfig.authToken` taking precedence over secure storage, and sets Authorization itself.
 A 401 on a request carrying that token emits `auth.expired` once for that request, retains the
 token, and still returns the HTTP response. Set-Cookie and Set-Cookie2 are always omitted from returned
@@ -1566,12 +1567,12 @@ newer host can return one the bundle was generated before.
 
 All five are `since: 6`, and `bundle.status` reads state the host already keeps — it never starts a
 network request, so a page may poll it. One exception to "already keeps": a schema declaring
-`BundleStatus.urgent` makes the read verify the pending manifest's local bytes (R17), which is file IO
+`BundleStatus.urgent` makes the read verify the pending manifest's local bytes, which is file IO
 and an Ed25519 verification on the UI isolate per call while a pending bundle exists. Prefer the
 `bundle.updateReady` event to a tight poll when the app declares `urgent`.
 
 
-#### Explicit checks and completion (revision 19, S8)
+#### Explicit checks and completion (revision 19)
 
 `bundle.check() -> void` (since 19, no params) starts an update check through
 ValenceApp's existing coalesced UI update path. It joins any in-flight host check,
@@ -1608,7 +1609,7 @@ retry, await bundle.check and then re-read status. Older hosts can continue usin
 bundle.updateReady and mount/resume reads, but those do not reliably notify a
 refused offer that finishes after the read.
 
-### 4.7 Adaptive layout and accessibility (R8)
+### 4.7 Adaptive layout and accessibility
 
 `ValenceApp` uses edge-to-edge layout. It publishes `--valence-inset-top`,
 `--valence-inset-right`, `--valence-inset-bottom` and `--valence-inset-left` on the
@@ -1645,7 +1646,7 @@ does not expose a page-callable system-settings setter. These signals describe O
 preferences; they do not certify the page as accessible. Semantic HTML, TalkBack
 testing, contrast, focus order and usable tap targets remain the app's job.
 
-### 4.8 Task state restoration (R7)
+### 4.8 Task state restoration
 
 Snapshots are bound to the native recorded account (§4.4) as well as the signed bundle seq.
 Before loading a restored route, compare its account fingerprint with secure storage; a mismatch
@@ -1730,7 +1731,7 @@ Android process reclamation is tested with Home then `adb shell am kill <appId>`
 reopening the retained task. iOS uses Flutter restoration too but is experimental
 and untested; its app must opt into native state restoration as Flutter documents.
 
-### 4.9 Permissions (schema 10, R3)
+### 4.9 Permissions (schema 10)
 
 The starter schema introduces the methods and event at 10. When adding them to
 an existing app, choose `since >= max(10, shipped store schema version + 1)` for
@@ -1866,7 +1867,7 @@ namespace the core already owns, so it has no fragment, no namespace of its own 
 `plugins` entry — it is a pub dependency and a constructor argument. Which of the two shapes a
 package uses is the first thing its listing has to say, because it decides how it is installed.
 
-### 4.11 Sharing an image (R14, schema 14)
+### 4.11 Sharing an image (schema 14)
 
 `share.image` is `since: 14`, with optional string params `bytes`, `path`, `fileName`,
 `caption`, returning a string. Exactly one of `bytes` (canonical standard padded base64,
@@ -1953,7 +1954,7 @@ PRAGMA user_version = 3;
   - A background isolate must call `DartPluginRegistrant.ensureInitialized()` before its first store call, or the plugin isn't registered in that isolate at all. That is the other first-run-on-device failure in this code path.
 - **Check that WAL took.** `rawQuery('PRAGMA journal_mode = WAL')` returns the mode that is now in effect; a filesystem that can't do WAL answers `delete` and you lose the concurrency the rest of §5 assumes. Log or assert the returned value rather than discarding it.
 
-### 5.1.1 Startup and database wait diagnostics (R29)
+### 5.1.1 Startup and database wait diagnostics
 
 `Valence.open` reports each phase's entry and completion through its existing logger:
 binding, links, directories, store, state, services, notifications (when enabled), seed,
@@ -2271,7 +2272,7 @@ authenticated records must read `kv` directly or use a bucket with no cache gran
     - **a lock once the run is going is `failed`,** carrying the buckets and `changed` count it had already earned rather than zeros, including each page committed before a later page or lease renewal fails. Authentication and transport failures observed earlier retain their normal precedence. Past the lease, "nothing was attempted" is false, and a page's freshness line still has to learn what moved before the lock stopped it;
     - **anything that is not a lock still throws,** so a real bug reaches the job.
   - **A release that cannot write does not discard the run's result.** `releaseLease` is in the run's `finally`, and a lock there would otherwise replace a classified outcome with a throw. The row then stands until the TTL expires it, which is what the TTL is for, and the log says so — because "took" with no "released" otherwise reads as a torn-down isolate, and this is the other way to produce that pair. A cleanup lock cannot mask a primary non-lock failure: that failure is rethrown with its original stack. Conversely, a non-lock cleanup failure is not recovered merely because the primary failure was a lock. A release-only lock retains the completed outcome and logs safely; no lease acquisition, renewal, expiry or takeover rule changes. **The outbox count is the last read a classified run still needs, and a lock on it reports `0 pending` rather than discarding the result** — losing the buckets and `changed` count to *that* read would undo this rule on exactly the contended device it is written for. A page gets the same treatment as the background isolate, whose own backstop sits a frame too far out to still hold them. Non-locks still throw, so a real bug reaches the caller. **An `ok` degrades to `failed` when that count is the thing that could not be read**, because `ok` with `pending: 0` is rendered as "everything is saved" over an outbox nobody looked at: `busy` and a locked open answer zero too, but neither claims anything about the data, and `int` has no way to say "unknown". The *persisted* outcome is left as it was — the data sync did complete, and poisoning `sync.status` for every later read because one count was briefly unreadable is the opposite of this rule.
-- **Who holds the lease is reportable, not just whether one is held** (revision 20, S9). `busy` on its own cannot tell "a foreground run is legitimately still working" from "a background isolate was cancelled and never released" — by the page, by the log, or by four iterations of device evidence — so:
+- **Who holds the lease is reportable, not just whether one is held** (revision 20). `busy` on its own cannot tell "a foreground run is legitimately still working" from "a background isolate was cancelled and never released" — by the page, by the log, or by four iterations of device evidence — so:
   - `SyncStatus` gains `leaseKind: string?` and `leaseAgeMs: int?`, nullable grown returned fields (§4.3), gated by `(info.builtins ?? 0) >= 20`. They are non-null on **exactly** the condition `acquireLease` refuses on: the lease is within the two-minute TTL on either side of `now` *and* owned by this process. A lease the host would simply take over — expired, at least the TTL ahead, or left by a launch that is gone — reports free, because it is not what a `busy` answer is about; **the log names every row it displaces**, with which of those three it was, because `status` reporting it free leaves the log as the only place that can say a row was there. The two must read one predicate, or a status that named a holder the next run displaces sends a developer hunting a leak that does not exist.
   - **`leaseAgeMs` is the holder's age, measured from acquisition and not from the last renewal**. Those are different numbers, because the lease row is rewritten after every applied page, and the renewal is what the TTL is judged against — so an age read off the row falls back towards zero each page, and two reads during one continuous hold can *decrease*. On a device one hold reported 628, 69, 81, 785 and 1060 ms while its real age ran 301 to 2054 ms, and two refusals against a lease ~100 seconds old reported 28 ms and 58 ms, while the `released` line — which has always measured from acquisition — correctly reported 106506 ms. **A number that goes backwards is not an age**, and this is the one instrument the bullet above offers in place of the pre-emption it declines, so a wrong one points away from the cause rather than at it. The reported age and the release line's `heldForMs` are therefore the same measurement, and `released` is what a test can hold them against. A row with no take-time — written by an older host — reports the row's age, which is the old behaviour and the best available from those bytes; a take-time the clock has moved *past* does the same, because a negative age answers a different question.
   - `leaseKind` is an open string set, read like `reason`. A held row that records no kind — written before this revision, by a launch whose pid this process happens to have — reports `"unknown"`, **never null**: null means "a run starting now would not be refused", and conflating that with "held by a host I cannot name" is the bug this field exists to close.
@@ -2323,7 +2324,7 @@ Everything here is silent when it is wrong: the call succeeds, the UI says "Set"
 
 - **Build setup.** `flutter_local_notifications` fails the build with "requires core library desugaring to be enabled" until the host's `android/app/build.gradle.kts` sets `isCoreLibraryDesugaringEnabled = true` and adds `coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")` — a 1.x desugar library fails the same build. `valence codegen` writes both lines into a `flutter create`-shaped `build.gradle.kts` (or `build.gradle`) and leaves a layout it cannot place alone with a warning; doctor's `Android desugaring` row fails until both are present. Every host needs them, including one with `notifications.enabled` false, because the plugin ships with the runtime.
 - **Declare `RECEIVE_BOOT_COMPLETED` and the plugin's three receivers** (`ScheduledNotificationReceiver`, `ScheduledNotificationBootReceiver` with the boot intent filter, and `ActionBroadcastReceiver`) in the host's own manifest. **Android cancels every alarm at shutdown**, and the only re-arm triggers this architecture gives you are a UI start and a `sync.changed` — and the user opens the app *because* the reminder arrived. So without these, an overnight reboot (an OS update is the common case) silently ends the whole schedule and nothing ever rebuilds it.
-- **Permission.** Android 13+ needs `POST_NOTIFICATIONS`. The plugin *declares* it for you, so the host's job is to **request it at init and report the result** (`requestNotificationsPermission()`): a denied permission is otherwise indistinguishable from a working one, and the host schedules into a void on every modern device with no error anywhere.
+- **Permission.** Android 13+ needs `POST_NOTIFICATIONS`. The plugin *declares* it for you, so the host's job is to **request it when the user asks for reminders and report the result** (`requestNotificationsPermission()`, through `notify.permission({request: true})`; initialization never prompts, §6.5): a denied permission is otherwise indistinguishable from a working one, and the host schedules into a void on every modern device with no error anywhere.
 - **Create the channel at init, not on first post.** Android drops a notification whose channel does not exist, silently, and the plugin only creates the channel when a notification is *shown* — so if posting is what is broken, the channel never exists and never will.
 - **Delivery is best effort.** `SCHEDULE_EXACT_ALARM` is **not pre-granted to a fresh install** of an app targeting API 33 or later, even when the manifest declares it — and a backup-and-restore onto Android 14 withdraws it from an app that had it, which is worth reading next to §2.4's backup rules (`logcat`: "lost permission to set exact alarms"); the plugin then records `inexactAllowWhileIdle` and the alarm can sit minutes past its due time, still pending. `USE_EXACT_ALARM` is the one granted automatically and Google Play restricts it to alarm-clock and calendar apps. A morning reminder does not need to be exact: prefer `inexactAllowWhileIdle`, and report the mode you got so the UI can say "Android may deliver this late" instead of lying.
 - **Older app-owned wall-clock scheduling (observed plugin 19.x): set `tz.local` from the device's real zone.** The schema-11 built-in uses plugin 22.3.2+ with explicit absolute UTC one-shot deadlines (?6.5); this historical observation is about the custom daily-reminder implementation. The plugin re-derives every stored notification against `tz.local` whenever the clock, the timezone or the device changes. Scheduling an absolute instant (`tz.TZDateTime.from(utc, tz.UTC)`) passes every unit test and then **deletes every scheduled alarm** on the first `TIME_SET` — six before a clock change, zero after, nothing in the log. Building the same times in the device's zone leaves all six intact.
@@ -2448,7 +2449,7 @@ domains entitlements, and `FlutterDeepLinkingEnabled=false`; it is experimental
 and untested. Custom schemes are interceptable by other apps; use verified HTTPS
 links for sensitive flows and authenticate any action separately.
 
-R6 matrix: cold/warm links, startup deduplication and repeated taps; unlisted and
+Deep-link regression rows: cold/warm links, startup deduplication and repeated taps; unlisted and
 malformed links denied; query/hash retained; pending initial reply cannot overwrite
 a live event or navigate after unsubscribe; generated delegations; association-file
 validation; Android cold/warm intents and `pm verify-app-links`/`pm set-app-links`.
@@ -2527,8 +2528,8 @@ Use Android high priority for a timely hint and APNs `content-available: 1`,
 Native setup is a store release: Firebase project config, Android notification
 permission, Google Play services; iOS APNs key, Push Notifications and Remote
 notifications background capability with method swizzling enabled. No service
-account key belongs in an app or bundle. R5 device validation is **blocked: needs
-Firebase project** until the maintainer supplies the project configuration.
+account key belongs in an app or bundle. Push delivery has not yet been validated on a
+device.
 
 ## 7. Store-policy rules (enforced by `valence bundle` and the reviewer)
 
@@ -2571,7 +2572,7 @@ Firebase project** until the maintainer supplies the project configuration.
 
 - `data.getMany({bucket, keys: string[]}) -> Row[]` is a built-in at `since: 3`. It reads the active bundle's schema, returns live rows in first-requested-key order, omits missing keys and tombstones, and deduplicates keys. Empty input returns an empty list. More than 500 input keys fails with `E_PARAMS`; keys are bound SQL parameters, never SQL text. One batch crosses the bridge once, rather than paying a separate WebView round trip per key (about 15 ms in the test-app emulator measurement; not a performance guarantee).
 - `sync.status() -> {pending: int, lastSyncedAt: int?, offline: bool}` is a built-in at `since: 3`, with no network side effect. `pending` counts outbox operations, including deletes and repeated edits. `lastSyncedAt` is the epoch-millisecond time of the last successful **unscoped** sync, persisted in reserved host prefs, or null before one. `offline` describes the last attempted run's transport failure, not current connectivity; it is false before an attempt. Busy runs do not overwrite these observations. A scoped run cannot advance the global timestamp. `SyncResult.pending` is an optional nullable `int?` (§4.3), reporting remaining operations at return time, including busy/offline/no-server results.
-  - Schema 15 adds nullable SyncStatus.reason for the last completed ordinary attempt, scoped runs included. Older schemas omit it; apps needing an explicit authenticated-bucket receipt still persist their own outcome. See the R17 returned-field contract.
+  - Schema 15 adds nullable SyncStatus.reason for the last completed ordinary attempt, scoped runs included. Older schemas omit it; apps needing an explicit authenticated-bucket receipt still persist their own outcome. See "Schema 15 returned-field additions" in §4.
 - `ota.channel` defaults to `production` and must match `[A-Za-z0-9_-]+`. Codegen emits `valenceOtaChannel` and wires it into `valenceConfig.channel`; the updater follows that channel. Bundles remain channel-neutral. Changing a compiled host's channel needs a host build.
 - OTA `requires.bridge` defaults to `baseline.storeSchema.version`, falling back to the local schema version before any store baseline. Built-in and store builds default to the local schema version. An explicit `--requires-bridge` still wins. Building below the local version names the methods and events needing `has()` guards, and what each does on the older host; it does not make unguarded calls safe.
 - `seedSchemas: {bucket: int[]}` optionally declares additional read-only schemas the project may seed. Current `data` schemas are implicitly declared. `seed --from` accepts legacy `<bucket>.json` and `<bucket>.v<N>.json` files with `{schema, rows}`. A versioned filename must match its payload; every pair must be declared, duplicates fail atomically, and multiple schemas coexist. Missing **current pairs** warn even if an older pair was seeded. Writable buckets remain schema 1 and cannot be declared in `seedSchemas`.
@@ -2667,7 +2668,7 @@ it and the first thing to fail would be the store build, on a device.
   is refused before scheduling, rather than silently omitting the image. No URL or page-supplied file
   path is accepted. iOS attachments are written only to a host-owned private directory. Images are
   optional, not downloaded. Actions are up to three unique compiled IDs `open`, `done`, `snooze` with
-  those English labels. Each opens the UI, including on iOS; reply inputs are deferred to S1.
+  those English labels. Each opens the UI, including on iOS; reply inputs are not supported yet.
 - `notify.cancel({id}) -> void` cancels that pending/displayed notification only, never all others.
   `notify.pending() -> {id, title?, body?, payload?}[]` asks the native scheduler, not an app-maintained
   shadow list. Re-arm by ID difference; do not cancel a displayed notification simply to refill a window.
@@ -2738,7 +2739,7 @@ notification callback runs UI activation. iOS code paths are experimental and un
 
 ## 8. Test matrix (minimum; all must pass before "done")
 
-S9 lease diagnostics (§5.6): `sync.status` names the holder's kind and its age in milliseconds while a
+Lease diagnostics (§5.6): `sync.status` names the holder's kind and its age in milliseconds while a
 lease is held and reports both null when it is free; the kind comes off the **row**, so a driver of one
 kind reads another's correctly; a lease this host would take over — expired, at least the TTL ahead,
 or left by a foreign pid — reports free rather than naming a holder the next run displaces, while a row
@@ -2769,7 +2770,7 @@ reproduction on a real phone can be read; nothing in `flutter test` or on the em
 reproduces a WorkManager cancellation, and this change deliberately alters no lease timing, so there is
 nothing about a leak for a test to assert.
 
-S7 / §5.5.1: compiled cache grants default-deny, unknown/writable/dot-key denials,
+Cache grants (§5.5.1): compiled cache grants default-deny, unknown/writable/dot-key denials,
 store-upgrade grant revocation preserving server rows and outbox,
 strict nonce and parameter dispatch, UTF-8 size cap and previous-value retention;
 mixed-source reads/count/key pagination and deduplication; pull/tombstone/seed
@@ -2786,7 +2787,7 @@ config load before any row exists — there is no test for a row-count or total-
 is none to test**. Covered in `cache_test.dart`,
 `updater_test.dart`, `runtime_test.dart`, CLI generated-Dart tests and the example wiring test.
 
-S5 renderer loss (§3): a `webContentProcessTerminated` resource error reloads the **same** manifest at
+Renderer loss (§3): a `webContentProcessTerminated` resource error reloads the **same** manifest at
 the route the page was on, counts no trial failure, and leaves the §2.4 trial serving — including the
 case where the ready timer for the dead page would otherwise have timed out and spent a strike. A
 content process that keeps dying stops being reloaded after three recoveries, says so in the log,
@@ -2800,7 +2801,7 @@ day the Android handler must be written and §3's limitation dropped. No device 
 the WebView's own process with no Dart frame in between, so nothing in `flutter test` or on the emulator
 can observe the host's side of it.
 
-S4 method retirement (§4.1): a `"retired": true` method keeps its name, `since`, params and return type in
+Method retirement (§4.1): a `"retired": true` method keeps its name, `since`, params and return type in
 the schema, in `METHOD_SINCE` and in the `BridgeHandlers` interface, is answered concretely by the
 generated `ValenceBuiltins` with `E_UNSUPPORTED` behind unchanged strict decoding, is marked
 `@deprecated` on its `Methods` entry — a label, not a call-site diagnostic — and stops producing the
@@ -2823,7 +2824,7 @@ built-in bundle alone. A `--store` build prints a retirement or un-retirement in
 the additive guard is deliberately blind to the key. The retired handler is compiled and dispatched in the
 generated-Dart suite.
 
-R4 notification event compatibility (§6.5): a frozen pre-11 string-ID event survives codegen/check with
+Notification event compatibility (§6.5): a frozen pre-11 string-ID event survives codegen/check with
 its baseline unchanged and no automatic built-in emission. An event qualifies for automatic emission only
 at since 11+ with an `int` id **and no response field typed to something the response cannot fill** — a
 `payload: int`, an `action: bool`, or a non-nullable `action` on `notify.tapped` each disqualify, while
@@ -2839,7 +2840,7 @@ dropped with a log while the builder's own output passes**, and a tap for an app
 adapter logged once per event name rather than once per tap. The Dart default event table is one
 constant, so `ValenceConfig`'s default cannot drift from it. Existing scheduler security checks hold.
 
-R29 diagnostics (§5.1.1): startup reports ordered phases and monotonic elapsed times,
+Startup diagnostics (§5.1.1): startup reports ordered phases and monotonic elapsed times,
 failure names the active phase and preserves the original error; completion does not
 bind a server or imply page readiness. Held database futures produce named waits
 without timeout, concurrent operations have distinct ids, completion/error cancels
@@ -2847,7 +2848,7 @@ timers, exception identity/trace survives, diagnostic sink failure cannot change
 operation result, and logs omit private arguments. Exercise store reads, prefs,
 transactions, sync status/lease and a held database open through their real wrappers.
 
-R19: generated requirements include event-only fragment namespaces and every plugin
+Plugin requirements: generated requirements include event-only fragment namespaces and every plugin
 method; constructing real generated handlers without their plugin throws before
 dispatch; an installed namespace missing a declared method is rejected; extra native
 methods remain unreachable, nonce/strict decoding still precede invocation, and
@@ -2855,7 +2856,7 @@ legacy direct registry users retain their API. Doctor reports configured require
 as WARN rather than claiming native registration ran. Validate matching plugin
 construction and invocation in the example host.
 
-R7: bounded multibyte JSON, null clearing, strict nonce/params delegation, task
+Task state restoration (§4.8): bounded multibyte JSON, null clearing, strict nonce/params delegation, task
 snapshot restore and fresh-task reset, same-bundle and native-account isolation (including stale OS snapshots and in-flight route captures), refresh/adoption retention, hostile restored
 routes (including encoded /_host/), rotated loopback port, unchanged trial checks;
 **a replacement envelope handed to a running scope is refused unless its account fingerprint and seq
@@ -2876,13 +2877,13 @@ intact and the pre-emption line in the log, while the same kill without an inten
 The link half is exercised on the device by `packages/valence/example`; an app with a scheduled reminder
 owns the notification half.
 
-R3 permissions: unknown/unconfigured kinds and background/queued requests are
+Permissions (§4.9): unknown/unconfigured kinds and background/queued requests are
 denied before platform access; all five statuses and provisional normalization;
 legacy/modern Android photos and Bluetooth mappings; serialized dialogs recover
 after errors; resume emits changed kinds only, tolerates an individual failure and
 does not prompt; generated dispatch retains nonce and strict parameter checks.
 
-R4: disabled group denial; no implicit permission prompt; passive/requested permissions; exact denial
+Notifications: disabled group denial; no implicit permission prompt; passive/requested permissions; exact denial
 and revocation downgrade; permission refusal schedules nothing; native pending/replacement/cap/cancel;
 bounded text/actions/images including dimension, magic, malformed base64 and path attacks; channel
 policy validation; callback escaping, malformed/foreign response rejection and consuming cold initial;
@@ -2890,9 +2891,9 @@ badge support/failure; generated strict dispatch/nonce/older-host guards. Androi
 actually posts with reported timing, warm tap/action and cold tap, image, cancellation, channel creation,
 clock-change and reboot persistence. No iOS verification is implied by unit or Android tests.
 
-**R16 mechanical doctor.** Both CLI entry points use the same diagnostics. Every FAIL includes a `Fix:` line and exits nonzero, without rewriting files. Compare schema and generated host bridge versions; validate the recorded store schema; verify local OTA manifests and their files before comparing `requires.bridge` with the recorded store version. An OTA above that version is FAIL: rebuild with the store bridge floor and guard newer calls, or ship the new host first. Missing store evidence is WARN; historical OTA artifacts are checked too, so archive obsolete local releases outside `dist-ota` before rerunning. `host.database` is a plain file name (default `valence.db`), never a path: fail on separators, traversal or an invalid filename, and report `<appSupport>/<name>` with a WARN that actual installed location and legacy adoption need a device check. Never open or move a user's database from doctor. Inspect Git's tracked and untracked, non-ignored files for PEM private-key headers; fail without printing key material, including when the configured signing-key directory resolves inside Git through a link. Git unavailable is WARN, not PASS. Ignored files are outside this scan; this is a working-tree check, not a Git-history secret audit. Validate `web.connect` as HTTP(S) URLs without credentials, whitespace or CSP source syntax; paths remain supported and normalize to origins. Validate `http.origins` separately as exact HTTP(S) origins; browser CSP permission never grants native token access. R16 does not add bridge methods or change package versions.
+**Mechanical doctor.** Both CLI entry points use the same diagnostics. Every FAIL includes a `Fix:` line and exits nonzero, without rewriting files. Compare schema and generated host bridge versions; validate the recorded store schema; verify local OTA manifests and their files before comparing `requires.bridge` with the recorded store version. An OTA above that version is FAIL: rebuild with the store bridge floor and guard newer calls, or ship the new host first. Missing store evidence is WARN; historical OTA artifacts are checked too, so archive obsolete local releases outside `dist-ota` before rerunning. `host.database` is a plain file name (default `valence.db`), never a path: fail on separators, traversal or an invalid filename, and report `<appSupport>/<name>` with a WARN that actual installed location and legacy adoption need a device check. Never open or move a user's database from doctor. Inspect Git's tracked and untracked, non-ignored files for PEM private-key headers; fail without printing key material, including when the configured signing-key directory resolves inside Git through a link. Git unavailable is WARN, not PASS. Ignored files are outside this scan; this is a working-tree check, not a Git-history secret audit. Validate `web.connect` as HTTP(S) URLs without credentials, whitespace or CSP source syntax; paths remain supported and normalize to origins. Validate `http.origins` separately as exact HTTP(S) origins; browser CSP permission never grants native token access. The doctor checks do not add bridge methods or change package versions.
 
-R12 regression rows: batch reads preserve requested order, deduplicate, isolate bucket/schema, omit tombstones, bind hostile keys, and reject over-limit input; sync status counts deletes and survives reopen, preserves observations on busy and errors, timestamps only successful unscoped runs; generated defaults dispatch as `E_UNSUPPORTED`; old schemas still generate without grown fields; channel validation and beta pointer URL; store-baseline OTA default with explicit and built-in overrides; multi-schema seed declaration/duplicate/atomicity/current-coverage checks; doctor reports missing evidence as WARN and real failures as FAIL. R16 regressions cover bridge drift, malformed baselines, signed but incompatible OTA, bad signatures, database paths, Git key discovery (including untracked files and linked directories), unavailable Git, and invalid browser/native origins.
+Batch read and sync status regression rows: batch reads preserve requested order, deduplicate, isolate bucket/schema, omit tombstones, bind hostile keys, and reject over-limit input; sync status counts deletes and survives reopen, preserves observations on busy and errors, timestamps only successful unscoped runs; generated defaults dispatch as `E_UNSUPPORTED`; old schemas still generate without grown fields; channel validation and beta pointer URL; store-baseline OTA default with explicit and built-in overrides; multi-schema seed declaration/duplicate/atomicity/current-coverage checks; doctor reports missing evidence as WARN and real failures as FAIL. Doctor regressions cover bridge drift, malformed baselines, signed but incompatible OTA, bad signatures, database paths, Git key discovery (including untracked files and linked directories), unavailable Git, and invalid browser/native origins.
 
 | Layer | Tests |
 |---|---|
@@ -2918,25 +2919,25 @@ R12 regression rows: batch reads preserve requested order, deduplicate, isolate 
 | bridge | **a host under a §2.5 mandatory store update drops every bridge message *and says so*, one line per state rather than one per message**. The drop itself was already covered; what was missing is that it is the only state producing a call that never settles with nothing in any log to explain it, which is the first candidate in §4.3's triage |
 | host | **WebView inspection is behind `kDebugMode`** — exactly one `enableDebugging` call in `lib/`, with the guard directly on it |
 | bridge | **`has()` answers for an event as well as a method** — true below *and at exactly* the host's version, false above it, false for an unknown name rather than throwing, false for every event on the web and true there for a method the shim implements; missing or wrong nonce → `E_DENIED`; unknown method → `E_UNKNOWN`; bad params → `E_PARAMS`; a write to a read-only bucket → `E_DENIED`; **a `data.put` key of `.` or `..` → `E_PARAMS` and nothing queued, while `...`, `a.b` and `.hidden` are accepted**; `prefs.*` and `secure.*` on a `valence.` key → `E_DENIED`, so the stored token is unreadable by the page; `open.external` rejects `javascript:` and `file:`; reply escaping round-trips U+2028 and quotes; **an inbound message over `MAX_MESSAGE_BYTES` of UTF-8 is rejected by `@getvalence/bridge` before `postMessage`, with `E_TOO_LARGE`, rather than killing the webview** (a multi-byte string that is under the cap in UTF-16 code units and over it in bytes is refused); **an over-cap *reply* is replaced by `E_TOO_LARGE` rather than sent**; **`data.list` clamps `limit` to 500 and defaults it to 100**; **`after` reads a bucket past the clamp completely, in key order, with no row repeated or skipped, composes with `prefix`, resumes correctly from a cursor key that has since been deleted, and advances past an empty first key (`''` is a valid key, so an absent cursor is `null` and never `''`); `data.count` reports a size past the clamp, honours `prefix`, is scoped to the pair and omits tombstones**; **a built-in's optional *param* is passed through when the app's schema declares it, omitted from the delegation when it does not, refused at the wrong type or under another name, refused on a different built-in, **refused without a `version` above the shipped one** (a param has no `since`, so a sibling method or event at the same version is the only thing `has()` can gate on — and `app.info().bridge` is the app's own schema version, so it gates nothing here), and additive against a method a `--store` build already recorded — while an app's own shipped method may not grow a param at all, and neither `since` nor any other method-level key may change** |
-| explicit checks and completion (S8) | signed incompatible offer emits bundle.checked with authenticated requiredBridge and no updateReady/pending; invalid signatures never disclose requirements; coalesced checks produce one completion after status publication; explicit checks enforce native mid-session policy and never auto-apply or spend trial strikes; malformed modern declarations fail codegen and absent/pre-19 declarations stay silent; unloaded pages drop completion and mount reads recover state; unattached hosts refuse; debug dev mode skips discovery |
+| explicit checks and completion | signed incompatible offer emits bundle.checked with authenticated requiredBridge and no updateReady/pending; invalid signatures never disclose requirements; coalesced checks produce one completion after status publication; explicit checks enforce native mid-session policy and never auto-apply or spend trial strikes; malformed modern declarations fail codegen and absent/pre-19 declarations stay silent; unloaded pages drop completion and mount reads recover state; unattached hosts refuse; debug dev mode skips discovery |
 | lifecycle, connectivity and update status (§4.6) | `hidden` then `paused` emits one `app.lifecycle` with `background`, and a repeat of the same state emits nothing; **the two state events are dropped rather than buffered when no page is loaded, while the one-shot events still buffer and flush**; `inactive` and `detached` map to themselves; `app.state()` reports the pair before any event has been emitted, and a lifecycle change during start-up updates it while the resume *work* stays suppressed; `app.online` emits only on change, with the first value derived from the current connectivity rather than waiting for one; **a connectivity report with several interfaces is online when any of them is not `none`**; `sync.done` carries the whole `SyncResult` after every completed UI-isolate run including `changed: 0`, `busy` and `unauthorized`, **including the push a `data.put` fires**, and is emitted after `sync.changed` for the same run; **the one-shot buffer is bounded and drops its oldest with a log**; `bundle.status` is `idle` before any check, `unconfigured` with no `otaBase`, and reports `uptodate`, `rollout`, `bad`, `offline`, `rejected`, `toobig`, `waitingForData`, `busy` and `ready` for the step that stopped the check, with `offered` set once the pointer decoded and `checkedAt` moving only on a completed check; **a step 7 stop caused by `dataSizeCap` is `toobig` both when the cap ran out inside a pair's pull and when a first pair spent it all before a second pair's pull began**; `serving`/`pending`/`trial` match the live state; **`bundle.updateReady` fires on every transition to `pending` — urgent and not — once for two coalesced concurrent checks, and never for a check that stopped before step 8** |
 | local notifications (dart test, `valence.test.mjs`) | a native service that refuses to start leaves `initialize()` completing, `unavailable` set to the native code, a logged reason naming `keep.xml` and the icon, `notify.schedule` reporting `blocked`, empty `pending`, no-op `cancel`/`channel`, false `badge`, no native send or prompt, and parameter validation still refusing bad input; **`pendingIds` reports the same IDs as `pending` from one native snapshot, is empty on an unavailable service, and through generated dispatch answers a 64-request queue at the maximum title/body/payload sizes while `notify.pending` on that same queue is refused with `E_TOO_LARGE`**; `doctor`'s `notification icon` row warns with no Android `res` directory, fails for a drawable that is absent, fails for a drawable `res/raw/keep.xml` does not name (including a longer name that merely starts with it), and passes once both exist |
 | dev diagnostics (widget tests) | startup names the validated upstream origin and disabled OTA behavior; ready, signed reload, update checks and apply each log a dev bypass; startup/resume/periodic checks leave activation evidence unchanged and send no OTA requests; sync remains available; signed startup has no dev warning; release AOT excludes the upstream URL, proxy and dev diagnostics |
 | integration (`integration_test`, device or emulator) | **first launch opens the database and paints** — the store and sync rows above run on `sqflite_common_ffi`, which is more permissive than Android's `SQLiteDatabase` (it accepts `execute` for pragmas), so a green unit suite is not evidence the store opens on a phone; cold start in airplane mode renders the built-in bundle with seed data; a corrupt CAS file is detected the first time the server serves it, deleted, and re-downloaded by the next update check; a background sync followed by a UI bridge call (the database must still be open); background then resume after 10 minutes, the server is rebound and the page still works; **each §6 item the app ships actually works on the device** — a biometric prompt appears rather than throwing `no_fragment_activity`, and a reminder scheduled N seconds out really posts and reports `exact` or `inexact` rather than `ok`; **a scheduled window survives a clock change** (`cmd alarm set-time`, then the alarms are still there) **and a reboot**; **a re-arm does not cancel a notification already on screen**; **a widget snapshot reaches a placed widget**, and the provider resolves under the fully-qualified class name |
 
-R24 reconnect regression rows: an offline foreground check followed by a live report completes a verified pending update and moves checkedAt without reloading or consuming a trial; none-only reports do not check; mixed-interface reports and live-to-live handovers check; concurrent reports coalesce; background reports update online state and sync but defer the update check to resume; invalid signatures remain rejected without pending or updateReady; disposal cancels the subscription. Development mode still suppresses signed update checks.
+Reconnect regression rows: an offline foreground check followed by a live report completes a verified pending update and moves checkedAt without reloading or consuming a trial; none-only reports do not check; mixed-interface reports and live-to-live handovers check; concurrent reports coalesce; background reports update online state and sync but defer the update check to resume; invalid signatures remain rejected without pending or updateReady; disposal cancels the subscription. Development mode still suppresses signed update checks.
 
-R8 regression rows (§4.7): owning-view logical insets exclude keyboard and change after rotation; system font size and accessibility preferences are read independently of app theme; native Android zoom follows settings changes; repeated iOS root scaling does not compound; publication preserves navigation and nonce; initial/reload appearance delivery and typed unsubscribe; AppInfo.fontScale is optional and additive only at num?, and generated delegates compile with and without it.
+Adaptive layout regression rows (§4.7): owning-view logical insets exclude keyboard and change after rotation; system font size and accessibility preferences are read independently of app theme; native Android zoom follows settings changes; repeated iOS root scaling does not compound; publication preserves navigation and nonce; initial/reload appearance delivery and typed unsubscribe; AppInfo.fontScale is optional and additive only at num?, and generated delegates compile with and without it.
 
-R5 regression rows: exact data-only sync hints only; no payload-supplied config, URLs, tokens or trial transitions; passive startup and explicit permission requests; registration gated on permission/APNs; cold-tap consumption and live-tap race; token rotation; JSON escaping and event cap; disabled-host E_UNSUPPORTED and generated strict nonce/params denials. Device delivery/image/silent-sync checks remain blocked until a Firebase project is supplied.
+Push regression rows: exact data-only sync hints only; no payload-supplied config, URLs, tokens or trial transitions; passive startup and explicit permission requests; registration gated on permission/APNs; cold-tap consumption and live-tap race; token rotation; JSON escaping and event cap; disabled-host E_UNSUPPORTED and generated strict nonce/params denials. Device delivery, image and silent-sync checks have not yet run on a device.
 
-R17 regression rows: independent app/built-in revisions; reporting-schema parameter coherence; nullable returned fields additive against schema 14; legacy delegation omission; persisted unauthorized/failed/scoped-success outcomes, agreement with returned failures after driver replacement, busy/error preservation and account clearing; signed pending urgency true/false, invalid signature/missing/stale sequence refusal and unchanged activation state.
+Returned-field regression rows: independent app/built-in revisions; reporting-schema parameter coherence; nullable returned fields additive against schema 14; legacy delegation omission; persisted unauthorized/failed/scoped-success outcomes, agreement with returned failures after driver replacement, busy/error preservation and account clearing; signed pending urgency true/false, invalid signature/missing/stale sequence refusal and unchanged activation state.
 
-R27 regression rows: a generated core-only host resolves no firebase_* or valence_push packages; the core example APK has no Firebase provider/service or Firebase DEX classes. Opt-in adapter tests map native envelopes (including empty notifications), passive permission, registration, taps and events; core retains exact hints, caps, JSON escaping, disabled-host denials, native token/lease sync and unchanged activation state. Firebase device delivery remains blocked; iOS untested.
+Core-only host regression rows: a generated core-only host resolves no firebase_* or valence_push packages; the core example APK has no Firebase provider/service or Firebase DEX classes. Opt-in adapter tests map native envelopes (including empty notifications), passive permission, registration, taps and events; core retains exact hints, caps, JSON escaping, disabled-host denials, native token/lease sync and unchanged activation state. Firebase device delivery is not yet validated on a device; iOS untested.
 
 
 
-R31: authenticated newer-host reporting, fixed store destination and unsupported iOS
+Mandatory updates: authenticated newer-host reporting, fixed store destination and unsupported iOS
 configuration; signed mandatory block, cold open revalidation and newer withdrawal;
 wrong signature/app/seq/floor and malformed requires/minHost cannot establish policy;
 blocked trials retain their attempts and queued page calls cannot dispatch;

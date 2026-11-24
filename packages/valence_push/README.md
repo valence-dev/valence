@@ -1,7 +1,7 @@
 # valence_push
 
 Opt-in Firebase Messaging transport for `valence`. Android is the tested host
-platform; Firebase delivery still needs a maintainer project. iOS is experimental
+platform; Firebase delivery has not yet been validated on a device. iOS is experimental
 and untested. See [Remote push](https://getvalence.dev/docs/guides/remote-push/)
 for native setup, background callbacks, privacy, images and acceptance checks.
 

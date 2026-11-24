@@ -579,7 +579,7 @@ Task restoration now checks the native account before loading a restored route, 
 
 Schema 8 adds `state.save({json})` and `state.restore()` for a task-local UI blob (65,536 JSON UTF-8 bytes). ValenceApp restores the local path/query/hash after OS process reclamation. Explicit task closure starts fresh; a different bundle seq clears the snapshot. Save promptly and keep durable records in SQLite. iOS is experimental and untested.
 
-### permissions (R3)
+### permissions
 
 - Added schema-9 permission checks, serialized foreground requests, app settings and resume changes. Hosts opt in with `permissions.kinds`, native declarations, codegen and a store build. Android checks preserve uncertain denial; iOS remains experimental and untested.
 
@@ -590,7 +590,7 @@ Schema 11 adds built-in local reminders: notify.schedule/cancel/pending/channels
 
 ### remote push
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device validation is blocked: needs Firebase project. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
 
 ### image sharing
 
@@ -640,7 +640,7 @@ take. Persist on `background`, not `detached`. iOS remains experimental and unte
 - OTA bundle bridge requirements now default to the recorded store baseline. Guard newer methods; explicitly pin lower if older store builds remain supported. Built-in/store defaults still use the current schema.
 - Compile ota.channel and generate opt-in BridgeHandlersDefaults for test doubles.
 - Run mechanical doctor diagnostics and mapped unit tests without an interactive session. Unexecuted evidence stays WARN.
-- Constrain path_provider_android to the pre-JNI range >=2.2.17 <2.3.0 while compatibility is validated (U-7, 2026-10-21).
+- Constrain path_provider_android to the pre-JNI range >=2.2.17 <2.3.0 while compatibility is validated (checked 2026-10-21).
 
 ### First release of this package
 

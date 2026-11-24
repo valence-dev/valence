@@ -26,7 +26,7 @@ the [`valence`](https://pub.dev/packages/valence) package. This app is the part 
 
 ## Run it
 
-For the R9 live-development demo, run `npm install` in `dev-web`, then from this example root
+For the live-development demo, run `npm install` in `dev-web`, then from this example root
 run `node ../../../.claude/skills/valence/scripts/valence.mjs dev --web-dir dev-web`.
 In another terminal run the printed Flutter command. Tap the counter, edit `dev-web/message.js`
 and verify the label changes while the counter stays put. The HMR callback also writes a native
@@ -59,9 +59,8 @@ The contracts §8 matrix is the package's suite, one directory up. An app does n
 
 ## Not a device test
 
-The R12 tooling check on 2026-10-21 separately ran this example on Android: seeded batch reads,
-two queued writes and a queued delete showed the same pending count in the page and SQLite.
-See [the validation record](../../../docs/r12-validation.md). The pre-JNI dependency range resolved
+Separately, this example has been run on Android: seeded batch reads, two queued writes and a
+queued delete showed the same pending count in the page and SQLite. The pre-JNI dependency range resolved
 `path_provider_android` 2.2.23. Its prior local override is removed; the runtime carries the constraint.
 
 A green `flutter test` is **not** evidence that the store opens on a phone: it runs on
@@ -81,9 +80,6 @@ explicit cleartext origin even in release builds despite Android's network
 security XML. The default example therefore grants no off-device HTTP origin.
 The offline bundle and seed still work without that server.
 
-For the release-device transport probe and its synthetic-only credential, see
-[R23 validation](../../../docs/r23-validation.md).
-
 ### The cookie jar (§4.5.1)
 
 `http.cookieJar` grants the same loopback origin a host-held jar with a `csrftoken`/`X-CSRFToken`
@@ -94,7 +90,7 @@ prints whether the page could see `Set-Cookie` (it cannot) beside the `202`-shap
 `{accepted: true}`. **Try to send the CSRF header myself** proves the mirrored header is refused with
 `E_DENIED`: the page cannot supply either half, which is the whole point of the jar holding them.
 
-## R8 layout probe
+## Layout probe
 
 The signed page displays app.appearance and logical insets, pads content with the host variables, uses 48px buttons and exposes optional fontScale through app.info. Rotate, resize, change font size and toggle system dark mode without reloading. See [accessibility](../../../docs/accessibility.md). iOS remains experimental and untested.
 
@@ -106,7 +102,7 @@ Task snapshots are bound to the native account as well as the signed bundle: swi
 
 ## Deep-link demo
 
-The R6 surfaces were added at schema 9. This merged example reports schema 16 and accepts `valence-example://app` and `https://links.example.invalid`. Native Android filters and experimental iOS registrations are included. The page shows the routed path/query/hash and uses the wire protocol directly, matching the rest of this no-bundler demo. Production apps use `onLink()` from their generated client. See [setup](../../../docs/deep-links.md). The placeholder HTTPS domain cannot verify; forced approval tests delivery only.
+The deep-link surfaces were added at schema 9. This merged example reports schema 16 and accepts `valence-example://app` and `https://links.example.invalid`. Native Android filters and experimental iOS registrations are included. The page shows the routed path/query/hash and uses the wire protocol directly, matching the rest of this no-bundler demo. Production apps use `onLink()` from their generated client. See [setup](../../../docs/deep-links.md). The placeholder HTTPS domain cannot verify; forced approval tests delivery only.
 
 
 ## Permissions demo
@@ -127,7 +123,7 @@ has no Firebase dependency, configuration or initialization. Calls report
 add `valence_push` and direct Firebase imports, configure the native project and
 initialize `createFirebasePush()` as shown in [the setup guide](../../../docs/remote-push.md).
 A native rebuild is required; no signing or bridge-schema change is needed for
-these existing controls. Device delivery needs a maintainer Firebase project;
+these existing controls. Device delivery has not yet been validated;
 iOS/APNs remains experimental and untested.
 
 Schema 15 adds nullable AppInfo.builtins, SyncStatus.reason and BundleStatus.urgent. Older hosts omit them. See [capability revisions and durable status](https://getvalence.dev/docs/guides/capabilities-and-status/).

@@ -137,7 +137,13 @@ function inspectWeb(root, dir) {
   const staticExport = fw.dep === 'next'
     ? !!nextConfig && /output\s*:\s*["']export["']/.test(readFileSync(join(dir, nextConfig), 'utf8'))
     : fw.dep !== '@sveltejs/kit' || !!deps['@sveltejs/adapter-static'];
-  return { rank, dir: rel, framework: fw.name, version: String(deps[fw.dep]).replace(/^\D*/, ''), pm, name: pkg.name, out: at(fw.out), routes: routes && at(routes), lib: at(fw.lib), staticExport };
+  // A random build id (Next) or build timestamp (SvelteKit) changes files on every rebuild, so a rollback
+  // rebuild of the last good commit becomes a fresh download instead of re-using blobs phones already have.
+  const svelteConfig = fw.dep === '@sveltejs/kit' && readdirSync(dir).find((f) => /^svelte\.config\.(js|mjs|cjs|ts)$/.test(f));
+  const stableBuild = fw.dep === 'next'
+    ? !!nextConfig && /generateBuildId/.test(readFileSync(join(dir, nextConfig), 'utf8'))
+    : fw.dep !== '@sveltejs/kit' || (!!svelteConfig && /version\s*:\s*\{[^}]*\bname\b/.test(readFileSync(join(dir, svelteConfig), 'utf8')));
+  return { rank, dir: rel, framework: fw.name, version: String(deps[fw.dep]).replace(/^\D*/, ''), pm, name: pkg.name, out: at(fw.out), routes: routes && at(routes), lib: at(fw.lib), staticExport, stableBuild };
 }
 
 // Candidates ordered by framework specificity (SvelteKit before a monorepo root that merely lists vite), then path.
@@ -410,6 +416,9 @@ async function init(o) {
       ok('web app', `${web.dir}  ${web.framework} ${web.version} · ${web.pm} · builds to ${web.out}`);
       if (!web.staticExport && web.framework === 'SvelteKit') warn('sveltekit', `no @sveltejs/adapter-static; install it with fallback: 'index.html' and set ssr = false in the root layout, so the build writes ${web.out}/ (valence needs static files)`);
       else if (!web.staticExport) warn('next.js', `no output: 'export' in next.config; add it so the build writes ${web.out}/ (valence needs static files)`);
+      if (!web.stableBuild) warn('rollback', web.framework === 'Next.js'
+        ? "no generateBuildId in next.config; Next stamps a random build id into every page, so rebuilding the same commit re-downloads them. Add generateBuildId: () => execSync('git rev-parse HEAD').toString().trim() (getvalence.dev/docs/guides/releasing/#roll-back)"
+        : 'no kit.version.name in svelte.config; SvelteKit stamps the build time, so rebuilding the same commit changes files. Set it to the git commit (getvalence.dev/docs/guides/releasing/#roll-back)');
       say(existingHost ? green('✓') : dim('·'), 'flutter host', existingHost ? `${existingHost}/` : `${host}/ (Claude creates it)`);
       say(git ? green('✓') : yellow('!'), 'git', git ? 'repository found' : 'not a git repo (recommended before generating code)');
       if (!interactive() && !o.yes) warn('prompts', 'no terminal: using detected defaults (pass --app-id/--ota/--sync to set them)');

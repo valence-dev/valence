@@ -304,6 +304,19 @@ test('Next.js without output: export is flagged', () => {
   assert.equal(detectWeb(root)[0].staticExport, false);
   write(join(root, 'next.config.mjs'), "export default { output: 'export' };");
   assert.equal(detectWeb(root)[0].staticExport, true);
+  // A random build id makes a rollback rebuild a full download: the wizard warns until it is pinned.
+  assert.equal(detectWeb(root)[0].stableBuild, false);
+  write(join(root, 'next.config.mjs'), "export default { output: 'export', generateBuildId: () => 'abc' };");
+  assert.equal(detectWeb(root)[0].stableBuild, true);
+});
+
+test('SvelteKit without kit.version.name is flagged as not reproducible', () => {
+  const root = mkdtempSync(join(tmpdir(), 'mrw-kit-'));
+  write(join(root, 'package.json'), JSON.stringify({ name: 'k', devDependencies: { '@sveltejs/kit': '^3', '@sveltejs/adapter-static': '^4' } }));
+  write(join(root, 'svelte.config.js'), 'export default { kit: {} };');
+  assert.equal(detectWeb(root)[0].stableBuild, false);
+  write(join(root, 'svelte.config.js'), "export default { kit: { version: { name: 'abc' } } };");
+  assert.equal(detectWeb(root)[0].stableBuild, true);
 });
 
 test('update: hash-tracked installs, safe pruning, backups only for files the user edited', async () => {
