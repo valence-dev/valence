@@ -2528,8 +2528,19 @@ Use Android high priority for a timely hint and APNs `content-available: 1`,
 Native setup is a store release: Firebase project config, Android notification
 permission, Google Play services; iOS APNs key, Push Notifications and Remote
 notifications background capability with method swizzling enabled. No service
-account key belongs in an app or bundle. Push delivery has not yet been validated on a
-device.
+account key belongs in an app or bundle.
+
+A notification message never runs a sync, so a server that wants a visible alert
+and a sync sends two messages: the data-only hint above and a separate
+notification. Pages register the token with their backend through `http.request`,
+which attaches the bearer, and unlink it **before** `auth.setToken({token: null})`;
+if that sign-out is refused with `E_PENDING`, they link it again. `has()` follows
+the schema, not the installed adapter, so pages catch `E_UNSUPPORTED` on `push.*`.
+
+Remote push (FCM) was built and run on Android, end to end. That covers
+foreground, background, killed-process sync, notification taps and image
+notifications. Token rotation has not been observed yet. iOS is experimental and
+untested.
 
 ## 7. Store-policy rules (enforced by `valence bundle` and the reviewer)
 
@@ -2933,7 +2944,7 @@ Push regression rows: exact data-only sync hints only; no payload-supplied confi
 
 Returned-field regression rows: independent app/built-in revisions; reporting-schema parameter coherence; nullable returned fields additive against schema 14; legacy delegation omission; persisted unauthorized/failed/scoped-success outcomes, agreement with returned failures after driver replacement, busy/error preservation and account clearing; signed pending urgency true/false, invalid signature/missing/stale sequence refusal and unchanged activation state.
 
-Core-only host regression rows: a generated core-only host resolves no firebase_* or valence_push packages; the core example APK has no Firebase provider/service or Firebase DEX classes. Opt-in adapter tests map native envelopes (including empty notifications), passive permission, registration, taps and events; core retains exact hints, caps, JSON escaping, disabled-host denials, native token/lease sync and unchanged activation state. Firebase device delivery is not yet validated on a device; iOS untested.
+Core-only host regression rows: a generated core-only host resolves no firebase_* or valence_push packages; the core example APK has no Firebase provider/service or Firebase DEX classes. Opt-in adapter tests map native envelopes (including empty notifications), passive permission, registration, taps and events; core retains exact hints, caps, JSON escaping, disabled-host denials, native token/lease sync and unchanged activation state. Remote push (FCM) was built and run on Android, end to end: foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS is experimental and untested.
 
 
 

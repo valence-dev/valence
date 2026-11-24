@@ -20,6 +20,27 @@ had to change, and nothing in your host has to change.
   your app schedules it, and Android treats that as a minimum. `web.declaredRoutes` is documented as
   combined with the scanned routes, as the CLI does. The spec no longer tells a host to request
   notification permission at startup.
+- **Remote push.** Remote push (FCM) was built and run on Android, end to end. That covers foreground,
+  background, killed-process sync, notification taps and image notifications. Token rotation has not been
+  observed yet. iOS is experimental and untested. No package bug was found, and the docs no longer say
+  push is unvalidated.
+- **Push docs.** The remote push guide now:
+  - installs the three pub.dev dependencies (`valence_push`, `firebase_core`, `firebase_messaging`)
+    instead of mentioning a path dependency;
+  - shows only the Gradle lines to add, not a plugin list that includes `kotlin-android`;
+  - adds the FCM manifest meta-data for the default notification icon and channel;
+  - shows how to register the token with your backend through `http.request`, which attaches the bearer,
+    after permission, on resume and on `push.tokenChanged`;
+  - unlinks the token before `auth.setToken({token: null})` and links it again if sign-out is refused
+    with `E_PENDING` (the accounts guide says the same);
+  - catches `E_UNSUPPORTED` around `push.initial`, because `has()` follows the schema and a host without
+    `valence_push` has the same schema, and explains `hostBuild` and `bundle --min-host`;
+  - adds "Sending from your server": the service-account OAuth flow, the FCM HTTP v1 endpoint, the
+    data-only sync hint and the visible notification as two separate messages, the errors that mean
+    "drop this token", and a small `node:crypto` sender;
+  - links the templates on `main`.
+
+  The local testing guide says to cold-boot a slow emulator before blaming the app.
 
 ## 0.4.0-beta.1 (2026-11-22)
 
