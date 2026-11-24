@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased (0.4.0-beta.2)
+## 0.4.0-beta.2 (2026-11-24)
 
-Fixes from a second app built from the public docs alone: a shared expense list with Next.js, two-person
-sync, over-the-air releases, rollback, staged rollout and local reminders. Nothing in the runtime packages
-had to change, and nothing in your host has to change.
+**Remote push now runs end to end on Android**, and a second app built from the public docs alone (a shared
+expense list with Next.js, two-person sync, over-the-air releases, rollback, staged rollout, local
+reminders and push) turned up only docs and wizard gaps. **Android is supported; iOS is experimental and
+untested.** Nothing in the runtime packages had to change, and nothing in your host has to change.
 
 - **Rollbacks with Next.js.** Next stamps a random build id into every page, so rebuilding the last good
   commit changed about a third of the files and phones downloaded them again. The wizard now warns when

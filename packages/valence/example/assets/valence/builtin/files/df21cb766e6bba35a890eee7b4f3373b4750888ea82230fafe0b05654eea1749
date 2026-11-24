@@ -126,7 +126,7 @@
       <button id="push-check">Check permission</button>
       <button id="push-request">Allow notifications</button>
       <button id="push-token">Check registration</button>
-      <pre id="push-result">Push device check blocked: needs Firebase project.</pre>
+      <pre id="push-result"></pre>
     </section>
 
 

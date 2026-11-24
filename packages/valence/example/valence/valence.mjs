@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
 import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
-export const VALENCE_VERSION = '0.4.0-beta.1'; // keep equal to package.json "version" (tested)
+export const VALENCE_VERSION = '0.4.0-beta.2'; // keep equal to package.json "version" (tested)
 
 /// Where this copy of the CLI is, and what it contains.
 ///

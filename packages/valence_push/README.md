@@ -11,7 +11,7 @@ Add these three dependencies only in hosts that use remote push:
 
 ```yaml
 dependencies:
-  valence_push: ^0.4.0-beta.1
+  valence_push: ^0.4.0-beta.2
   firebase_core: ^4.14.0
   firebase_messaging: ^16.7.0
 ```

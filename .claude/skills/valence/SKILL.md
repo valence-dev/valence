@@ -384,8 +384,8 @@ For batch reads, use `data.getMany` (since 3, max 500 keys). Read outbox depth f
 
 | Item | Version | Note |
 |---|---|---|
-| `valence` (pub.dev) | 0.4.0-beta.1 | **The host runtime.** `flutter pub add valence`. It brings `webview_flutter`, `sqflite`, `path_provider`, `cryptography`, `crypto`, `http`, `url_launcher`, `connectivity_plus`, `flutter_secure_storage`, `permission_handler` and `device_info_plus` with it, so a host declares none of those itself. Needs Flutter 3.44 or later, and `minSdk 23` on Android (secure storage). Versioned independently of this CLI |
-| `@getvalence/bridge` (npm) | 0.4.0-beta.1 | **The web client.** ESM, zero runtime dependencies, Node 22.18+ to run its own tests. App code imports it through the generated `bridge.g.ts`, never directly |
+| `valence` (pub.dev) | 0.4.0-beta.2 | **The host runtime.** `flutter pub add valence`. It brings `webview_flutter`, `sqflite`, `path_provider`, `cryptography`, `crypto`, `http`, `url_launcher`, `connectivity_plus`, `flutter_secure_storage`, `permission_handler` and `device_info_plus` with it, so a host declares none of those itself. Needs Flutter 3.44 or later, and `minSdk 23` on Android (secure storage). Versioned independently of this CLI |
+| `@getvalence/bridge` (npm) | 0.4.0-beta.2 | **The web client.** ESM, zero runtime dependencies, Node 22.18+ to run its own tests. App code imports it through the generated `bridge.g.ts`, never directly |
 | Flutter / Dart | 3.47.7 / 3.13.5 (stable, 2026-10-08) | `sqflite` 2.4.4+2 needs Flutter 3.44 or later |
 | webview_flutter | 4.14.1 (2026-07-07) | **default WebView**. `flutter_inappwebview` has had no stable release since 6.1.5 (2024-10-08). `webview_flutter_android` 4.14.1 is still the newest ([pub.dev versions](https://pub.dev/packages/webview_flutter_android/versions), checked 2026-11-01) and exposes **no `onRenderProcessGone`**, so a renderer eviction kills the host process on Android (contracts §3, "Renderer loss"); a tripwire test fails when that changes |
 | sqflite | 2.4.4+2 (2026-10-13) | Local store, inside the `valence` package. Drift 2.35.2 is fine if the app already uses it for its own tables |

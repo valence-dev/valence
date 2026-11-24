@@ -1,11 +1,11 @@
 {
   "format": 1,
   "appId": "com.getvalence.example",
-  "seq": 1793567181,
-  "version": "2026-11-01+1793567181",
+  "seq": 1795502217,
+  "version": "2026-11-24+1795502217",
   "floor": 0,
   "requires": {
-    "bridge": 18,
+    "bridge": 20,
     "data": {
       "plants": 1
     }
@@ -19,14 +19,14 @@
   ],
   "files": {
     "index.html": {
-      "h": "1aba78cc3d75d5893019f465393892c226af90a5333e24acdcf78416472a178c",
-      "n": 26145
+      "h": "df21cb766e6bba35a890eee7b4f3373b4750888ea82230fafe0b05654eea1749",
+      "n": 26095
     },
     "share.png": {
       "h": "dae77b1f264e572c86c9714db5bc07f2002afd4f5d54b8e1f4d43239d2d6aff3",
       "n": 1152
     }
   },
-  "createdAt": "2026-11-01T21:06:21.840Z",
+  "createdAt": "2026-11-24T06:36:57.041Z",
   "keyId": "k1"
 }
