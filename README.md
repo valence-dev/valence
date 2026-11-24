@@ -1,3 +1,5 @@
+<img width="2048" height="768" alt="Valence crab ships web UI" src="https://github.com/user-attachments/assets/e3fc0902-3096-458a-852f-cfe6e859afb7" />
+
 # Valence
 
 **Keep the core. Swap the shell.** Your web app becomes your mobile app's interface. A small Flutter core ships through the stores once; every UI release after that is signed, tried on each phone and rolled back on its own if it fails. Data lives in native SQLite, so it works offline.
