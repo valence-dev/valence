@@ -1,13 +1,22 @@
 # valence_push
 
-Opt-in Firebase Messaging transport for `valence`. Android is the tested host
-platform; Firebase delivery has not yet been validated on a device. iOS is experimental
-and untested. See [Remote push](https://getvalence.dev/docs/guides/remote-push/)
-for native setup, background callbacks, privacy, images and acceptance checks.
+Opt-in Firebase Messaging transport for `valence`. Remote push (FCM) was built and
+run on Android, end to end. That covers foreground, background, killed-process sync,
+notification taps and image notifications. Token rotation has not been observed yet.
+iOS is experimental and untested. See [Remote push](https://getvalence.dev/docs/guides/remote-push/)
+for native setup, token registration, sign-out, sending from your server, images and
+acceptance checks.
 
-Install `valence_push: ^0.4.0-beta.1` only in hosts that use remote push. Keep
-`firebase_core: ^4.14.0` and `firebase_messaging: ^16.7.0` as direct app dependencies
-when importing them. Initialize Firebase, register the top-level background callback,
+Add these three dependencies only in hosts that use remote push:
+
+```yaml
+dependencies:
+  valence_push: ^0.4.0-beta.1
+  firebase_core: ^4.14.0
+  firebase_messaging: ^16.7.0
+```
+
+Initialize Firebase, register the top-level background callback,
 then pass `createFirebasePush()` (import `package:valence_push/valence_push.dart`)
 to `Valence.open`. Replace the old no-argument `ValencePush()` constructor.
 `ValencePush.handleBackground` stays in core and accepts the existing data map.
@@ -21,7 +30,7 @@ includes the native Firebase SDKs even when no Dart code invokes them. Review
 native auto-init and consent settings; a false Dart flag cannot remove those SDKs.
 No SDK-version bump, wire/schema change, signing change or delivery guarantee is added.
 
-In this monorepo, `pubspec_overrides.yaml` resolves the unpublished sibling core.
+In this monorepo, `pubspec_overrides.yaml` resolves the sibling core checkout for contributors.
 Pub consumers use the versioned dependency; the override is not part of the upload.
 Run `flutter pub get`, `flutter test`, `dart analyze --fatal-infos .` here. The publish
 dry run uses the local override and reports a dependency-override hint; the upload

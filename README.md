@@ -218,7 +218,7 @@ Schema 11 adds built-in local reminders: notify.schedule/cancel/pending/channels
 
 ### Remote push
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS/APNs is experimental and untested.** See [setup and acceptance checks](docs/remote-push.md).
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS/APNs is experimental and untested.** See [setup and acceptance checks](docs/remote-push.md).
 
 Firebase native dependencies ship only through an installed push package or another app dependency. Hosts using `valence_push` must target iOS 15.0 or later and initialize Firebase explicitly; core-only hosts do not inherit that Firebase requirement. iOS is experimental and untested.
 
