@@ -1,5 +1,26 @@
 # Changelog
 
+## Unreleased (0.4.0-beta.2)
+
+Fixes from a second app built from the public docs alone: a shared expense list with Next.js, two-person
+sync, over-the-air releases, rollback, staged rollout and local reminders. Nothing in the runtime packages
+had to change, and nothing in your host has to change.
+
+- **Rollbacks with Next.js.** Next stamps a random build id into every page, so rebuilding the last good
+  commit changed about a third of the files and phones downloaded them again. The wizard now warns when
+  `next.config` has no `generateBuildId`, or `svelte.config` has no `kit.version.name`, and the releasing
+  guide shows the Next.js fix next to the SvelteKit one.
+- **`--requires-bridge` default.** The docs said it defaults to the schema version. It defaults to the
+  bridge version of your last `--store` build on an OTA build, as the CLI has done since 0.4.0-beta.0.
+  The options tables now say so, with an example.
+- **Docs.** The reminders guide now includes the full Android manifest block, explains that a batch of
+  `notify.schedule` calls takes seconds, shows how to unit-test a notification-enabled host on a desktop,
+  and how to read an Android `BIND APPLICATION ANR` for the reminder receiver. The rollback drill names
+  the log line to wait for at each step. The auth guide no longer says sync runs "every fifteen minutes":
+  your app schedules it, and Android treats that as a minimum. `web.declaredRoutes` is documented as
+  combined with the scanned routes, as the CLI does. The spec no longer tells a host to request
+  notification permission at startup.
+
 ## 0.4.0-beta.1 (2026-11-22)
 
 A patch from building a fresh app with nothing but the public docs. **Android is supported; iOS is

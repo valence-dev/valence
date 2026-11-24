@@ -99,7 +99,8 @@ These are enforced by `valence.mjs`, the builder and the reviewer.
   - **An existing Flutter project.** A `pubspec.yaml` with a `flutter:` section.
   - **A monorepo layout.**
 - Check the toolchains: `flutter --version`, `dart --version`, `node -v` (Node 22.13 or later). **If any is missing, stop.** Print the official install link. Never install an SDK silently.
-- **The web app must be able to build to static files.** If its pages need a server, stop and explain how to switch to SPA mode. For SvelteKit, that means `adapter-static` with `fallback: 'index.html'` and `export const ssr = false` in the root layout. The docs-scout confirms the current syntax.
+- **The web app must be able to build to static files.** If its pages need a server, stop and explain how to switch to SPA mode. For SvelteKit, that means `adapter-static` with `fallback: 'index.html'` and `export const ssr = false` in the root layout. For Next.js, `output: 'export'`. The docs-scout confirms the current syntax.
+- **Make the web build reproducible,** or a rollback rebuild is a full download for every phone. Next.js: `generateBuildId` returning the git commit. SvelteKit: `kit.version.name` set to the git commit. The wizard warns when either is missing.
 
 ### Phase 1: Docs check (in the background, started now)
 
