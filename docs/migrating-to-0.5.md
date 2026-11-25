@@ -37,8 +37,9 @@ Upgrade if it reports anything below 3.47.
 npx create-valence@latest update
 ```
 
-That replaces `valence/valence.mjs` and the `/valence` skill. Start a new Claude Code session afterwards,
-or the old skill stays loaded.
+That replaces `valence/valence.mjs` and the `/valence` skill, then runs codegen once. Its `Android build`
+warning (AGP and Gradle below the floor) is expected at this point; step 4 fixes it. Start a new Claude
+Code session afterwards, or the old skill stays loaded.
 
 ## 3. Host `pubspec.yaml`
 
@@ -128,7 +129,7 @@ Keep the core library desugaring lines you added for 0.4. They have not changed.
 
 ## 5. Regenerate
 
-From the project root:
+Run codegen again now that the build files are edited, from the project root:
 
 ```sh
 node valence/valence.mjs codegen
@@ -153,9 +154,15 @@ Two rows cover this upgrade:
 
 ## 7. Build and try it on a device
 
+From your Flutter host's folder (the `host.dir` in `valence/valence.config.json`, `mobile/` by default):
+
 ```sh
+cd mobile
 flutter build apk --debug
 ```
+
+Install it over the old build (`adb install -r build/app/outputs/flutter-apk/app-debug.apk`), not after
+uninstalling, so you also see the user's data carry over.
 
 Then, on an Android device or emulator, check what the tests cannot:
 
