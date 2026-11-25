@@ -427,12 +427,18 @@ void main() {
     respond = (_) async => http.Response('', 404);
     // Startup arms sync even while the native blocker is visible. Keep its real SQLite I/O
     // outside fake time, as mount() does, and drain it after disposal before closing the DB.
-    await tester.runAsync(() => tester.pumpWidget(MaterialApp(
-        home: ValenceApp(
-            valence: runtime,
-            log: log.call,
-            dispatch: (raw, nonce) async =>
-                throw StateError('must not dispatch')))));
+    // No MaterialApp: the host's own screens must not need a design system, because an app's root
+    // may be legacy Material, material_ui or Cupertino, each with its own Theme types.
+    await tester.runAsync(() => tester.pumpWidget(Directionality(
+        textDirection: TextDirection.ltr,
+        child: MediaQuery(
+          data: const MediaQueryData(),
+          child: ValenceApp(
+              valence: runtime,
+              log: log.call,
+              dispatch: (raw, nonce) async =>
+                  throw StateError('must not dispatch')),
+        ))));
     addTearDown(() async {
       await tester.runAsync(() => tester.pumpWidget(const SizedBox()));
       await io(tester);
@@ -816,7 +822,7 @@ void main() {
       'I-61: resume during startup changes state but starts no work or event',
       (tester) async {
     await mount(tester, blocked: true);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.text('Loading…'), findsOneWidget);
     expect(runtime.server, isNotNull,
         reason: 'startup is held after binding, before triggers');
     await lifecycle(tester, AppLifecycleState.paused);

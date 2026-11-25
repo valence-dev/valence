@@ -19,7 +19,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  material_ui: ^1.11.1
   # Ed25519 verification of the manifest signature (contracts check 1).
   cryptography: ^2.9.0
   # crypto gives the *synchronous* sha256.convert(bytes) that check 7 needs inside the
@@ -51,6 +50,8 @@ dependencies:
   share_plus: ^13.3.1
 
 dev_dependencies:
+  # Tests host ValenceApp under a MaterialApp, as most apps do; the package itself uses plain widgets.
+  material_ui: ^1.11.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0

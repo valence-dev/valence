@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
@@ -84,6 +84,7 @@ class _ValenceAppState extends State<ValenceApp>
 
   WebViewController? _controller;
   Object? _error;
+  String? _storeMessage;
   String _origin = '';
   ValenceAppearance? _appearance;
   bool _appearanceScheduled = false;
@@ -960,57 +961,95 @@ class _ValenceAppState extends State<ValenceApp>
     );
   }
 
+  // The host's own screens use plain widgets, never a design system. The app's root may be a legacy
+  // MaterialApp, a material_ui app or a Cupertino app, and each of those keeps its own Theme and
+  // ScaffoldMessenger types: a Material widget here would ignore the app's theme under the other kind
+  // and throw on ScaffoldMessenger.of. Colours follow the effective appearance instead.
+  // ponytail: a bare look; an app that wants its brand here passes `loading` and `onError`.
+  Widget _surface(BuildContext context, Widget child) {
+    final dark = (_appearance ?? _systemAppearance()).darkMode;
+    final ink = dark ? const Color(0xFFECEFF4) : const Color(0xFF1C1F24);
+    return ColoredBox(
+      color: dark ? const Color(0xFF16181C) : const Color(0xFFFFFFFF),
+      child: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: DefaultTextStyle(
+              style: TextStyle(color: ink, fontSize: 16, height: 1.4),
+              textAlign: TextAlign.center,
+              child: child,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _button(String label, VoidCallback onTap) => Semantics(
+        button: true,
+        child: GestureDetector(
+          onTap: onTap,
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            margin: const EdgeInsets.only(top: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            decoration: BoxDecoration(
+              border: Border.all(color: const Color(0xFF8A919E)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(label),
+          ),
+        ),
+      );
+
   Widget _buildHost(BuildContext context) {
     if (!_devMode && _valence.updater.storeUpdateRequired) {
-      return Scaffold(
-          body: SafeArea(
-              child: Center(
-                  child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text('Update required',
-              style: Theme.of(context).textTheme.headlineSmall),
+      return _surface(
+        context,
+        Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('Update required',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
           const SizedBox(height: 16),
           const Text(
-              'Install the latest version from the store to continue. Your saved data stays on this device.',
-              textAlign: TextAlign.center),
-          const SizedBox(height: 16),
+              'Install the latest version from the store to continue. Your saved data stays on this device.'),
+          if (_storeMessage != null) ...[
+            const SizedBox(height: 12),
+            Text(_storeMessage!),
+          ],
+          const SizedBox(height: 4),
           if (_valence.storeUrl != null)
-            FilledButton(
-                onPressed: () async {
-                  try {
-                    await _valence.openStore();
-                  } on Object catch (e) {
-                    _log('update: store could not open: $e');
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content:
-                              Text('Could not open the store. Try again.')));
-                    }
-                  }
-                },
-                child: const Text('Open store')),
-          TextButton(
-              onPressed: _checkForUpdate, child: const Text('Check again')),
+            _button('Open store', () async {
+              try {
+                await _valence.openStore();
+              } on Object catch (e) {
+                _log('update: store could not open: $e');
+                if (mounted) {
+                  setState(() =>
+                      _storeMessage = 'Could not open the store. Try again.');
+                }
+              }
+            }),
+          _button('Check again', _checkForUpdate),
         ]),
-      ))));
+      );
     }
     final error = _error;
     if (error != null) {
+      // Long-press copies the message, which is what a user is asked for when reporting it.
       return widget.onError?.call(error) ??
-          Scaffold(
-            body: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: SelectableText('$error', textAlign: TextAlign.center),
-              ),
+          _surface(
+            context,
+            GestureDetector(
+              onLongPress: () =>
+                  unawaited(Clipboard.setData(ClipboardData(text: '$error'))),
+              child: Text('$error'),
             ),
           );
     }
     final controller = _controller;
     if (controller == null) {
-      return widget.loading ??
-          const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return widget.loading ?? _surface(context, const Text('Loading…'));
     }
     // Android users expect back to go back, and a Scaffold holding a WebViewWidget pops its only route
     // instead — so the first swipe from any sub-screen closes the app. It is the most common complaint
@@ -1029,14 +1068,20 @@ class _ValenceAppState extends State<ValenceApp>
                 ? SystemUiOverlayStyle.light
                 : SystemUiOverlayStyle.dark)
             .copyWith(
-          statusBarColor: Colors.transparent,
-          systemNavigationBarColor: Colors.transparent,
+          statusBarColor: const Color(0x00000000),
+          systemNavigationBarColor: const Color(0x00000000),
           systemNavigationBarIconBrightness:
               (_appearance ?? _systemAppearance()).darkMode
                   ? Brightness.light
                   : Brightness.dark,
         ),
-        child: Scaffold(body: WebViewWidget(controller: controller)),
+        // What Scaffold's resizeToAvoidBottomInset did: keep the page above the keyboard, so a
+        // focused input is not hidden behind it.
+        child: Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+          child: WebViewWidget(controller: controller),
+        ),
       ),
     );
   }
