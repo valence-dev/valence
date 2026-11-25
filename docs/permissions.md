@@ -98,7 +98,7 @@ Do not request broad library access just to choose one image: use a system picke
 in a separate native method instead. Review the store's photo-access requirements
 for your app before declaring broad access.
 
-On Android set `compileSdk` to at least 35 and target a modern SDK (the example uses
+On Android set `compileSdk` to at least 37 (the notification plugin's floor) and target a modern SDK (the example uses
 Flutter's current SDK values). Camera and microphone declarations can filter devices
 in a store listing; add `android:required="false"` hardware features when appropriate.
 The complete demonstration declarations are in the example app. A notification grant

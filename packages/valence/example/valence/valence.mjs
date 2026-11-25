@@ -1846,16 +1846,56 @@ export function desugaring(root, cfg) {
   return undefined;
 }
 
+// flutter_local_notifications 23 builds against compileSdk 37 and AGP 9.1.1 (its README and CHANGELOG),
+// and AGP 9.1 runs on Gradle 9.3.1 or later. `flutter create` still writes `compileSdk =
+// flutter.compileSdkVersion`, which is 36 up to at least Flutter 3.50, so a fresh host fails its first build.
+export const ANDROID_FLOOR = { compileSdk: 37, agp: '9.1.1', gradle: '9.3.1' };
+const below = (v, floor) => {
+  const a = v.split('.').map(Number), b = floor.split('.').map(Number);
+  for (let i = 0; i < b.length; i++) if ((a[i] ?? 0) !== b[i]) return (a[i] ?? 0) < b[i];
+  return false;
+};
+const readCode = (file) => (existsSync(file) ? gradleCode(readFileSync(file, 'utf8')) : '');
+const COMPILE_SDK = /^([ \t]*compileSdk(?:Version)?\s*(?:=\s*)?)([^\s/]+)/m;
+
+/// The host's compileSdk, AGP and Gradle versions against [ANDROID_FLOOR]: `wrong` names what is below
+/// the floor, `unread` what the `flutter create` layout did not show. Undefined without `android/`.
+export function androidBuild(root, cfg) {
+  const android = join(root, cfg.host.dir, 'android');
+  if (!existsSync(android)) return undefined;
+  const wrong = [], unread = [];
+  const app = ['build.gradle.kts', 'build.gradle'].map((f) => join(android, 'app', f)).find((f) => existsSync(f));
+  const sdk = app && COMPILE_SDK.exec(readCode(app))?.[2];
+  if (!sdk) unread.push('compileSdk');
+  else if (sdk === 'flutter.compileSdkVersion') wrong.push(`compileSdk is flutter.compileSdkVersion (36 in current Flutter), not ${ANDROID_FLOOR.compileSdk}`);
+  else if (!/^\d+$/.test(sdk)) unread.push(`compileSdk (${sdk})`);
+  else if (Number(sdk) < ANDROID_FLOOR.compileSdk) wrong.push(`compileSdk ${sdk} is below ${ANDROID_FLOOR.compileSdk}`);
+  const build = ['settings.gradle.kts', 'settings.gradle', 'build.gradle.kts', 'build.gradle'].map((f) => readCode(join(android, f))).join('\n');
+  const agp = (/id\s*\(?\s*["']com\.android\.application["']\s*\)?\s*version\s*\(?\s*["']([\d.]+)["']/.exec(build)
+    ?? /com\.android\.tools\.build:gradle:([\d.]+)/.exec(build))?.[1];
+  if (!agp) unread.push('the Android Gradle plugin version');
+  else if (below(agp, ANDROID_FLOOR.agp)) wrong.push(`Android Gradle plugin ${agp} is below ${ANDROID_FLOOR.agp}`);
+  const wrapper = join(android, 'gradle', 'wrapper', 'gradle-wrapper.properties');
+  const gradle = existsSync(wrapper) ? /distributionUrl=.*gradle-([\d.]+)-(?:all|bin)\.zip/.exec(readFileSync(wrapper, 'utf8'))?.[1] : undefined;
+  if (!gradle) unread.push('the Gradle wrapper version');
+  else if (below(gradle, ANDROID_FLOOR.gradle)) wrong.push(`Gradle ${gradle} is below ${ANDROID_FLOOR.gradle}`);
+  return { wrong, unread, found: { compileSdk: sdk, agp, gradle } };
+}
+
 // ponytail: a text edit, not a Gradle parser. It handles the `flutter create` layout (a compileOptions
-// block, an optional top-level dependencies block); anything else is left alone and reported, and
-// doctor's "Android desugaring" row keeps failing until a person adds the lines.
+// block, an optional top-level dependencies block, `compileSdk = flutter.compileSdkVersion`); anything
+// else is left alone and reported, and doctor's "Android desugaring" and "Android build" rows keep
+// failing until a person fixes it. AGP and the Gradle wrapper are toolchain choices: reported, not edited.
 function ensureDesugaring(root, cfg) {
   const g = desugaring(root, cfg);
   if (!g) return {};
   // A value somebody set on purpose is reported, never overwritten.
   if (g.wrong.length) return { warning: `${g.file}: ${g.wrong.join('; ')}; set ${g.d.onLine} and ${g.d.depLine}` };
-  if (!g.missing.length) return {};
   let text = g.text;
+  // The template default is nobody's choice, so it is the one compileSdk value codegen rewrites.
+  if (COMPILE_SDK.exec(gradleCode(text))?.[2] === 'flutter.compileSdkVersion') {
+    text = text.replace(/^([ \t]*compileSdk(?:Version)?\s*(?:=\s*)?)flutter\.compileSdkVersion\b/m, (m, lead) => `${lead}${ANDROID_FLOOR.compileSdk}`);
+  }
   const eol = text.includes('\r\n') ? '\r\n' : '\n';
   if (g.missing.includes(g.d.onLine)) {
     if (!/^([ \t]*)compileOptions\s*\{/m.test(text)) return { warning: `${g.file} has no compileOptions block; add ${g.d.onLine} to it and ${g.d.depLine} to dependencies` };
@@ -1866,6 +1906,7 @@ function ensureDesugaring(root, cfg) {
       ? text.replace(/^dependencies\s*\{/m, (m) => `${m}${eol}    ${g.d.depLine}`)
       : `${text.replace(/\s*$/, eol)}${eol}dependencies {${eol}    ${g.d.depLine}${eol}}${eol}`;
   }
+  if (text === g.text) return {};
   writeFileSync(g.file, text);
   return { written: g.file };
 }
@@ -1894,6 +1935,8 @@ export function codegen({ root, cfg, check = false }) {
   for (const [f, text] of outputs) if (stale.includes(f)) writeFile(f, text);
   const gradle = ensureDesugaring(root, cfg);
   if (gradle.warning) warnings.push(gradle.warning);
+  const build = androidBuild(root, cfg);
+  if (build?.wrong.length) warnings.push(`Android build: ${build.wrong.join('; ')}; flutter_local_notifications needs compileSdk ${ANDROID_FLOOR.compileSdk}, AGP ${ANDROID_FLOOR.agp} and Gradle ${ANDROID_FLOOR.gradle} (contracts §6.1)`);
   return { written: gradle.written ? [...stale, gradle.written] : stale, warnings };
 }
 
@@ -2281,6 +2324,13 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     if (g.wrong.length) throw new Error(`${relative(root, g.file)}: ${g.wrong.join('; ')}; flutter_local_notifications, which package:valence always depends on, fails the Android build`);
     if (g.missing.length) throw new Error(`${relative(root, g.file)} lacks ${g.missing.join(' and ')}; flutter_local_notifications, which package:valence always depends on, fails the first Android build without them`);
   }, `run valence codegen, which writes them, or add ${DESUGAR['build.gradle.kts'].onLine} to compileOptions and ${DESUGAR['build.gradle.kts'].depLine} to dependencies in <host>/android/app/build.gradle.kts`);
+  await check('Android build', () => {
+    const b = androidBuild(root, cfg);
+    if (!b) return 'Android Gradle build absent; compileSdk, AGP and Gradle not checked';
+    if (b.wrong.length) throw new Error(`${b.wrong.join('; ')}; flutter_local_notifications, which package:valence always depends on, needs compileSdk ${ANDROID_FLOOR.compileSdk}, AGP ${ANDROID_FLOOR.agp} and Gradle ${ANDROID_FLOOR.gradle}`);
+    if (b.unread.length) return `could not read ${b.unread.join(', ')}; check compileSdk ${ANDROID_FLOOR.compileSdk}+, AGP ${ANDROID_FLOOR.agp}+ and Gradle ${ANDROID_FLOOR.gradle}+ by hand`;
+    return { msg: `compileSdk ${b.found.compileSdk}, AGP ${b.found.agp}, Gradle ${b.found.gradle}` };
+  }, `run valence codegen, which sets compileSdk = ${ANDROID_FLOOR.compileSdk} over the flutter create default; set com.android.application to version "${ANDROID_FLOOR.agp}" in <host>/android/settings.gradle.kts and gradle-${ANDROID_FLOOR.gradle}-all.zip in <host>/android/gradle/wrapper/gradle-wrapper.properties`);
   await check('signing keys in Git', () => {
     if (insideGit(keyDir)) throw new Error('configured signing-key directory resolves inside a Git work tree');
     const repo = git(['rev-parse', '--show-toplevel'], childMs);
