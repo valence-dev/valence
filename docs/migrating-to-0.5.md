@@ -63,6 +63,11 @@ to:
 
 The plugin's Dart API did not change between 22 and 23, so app-owned notification code compiles as it is.
 
+Your app's own UI library is your choice. Flutter 3.47 deprecates `package:flutter/material.dart` in favour
+of the `material_ui` package; moving your own `MaterialApp` is optional and separate from this upgrade.
+Valence's own screens (loading, error, update required) now use plain Flutter widgets, so they work under
+a legacy `MaterialApp`, a `material_ui` app or a Cupertino app alike, and follow the phone's dark mode.
+
 Then run:
 
 ```sh
@@ -105,6 +110,19 @@ If the file has a `distributionSha256Sum` line, update or remove it to match the
 
 Newer versions are fine for all three. Flutter 3.50 warns below AGP 9.3.1 and Gradle 9.5.0 but still
 builds.
+
+**Coming from AGP 8.x?** AGP 9 turns on its new DSL and built-in Kotlin by default, and a host made by an
+older `flutter create` (one that still applies `org.jetbrains.kotlin.android`) fails to configure after
+the version bump. Either add these two lines to `android/gradle.properties`, which is what Flutter's
+current template does:
+
+```properties
+android.newDsl=false
+android.builtInKotlin=false
+```
+
+or regenerate `android/` with `flutter create .` on Flutter 3.47 or later and re-apply your own edits
+(`applicationId`, signing, permissions, the notification receivers).
 
 Keep the core library desugaring lines you added for 0.4. They have not changed.
 

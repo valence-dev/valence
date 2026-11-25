@@ -1849,6 +1849,8 @@ export function desugaring(root, cfg) {
 // flutter_local_notifications 23 builds against compileSdk 37 and AGP 9.1.1 (its README and CHANGELOG),
 // and AGP 9.1 runs on Gradle 9.3.1 or later. `flutter create` still writes `compileSdk =
 // flutter.compileSdkVersion`, which is 36 up to at least Flutter 3.50, so a fresh host fails its first build.
+// ponytail: the template default is assumed to be 36. Once Flutter's default reaches 37, doctor would FAIL a
+// host that builds fine; recheck this (or read FlutterExtension.kt from the SDK) on each Flutter bump.
 export const ANDROID_FLOOR = { compileSdk: 37, agp: '9.1.1', gradle: '9.3.1' };
 const below = (v, floor) => {
   const a = v.split('.').map(Number), b = floor.split('.').map(Number);

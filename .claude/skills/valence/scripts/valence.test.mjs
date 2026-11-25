@@ -1482,6 +1482,12 @@ test('codegen raises the flutter create compileSdk and doctor holds the notifica
   assert.deepEqual((await row()).slice(0, 3), ['PASS', 'Android build', 'compileSdk 37, AGP 9.1.1, Gradle 9.10.0']);
   const again = codegen({ root, cfg });
   assert.ok(!again.written.includes(kts));
+  // A CRLF checkout keeps its line endings through the rewrite, and a rerun changes nothing.
+  const crlf = created.replace(/\n/g, '\r\n');
+  writeFileSync(kts, crlf);
+  codegen({ root, cfg });
+  assert.equal(readFileSync(kts, 'utf8'), crlf.replace('flutter.compileSdkVersion', '37'));
+  assert.ok(!codegen({ root, cfg }).written.includes(kts));
   assert.doesNotMatch(again.warnings.join(' '), /Android build/);
   // A literal below the floor was set on purpose: reported, not overwritten. Groovy and legacy classpath too.
   rmSync(kts);

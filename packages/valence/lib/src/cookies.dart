@@ -57,7 +57,7 @@ final class _Jarred {
 ///
 /// Held by the runtime for its lifetime, so the secure-storage read happens once rather than per request.
 final class ValenceCookies {
-  /// Creates the jar. [_now] is injectable so expiry is testable without sleeping.
+  /// Creates the jar. `now` is injectable so expiry is testable without sleeping.
   ValenceCookies({
     required this.jar,
     required this._secure,

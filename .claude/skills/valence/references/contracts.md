@@ -350,7 +350,11 @@ it properly needs a signed freshness field (a policy `notAfter`, or a signed poi
 knowing a device that never receives that seq stays blocked.
 
 When verified minHost exceeds the compiled bridge version, ValenceApp shows a
-native blocking Update required screen instead of the web UI. Startup transitions
+native blocking Update required screen instead of the web UI. That screen, the
+loading screen and the error screen use plain Flutter widgets and no design system:
+the app's root may be a legacy MaterialApp, a material_ui app or a Cupertino app,
+and Material and material_ui keep separate Theme and ScaffoldMessenger types. They
+follow the effective appearance (dark mode); a store-open failure is shown inline. Startup transitions
 and ready timers are suspended while blocked; no trial is consumed. Queued page
 messages cannot invoke the bridge. A policy discovered during a trial pauses its
 ready timer and clears only the volatile serving marker so the next startup does
