@@ -1440,6 +1440,66 @@ test('codegen writes Android core library desugaring and doctor fails without it
   assert.equal((await row())[0], 'FAIL');
 });
 
+test('codegen raises the flutter create compileSdk and doctor holds the notifications 23 Android floor', async () => {
+  const { root, cfg } = fixture();
+  const android = join(root, cfg.host.dir, 'android');
+  const row = async () => (await diagnose({ root, cfg })).find(([, n]) => n === 'Android build');
+  assert.deepEqual((await row()).slice(0, 2), ['WARN', 'Android build']);
+  mkdirSync(join(android, 'app'), { recursive: true });
+  mkdirSync(join(android, 'gradle', 'wrapper'), { recursive: true });
+  const kts = join(android, 'app', 'build.gradle.kts');
+  const settings = join(android, 'settings.gradle.kts');
+  const wrapper = join(android, 'gradle', 'wrapper', 'gradle-wrapper.properties');
+  // A 0.4 host as Flutter 3.44's template made it: compileSdk, AGP and Gradle are all short of the plugin's.
+  const created = [
+    'android {',
+    '    compileSdk = flutter.compileSdkVersion',
+    '    compileOptions {',
+    '        isCoreLibraryDesugaringEnabled = true',
+    '    }',
+    '}',
+    '',
+    'dependencies {',
+    '    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")',
+    '}',
+    '',
+  ].join('\n');
+  writeFileSync(kts, created);
+  writeFileSync(settings, 'plugins {\n    id("com.android.application") version "9.0.1" apply false\n}\n');
+  writeFileSync(wrapper, 'distributionUrl=https\\://services.gradle.org/distributions/gradle-9.1.0-all.zip\n');
+  const before = await row();
+  assert.equal(before[0], 'FAIL');
+  for (const part of [/flutter\.compileSdkVersion/, /plugin 9\.0\.1 is below 9\.1\.1/, /Gradle 9\.1\.0 is below 9\.3\.1/]) assert.match(before[2], part);
+  // Codegen rewrites only the template default; AGP and the wrapper are reported, never edited.
+  const gen = codegen({ root, cfg });
+  assert.ok(gen.written.includes(kts));
+  assert.equal(readFileSync(kts, 'utf8'), created.replace('flutter.compileSdkVersion', '37'));
+  assert.match(gen.warnings.join(' '), /Android build: Android Gradle plugin 9\.0\.1 is below 9\.1\.1; Gradle 9\.1\.0 is below 9\.3\.1/);
+  assert.match(readFileSync(settings, 'utf8'), /9\.0\.1/);
+  assert.match((await row())[2], /^Android Gradle plugin 9\.0\.1/);
+  writeFileSync(settings, 'plugins {\n    // id("com.android.application") version "9.3.1" apply false\n    id("com.android.application") version "9.1.1" apply false\n}\n');
+  writeFileSync(wrapper, 'distributionUrl=https\\://services.gradle.org/distributions/gradle-9.10.0-bin.zip\n');
+  assert.deepEqual((await row()).slice(0, 3), ['PASS', 'Android build', 'compileSdk 37, AGP 9.1.1, Gradle 9.10.0']);
+  const again = codegen({ root, cfg });
+  assert.ok(!again.written.includes(kts));
+  assert.doesNotMatch(again.warnings.join(' '), /Android build/);
+  // A literal below the floor was set on purpose: reported, not overwritten. Groovy and legacy classpath too.
+  rmSync(kts);
+  rmSync(settings);
+  const groovy = join(android, 'app', 'build.gradle');
+  const old = "android {\n    compileSdkVersion 35\n    compileOptions {\n        coreLibraryDesugaringEnabled true\n    }\n}\ndependencies {\n    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'\n}\n";
+  writeFileSync(groovy, old);
+  writeFileSync(join(android, 'build.gradle'), "buildscript {\n    dependencies {\n        classpath 'com.android.tools.build:gradle:9.2.0'\n    }\n}\n");
+  assert.match(codegen({ root, cfg }).warnings.join(' '), /Android build: compileSdk 35 is below 37/);
+  assert.equal(readFileSync(groovy, 'utf8'), old);
+  assert.equal((await row())[0], 'FAIL');
+  // An expression codegen cannot evaluate is a WARN naming what it could not read, never a PASS.
+  writeFileSync(groovy, old.replace('compileSdkVersion 35', 'compileSdk libs.versions.sdk.get()'));
+  const unread = await row();
+  assert.deepEqual(unread.slice(0, 2), ['WARN', 'Android build']);
+  assert.match(unread[2], /could not read compileSdk \(libs\.versions\.sdk\.get\(\)\)/);
+});
+
 test('doctor checks that pubspec.yaml declares the bundle assets', async () => {
   const { root, cfg, key } = fixture();
   codegen({ root, cfg });

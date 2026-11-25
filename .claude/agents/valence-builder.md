@@ -74,7 +74,8 @@ Your job is the part that is genuinely this app's:
     `workmanager` or `BGTaskScheduler` is yours. The package deliberately does not depend on
     `workmanager`, which applies the Kotlin Gradle Plugin and warns on every Android build.
   - the §6.1 and §6.2 native setup for whichever native-value items you wire in — core library
-    desugaring, `RECEIVE_BOOT_COMPLETED` and the plugin's three receivers for notifications; the
+    desugaring and the Android build floor (`compileSdk` 37, AGP 9.1.1, Gradle 9.3.1),
+    `RECEIVE_BOOT_COMPLETED` and the plugin's three receivers for notifications; the
     `AppWidgetProvider`, `RemoteViews` layout, `appwidget-provider` XML and manifest receiver for a widget.
 - **Two or more of the §6 native-value items**, or Apple rejects the app as a repackaged website (4.2).
 - **Tests: the wiring, not the matrix.** Do not port §8; it is already the package's suite. Cover instead:

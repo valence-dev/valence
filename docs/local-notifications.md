@@ -202,15 +202,17 @@ depends on the launcher, and may need manufacturer permissions and an active not
 
 ## Android setup
 
-The package depends on `flutter_local_notifications` 22.3.2+, `timezone` 0.11 and `app_badge_plus`
+The package depends on `flutter_local_notifications` 23.0.4+, `timezone` 0.11 and `app_badge_plus`
 1.3.5+. These resolve together with `connectivity_plus` 7.3.2 without the old dbus override.
-App-owned Dart code using an older notification plugin must adopt the 22.x named-parameter API or delegate to the built-in service; preserve any shipped bridge signature. Desugaring is required even for a host which has not enabled local notifications.
-`valence codegen` writes the two desugaring lines into a `flutter create`-shaped Gradle file, and doctor's
-`Android desugaring` row fails until both are present. By hand, in `android/app/build.gradle.kts`:
+App-owned Dart code using an older notification plugin must adopt the named-parameter API (22.x and 23.x share it) or delegate to the built-in service; preserve any shipped bridge signature. Desugaring and the build floor are required even for a host which has not enabled local notifications.
+`valence codegen` writes the two desugaring lines into a `flutter create`-shaped Gradle file and sets `compileSdk = 37`
+over the template default; doctor's `Android desugaring` and `Android build` rows fail until they are right.
+The plugin also needs Android Gradle plugin 9.1.1+ in `android/settings.gradle.kts` and Gradle 9.3.1+ in
+`android/gradle/wrapper/gradle-wrapper.properties`; codegen does not edit those. By hand, in `android/app/build.gradle.kts`:
 
 ```kotlin
 android {
-    compileSdk = 36 // at least 35
+    compileSdk = 37 // at least 37
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
