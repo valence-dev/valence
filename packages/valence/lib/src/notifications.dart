@@ -31,10 +31,9 @@ final class ValenceNotifications {
     this.icon = 'ic_stat_valence',
     ValenceNotificationPlatform? platform,
     DateTime Function()? now,
-    ValenceLogger log = defaultValenceLogger,
+    this._log = defaultValenceLogger,
   })  : _platform = platform ?? ValenceNotificationPlatform(),
-        _now = now ?? DateTime.now,
-        _log = log;
+        _now = now ?? DateTime.now;
 
   /// Private attachment directory.
   final Directory directory;
