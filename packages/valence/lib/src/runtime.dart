@@ -249,8 +249,8 @@ final class Valence {
     required this.secure,
     required this.dir,
     required this.hostBuild,
-    required ValenceLogger log,
-  }) : _log = log;
+    required this._log,
+  });
 
   /// Opens the runtime: the data store, the seed import, the state file and the updater.
   ///

@@ -89,10 +89,8 @@ abstract interface class ValencePushTransport {
 final class ValencePush {
   /// Creates a push service with an explicit native transport.
   ValencePush(
-      {required ValencePushTransport transport,
-      ValenceLogger log = defaultValenceLogger})
-      : _transport = transport,
-        _log = log;
+      {required this._transport,
+      this._log = defaultValenceLogger});
 
   final ValencePushTransport _transport;
   final ValenceLogger _log;

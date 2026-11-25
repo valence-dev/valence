@@ -13,12 +13,13 @@ topics:
   - code-push
 
 environment:
-  sdk: ^3.6.0
-  flutter: ">=3.44.0"
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  material_ui: ^1.11.1
   # Ed25519 verification of the manifest signature (contracts check 1).
   cryptography: ^2.9.0
   # crypto gives the *synchronous* sha256.convert(bytes) that check 7 needs inside the
