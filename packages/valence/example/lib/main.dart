@@ -3,7 +3,7 @@
 // Everything the spec calls the host — the loopback server, the updater and its rollback, the SQLite
 // store, sync, the bridge trust boundary, the WebView with its navigation lock and back gesture — is in
 // the `valence` package. This file is the app-specific part, and that is all of it.
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:valence/valence.dart';
 import 'package:valence_example_haptics/haptics.dart';
 

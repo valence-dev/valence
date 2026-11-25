@@ -57,16 +57,14 @@ final class _Jarred {
 ///
 /// Held by the runtime for its lifetime, so the secure-storage read happens once rather than per request.
 final class ValenceCookies {
-  /// Creates the jar. [now] is injectable so expiry is testable without sleeping.
+  /// Creates the jar. [_now] is injectable so expiry is testable without sleeping.
   ValenceCookies({
     required this.jar,
-    required ValenceSecure secure,
+    required this._secure,
     Set<String> origins = const {},
-    ValenceLogger log = defaultValenceLogger,
-    DateTime Function() now = DateTime.now,
-  })  : _secure = secure,
-        _log = log,
-        _now = now {
+    this._log = defaultValenceLogger,
+    this._now = DateTime.now,
+  }) {
     // The same three rules `codegen` enforces, enforced again here. `codegen` and the package are on
     // independent release trains, and a host may write `ValenceConfig` by hand — so a cleartext jar, or
     // one aimed at an origin `http.request` cannot reach, must not simply work. Sealed and logged rather

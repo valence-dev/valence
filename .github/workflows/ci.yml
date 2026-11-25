@@ -19,7 +19,7 @@ jobs:
           node-version: 22 # the client.ts test needs >= 22.18 (type stripping)
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.44.2 # the package's minimum; puts dart on PATH for the codegen test
+          flutter-version: 3.47.0 # the package's minimum; puts dart on PATH for the codegen test
           cache: true
       # The codegen test resolves its probe project offline, and the pack test runs the bridge's tsc.
       - run: flutter pub get
@@ -50,7 +50,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.44.2
+          flutter-version: 3.47.0 # the package's minimum
           cache: true
       - name: valence
         working-directory: packages/valence

@@ -108,13 +108,11 @@ final class ValencePermissions {
   /// Creates a foreground UI service; construction makes no platform call.
   ValencePermissions({
     required Set<String> kinds,
-    required bool Function() isForeground,
+    required this._isForeground,
     ValencePermissionBackend? backend,
-    ValenceLogger log = defaultValenceLogger,
+    this._log = defaultValenceLogger,
   })  : kinds = Set.unmodifiable(kinds),
-        _isForeground = isForeground,
-        _backend = backend ?? ValencePermissionBackend.native(),
-        _log = log {
+        _backend = backend ?? ValencePermissionBackend.native() {
     if (!valencePermissionKinds.containsAll(kinds)) {
       throw ArgumentError.value(kinds, 'kinds', 'unknown permission kind');
     }

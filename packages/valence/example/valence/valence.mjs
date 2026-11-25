@@ -2416,7 +2416,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     const deps = JSON.parse(r.stdout).packages;
     if (!Array.isArray(deps) || !deps.some((d) => d.name === 'valence')) throw new Error('resolved host does not depend on valence');
     const android = deps.find((d) => d.name === 'path_provider_android');
-    if (android?.version !== '2.2.23') return `path_provider_android ${android?.version ?? 'absent'} differs from tested compatibility range >=2.2.17 <2.3.0 (expected 2.2.23) (U-7)`;
+    if (android?.version !== '2.2.23') return `path_provider_android ${android?.version ?? 'absent'} differs from tested compatibility range >=2.2.17 <2.3.0 (expected 2.2.23)`;
   });
   const matrixPath = join(root, '.valence', 'test-matrix.json');
   let matrix = {};
@@ -2555,7 +2555,7 @@ const HELP = `Valence CLI ${VALENCE_VERSION} (spec: references/contracts.md)
 
   valence version [--build]              print the CLI version; --build appends the digest of this file
                                     *only*, which tells two copies of the generator at the same version
-                                    apart (K F-48); the spec is not in it, and "update" names what moved
+                                    apart; the spec is not in it, and "update" names what moved
   valence keygen                         new Ed25519 key in ~/.valence/keys, public key into valence/keyring.json
   valence codegen [--check]              bridge.schema.json -> bridge.g.ts, bridge.g.dart, config.g.dart
   valence bundle [--builtin | --store [--rebaseline]] [--floor N] [--requires-bridge N] [--min-host N] [--urgent] [--key file]

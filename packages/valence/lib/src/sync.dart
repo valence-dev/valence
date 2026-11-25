@@ -164,11 +164,10 @@ final class ValenceSync {
     required this.store,
     required this.config,
     http.Client? client,
-    ValenceLogger log = defaultValenceLogger,
+    this._log = defaultValenceLogger,
     DateTime Function()? clock,
     this.kind = ValenceSyncKind.foreground,
   })  : _client = client ?? http.Client(),
-        _log = log,
         _now = clock ?? DateTime.now;
 
   /// What kind of run this driver performs, recorded in the lease and reported by [status] (§5.6).

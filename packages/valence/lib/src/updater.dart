@@ -129,15 +129,12 @@ final class ValenceUpdater {
     required this.manifestsDir,
     required this.store,
     required this.sync,
-    required ValenceAssetReader readAsset,
+    required this._readAsset,
     http.Client? client,
-    ValenceLogger log = defaultValenceLogger,
-    void Function(Future<void> Function()) afterFrame = _postFrame,
+    this._log = defaultValenceLogger,
+    this._afterFrame = _postFrame,
     this.onUpdateReady,
-  })  : _readAsset = readAsset,
-        _afterFrame = afterFrame,
-        _client = client ?? http.Client(),
-        _log = log;
+  })  : _client = client ?? http.Client();
 
   /// The app's configuration.
   final ValenceConfig config;
