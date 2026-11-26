@@ -154,7 +154,7 @@ Two rows cover this upgrade:
 
 ## 7. Build and try it on a device
 
-From your Flutter host's folder (the `host.dir` in `valence/valence.config.json`, `mobile/` by default):
+From the project root, change into your Flutter host's folder (the `host.dir` in `valence/valence.config.json`, `mobile/` by default) and build:
 
 ```sh
 cd mobile

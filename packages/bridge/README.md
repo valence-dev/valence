@@ -9,7 +9,7 @@ the generated file, not from here.
 
 ```bash
 npm install @getvalence/bridge
-npx valence codegen
+node valence/valence.mjs codegen   # from the project root
 ```
 
 ```ts

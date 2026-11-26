@@ -62,10 +62,10 @@ class ValenceApp extends StatefulWidget {
   /// `(raw, nonce) => bridgeDispatch(handlers, raw, nonce: nonce)`.
   final ValenceDispatch dispatch;
 
-  /// Shown while the first bundle is being resolved. A plain centred spinner by default.
+  /// Shown while the first bundle is being resolved. Centred "Loading…" text by default.
   final Widget? loading;
 
-  /// Shown when there is no servable bundle at all. The default reports the error as selectable text.
+  /// Shown when there is no servable bundle at all. The default shows the error as text; a long press copies it.
   final Widget Function(Object error)? onError;
 
   /// Where the host's own lines go.
