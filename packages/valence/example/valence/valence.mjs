@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
 import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
-export const VALENCE_VERSION = '0.4.0-beta.2'; // keep equal to package.json "version" (tested)
+export const VALENCE_VERSION = '0.5.0-beta.0'; // keep equal to package.json "version" (tested)
 
 /// Where this copy of the CLI is, and what it contains.
 ///
@@ -718,6 +718,17 @@ export function bundle({ root, cfg, key, builtin = false, store = false, rebasel
     const shown = relRefs.slice(0, 3).join(', ') + (relRefs.length > 3 ? ', …' : '');
     warnings.push(
       `${entry} references ${relRefs.length} asset${relRefs.length > 1 ? 's' : ''} by a relative URL (${shown}). The SPA fallback serves the entry page at any depth (contracts §3), so the webview resolves those against the request path and 404s them: a reload or a back gesture on a nested route gives a blank screen with nothing in the log. Build so the output references assets from the origin root — base: '/' in Vite; in SvelteKit it is the setting that controls relative asset paths, not the deployment subpath, so check your version's docs. The host owns the whole origin, so a root-relative URL is always right.`,
+    );
+  }
+
+  // §3: an extensionless URL that is not a file gets the entry page, at any depth, and only the entry page
+  // gets the nonce and CSP. A multi-page build (Astro's default, a Next.js export) has an HTML file per
+  // route that a link or a reload never reaches, so the app shows the entry page there instead.
+  const pages = Object.keys(files).filter((f) => f !== entry && /\.html?$/i.test(f) && !/(^|\/)(404|500)\.html?$/i.test(f));
+  if (pages.length) {
+    const shown = pages.slice(0, 3).join(', ') + (pages.length > 3 ? ', …' : '');
+    warnings.push(
+      `this build has ${pages.length} HTML page${pages.length > 1 ? 's' : ''} besides ${entry} (${shown}). Inside the app the host serves ${entry} for every route (contracts §3), so a link or a reload on /events/a/ shows ${entry}, never events/a/index.html. That is right for a single-page app whose router reads the URL; a multi-page site, where each link loads another HTML file, needs client-side routing from one entry page.`,
     );
   }
 
@@ -1846,28 +1857,103 @@ export function desugaring(root, cfg) {
   return undefined;
 }
 
+// flutter_local_notifications 23 builds against compileSdk 37 and AGP 9.1.1 (its README and CHANGELOG),
+// and AGP 9.1 runs on Gradle 9.3.1 or later. `flutter create` still writes `compileSdk =
+// flutter.compileSdkVersion`, which is 36 up to at least Flutter 3.50, so a fresh host fails its first build.
+// ponytail: the template default is assumed to be 36. Once Flutter's default reaches 37, doctor would FAIL a
+// host that builds fine; recheck this (or read FlutterExtension.kt from the SDK) on each Flutter bump.
+export const ANDROID_FLOOR = { compileSdk: 37, agp: '9.1.1', gradle: '9.3.1' };
+const below = (v, floor) => {
+  const a = v.split('.').map(Number), b = floor.split('.').map(Number);
+  for (let i = 0; i < b.length; i++) if ((a[i] ?? 0) !== b[i]) return (a[i] ?? 0) < b[i];
+  return false;
+};
+const readCode = (file) => (existsSync(file) ? gradleCode(readFileSync(file, 'utf8')) : '');
+const COMPILE_SDK = /^([ \t]*compileSdk(?:Version)?\s*(?:=\s*)?)([^\s/]+)/m;
+
+/// The host's compileSdk, AGP and Gradle versions against [ANDROID_FLOOR]: `wrong` names what is below
+/// the floor, `unread` what the `flutter create` layout did not show. Undefined without `android/`.
+export function androidBuild(root, cfg) {
+  const android = join(root, cfg.host.dir, 'android');
+  if (!existsSync(android)) return undefined;
+  const wrong = [], unread = [];
+  const app = ['build.gradle.kts', 'build.gradle'].map((f) => join(android, 'app', f)).find((f) => existsSync(f));
+  const sdk = app && COMPILE_SDK.exec(readCode(app))?.[2];
+  if (!sdk) unread.push('compileSdk');
+  else if (sdk === 'flutter.compileSdkVersion') wrong.push(`compileSdk is flutter.compileSdkVersion (36 in current Flutter), not ${ANDROID_FLOOR.compileSdk}`);
+  else if (!/^\d+$/.test(sdk)) unread.push(`compileSdk (${sdk})`);
+  else if (Number(sdk) < ANDROID_FLOOR.compileSdk) wrong.push(`compileSdk ${sdk} is below ${ANDROID_FLOOR.compileSdk}`);
+  const build = ['settings.gradle.kts', 'settings.gradle', 'build.gradle.kts', 'build.gradle'].map((f) => readCode(join(android, f))).join('\n');
+  const agp = (/id\s*\(?\s*["']com\.android\.application["']\s*\)?\s*version\s*\(?\s*["']([\d.]+)["']/.exec(build)
+    ?? /com\.android\.tools\.build:gradle:([\d.]+)["']/.exec(build))?.[1];
+  if (!agp) unread.push('the Android Gradle plugin version');
+  else if (below(agp, ANDROID_FLOOR.agp)) wrong.push(`Android Gradle plugin ${agp} is below ${ANDROID_FLOOR.agp}`);
+  const wrapper = join(android, 'gradle', 'wrapper', 'gradle-wrapper.properties');
+  const gradle = existsSync(wrapper) ? /distributionUrl=.*gradle-([\d.]+)-(?:all|bin)\.zip/.exec(readFileSync(wrapper, 'utf8'))?.[1] : undefined;
+  if (!gradle) unread.push('the Gradle wrapper version');
+  else if (below(gradle, ANDROID_FLOOR.gradle)) wrong.push(`Gradle ${gradle} is below ${ANDROID_FLOOR.gradle}`);
+  return { wrong, unread, found: { compileSdk: sdk, agp, gradle } };
+}
+
 // ponytail: a text edit, not a Gradle parser. It handles the `flutter create` layout (a compileOptions
-// block, an optional top-level dependencies block); anything else is left alone and reported, and
-// doctor's "Android desugaring" row keeps failing until a person adds the lines.
+// block, an optional top-level dependencies block, `compileSdk = flutter.compileSdkVersion`); anything
+// else is left alone and reported, and doctor's "Android desugaring" and "Android build" rows keep
+// failing until a person fixes it. AGP and the Gradle wrapper are toolchain choices: reported, not edited.
+// Comments blanked to spaces, so an offset found here is the same offset in the original text.
+const maskComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' ')).replace(/(?<![:"'])\/\/.*$/gm, (m) => ' '.repeat(m.length));
+
+// The template default is nobody's choice, so it is the one compileSdk value codegen rewrites. It
+// rewrites the live assignment, never a commented-out copy above it.
+function rewriteCompileSdk(text) {
+  const m = COMPILE_SDK.exec(maskComments(text));
+  if (m?.[2] !== 'flutter.compileSdkVersion') return text;
+  const at = m.index + m[1].length;
+  return text.slice(0, at) + ANDROID_FLOOR.compileSdk + text.slice(at + m[2].length);
+}
+
 function ensureDesugaring(root, cfg) {
   const g = desugaring(root, cfg);
   if (!g) return {};
-  // A value somebody set on purpose is reported, never overwritten.
-  if (g.wrong.length) return { warning: `${g.file}: ${g.wrong.join('; ')}; set ${g.d.onLine} and ${g.d.depLine}` };
-  if (!g.missing.length) return {};
-  let text = g.text;
+  // The compileSdk rewrite stands on its own: a desugaring problem below must not drop it.
+  let text = rewriteCompileSdk(g.text);
+  let warning;
   const eol = text.includes('\r\n') ? '\r\n' : '\n';
-  if (g.missing.includes(g.d.onLine)) {
-    if (!/^([ \t]*)compileOptions\s*\{/m.test(text)) return { warning: `${g.file} has no compileOptions block; add ${g.d.onLine} to it and ${g.d.depLine} to dependencies` };
-    text = text.replace(/^([ \t]*)compileOptions\s*\{/m, (m, ind) => `${m}${eol}${ind}    ${g.d.onLine}`);
+  // A value somebody set on purpose is reported, never overwritten.
+  if (g.wrong.length) warning = `${g.file}: ${g.wrong.join('; ')}; set ${g.d.onLine} and ${g.d.depLine}`;
+  else if (g.missing.includes(g.d.onLine) && !/^([ \t]*)compileOptions\s*\{/m.test(text)) {
+    warning = `${g.file} has no compileOptions block; add ${g.d.onLine} to it and ${g.d.depLine} to dependencies`;
+  } else {
+    if (g.missing.includes(g.d.onLine)) text = text.replace(/^([ \t]*)compileOptions\s*\{/m, (m, ind) => `${m}${eol}${ind}    ${g.d.onLine}`);
+    if (g.missing.includes(g.d.depLine)) {
+      text = /^dependencies\s*\{/m.test(text)
+        ? text.replace(/^dependencies\s*\{/m, (m) => `${m}${eol}    ${g.d.depLine}`)
+        : `${text.replace(/\s*$/, eol)}${eol}dependencies {${eol}    ${g.d.depLine}${eol}}${eol}`;
+    }
   }
-  if (g.missing.includes(g.d.depLine)) {
-    text = /^dependencies\s*\{/m.test(text)
-      ? text.replace(/^dependencies\s*\{/m, (m) => `${m}${eol}    ${g.d.depLine}`)
-      : `${text.replace(/\s*$/, eol)}${eol}dependencies {${eol}    ${g.d.depLine}${eol}}${eol}`;
-  }
+  if (text === g.text) return warning ? { warning } : {};
   writeFileSync(g.file, text);
-  return { written: g.file };
+  return warning ? { written: g.file, warning } : { written: g.file };
+}
+
+// The host serves the bundle from a loopback socket, and Android refuses any socket without INTERNET.
+// \`flutter create\` declares it only in the debug and profile manifests, so a release build that skips
+// this cannot start (§6.1). It is every host's, so codegen adds it like desugaring.
+const INTERNET_LINE = '<uses-permission android:name="android.permission.INTERNET"/>';
+export function internetPermission(root, cfg) {
+  const file = join(root, cfg.host.dir, 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
+  if (!existsSync(file)) return undefined;
+  const text = readFileSync(file, 'utf8');
+  const has = /<uses-permission\s+android:name\s*=\s*["']android\.permission\.INTERNET["']/.test(text.replace(/<!--[\s\S]*?-->/g, ''));
+  return { file, text, has };
+}
+
+function ensureInternet(root, cfg) {
+  const m = internetPermission(root, cfg);
+  if (!m || m.has) return {};
+  const eol = m.text.includes('\r\n') ? '\r\n' : '\n';
+  if (!/<manifest\b[^>]*>/.test(m.text)) return { warning: `${m.file} has no <manifest> element; add ${INTERNET_LINE} to it` };
+  writeFileSync(m.file, m.text.replace(/<manifest\b[^>]*>/, (tag) => `${tag}${eol}    ${INTERNET_LINE}`));
+  return { written: m.file };
 }
 
 export function codegen({ root, cfg, check = false }) {
@@ -1894,7 +1980,11 @@ export function codegen({ root, cfg, check = false }) {
   for (const [f, text] of outputs) if (stale.includes(f)) writeFile(f, text);
   const gradle = ensureDesugaring(root, cfg);
   if (gradle.warning) warnings.push(gradle.warning);
-  return { written: gradle.written ? [...stale, gradle.written] : stale, warnings };
+  const internet = ensureInternet(root, cfg);
+  if (internet.warning) warnings.push(internet.warning);
+  const build = androidBuild(root, cfg);
+  if (build?.wrong.length) warnings.push(`Android build: ${build.wrong.join('; ')}; flutter_local_notifications needs compileSdk ${ANDROID_FLOOR.compileSdk}, AGP ${ANDROID_FLOOR.agp} and Gradle ${ANDROID_FLOOR.gradle} (contracts §6.1)`);
+  return { written: [...stale, gradle.written, internet.written].filter(Boolean), warnings };
 }
 
 // ---------- CLI ----------
@@ -1954,6 +2044,8 @@ const timeoutError = (what, fix, ms) => {
 // Mechanical evidence only. A declaration or a passing unit test cannot establish device behavior.
 // The budget defaults rather than being required: every caller passes `diagnose`'s validated one, and a
 // future caller that forgets gets 180 s instead of `spawnSync`'s unbounded `undefined`.
+// What doctor says when Flutter is missing, so a developer knows where it looked.
+const FLUTTER_LOOKUP = process.platform === 'win32' ? 'where.exe flutter.bat found nothing on PATH' : 'no flutter on PATH';
 function runFlutter(args, cwd, timeoutMs = DEFAULT_CHILD_TIMEOUT_MS) {
   // Windows Flutter is a .bat entry point. Only fixed flags and the validated relative test paths reach
   // this command string; reject shell syntax here too, so adding another caller cannot widen it.
@@ -2281,6 +2373,19 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     if (g.wrong.length) throw new Error(`${relative(root, g.file)}: ${g.wrong.join('; ')}; flutter_local_notifications, which package:valence always depends on, fails the Android build`);
     if (g.missing.length) throw new Error(`${relative(root, g.file)} lacks ${g.missing.join(' and ')}; flutter_local_notifications, which package:valence always depends on, fails the first Android build without them`);
   }, `run valence codegen, which writes them, or add ${DESUGAR['build.gradle.kts'].onLine} to compileOptions and ${DESUGAR['build.gradle.kts'].depLine} to dependencies in <host>/android/app/build.gradle.kts`);
+  await check('Android build', () => {
+    const b = androidBuild(root, cfg);
+    if (!b) return 'Android Gradle build absent; compileSdk, AGP and Gradle not checked';
+    if (b.wrong.length) throw new Error(`${b.wrong.join('; ')}; flutter_local_notifications, which package:valence always depends on, needs compileSdk ${ANDROID_FLOOR.compileSdk}, AGP ${ANDROID_FLOOR.agp} and Gradle ${ANDROID_FLOOR.gradle}`);
+    if (b.unread.length) return `could not read ${b.unread.join(', ')}; check compileSdk ${ANDROID_FLOOR.compileSdk}+, AGP ${ANDROID_FLOOR.agp}+ and Gradle ${ANDROID_FLOOR.gradle}+ by hand`;
+    return { msg: `compileSdk ${b.found.compileSdk}, AGP ${b.found.agp}, Gradle ${b.found.gradle}` };
+  }, `run valence codegen, which sets compileSdk = ${ANDROID_FLOOR.compileSdk} over the flutter create default; set com.android.application to version "${ANDROID_FLOOR.agp}" in <host>/android/settings.gradle.kts and gradle-${ANDROID_FLOOR.gradle}-all.zip in <host>/android/gradle/wrapper/gradle-wrapper.properties`);
+  await check('Android internet', () => {
+    const m = internetPermission(root, cfg);
+    if (!m) return 'Android manifest absent; INTERNET permission not checked';
+    if (!m.has) throw new Error(`${relative(root, m.file)} does not declare INTERNET; a release build cannot open the loopback server and shows only a start-up error (debug builds hide this, because flutter create declares it there)`);
+    return { msg: 'declared in the main manifest' };
+  }, `run valence codegen, which adds it, or add ${INTERNET_LINE} inside <manifest> in <host>/android/app/src/main/AndroidManifest.xml`);
   await check('signing keys in Git', () => {
     if (insideGit(keyDir)) throw new Error('configured signing-key directory resolves inside a Git work tree');
     const repo = git(['rev-parse', '--show-toplevel'], childMs);
@@ -2410,13 +2515,13 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     if (!existsSync(join(host, 'pubspec.yaml'))) return 'host pubspec missing; dependency resolution not run';
     if (!existsSync(join(host, 'pubspec.lock'))) return 'pubspec.lock missing; run flutter pub get before checking resolved dependencies';
     const r = run(['pub', 'deps', '--json'], host, childMs);
-    if (r.error?.code === 'ENOENT') return 'Flutter unavailable; dependency resolution not checked';
+    if (r.error?.code === 'ENOENT') return `Flutter unavailable (${FLUTTER_LOOKUP}); dependency resolution not checked: add Flutter's bin folder to PATH, or run flutter pub deps in the host yourself`;
     if (killedByTimeout(r)) throw timeoutError('flutter pub deps --json', 'run flutter pub get in the host and rerun; a cold pub cache or a second concurrent Flutter command is the usual cause', childMs);
     if (r.error || r.status !== 0) throw new Error(`flutter pub deps --json failed; run flutter pub get in the host${childTail(r)}`);
     const deps = JSON.parse(r.stdout).packages;
     if (!Array.isArray(deps) || !deps.some((d) => d.name === 'valence')) throw new Error('resolved host does not depend on valence');
     const android = deps.find((d) => d.name === 'path_provider_android');
-    if (android?.version !== '2.2.23') return `path_provider_android ${android?.version ?? 'absent'} differs from tested compatibility range >=2.2.17 <2.3.0 (expected 2.2.23) (U-7)`;
+    if (android?.version !== '2.2.23') return `path_provider_android ${android?.version ?? 'absent'} differs from tested compatibility range >=2.2.17 <2.3.0 (expected 2.2.23)`;
   });
   const matrixPath = join(root, '.valence', 'test-matrix.json');
   let matrix = {};
@@ -2453,7 +2558,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
       if (id === 'integration' || files.some((f) => f.startsWith('integration_test/'))) return 'mapped; requires a separate emulator/device run';
       if (!tests) return 'mapped but not executed; pass --tests';
       const r = run(['test', ...files], host, childMs);
-      if (r.error?.code === 'ENOENT') return 'Flutter unavailable; tests not run';
+      if (r.error?.code === 'ENOENT') return `Flutter unavailable (${FLUTTER_LOOKUP}); tests not run: add Flutter's bin folder to PATH, or run flutter test in the host yourself`;
       if (killedByTimeout(r)) throw timeoutError(`flutter test for ${id}`, `run "flutter test ${files.join(' ')}" in host.dir yourself; doctor runs one Flutter command at a time and a second concurrent run is the usual cause`, childMs);
       if (r.error || r.status !== 0) throw new Error(`flutter test failed for ${id}${childTail(r)}`);
     });
@@ -2555,7 +2660,7 @@ const HELP = `Valence CLI ${VALENCE_VERSION} (spec: references/contracts.md)
 
   valence version [--build]              print the CLI version; --build appends the digest of this file
                                     *only*, which tells two copies of the generator at the same version
-                                    apart (K F-48); the spec is not in it, and "update" names what moved
+                                    apart; the spec is not in it, and "update" names what moved
   valence keygen                         new Ed25519 key in ~/.valence/keys, public key into valence/keyring.json
   valence codegen [--check]              bridge.schema.json -> bridge.g.ts, bridge.g.dart, config.g.dart
   valence bundle [--builtin | --store [--rebaseline]] [--floor N] [--requires-bridge N] [--min-host N] [--urgent] [--key file]

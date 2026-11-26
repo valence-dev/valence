@@ -24,15 +24,14 @@ const secureAuthAccountKey = 'valence.auth.account';
 /// reboot finds no token rather than failing — **written and unverified, like every iOS path here.**
 final class ValenceSecure {
   /// Creates the store. Pass [storage] in tests, or let the platform default stand.
-  ValenceSecure({FlutterSecureStorage? storage, ValenceLogger log = defaultValenceLogger})
+  ValenceSecure({FlutterSecureStorage? storage, this._log = defaultValenceLogger})
       : _storage = storage ??
             const FlutterSecureStorage(
               // first_unlock_this_device, not the default after_first_unlock: the item must not travel to
               // another device in an iCloud Keychain backup, and a background launch after a reboot still
               // needs it once the user has unlocked once.
               iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock_this_device),
-            ),
-        _log = log;
+            );
 
   final FlutterSecureStorage _storage;
   final ValenceLogger _log;

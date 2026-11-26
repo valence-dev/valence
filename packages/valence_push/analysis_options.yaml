@@ -4,6 +4,8 @@ analyzer:
   errors:
     # The package is published, so a missing doc comment on a public member is a real gap.
     public_member_api_docs: warning
+  exclude:
+    - build/**
 
 linter:
   rules:

@@ -42,7 +42,7 @@ const CLI = new Set(['dev', 'keygen', 'codegen', 'bundle', 'verify', 'pointer', 
 // The two published runtimes the generated code imports. Their version is deliberately independent of
 // this CLI's: a fix to a runtime ships with "flutter pub upgrade" or "npm update", with no new wizard.
 // A test keeps it equal to both packages/*/ versions in this repo.
-const RUNTIME_VERSION = '0.4.0-beta.2';
+const RUNTIME_VERSION = '0.5.0-beta.0';
 const BRIDGE_PKG = '@getvalence/bridge';
 const HOST_PKG = 'valence';
 // pnpm, yarn and bun all take "add"; npm is the odd one.
@@ -416,6 +416,7 @@ async function init(o) {
       ok('web app', `${web.dir}  ${web.framework} ${web.version} · ${web.pm} · builds to ${web.out}`);
       if (!web.staticExport && web.framework === 'SvelteKit') warn('sveltekit', `no @sveltejs/adapter-static; install it with fallback: 'index.html' and set ssr = false in the root layout, so the build writes ${web.out}/ (valence needs static files)`);
       else if (!web.staticExport) warn('next.js', `no output: 'export' in next.config; add it so the build writes ${web.out}/ (valence needs static files)`);
+      if (web.framework === 'Astro') warn('astro', 'Astro builds one HTML file per page, but inside the app every URL gets index.html, so a plain link to another page shows the home page. Route on the client from one page (getvalence.dev/docs/guides/web-app/)');
       if (!web.stableBuild) warn('rollback', web.framework === 'Next.js'
         ? "no generateBuildId in next.config; Next stamps a random build id into every page, so rebuilding the same commit re-downloads them. Add generateBuildId: () => execSync('git rev-parse HEAD').toString().trim() (getvalence.dev/docs/guides/releasing/#roll-back)"
         : 'no kit.version.name in svelte.config; SvelteKit stamps the build time, so rebuilding the same commit changes files. Set it to the git commit (getvalence.dev/docs/guides/releasing/#roll-back)');
@@ -498,8 +499,12 @@ async function init(o) {
     // come back unknown there. Say so, and name the alternative for anyone not using Claude Code at all.
     const freshSession = [
       dim('  That starts a new session, which matters: the skill was installed during this run, so'),
-      dim('  /valence is not registered in a session that is already open. Without Claude Code, add'),
-      dim('  the two runtimes above and follow https://getvalence.dev/docs/getting-started/quick-start/'),
+      dim('  /valence is not registered in a session that is already open.'),
+      '',
+      `  ${bold('Not using Claude Code?')} If there is no Flutter host yet, run ${bold(`flutter create ${cfg.host.dir}`)} here, set`,
+      `  applicationId = "${cfg.appId}" in ${cfg.host.dir}/android/app/build.gradle.kts and run codegen again. Then add the two`,
+      '  runtimes above and follow https://getvalence.dev/docs/getting-started/quick-start/#set-up-the-host',
+      `  Another coding agent can follow ${skillBase(root, o.global) === join(homedir(), '.claude') ? '~/.claude' : '.claude'}/skills/valence/SKILL.md the same way.`,
       '',
     ].join('\n');
     const claude = tool('claude --version', root);

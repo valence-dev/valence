@@ -803,6 +803,15 @@ test('_host/ is reserved for the host, and a relative asset base in the entry pa
   html('<script type="module" src="/_app/a.js"></script><link rel="icon" href="data:,"><img src="//cdn/x.png"><a href="#x">');
   assert.ok(!bundle({ root, cfg, key, now: NOW }).warnings.some((x) => x.includes('relative URL')));
 
+  // A multi-page build: the host serves the entry for every route, so the other pages warn. 404.html does not.
+  writeFileSync(join(root, 'web', 'build', '404.html'), '');
+  assert.ok(!bundle({ root, cfg, key, now: NOW }).warnings.some((x) => x.includes('HTML page')));
+  mkdirSync(join(root, 'web', 'build', 'events', 'a'), { recursive: true });
+  writeFileSync(join(root, 'web', 'build', 'events', 'a', 'index.html'), '');
+  writeFileSync(join(root, 'web', 'build', 'about.html'), '');
+  const mpa = bundle({ root, cfg, key, now: NOW }).warnings.find((x) => x.includes('HTML page'));
+  assert.match(mpa, /2 HTML pages besides index\.html \((about\.html, events\/a\/index\.html|events\/a\/index\.html, about\.html)\)/);
+
   // The server answers /_host/ before the manifest lookup, so a bundle file under it could never be reached.
   mkdirSync(join(root, 'web', 'build', '_host'));
   writeFileSync(join(root, 'web', 'build', '_host', 'x.js'), '');
@@ -1438,6 +1447,108 @@ test('codegen writes Android core library desugaring and doctor fails without it
   writeFileSync(groovy, 'android {\n}\n');
   assert.match(codegen({ root, cfg }).warnings.join(' '), /no compileOptions block/);
   assert.equal((await row())[0], 'FAIL');
+});
+
+test('codegen raises the flutter create compileSdk and doctor holds the notifications 23 Android floor', async () => {
+  const { root, cfg } = fixture();
+  const android = join(root, cfg.host.dir, 'android');
+  const row = async () => (await diagnose({ root, cfg })).find(([, n]) => n === 'Android build');
+  assert.deepEqual((await row()).slice(0, 2), ['WARN', 'Android build']);
+  mkdirSync(join(android, 'app'), { recursive: true });
+  mkdirSync(join(android, 'gradle', 'wrapper'), { recursive: true });
+  const kts = join(android, 'app', 'build.gradle.kts');
+  const settings = join(android, 'settings.gradle.kts');
+  const wrapper = join(android, 'gradle', 'wrapper', 'gradle-wrapper.properties');
+  // A 0.4 host as Flutter 3.44's template made it: compileSdk, AGP and Gradle are all short of the plugin's.
+  const created = [
+    'android {',
+    '    compileSdk = flutter.compileSdkVersion',
+    '    compileOptions {',
+    '        isCoreLibraryDesugaringEnabled = true',
+    '    }',
+    '}',
+    '',
+    'dependencies {',
+    '    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")',
+    '}',
+    '',
+  ].join('\n');
+  writeFileSync(kts, created);
+  writeFileSync(settings, 'plugins {\n    id("com.android.application") version "9.0.1" apply false\n}\n');
+  writeFileSync(wrapper, 'distributionUrl=https\\://services.gradle.org/distributions/gradle-9.1.0-all.zip\n');
+  const before = await row();
+  assert.equal(before[0], 'FAIL');
+  for (const part of [/flutter\.compileSdkVersion/, /plugin 9\.0\.1 is below 9\.1\.1/, /Gradle 9\.1\.0 is below 9\.3\.1/]) assert.match(before[2], part);
+  // Codegen rewrites only the template default; AGP and the wrapper are reported, never edited.
+  const gen = codegen({ root, cfg });
+  assert.ok(gen.written.includes(kts));
+  assert.equal(readFileSync(kts, 'utf8'), created.replace('flutter.compileSdkVersion', '37'));
+  assert.match(gen.warnings.join(' '), /Android build: Android Gradle plugin 9\.0\.1 is below 9\.1\.1; Gradle 9\.1\.0 is below 9\.3\.1/);
+  assert.match(readFileSync(settings, 'utf8'), /9\.0\.1/);
+  assert.match((await row())[2], /^Android Gradle plugin 9\.0\.1/);
+  writeFileSync(settings, 'plugins {\n    // id("com.android.application") version "9.3.1" apply false\n    id("com.android.application") version "9.1.1" apply false\n}\n');
+  writeFileSync(wrapper, 'distributionUrl=https\\://services.gradle.org/distributions/gradle-9.10.0-bin.zip\n');
+  assert.deepEqual((await row()).slice(0, 3), ['PASS', 'Android build', 'compileSdk 37, AGP 9.1.1, Gradle 9.10.0']);
+  const again = codegen({ root, cfg });
+  assert.ok(!again.written.includes(kts));
+  // A CRLF checkout keeps its line endings through the rewrite, and a rerun changes nothing.
+  const crlf = created.replace(/\n/g, '\r\n');
+  writeFileSync(kts, crlf);
+  codegen({ root, cfg });
+  assert.equal(readFileSync(kts, 'utf8'), crlf.replace('flutter.compileSdkVersion', '37'));
+  assert.ok(!codegen({ root, cfg }).written.includes(kts));
+  assert.doesNotMatch(again.warnings.join(' '), /Android build/);
+  // A literal below the floor was set on purpose: reported, not overwritten. Groovy and legacy classpath too.
+  rmSync(kts);
+  rmSync(settings);
+  const groovy = join(android, 'app', 'build.gradle');
+  const old = "android {\n    compileSdkVersion 35\n    compileOptions {\n        coreLibraryDesugaringEnabled true\n    }\n}\ndependencies {\n    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'\n}\n";
+  writeFileSync(groovy, old);
+  writeFileSync(join(android, 'build.gradle'), "buildscript {\n    dependencies {\n        classpath 'com.android.tools.build:gradle:9.2.0'\n    }\n}\n");
+  assert.match(codegen({ root, cfg }).warnings.join(' '), /Android build: compileSdk 35 is below 37/);
+  assert.equal(readFileSync(groovy, 'utf8'), old);
+  assert.equal((await row())[0], 'FAIL');
+  // An expression codegen cannot evaluate is a WARN naming what it could not read, never a PASS.
+  writeFileSync(groovy, old.replace('compileSdkVersion 35', 'compileSdk libs.versions.sdk.get()'));
+  const unread = await row();
+  assert.deepEqual(unread.slice(0, 2), ['WARN', 'Android build']);
+  assert.match(unread[2], /could not read compileSdk \(libs\.versions\.sdk\.get\(\)\)/);
+  // A pre-release classpath AGP is unreadable, as it is in plugins {}, never read as the final version.
+  writeFileSync(groovy, old.replace('compileSdkVersion 35', 'compileSdkVersion 37'));
+  writeFileSync(join(android, 'build.gradle'), "buildscript {\n    dependencies {\n        classpath 'com.android.tools.build:gradle:9.1.1-rc01'\n    }\n}\n");
+  assert.match((await row())[2], /could not read the Android Gradle plugin version/);
+  rmSync(groovy);
+  // The live assignment is rewritten, not a commented-out copy above it.
+  const commented = created.replace('android {\n', 'android {\n    /*\n    compileSdk = flutter.compileSdkVersion\n    */\n');
+  writeFileSync(kts, commented);
+  codegen({ root, cfg });
+  assert.equal(readFileSync(kts, 'utf8'), commented.replace('    compileSdk = flutter.compileSdkVersion\n    compileOptions', '    compileSdk = 37\n    compileOptions'));
+  // A desugaring problem codegen only reports does not drop the compileSdk rewrite.
+  for (const broken of [created.replace(/    compileOptions \{\n.*\n    \}\n/, ''), created.replace('= true', '= false')]) {
+    writeFileSync(kts, broken);
+    const gen2 = codegen({ root, cfg });
+    assert.equal(readFileSync(kts, 'utf8'), broken.replace('flutter.compileSdkVersion', '37'));
+    assert.ok(gen2.written.includes(kts));
+    assert.match(gen2.warnings.join(' '), /compileOptions block|set to false/);
+  }
+});
+
+test('codegen adds INTERNET to the main manifest and doctor fails without it', async () => {
+  const { root, cfg } = fixture();
+  const row = async () => (await diagnose({ root, cfg })).find(([, n]) => n === 'Android internet');
+  assert.equal((await row())[0], 'WARN');
+  const dir = join(root, cfg.host.dir, 'android', 'app', 'src', 'main');
+  mkdirSync(dir, { recursive: true });
+  const file = join(dir, 'AndroidManifest.xml');
+  // flutter create's main manifest: INTERNET only in debug/profile, plus a commented-out one that must not count.
+  const created = '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\r\n    <!-- <uses-permission android:name="android.permission.INTERNET"/> -->\r\n    <application android:label="mobile"/>\r\n</manifest>\r\n';
+  writeFileSync(file, created);
+  assert.equal((await row())[0], 'FAIL');
+  const gen = codegen({ root, cfg });
+  assert.ok(gen.written.includes(file));
+  assert.equal(readFileSync(file, 'utf8'), created.replace('android">\r\n', 'android">\r\n    <uses-permission android:name="android.permission.INTERNET"/>\r\n'));
+  assert.deepEqual((await row()).slice(0, 2), ['PASS', 'Android internet']);
+  assert.ok(!codegen({ root, cfg }).written.includes(file), 'a rerun changes nothing');
 });
 
 test('doctor checks that pubspec.yaml declares the bundle assets', async () => {

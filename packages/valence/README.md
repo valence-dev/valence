@@ -65,7 +65,7 @@ API too, with its existing scheme restrictions and reserved owner.
 
 ```bash
 flutter pub add valence
-npx valence codegen
+node valence/valence.mjs codegen   # from the project root
 ```
 
 ```dart

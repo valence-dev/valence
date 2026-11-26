@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.5.0-beta.0 (2026-11-26)
+
+**Valence moves to the current Flutter and Android toolchain.** This is a breaking release for hosts:
+follow [Migrating to 0.5](docs/migrating-to-0.5.md). **Android is supported; iOS is experimental and
+untested.** A third app built from the docs (a club events app with sign-in, offline RSVPs, reminders,
+over-the-air releases, rollback and a staged rollout) ran on 0.5 without a package bug; what it found was
+docs and wizard gaps, fixed below.
+
+- **What you must change in your host:**
+  - Flutter 3.47 or later and Dart 3.13 or later. The `valence` package will not resolve on older SDKs.
+  - Android: compileSdk 37, Android Gradle Plugin 9.1.1 and Gradle 9.3.1 or later. This comes from
+    `flutter_local_notifications` 23, which `valence` always depends on, even if you never schedule a
+    reminder. `valence codegen` raises Flutter's default `compileSdk` to 37 for you; AGP and the Gradle
+    wrapper are yours to update. `create-valence doctor` has a new **Android build** row that checks
+    all three.
+  - A host still on AGP 8 needs `android.newDsl=false` and `android.builtInKotlin=false` in
+    `gradle.properties` (the migration guide explains why).
+- **The host's own screens no longer use Material.** The loading, error and "update required" screens
+  are drawn with plain Flutter widgets, so they no longer clash with whatever UI library your app uses
+  (Flutter's `material.dart`, `material_ui` or none). Nothing in your web UI changes.
+- **Sync servers: what a retried push echoes.** The spec and the sync guides now say it outright: when
+  the phone retries an op id the server has already seen, acknowledge it again, assign no new `usn`, and
+  echo the key's *current* row, not the row as it was when that op first arrived. Echoing the old row
+  can leave a phone stale for good after a lost reply. Check your server if you wrote your own.
+- **Docs.** New guidance on keeping a fixed bottom bar from covering the field being typed in, the
+  status bar, and the largest system font size; test recipes for going offline on an Android emulator
+  (airplane mode can leave Wi-Fi on) and for a notification tap that has to start the app from nothing.
+- **Wizard and doctor.** The wizard's last screen now shows the path for people not using Claude Code.
+  When doctor can't find Flutter, it says where it looked. The skill now asks for root-absolute asset
+  URLs (Vite `base: '/'`) instead of the vaguer "relative-safe" wording.
+- **Release builds need `INTERNET` in the main manifest.** `flutter create` declares it only for debug
+  builds, so a release build following the docs showed only a start-up error. `valence codegen` now adds
+  it to `android/app/src/main/AndroidManifest.xml`, doctor has an `Android internet` row, and the host's
+  error names the missing permission.
+- **A notification tap that starts the app arrives once.** On Android it also reached the page as a live
+  `notify.tapped`, so a page that acted on taps did it twice (0.4 had this too). It now arrives only
+  through `notify.initial`. If your page deduplicated it itself, that code is now harmless.
+- **The host's own screens in dark mode** now set light status-bar icons, and a long error scrolls.
+- **Supabase guide.** supabase-js, row-level security and Google sign-in through the system browser were
+  tested inside a Valence app on Android, including a sign-in that survives Android killing the app
+  mid-login. The new guide covers secure session storage, the deep-link return, handing the token to the
+  host, and signing out in the right order. Offline sync with Supabase still needs your own adapter.
+- **One entry page.** The app serves your entry page for every URL, so a multi-page build shows the
+  home page for every link. `valence bundle` now warns when the build has other HTML pages, and the
+  wizard warns when it detects Astro, which builds one HTML file per page by default. Route on the client.
+
 ## 0.4.0-beta.2 (2026-11-24)
 
 **Remote push now runs end to end on Android**, and a second app built from the public docs alone (a shared

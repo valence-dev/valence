@@ -315,8 +315,9 @@ void main() {
     expect(events, isEmpty, reason: 'cold replay belongs to the app');
     expect(await service.initial(), isNull);
     final coldScript = legacyEvent(cold);
+    // A later tap on another notification for the same item (the launch tap's own echo is dropped).
     platform.respond(response(
-        id: 1885662976,
+        id: 1885662977,
         payload: jsonEncode({'id': 'inspection-reminder', 'p': 'unit-0101'})));
     final encoded = events.single;
     expect(encoded, coldScript);
@@ -328,6 +329,29 @@ void main() {
       'payload': jsonEncode({'id': 'inspection-reminder', 'p': 'unit-0101'}),
     });
   });
+  test('a cold tap echoed as a live response reaches the page once', () async {
+    // Android can hand the launch intent to the live callback too; notify.initial owns the cold tap.
+    service = ValenceNotifications(
+        directory: directory, emit: events.add, platform: platform);
+    platform.launch = response(id: 7, payload: 'p30');
+    await service.initialize();
+    platform.respond(response(id: 7, payload: 'p30'));
+    expect(events, isEmpty, reason: 'the echo of the launch tap is not a second tap');
+    expect(await service.initial(), {'id': 7, 'payload': 'p30', 'action': null});
+    // Only the one echo is dropped: a later tap, and any other notification, are delivered.
+    platform.respond(response(id: 7, payload: 'p30'));
+    platform.respond(response(id: 8, payload: 'p31'));
+    expect(events, hasLength(2));
+  });
+
+  test('a response that arrives before the launch details are read is judged against them', () async {
+    final early = _EarlyEcho(response(id: 7, payload: 'p30'));
+    service = ValenceNotifications(directory: directory, emit: events.add, platform: early);
+    await service.initialize();
+    expect(events, isEmpty);
+    expect(await service.initial(), {'id': 7, 'payload': 'p30', 'action': null});
+  });
+
   test('automatic events use only declared modern names and fields', () async {
     service = ValenceNotifications(
         directory: directory,
@@ -436,7 +460,8 @@ void main() {
     expect((await service.initial() as Map)['id'], 42);
     expect(await service.initial(), null);
     expect(events, isEmpty);
-    platform.respond(response());
+    // A different notification: an identical one is the launch tap's echo, dropped once.
+    platform.respond(response(id: 43));
     platform.respond(response(action: 'done'));
     expect(events[0], contains('notify.tapped'));
     expect(events[1], contains('notify.action'));
@@ -473,4 +498,16 @@ void main() {
     platform.allowed = false;
     expect(await service.badge(2), false);
   });
+}
+
+/// Delivers the launch tap through the live callback before `initialize` returns it.
+class _EarlyEcho extends FakeNotifications {
+  _EarlyEcho(this.tap);
+  final NotificationResponse tap;
+  @override
+  Future<NotificationResponse?> initialize(
+      String icon, void Function(NotificationResponse) callback) async {
+    callback(tap);
+    return tap;
+  }
 }

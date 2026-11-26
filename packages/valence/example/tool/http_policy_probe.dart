@@ -1,7 +1,7 @@
 // Run explicitly with -t tool/http_policy_probe.dart, never the example entry point.
 // Uses only a synthetic credential, without opening Valence or its secure store.
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:valence/valence.dart';
 
 Future<void> main() async {

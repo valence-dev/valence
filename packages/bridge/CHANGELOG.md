@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0-beta.0 (2026-11-26)
+
+No changes in this package; the version follows the other Valence runtime packages. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.5.0-beta.0).
+
 ## 0.4.0-beta.2 (2026-11-24)
 
 No changes in this package; the version follows the other Valence runtime packages. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.2).

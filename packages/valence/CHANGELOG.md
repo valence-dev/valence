@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0-beta.0 (2026-11-26)
+
+**Breaking:** needs Flutter 3.47+ / Dart 3.13+, and on Android compileSdk 37, AGP 9.1.1 and Gradle 9.3.1, because it now depends on `flutter_local_notifications` 23 (no Dart API change). The loading, error and update-required screens use plain widgets instead of Material, so they work under any UI library. A notification tap that starts the app now reaches the page once, through `notify.initial` (Android also delivered it as a live `notify.tapped`). A host without the Android `INTERNET` permission now fails with a message naming it. In dark mode the host screens set light status-bar icons. See [Migrating to 0.5](https://github.com/valence-dev/valence/blob/main/docs/migrating-to-0.5.md) and the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.5.0-beta.0).
+
 ## 0.4.0-beta.2 (2026-11-24)
 
 No code changes. Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS is experimental and untested. See the [release notes](https://github.com/valence-dev/valence/releases/tag/v0.4.0-beta.2).

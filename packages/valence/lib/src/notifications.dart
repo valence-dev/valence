@@ -31,10 +31,9 @@ final class ValenceNotifications {
     this.icon = 'ic_stat_valence',
     ValenceNotificationPlatform? platform,
     DateTime Function()? now,
-    ValenceLogger log = defaultValenceLogger,
+    this._log = defaultValenceLogger,
   })  : _platform = platform ?? ValenceNotificationPlatform(),
-        _now = now ?? DateTime.now,
-        _log = log;
+        _now = now ?? DateTime.now;
 
   /// Private attachment directory.
   final Directory directory;
@@ -57,6 +56,18 @@ final class ValenceNotifications {
   Future<void>? _initialized;
   Future<void> _tail = Future.value();
   Map<String, Object?>? _initial;
+
+  // The tap that launched the process, until its live echo arrives. On Android the launch intent can
+  // also reach the plugin's live callback (seen with Flutter 3.50), so without this one cold tap reached
+  // the page twice: as notify.initial and as notify.tapped (§6.5 says once, through notify.initial).
+  // ponytail: dropped once, by id, payload and action. A host that never echoes loses one identical
+  // later tap, which needs the same notification tapped again after it was dismissed by the first.
+  String? _launchKey;
+  bool _starting = false;
+  final List<NotificationResponse> _early = [];
+
+  static String? _key(Map<String, Object?>? v) =>
+      v == null ? null : jsonEncode([v['id'], v['payload'], v['action']]);
   String? _unavailable;
   final Set<String> _warnedOwnEvent = {};
 
@@ -71,9 +82,11 @@ final class ValenceNotifications {
 
   Future<void> _initialize() async {
     _identifier(icon, 'icon');
+    _starting = true;
     try {
       final response = await _platform.initialize(icon, _respond);
       _initial = _response(response);
+      _launchKey = _key(_initial);
     } on PlatformException catch (e) {
       // Never fail Valence.open over the notification service. The icon is named only as
       // a string in valence.config.json, so Android's release resource shrinker removes
@@ -86,11 +99,27 @@ final class ValenceNotifications {
           'release build, check that android/app/src/main/res/raw/keep.xml names '
           '@drawable/$icon: resource shrinking deletes a drawable that only '
           'valence.config.json refers to.');
+    } finally {
+      // A response that arrived while the launch details were still being read is judged against them.
+      _starting = false;
+      final early = List.of(_early);
+      _early.clear();
+      early.forEach(_respond);
     }
   }
 
   void _respond(NotificationResponse response) {
+    if (_starting) {
+      _early.add(response);
+      return;
+    }
     final value = _response(response);
+    if (value != null && _launchKey != null && _key(value) == _launchKey) {
+      _launchKey = null;
+      _log('notifications: the launch tap also arrived as a live response; notify.initial delivers it, '
+          'so the live copy was dropped');
+      return;
+    }
     if (value != null) {
       final adapter = eventAdapter;
       if (adapter != null) {

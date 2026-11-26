@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -427,12 +427,18 @@ void main() {
     respond = (_) async => http.Response('', 404);
     // Startup arms sync even while the native blocker is visible. Keep its real SQLite I/O
     // outside fake time, as mount() does, and drain it after disposal before closing the DB.
-    await tester.runAsync(() => tester.pumpWidget(MaterialApp(
-        home: ValenceApp(
-            valence: runtime,
-            log: log.call,
-            dispatch: (raw, nonce) async =>
-                throw StateError('must not dispatch')))));
+    // No MaterialApp: the host's own screens must not need a design system, because an app's root
+    // may be legacy Material, material_ui or Cupertino, each with its own Theme types.
+    await tester.runAsync(() => tester.pumpWidget(Directionality(
+        textDirection: TextDirection.ltr,
+        child: MediaQuery(
+          data: const MediaQueryData(),
+          child: ValenceApp(
+              valence: runtime,
+              log: log.call,
+              dispatch: (raw, nonce) async =>
+                  throw StateError('must not dispatch')),
+        ))));
     addTearDown(() async {
       await tester.runAsync(() => tester.pumpWidget(const SizedBox()));
       await io(tester);
@@ -812,11 +818,26 @@ void main() {
     expect(runtime.stateRestore(), isNull);
   });
 
+  testWidgets('the host\'s own screens set light status icons in dark mode',
+      (tester) async {
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+    addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+    await mount(tester, blocked: true);
+    expect(find.text('Loading…'), findsOneWidget);
+    final region = tester.widget<AnnotatedRegion<SystemUiOverlayStyle>>(find
+        .ancestor(
+            of: find.text('Loading…'),
+            matching: find.byType(AnnotatedRegion<SystemUiOverlayStyle>))
+        .first);
+    expect(region.value.statusBarIconBrightness, Brightness.light);
+    webview.configureGate!.complete();
+  });
+
   testWidgets(
       'I-61: resume during startup changes state but starts no work or event',
       (tester) async {
     await mount(tester, blocked: true);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.text('Loading…'), findsOneWidget);
     expect(runtime.server, isNotNull,
         reason: 'startup is held after binding, before triggers');
     await lifecycle(tester, AppLifecycleState.paused);

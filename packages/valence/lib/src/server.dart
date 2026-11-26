@@ -150,6 +150,14 @@ final class ValenceServer {
       try {
         server = await HttpServer.bind(InternetAddress.loopbackIPv4, port, shared: false);
       } on SocketException catch (e) {
+        // EPERM/EACCES is not a busy port: Android refuses every socket to an app without INTERNET, and
+        // `flutter create` declares it only for debug and profile builds. Say so instead of trying 12 ports.
+        if (e.osError?.errorCode case 1 || 13) {
+          if (kDebugMode) dev?.close();
+          throw StateError('valence: the OS refused a loopback socket ($e). On Android, declare '
+              '<uses-permission android:name="android.permission.INTERNET"/> in '
+              'android/app/src/main/AndroidManifest.xml; valence codegen adds it.');
+        }
         log('server: port $port is not bindable ($e); picking another in 10000..29999');
         port = rng.nextInt(20000) + 10000;
         rotated = true;
