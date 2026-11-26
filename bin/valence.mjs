@@ -42,7 +42,7 @@ const CLI = new Set(['dev', 'keygen', 'codegen', 'bundle', 'verify', 'pointer', 
 // The two published runtimes the generated code imports. Their version is deliberately independent of
 // this CLI's: a fix to a runtime ships with "flutter pub upgrade" or "npm update", with no new wizard.
 // A test keeps it equal to both packages/*/ versions in this repo.
-const RUNTIME_VERSION = '0.4.0-beta.2';
+const RUNTIME_VERSION = '0.5.0-beta.0';
 const BRIDGE_PKG = '@getvalence/bridge';
 const HOST_PKG = 'valence';
 // pnpm, yarn and bun all take "add"; npm is the odd one.
@@ -498,8 +498,11 @@ async function init(o) {
     // come back unknown there. Say so, and name the alternative for anyone not using Claude Code at all.
     const freshSession = [
       dim('  That starts a new session, which matters: the skill was installed during this run, so'),
-      dim('  /valence is not registered in a session that is already open. Without Claude Code, add'),
-      dim('  the two runtimes above and follow https://getvalence.dev/docs/getting-started/quick-start/'),
+      dim('  /valence is not registered in a session that is already open.'),
+      '',
+      `  ${bold('Not using Claude Code?')} Add the two runtimes above, then follow`,
+      '  https://getvalence.dev/docs/getting-started/quick-start/#set-up-the-host',
+      `  Another coding agent can follow ${skillBase(root, o.global) === join(homedir(), '.claude') ? '~/.claude' : '.claude'}/skills/valence/SKILL.md the same way.`,
       '',
     ].join('\n');
     const claude = tool('claude --version', root);

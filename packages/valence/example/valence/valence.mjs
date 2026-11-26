@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
 import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
-export const VALENCE_VERSION = '0.4.0-beta.2'; // keep equal to package.json "version" (tested)
+export const VALENCE_VERSION = '0.5.0-beta.0'; // keep equal to package.json "version" (tested)
 
 /// Where this copy of the CLI is, and what it contains.
 ///
@@ -1999,6 +1999,8 @@ const timeoutError = (what, fix, ms) => {
 // Mechanical evidence only. A declaration or a passing unit test cannot establish device behavior.
 // The budget defaults rather than being required: every caller passes `diagnose`'s validated one, and a
 // future caller that forgets gets 180 s instead of `spawnSync`'s unbounded `undefined`.
+// What doctor says when Flutter is missing, so a developer knows where it looked.
+const FLUTTER_LOOKUP = process.platform === 'win32' ? 'where.exe flutter.bat found nothing on PATH' : 'no flutter on PATH';
 function runFlutter(args, cwd, timeoutMs = DEFAULT_CHILD_TIMEOUT_MS) {
   // Windows Flutter is a .bat entry point. Only fixed flags and the validated relative test paths reach
   // this command string; reject shell syntax here too, so adding another caller cannot widen it.
@@ -2462,7 +2464,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     if (!existsSync(join(host, 'pubspec.yaml'))) return 'host pubspec missing; dependency resolution not run';
     if (!existsSync(join(host, 'pubspec.lock'))) return 'pubspec.lock missing; run flutter pub get before checking resolved dependencies';
     const r = run(['pub', 'deps', '--json'], host, childMs);
-    if (r.error?.code === 'ENOENT') return 'Flutter unavailable; dependency resolution not checked';
+    if (r.error?.code === 'ENOENT') return `Flutter unavailable (${FLUTTER_LOOKUP}); dependency resolution not checked: add Flutter's bin folder to PATH, or run flutter pub deps in the host yourself`;
     if (killedByTimeout(r)) throw timeoutError('flutter pub deps --json', 'run flutter pub get in the host and rerun; a cold pub cache or a second concurrent Flutter command is the usual cause', childMs);
     if (r.error || r.status !== 0) throw new Error(`flutter pub deps --json failed; run flutter pub get in the host${childTail(r)}`);
     const deps = JSON.parse(r.stdout).packages;
@@ -2505,7 +2507,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
       if (id === 'integration' || files.some((f) => f.startsWith('integration_test/'))) return 'mapped; requires a separate emulator/device run';
       if (!tests) return 'mapped but not executed; pass --tests';
       const r = run(['test', ...files], host, childMs);
-      if (r.error?.code === 'ENOENT') return 'Flutter unavailable; tests not run';
+      if (r.error?.code === 'ENOENT') return `Flutter unavailable (${FLUTTER_LOOKUP}); tests not run: add Flutter's bin folder to PATH, or run flutter test in the host yourself`;
       if (killedByTimeout(r)) throw timeoutError(`flutter test for ${id}`, `run "flutter test ${files.join(' ')}" in host.dir yourself; doctor runs one Flutter command at a time and a second concurrent run is the usual cause`, childMs);
       if (r.error || r.status !== 0) throw new Error(`flutter test failed for ${id}${childTail(r)}`);
     });

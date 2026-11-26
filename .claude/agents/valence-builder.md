@@ -92,7 +92,7 @@ Your job is the part that is genuinely this app's:
 ## Web layer checklist
 
 - **The client is `@getvalence/bridge`.** `npm install` it (the wizard usually declares it already) and import `call`, `has`, `on`, `ready`, `connect`, `installShim` and `BridgeError` from the generated `bridge.g.ts`, never from the package directly: the generated file is what types a call against this app's schema. Never write a client of your own.
-- **Static SPA build** with relative-safe asset paths. Root layout: `connect()` on start, then `ready()` after the first meaningful paint.
+- **Static SPA build** with root-absolute asset URLs (Vite `base: '/'`, never `./`), so a reload on a nested route still finds them (§3). Root layout: `connect()` on start, then `ready()` after the first meaningful paint.
 - **`shim.ts`:** browser fallbacks for the methods that make sense on the web, typed as the generated `AppShim` so a wrong signature does not compile, and installed with `installShim`. Everything else throws `E_UNSUPPORTED`.
 - **No CSP meta.** The host sends the signed `manifest.csp` as a header. Put any API origins other than `sync.base` in `valence.config.json` `web.connect`.
 - **No iframes to other origins.** Video, payment and similar embeds open externally.
