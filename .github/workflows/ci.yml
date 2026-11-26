@@ -58,8 +58,15 @@ jobs:
           flutter pub get
           flutter analyze --fatal-infos
           flutter test
+      # The example runs the generated dispatcher, including the bridge fuzz test.
+      - name: example
+        working-directory: packages/valence/example
+        run: |
+          flutter pub get
+          flutter test
       - name: valence_push
         working-directory: packages/valence_push
         run: |
           flutter pub get
           flutter analyze --fatal-infos
+          flutter test
