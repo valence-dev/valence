@@ -256,8 +256,11 @@ class _ValenceAppState extends State<ValenceApp>
         _valence.config.updateInterval, (_) => unawaited(_checkForUpdate()));
     _connectivity =
         Connectivity().onConnectivityChanged.listen(_onConnectivity);
-    // The stream only reports *changes*, so without this a page that asks `app.state()` on a cold start
-    // reads the optimistic default rather than an answer (§4.6).
+    // The stream is not guaranteed to report the current state, so without this a page that asks
+    // `app.state()` on a cold start reads the optimistic default rather than an answer (§4.6).
+    // ponytail: Android does replay the current state on subscribe, so a cold start runs one extra
+    // pointer fetch and one lease-refused sync after the start-up pair. Filter that replay only if the
+    // request cost shows up; skipping a report risks missing a real reconnect.
     unawaited(_readConnectivity());
   }
 
