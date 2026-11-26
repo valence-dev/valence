@@ -803,6 +803,15 @@ test('_host/ is reserved for the host, and a relative asset base in the entry pa
   html('<script type="module" src="/_app/a.js"></script><link rel="icon" href="data:,"><img src="//cdn/x.png"><a href="#x">');
   assert.ok(!bundle({ root, cfg, key, now: NOW }).warnings.some((x) => x.includes('relative URL')));
 
+  // A multi-page build: the host serves the entry for every route, so the other pages warn. 404.html does not.
+  writeFileSync(join(root, 'web', 'build', '404.html'), '');
+  assert.ok(!bundle({ root, cfg, key, now: NOW }).warnings.some((x) => x.includes('HTML page')));
+  mkdirSync(join(root, 'web', 'build', 'events', 'a'), { recursive: true });
+  writeFileSync(join(root, 'web', 'build', 'events', 'a', 'index.html'), '');
+  writeFileSync(join(root, 'web', 'build', 'about.html'), '');
+  const mpa = bundle({ root, cfg, key, now: NOW }).warnings.find((x) => x.includes('HTML page'));
+  assert.match(mpa, /2 HTML pages besides index\.html \((about\.html, events\/a\/index\.html|events\/a\/index\.html, about\.html)\)/);
+
   // The server answers /_host/ before the manifest lookup, so a bundle file under it could never be reached.
   mkdirSync(join(root, 'web', 'build', '_host'));
   writeFileSync(join(root, 'web', 'build', '_host', 'x.js'), '');

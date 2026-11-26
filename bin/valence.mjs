@@ -416,6 +416,7 @@ async function init(o) {
       ok('web app', `${web.dir}  ${web.framework} ${web.version} · ${web.pm} · builds to ${web.out}`);
       if (!web.staticExport && web.framework === 'SvelteKit') warn('sveltekit', `no @sveltejs/adapter-static; install it with fallback: 'index.html' and set ssr = false in the root layout, so the build writes ${web.out}/ (valence needs static files)`);
       else if (!web.staticExport) warn('next.js', `no output: 'export' in next.config; add it so the build writes ${web.out}/ (valence needs static files)`);
+      if (web.framework === 'Astro') warn('astro', 'Astro builds one HTML file per page, but inside the app every URL gets index.html, so a plain link to another page shows the home page. Route on the client from one page (getvalence.dev/docs/guides/web-app/)');
       if (!web.stableBuild) warn('rollback', web.framework === 'Next.js'
         ? "no generateBuildId in next.config; Next stamps a random build id into every page, so rebuilding the same commit re-downloads them. Add generateBuildId: () => execSync('git rev-parse HEAD').toString().trim() (getvalence.dev/docs/guides/releasing/#roll-back)"
         : 'no kit.version.name in svelte.config; SvelteKit stamps the build time, so rebuilding the same commit changes files. Set it to the git commit (getvalence.dev/docs/guides/releasing/#roll-back)');

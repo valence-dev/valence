@@ -721,6 +721,17 @@ export function bundle({ root, cfg, key, builtin = false, store = false, rebasel
     );
   }
 
+  // §3: an extensionless URL that is not a file gets the entry page, at any depth, and only the entry page
+  // gets the nonce and CSP. A multi-page build (Astro's default, a Next.js export) has an HTML file per
+  // route that a link or a reload never reaches, so the app shows the entry page there instead.
+  const pages = Object.keys(files).filter((f) => f !== entry && /\.html?$/i.test(f) && !/(^|\/)(404|500)\.html?$/i.test(f));
+  if (pages.length) {
+    const shown = pages.slice(0, 3).join(', ') + (pages.length > 3 ? ', …' : '');
+    warnings.push(
+      `this build has ${pages.length} HTML page${pages.length > 1 ? 's' : ''} besides ${entry} (${shown}). Inside the app the host serves ${entry} for every route (contracts §3), so a link or a reload on /events/a/ shows ${entry}, never events/a/index.html. That is right for a single-page app whose router reads the URL; a multi-page site, where each link loads another HTML file, needs client-side routing from one entry page.`,
+    );
+  }
+
   // §3: the host makes a bundle file's bytes revalidate by serving them no-cache with the hash as an
   // ETag. A service worker answering from Cache Storage is never asked, so a precache-first build puts
   // the stale-bundle hole straight back: the new bundle activates, the old page renders, and it calls
