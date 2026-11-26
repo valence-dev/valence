@@ -18,6 +18,7 @@ Valence is an open-source architecture for shipping a web UI inside a Flutter ap
 | `packages/valence_push/` | Opt-in Firebase Messaging transport. Core-only hosts do not depend on Firebase. |
 | `packages/bridge/` | **The web bridge client**, published on npm as `@getvalence/bridge`. The whole of §4.3, zero runtime dependencies, ESM with `.d.ts`. |
 | `docs/research.md` | Landscape research (2026-10-14): store policies quoted, OTA, SDUI and hybrid options, and the gap Valence fills. Not shipped in the npm package. |
+| `docs/migrating-from-0.3.md`, `docs/migrating-to-0.5.md` | Upgrade guides for adopters. A release that changes what a host must do updates the matching guide and the site copy. |
 | *(separate repo)* `valence-site` | The website and the developer docs (Astro + Starlight), kept in their own repo next to this one. Its release console models contracts §2.3, §2.4 and §5.3, and its docs pages restate this spec: when behaviour changes here, update them there. |
 | `LICENSE` | MIT |
 | `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | How to contribute, conduct, and private vulnerability reporting |
