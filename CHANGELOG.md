@@ -38,6 +38,10 @@ docs and wizard gaps, fixed below.
   `notify.tapped`, so a page that acted on taps did it twice (0.4 had this too). It now arrives only
   through `notify.initial`. If your page deduplicated it itself, that code is now harmless.
 - **The host's own screens in dark mode** now set light status-bar icons, and a long error scrolls.
+- **Supabase guide.** supabase-js, row-level security and Google sign-in through the system browser were
+  tested inside a Valence app on Android, including a sign-in that survives Android killing the app
+  mid-login. The new guide covers secure session storage, the deep-link return, handing the token to the
+  host, and signing out in the right order. Offline sync with Supabase still needs your own adapter.
 - **One entry page.** The app serves your entry page for every URL, so a multi-page build shows the
   home page for every link. `valence bundle` now warns when the build has other HTML pages, and the
   wizard warns when it detects Astro, which builds one HTML file per page by default. Route on the client.
