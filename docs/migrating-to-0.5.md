@@ -136,7 +136,8 @@ node valence/valence.mjs codegen
 ```
 
 This rewrites `compileSdk = flutter.compileSdkVersion` to `compileSdk = 37`, adds the desugaring lines if
-they are missing, and warns if AGP or Gradle is still below the floor. It never edits AGP or the Gradle
+they are missing, adds the `INTERNET` permission to `android/app/src/main/AndroidManifest.xml` if it is
+missing (a release build cannot start its local server without it), and warns if AGP or Gradle is still below the floor. It never edits AGP or the Gradle
 wrapper itself.
 
 ## 6. Check with doctor
@@ -145,7 +146,9 @@ wrapper itself.
 node valence/valence.mjs doctor
 ```
 
-Two rows cover this upgrade:
+Three rows cover this upgrade:
+
+- `Android internet` — `PASS` once the main manifest declares `INTERNET`.
 
 - `Android desugaring` — `PASS` once the two desugaring lines are present.
 - `Android build` — `PASS` reads `compileSdk 37, AGP 9.1.1, Gradle 9.3.1` (or your newer values). It is

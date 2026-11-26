@@ -30,6 +30,14 @@ docs and wizard gaps, fixed below.
 - **Wizard and doctor.** The wizard's last screen now shows the path for people not using Claude Code.
   When doctor can't find Flutter, it says where it looked. The skill now asks for root-absolute asset
   URLs (Vite `base: '/'`) instead of the vaguer "relative-safe" wording.
+- **Release builds need `INTERNET` in the main manifest.** `flutter create` declares it only for debug
+  builds, so a release build following the docs showed only a start-up error. `valence codegen` now adds
+  it to `android/app/src/main/AndroidManifest.xml`, doctor has an `Android internet` row, and the host's
+  error names the missing permission.
+- **A notification tap that starts the app arrives once.** On Android it also reached the page as a live
+  `notify.tapped`, so a page that acted on taps did it twice (0.4 had this too). It now arrives only
+  through `notify.initial`. If your page deduplicated it itself, that code is now harmless.
+- **The host's own screens in dark mode** now set light status-bar icons, and a long error scrolls.
 - **One entry page.** The app serves your entry page for every URL, so a multi-page build shows the
   home page for every link. `valence bundle` now warns when the build has other HTML pages, and the
   wizard warns when it detects Astro, which builds one HTML file per page by default. Route on the client.
