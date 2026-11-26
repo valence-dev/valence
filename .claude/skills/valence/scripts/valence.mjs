@@ -1935,6 +1935,27 @@ function ensureDesugaring(root, cfg) {
   return warning ? { written: g.file, warning } : { written: g.file };
 }
 
+// The host serves the bundle from a loopback socket, and Android refuses any socket without INTERNET.
+// \`flutter create\` declares it only in the debug and profile manifests, so a release build that skips
+// this cannot start (§6.1). It is every host's, so codegen adds it like desugaring.
+const INTERNET_LINE = '<uses-permission android:name="android.permission.INTERNET"/>';
+export function internetPermission(root, cfg) {
+  const file = join(root, cfg.host.dir, 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
+  if (!existsSync(file)) return undefined;
+  const text = readFileSync(file, 'utf8');
+  const has = /<uses-permission\s+android:name\s*=\s*["']android\.permission\.INTERNET["']/.test(text.replace(/<!--[\s\S]*?-->/g, ''));
+  return { file, text, has };
+}
+
+function ensureInternet(root, cfg) {
+  const m = internetPermission(root, cfg);
+  if (!m || m.has) return {};
+  const eol = m.text.includes('\r\n') ? '\r\n' : '\n';
+  if (!/<manifest\b[^>]*>/.test(m.text)) return { warning: `${m.file} has no <manifest> element; add ${INTERNET_LINE} to it` };
+  writeFileSync(m.file, m.text.replace(/<manifest\b[^>]*>/, (tag) => `${tag}${eol}    ${INTERNET_LINE}`));
+  return { written: m.file };
+}
+
 export function codegen({ root, cfg, check = false }) {
   const p = paths(root, cfg);
   const { schema: raw, owners, namespaces } = loadPluginSchema(root, cfg);
@@ -1959,9 +1980,11 @@ export function codegen({ root, cfg, check = false }) {
   for (const [f, text] of outputs) if (stale.includes(f)) writeFile(f, text);
   const gradle = ensureDesugaring(root, cfg);
   if (gradle.warning) warnings.push(gradle.warning);
+  const internet = ensureInternet(root, cfg);
+  if (internet.warning) warnings.push(internet.warning);
   const build = androidBuild(root, cfg);
   if (build?.wrong.length) warnings.push(`Android build: ${build.wrong.join('; ')}; flutter_local_notifications needs compileSdk ${ANDROID_FLOOR.compileSdk}, AGP ${ANDROID_FLOOR.agp} and Gradle ${ANDROID_FLOOR.gradle} (contracts §6.1)`);
-  return { written: gradle.written ? [...stale, gradle.written] : stale, warnings };
+  return { written: [...stale, gradle.written, internet.written].filter(Boolean), warnings };
 }
 
 // ---------- CLI ----------
@@ -2357,6 +2380,12 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
     if (b.unread.length) return `could not read ${b.unread.join(', ')}; check compileSdk ${ANDROID_FLOOR.compileSdk}+, AGP ${ANDROID_FLOOR.agp}+ and Gradle ${ANDROID_FLOOR.gradle}+ by hand`;
     return { msg: `compileSdk ${b.found.compileSdk}, AGP ${b.found.agp}, Gradle ${b.found.gradle}` };
   }, `run valence codegen, which sets compileSdk = ${ANDROID_FLOOR.compileSdk} over the flutter create default; set com.android.application to version "${ANDROID_FLOOR.agp}" in <host>/android/settings.gradle.kts and gradle-${ANDROID_FLOOR.gradle}-all.zip in <host>/android/gradle/wrapper/gradle-wrapper.properties`);
+  await check('Android internet', () => {
+    const m = internetPermission(root, cfg);
+    if (!m) return 'Android manifest absent; INTERNET permission not checked';
+    if (!m.has) throw new Error(`${relative(root, m.file)} does not declare INTERNET; a release build cannot open the loopback server and shows only a start-up error (debug builds hide this, because flutter create declares it there)`);
+    return { msg: 'declared in the main manifest' };
+  }, `run valence codegen, which adds it, or add ${INTERNET_LINE} inside <manifest> in <host>/android/app/src/main/AndroidManifest.xml`);
   await check('signing keys in Git', () => {
     if (insideGit(keyDir)) throw new Error('configured signing-key directory resolves inside a Git work tree');
     const repo = git(['rev-parse', '--show-toplevel'], childMs);

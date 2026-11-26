@@ -501,8 +501,9 @@ async function init(o) {
       dim('  That starts a new session, which matters: the skill was installed during this run, so'),
       dim('  /valence is not registered in a session that is already open.'),
       '',
-      `  ${bold('Not using Claude Code?')} Add the two runtimes above, then follow`,
-      '  https://getvalence.dev/docs/getting-started/quick-start/#set-up-the-host',
+      `  ${bold('Not using Claude Code?')} If there is no Flutter host yet, run ${bold(`flutter create ${cfg.host.dir}`)} here, set`,
+      `  applicationId = "${cfg.appId}" in ${cfg.host.dir}/android/app/build.gradle.kts and run codegen again. Then add the two`,
+      '  runtimes above and follow https://getvalence.dev/docs/getting-started/quick-start/#set-up-the-host',
       `  Another coding agent can follow ${skillBase(root, o.global) === join(homedir(), '.claude') ? '~/.claude' : '.claude'}/skills/valence/SKILL.md the same way.`,
       '',
     ].join('\n');

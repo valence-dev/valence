@@ -1533,6 +1533,24 @@ test('codegen raises the flutter create compileSdk and doctor holds the notifica
   }
 });
 
+test('codegen adds INTERNET to the main manifest and doctor fails without it', async () => {
+  const { root, cfg } = fixture();
+  const row = async () => (await diagnose({ root, cfg })).find(([, n]) => n === 'Android internet');
+  assert.equal((await row())[0], 'WARN');
+  const dir = join(root, cfg.host.dir, 'android', 'app', 'src', 'main');
+  mkdirSync(dir, { recursive: true });
+  const file = join(dir, 'AndroidManifest.xml');
+  // flutter create's main manifest: INTERNET only in debug/profile, plus a commented-out one that must not count.
+  const created = '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\r\n    <!-- <uses-permission android:name="android.permission.INTERNET"/> -->\r\n    <application android:label="mobile"/>\r\n</manifest>\r\n';
+  writeFileSync(file, created);
+  assert.equal((await row())[0], 'FAIL');
+  const gen = codegen({ root, cfg });
+  assert.ok(gen.written.includes(file));
+  assert.equal(readFileSync(file, 'utf8'), created.replace('android">\r\n', 'android">\r\n    <uses-permission android:name="android.permission.INTERNET"/>\r\n'));
+  assert.deepEqual((await row()).slice(0, 2), ['PASS', 'Android internet']);
+  assert.ok(!codegen({ root, cfg }).written.includes(file), 'a rerun changes nothing');
+});
+
 test('doctor checks that pubspec.yaml declares the bundle assets', async () => {
   const { root, cfg, key } = fixture();
   codegen({ root, cfg });
