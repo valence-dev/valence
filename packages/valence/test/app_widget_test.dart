@@ -818,6 +818,21 @@ void main() {
     expect(runtime.stateRestore(), isNull);
   });
 
+  testWidgets('the host\'s own screens set light status icons in dark mode',
+      (tester) async {
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+    addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+    await mount(tester, blocked: true);
+    expect(find.text('Loading…'), findsOneWidget);
+    final region = tester.widget<AnnotatedRegion<SystemUiOverlayStyle>>(find
+        .ancestor(
+            of: find.text('Loading…'),
+            matching: find.byType(AnnotatedRegion<SystemUiOverlayStyle>))
+        .first);
+    expect(region.value.statusBarIconBrightness, Brightness.light);
+    webview.configureGate!.complete();
+  });
+
   testWidgets(
       'I-61: resume during startup changes state but starts no work or event',
       (tester) async {

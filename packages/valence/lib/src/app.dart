@@ -969,19 +969,32 @@ class _ValenceAppState extends State<ValenceApp>
   // ScaffoldMessenger types: a Material widget here would ignore the app's theme under the other kind
   // and throw on ScaffoldMessenger.of. Colours follow the effective appearance instead.
   // ponytail: a bare look; an app that wants its brand here passes `loading` and `onError`.
+  /// Transparent system bars whose icons contrast with the page (or the host's own screen) behind them.
+  static SystemUiOverlayStyle _overlay(bool dark) =>
+      (dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark).copyWith(
+        statusBarColor: const Color(0x00000000),
+        systemNavigationBarColor: const Color(0x00000000),
+        systemNavigationBarIconBrightness: dark ? Brightness.light : Brightness.dark,
+      );
+
   Widget _surface(BuildContext context, Widget child) {
     final dark = (_appearance ?? _systemAppearance()).darkMode;
     final ink = dark ? const Color(0xFFECEFF4) : const Color(0xFF1C1F24);
-    return ColoredBox(
-      color: dark ? const Color(0xFF16181C) : const Color(0xFFFFFFFF),
-      child: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: DefaultTextStyle(
-              style: TextStyle(color: ink, fontSize: 16, height: 1.4),
-              textAlign: TextAlign.center,
-              child: child,
+    // The status bar follows this screen too, or its icons stay dark on the dark background.
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: _overlay(dark),
+      child: ColoredBox(
+        color: dark ? const Color(0xFF16181C) : const Color(0xFFFFFFFF),
+        child: SafeArea(
+          child: Center(
+            // A long error at the largest font size scrolls instead of overflowing.
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: DefaultTextStyle(
+                style: TextStyle(color: ink, fontSize: 16, height: 1.4),
+                textAlign: TextAlign.center,
+                child: child,
+              ),
             ),
           ),
         ),
@@ -1067,17 +1080,7 @@ class _ValenceAppState extends State<ValenceApp>
         }
       },
       child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: ((_appearance ?? _systemAppearance()).darkMode
-                ? SystemUiOverlayStyle.light
-                : SystemUiOverlayStyle.dark)
-            .copyWith(
-          statusBarColor: const Color(0x00000000),
-          systemNavigationBarColor: const Color(0x00000000),
-          systemNavigationBarIconBrightness:
-              (_appearance ?? _systemAppearance()).darkMode
-                  ? Brightness.light
-                  : Brightness.dark,
-        ),
+        value: _overlay((_appearance ?? _systemAppearance()).darkMode),
         // What Scaffold's resizeToAvoidBottomInset did: keep the page above the keyboard, so a
         // focused input is not hidden behind it.
         child: Padding(
