@@ -30,6 +30,9 @@ docs and wizard gaps, fixed below.
 - **Wizard and doctor.** The wizard's last screen now shows the path for people not using Claude Code.
   When doctor can't find Flutter, it says where it looked. The skill now asks for root-absolute asset
   URLs (Vite `base: '/'`) instead of the vaguer "relative-safe" wording.
+- **One entry page.** The app serves your entry page for every URL, so a multi-page build shows the
+  home page for every link. `valence bundle` now warns when the build has other HTML pages, and the
+  wizard warns when it detects Astro, which builds one HTML file per page by default. Route on the client.
 
 ## 0.4.0-beta.2 (2026-11-24)
 
