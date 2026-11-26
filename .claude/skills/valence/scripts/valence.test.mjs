@@ -1504,6 +1504,24 @@ test('codegen raises the flutter create compileSdk and doctor holds the notifica
   const unread = await row();
   assert.deepEqual(unread.slice(0, 2), ['WARN', 'Android build']);
   assert.match(unread[2], /could not read compileSdk \(libs\.versions\.sdk\.get\(\)\)/);
+  // A pre-release classpath AGP is unreadable, as it is in plugins {}, never read as the final version.
+  writeFileSync(groovy, old.replace('compileSdkVersion 35', 'compileSdkVersion 37'));
+  writeFileSync(join(android, 'build.gradle'), "buildscript {\n    dependencies {\n        classpath 'com.android.tools.build:gradle:9.1.1-rc01'\n    }\n}\n");
+  assert.match((await row())[2], /could not read the Android Gradle plugin version/);
+  rmSync(groovy);
+  // The live assignment is rewritten, not a commented-out copy above it.
+  const commented = created.replace('android {\n', 'android {\n    /*\n    compileSdk = flutter.compileSdkVersion\n    */\n');
+  writeFileSync(kts, commented);
+  codegen({ root, cfg });
+  assert.equal(readFileSync(kts, 'utf8'), commented.replace('    compileSdk = flutter.compileSdkVersion\n    compileOptions', '    compileSdk = 37\n    compileOptions'));
+  // A desugaring problem codegen only reports does not drop the compileSdk rewrite.
+  for (const broken of [created.replace(/    compileOptions \{\n.*\n    \}\n/, ''), created.replace('= true', '= false')]) {
+    writeFileSync(kts, broken);
+    const gen2 = codegen({ root, cfg });
+    assert.equal(readFileSync(kts, 'utf8'), broken.replace('flutter.compileSdkVersion', '37'));
+    assert.ok(gen2.written.includes(kts));
+    assert.match(gen2.warnings.join(' '), /compileOptions block|set to false/);
+  }
 });
 
 test('doctor checks that pubspec.yaml declares the bundle assets', async () => {

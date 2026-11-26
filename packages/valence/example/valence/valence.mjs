@@ -1874,7 +1874,7 @@ export function androidBuild(root, cfg) {
   else if (Number(sdk) < ANDROID_FLOOR.compileSdk) wrong.push(`compileSdk ${sdk} is below ${ANDROID_FLOOR.compileSdk}`);
   const build = ['settings.gradle.kts', 'settings.gradle', 'build.gradle.kts', 'build.gradle'].map((f) => readCode(join(android, f))).join('\n');
   const agp = (/id\s*\(?\s*["']com\.android\.application["']\s*\)?\s*version\s*\(?\s*["']([\d.]+)["']/.exec(build)
-    ?? /com\.android\.tools\.build:gradle:([\d.]+)/.exec(build))?.[1];
+    ?? /com\.android\.tools\.build:gradle:([\d.]+)["']/.exec(build))?.[1];
   if (!agp) unread.push('the Android Gradle plugin version');
   else if (below(agp, ANDROID_FLOOR.agp)) wrong.push(`Android Gradle plugin ${agp} is below ${ANDROID_FLOOR.agp}`);
   const wrapper = join(android, 'gradle', 'wrapper', 'gradle-wrapper.properties');
@@ -1888,29 +1888,40 @@ export function androidBuild(root, cfg) {
 // block, an optional top-level dependencies block, `compileSdk = flutter.compileSdkVersion`); anything
 // else is left alone and reported, and doctor's "Android desugaring" and "Android build" rows keep
 // failing until a person fixes it. AGP and the Gradle wrapper are toolchain choices: reported, not edited.
+// Comments blanked to spaces, so an offset found here is the same offset in the original text.
+const maskComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' ')).replace(/(?<![:"'])\/\/.*$/gm, (m) => ' '.repeat(m.length));
+
+// The template default is nobody's choice, so it is the one compileSdk value codegen rewrites. It
+// rewrites the live assignment, never a commented-out copy above it.
+function rewriteCompileSdk(text) {
+  const m = COMPILE_SDK.exec(maskComments(text));
+  if (m?.[2] !== 'flutter.compileSdkVersion') return text;
+  const at = m.index + m[1].length;
+  return text.slice(0, at) + ANDROID_FLOOR.compileSdk + text.slice(at + m[2].length);
+}
+
 function ensureDesugaring(root, cfg) {
   const g = desugaring(root, cfg);
   if (!g) return {};
-  // A value somebody set on purpose is reported, never overwritten.
-  if (g.wrong.length) return { warning: `${g.file}: ${g.wrong.join('; ')}; set ${g.d.onLine} and ${g.d.depLine}` };
-  let text = g.text;
-  // The template default is nobody's choice, so it is the one compileSdk value codegen rewrites.
-  if (COMPILE_SDK.exec(gradleCode(text))?.[2] === 'flutter.compileSdkVersion') {
-    text = text.replace(/^([ \t]*compileSdk(?:Version)?\s*(?:=\s*)?)flutter\.compileSdkVersion\b/m, (m, lead) => `${lead}${ANDROID_FLOOR.compileSdk}`);
-  }
+  // The compileSdk rewrite stands on its own: a desugaring problem below must not drop it.
+  let text = rewriteCompileSdk(g.text);
+  let warning;
   const eol = text.includes('\r\n') ? '\r\n' : '\n';
-  if (g.missing.includes(g.d.onLine)) {
-    if (!/^([ \t]*)compileOptions\s*\{/m.test(text)) return { warning: `${g.file} has no compileOptions block; add ${g.d.onLine} to it and ${g.d.depLine} to dependencies` };
-    text = text.replace(/^([ \t]*)compileOptions\s*\{/m, (m, ind) => `${m}${eol}${ind}    ${g.d.onLine}`);
+  // A value somebody set on purpose is reported, never overwritten.
+  if (g.wrong.length) warning = `${g.file}: ${g.wrong.join('; ')}; set ${g.d.onLine} and ${g.d.depLine}`;
+  else if (g.missing.includes(g.d.onLine) && !/^([ \t]*)compileOptions\s*\{/m.test(text)) {
+    warning = `${g.file} has no compileOptions block; add ${g.d.onLine} to it and ${g.d.depLine} to dependencies`;
+  } else {
+    if (g.missing.includes(g.d.onLine)) text = text.replace(/^([ \t]*)compileOptions\s*\{/m, (m, ind) => `${m}${eol}${ind}    ${g.d.onLine}`);
+    if (g.missing.includes(g.d.depLine)) {
+      text = /^dependencies\s*\{/m.test(text)
+        ? text.replace(/^dependencies\s*\{/m, (m) => `${m}${eol}    ${g.d.depLine}`)
+        : `${text.replace(/\s*$/, eol)}${eol}dependencies {${eol}    ${g.d.depLine}${eol}}${eol}`;
+    }
   }
-  if (g.missing.includes(g.d.depLine)) {
-    text = /^dependencies\s*\{/m.test(text)
-      ? text.replace(/^dependencies\s*\{/m, (m) => `${m}${eol}    ${g.d.depLine}`)
-      : `${text.replace(/\s*$/, eol)}${eol}dependencies {${eol}    ${g.d.depLine}${eol}}${eol}`;
-  }
-  if (text === g.text) return {};
+  if (text === g.text) return warning ? { warning } : {};
   writeFileSync(g.file, text);
-  return { written: g.file };
+  return warning ? { written: g.file, warning } : { written: g.file };
 }
 
 export function codegen({ root, cfg, check = false }) {
