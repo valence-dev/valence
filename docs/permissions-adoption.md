@@ -1,9 +1,9 @@
 # Permissions adoption wording - 2026-11-02
 
-App-c iteration 56 identifies a documentation contradiction: the permissions guide
+reference app C iteration 56 identifies a documentation contradiction: the permissions guide
 said to copy since 10 rather than the app's next number, while the shipped-schema
 additive rule refuses new names at or below the shipped version. Read both test
-apps' findings and newest completed reports, Kundalini 18 / app-c 56, read-only.
+apps' findings and newest completed reports, reference app B 18 / reference app C 56, read-only.
 
 Decision: preserve shipped contracts and user data before convenience. New
 permission methods/events use since >= max(10, shipped store schema version + 1),

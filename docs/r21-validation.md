@@ -78,9 +78,8 @@ command and retains its restricted hostname grammar. Source/vendored copies
 match. No confirmed defect remains in this review; independent acceptance
 belongs to the improver.
 
-Both app findings were read-only inputs, with Kundalini iteration 12 and app-a
+Both app findings were read-only inputs, with reference app C iteration 12 and reference app A
 iteration 11. No test-app, snapshot or other worktree was modified. No new
 emulator or physical-LAN HMR run; the process regression uses a harmless
 argument-recording npm child. Runtime proxy coverage is separate from a
-network attacker simulation. Android builds are compilation evidence. iOS
-remains experimental and untested. Nothing was pushed or published.
+network attacker simulation. Android builds are compilation evidence. iOS is experimental and untested. Nothing was pushed or published.

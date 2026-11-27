@@ -73,8 +73,7 @@ The example was force-stopped, only reverse 18783 removed, the server stopped an
 the emulator lock released. No test-app repository or process was changed.
 
 This establishes the behavior on this Android emulator and current Flutter
-transport. It does not establish behavior on every platform/version. iOS remains
-experimental and untested. This is a native HTTP probe, not new evidence for HMR,
+transport. It does not establish behavior on every platform/version. iOS is experimental and untested. This is a native HTTP probe, not new evidence for HMR,
 OTA rollback, push delivery or app acceptance.
 
 ## Regression and review
@@ -94,8 +93,8 @@ pass. The diagnostic entry point is opt-in, uses only a synthetic token and is
 not imported by the normal application. No independent reviewer ran in this
 builder session; the branch awaits the improver's review.
 
-Both app findings and newest reports were consulted read-only: Kundalini
-iteration 12 and app-a iteration 10. Their snapshot mismatch remains separate;
+Both app findings and newest reports were consulted read-only: reference app C
+iteration 12 and reference app A iteration 10. Their snapshot mismatch remains separate;
 no snapshot distribution or app compatibility repair is claimed here.
 
 ## Gates

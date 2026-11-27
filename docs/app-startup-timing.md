@@ -16,14 +16,14 @@ the source guide and website guide agree. The reviewer checklist applies here to
 diagnostic privacy, preserved error behavior and separation from OTA readiness;
 no executable security path changed.
 
-Read both findings inventories and newest reports: Kundalini 23 and App C 155.
+Read both findings inventories and newest reports: reference app B 23 and reference app C 155.
 All must-have and original queue items are already done; this is an R29
-documentation follow-up. App C's raw app-phases-initial.txt records runtime open
+documentation follow-up. reference app C's raw app-phases-initial.txt records runtime open
 at 68371ms, then named app setup and a later firstFrame marker. Those boundaries
 do not identify a lock owner or ANR cause. The requested example closes the guide
 gap, not the startup failure.
 
-App C's saved final-artifact-audit.json has 25 passing checks and fullAcceptance
+reference app C's saved final-artifact-audit.json has 25 passing checks and fullAcceptance
 false. Independently rehashed both archived APKs and verified the five embedded
 files in each against their manifest hashes/sizes (builtin 1794126683).
 Doctor's JSON rows count 17 PASS / 10 WARN / zero FAIL. Raw worker log lines show
@@ -41,7 +41,7 @@ F-56 is app-owned and repaired in that repo; no source or durable URL was change
 here. F-55's stale migration instruction is already corrected by the included
 migration-dependencies branch. Initial startup/renderer/host low-memory failures
 remain separate from recovered checks. Canonical-package fresh installation and
-Kundalini F-83's rebuilt-host device recheck remain open. F-57 is harness feedback;
+reference app B F-83's rebuilt-host device recheck remain open. F-57 is harness feedback;
 the shared harness was not modified. Test app repos were read only.
 
 ## Validation
@@ -62,6 +62,5 @@ Flutter commands ran serially.
 
 The APK build retains its existing Android Kotlin migration warning.
 
-No new emulator acceptance was attempted for this documentation change. iOS
-remains experimental and untested. S1 stays parked, S2 needs Play, S10/P1 remain
+No new emulator acceptance was attempted for this documentation change. iOS is experimental and untested. S1 stays parked, S2 needs Play, S10/P1 remain
 deferred. Nothing was published or pushed.

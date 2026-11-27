@@ -53,4 +53,4 @@ policy transitions; without an attached host callback the RPC returns
 E_UNSUPPORTED. Calling the updater alone does not enforce the native block.
 
 Android widget/runtime and generated-code tests exercise the path. Emulator
-acceptance is separate. iOS remains experimental and untested.
+acceptance is separate. iOS is experimental and untested.

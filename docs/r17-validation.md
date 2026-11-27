@@ -22,8 +22,8 @@ accessibility guides to identify the current template schema, and refreshed the
 example CLI so it also carries upstream plugin-path containment. Source and
 vendored CLI bytes now match.
 
-Read both app findings and latest reports read-only: Kundalini iteration 12,
-app-a iteration 10. K F-52/A F-32 still describe mismatched supplied snapshots;
+Read both app findings and latest reports read-only: reference app C iteration 12,
+reference app A iteration 10. K F-52/A F-32 still describe mismatched supplied snapshots;
 the current prepack regression passes, but these app artifacts were not replaced.
 Anonymous-401 success reporting (R26), reconnect update checks (R24), seed marker
 locking (R25) and retention remain separate work. Durable reason describes the
@@ -61,7 +61,7 @@ confirmed defect found in this refresh. This was a local checklist review;
 Claude's improver still owns independent acceptance and merging.
 
 No new emulator run. Firebase delivery still needs the maintainer project;
-iOS remains experimental and untested. Neither test app nor another builder's
+iOS is experimental and untested. Neither test app nor another builder's
 worktree was modified. No push, publication, version bump or shared-branch merge.
 Only R17's Status cell is edited in the shared roadmap; this file carries the note.
 
@@ -142,7 +142,7 @@ warnings; these did not fail the build. No dependency upgrades were made.
 No new emulator run or R17 release APK. Integration's three-ABI release exclusion
 evidence remains in docs/integration.md; R17 does not change those compile-time
 guards. Both full app findings and newest reports were considered read-only
-(Kundalini iteration 11, app-a iteration 10). This does not replace their harness
-snapshots or close app-a's reported snapshot mismatch. Firebase delivery still
-needs the maintainer's project. iOS remains experimental and untested.
+(reference app C iteration 11, reference app A iteration 10). This does not replace their harness
+snapshots or close reference app A's reported snapshot mismatch. Firebase delivery still
+needs the maintainer's project. iOS is experimental and untested.
 No pushes, publications, shared-branch merges or test-app writes.

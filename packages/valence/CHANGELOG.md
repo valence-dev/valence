@@ -589,7 +589,7 @@ Schema 8 adds `state.save({json})` and `state.restore()` for a task-local UI blo
 
 ### permissions
 
-- Added schema-9 permission checks, serialized foreground requests, app settings and resume changes. Hosts opt in with `permissions.kinds`, native declarations, codegen and a store build. Android checks preserve uncertain denial; iOS remains experimental and untested.
+- Added schema-9 permission checks, serialized foreground requests, app settings and resume changes. Hosts opt in with `permissions.kinds`, native declarations, codegen and a store build. Android checks preserve uncertain denial; iOS is experimental and untested.
 
 ### local reminders
 
@@ -598,21 +598,21 @@ Schema 11 adds built-in local reminders: notify.schedule/cancel/pending/channels
 
 ### remote push
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
 
 ### image sharing
 
 `Valence.shareImage` backs schema-14 `share.image` with capped base64 input or a
 re-verified active signed bundle image, filename and caption validation, and native
 PNG/JPEG sharing through `share_plus`. Selection is not proof of delivery.
-iOS remains experimental and untested. Add the method through codegen and a store
+iOS is experimental and untested. Add the method through codegen and a store
 build; existing custom pre-14 declarations retain their own handlers.
 
 Sync correctness: pull cursors advance only through returned rows, never push echoes or a later server-head max. Fresh pairs satisfy OTA activation only after all pages or static chunks complete. Progress resumes after an interruption. Pending publication retains the data lease; GC protects in-flight manifests and retries stale snapshots. Step 7 waits up to five seconds for ordinary sync. Outbox operations use a durable insertion ordinal; database version 2 migrates legacy queued ids, values and deletes without changing bucket cursors or user rows.
 
 ### native HTTP and REST adapter
 
-Call your API with `http.request` (schema 4): the host enforces compiled `http.origins` origins, attaches the stored token, and never follows redirects. Existing hosts need codegen and a store build to add the capability or origins. A reference Node REST-to-sync adapter demonstrates durable pagination, tombstones and idempotent pushes. iOS remains experimental and untested.
+Call your API with `http.request` (schema 4): the host enforces compiled `http.origins` origins, attaches the stored token, and never follows redirects. Existing hosts need codegen and a store build to add the capability or origins. A reference Node REST-to-sync adapter demonstrates durable pagination, tombstones and idempotent pushes. iOS is experimental and untested.
 ### account switching is safe
 
 Schema version 13. `Valence.authSetToken` takes `account` and `discardPending`, and `Valence.authAccount()`
@@ -626,8 +626,7 @@ account's rows back under the previous account's token. Only `null` is the sign-
 clears the token and no data. A refresh of the recorded id, a first id with none recorded, and an app
 that never passes one all clear nothing, so a host upgrade cannot wipe an existing user's data. An
 account id the Keystore cannot return throws `E_INTERNAL` instead of reading as "none recorded", which
-would have made the next sign-in an adoption over the previous account's rows. iOS remains experimental
-and untested.
+would have made the next sign-in an adoption over the previous account's rows. iOS is experimental and untested.
 
 ### lifecycle, connectivity and update status
 
@@ -639,7 +638,7 @@ value at start-up rather than waiting for a change; and it emits `sync.done` wit
 `Valence.appState()` and `Valence.bundleStatus()` back the new `app.state` and `bundle.status`
 built-ins and never start a request. Every stop in the §2.3 check now records a `ValenceBundleReason`,
 so a page can tell a rollout gate from a release waiting for its data from a release no device will
-take. Persist on `background`, not `detached`. iOS remains experimental and untested.
+take. Persist on `background`, not `detached`. iOS is experimental and untested.
 
 ### offline tooling
 
@@ -716,8 +715,8 @@ Corrections an independent review found before this first release, each with a r
 
 ### adaptive layout and accessibility
 
-ValenceApp requests edge-to-edge layout, publishes system-bar/cutout inset CSS variables on load and metrics changes, follows Android system text zoom and emits schema-7 app.appearance snapshots. Add optional AppInfo.fontScale: "num?" and regenerate; old schemas remain supported. Existing pages must pad content/fixed controls using the variables and avoid double-scaling Android text. Custom hosts can pass their FlutterView to Valence.attach for matching font-scale reporting. iOS root-font scaling remains experimental and untested.
+ValenceApp requests edge-to-edge layout, publishes system-bar/cutout inset CSS variables on load and metrics changes, follows Android system text zoom and emits schema-7 app.appearance snapshots. Add optional AppInfo.fontScale: "num?" and regenerate; old schemas remain supported. Existing pages must pad content/fixed controls using the variables and avoid double-scaling Android text. Custom hosts can pass their FlutterView to Valence.attach for matching font-scale reporting. iOS is experimental and untested.
 
-Firebase dependencies now require iOS 15.0 or later, even with push disabled. Upgrade Runner/extension target settings; iOS remains experimental and untested.
+Firebase dependencies now require iOS 15.0 or later, even with push disabled. Upgrade Runner/extension target settings; iOS is experimental and untested.
 
 Bridge success and error reply caps now include Unicode separator escaping; oversized errors retain only safe numeric correlation ids.

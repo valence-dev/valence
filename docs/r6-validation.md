@@ -57,15 +57,14 @@ lifecycle sequencing, generated delegation and association-file validation.
 
 ## App context and limits
 
-Read both apps' VALENCE_FINDINGS.md and newest reports: Kundalini iteration 11
-(2026-10-23), app-a/Fernwise iteration 9 (2026-10-26). App-a F-32 reports mismatched
+Read both apps' VALENCE_FINDINGS.md and newest reports: reference app C iteration 11
+(2026-10-23), reference app A/Fernwise iteration 9 (2026-10-26). reference app A F-32 reports mismatched
 harness CLI/bridge snapshots; this branch's generated code compiles against its
 matching bridge, but no harness snapshots were replaced. F-33's unisolated lock
 warnings are not claimed fixed. Neither test-app repo was edited.
 
 No new emulator run; the Android evidence below remains historical. Real HTTPS
-domain ownership is still unverified for the placeholder domain. iOS remains
-experimental and untested. No pushes, publications or shared-branch merges.
+domain ownership is still unverified for the placeholder domain. iOS is experimental and untested. No pushes, publications or shared-branch merges.
 
 ---
 
@@ -88,8 +87,8 @@ Generated files were regenerated. The example's merged HTML was rebuilt and sign
 
 ## App evidence read (read only)
 
-- Kundalini: `VALENCE_FINDINGS.md` and newest `ITERATION_10_REPORT.md`. Migration retained existing data with an app-side database move; the 912-row catalogue exposed paging truncation. Batch reads, sync status, cache revalidation and rollback were exercised. Findings F-41?F-48 describe migration/dependency/docs/status gaps.
-- App-a: `VALENCE_FINDINGS.md` and newest `ITERATION_7_REPORT.md`. The 0.4 migration retained the shelf; a fresh 54.3 MB seed launch was slow, account switching remained refused, anonymous 401 reporting needed follow-up, and Android insets required correction.
+- reference app C: `VALENCE_FINDINGS.md` and newest `ITERATION_10_REPORT.md`. Migration retained existing data with an app-side database move; the 912-row catalogue exposed paging truncation. Batch reads, sync status, cache revalidation and rollback were exercised. Findings F-41?F-48 describe migration/dependency/docs/status gaps.
+- reference app A: `VALENCE_FINDINGS.md` and newest `ITERATION_7_REPORT.md`. The 0.4 migration retained the shelf; a fresh 54.3 MB seed launch was slow, account switching remained refused, anonymous 401 reporting needed follow-up, and Android insets required correction.
 
 These app reports are historical evidence for their snapshots, not new tests of this branch. Neither app repository was changed.
 

@@ -1,8 +1,8 @@
 # Pending-ID adoption documentation - 2026-11-02
 
-App-c iteration 54's F-41 identified an unconditional `since: 16` instruction
+reference app C iteration 54's F-41 identified an unconditional `since: 16` instruction
 that contradicted contracts §§4.1 and 6.5. Read both apps' findings and latest
-completed reports, Kundalini 18 / app-c 54, read-only.
+completed reports, reference app B 18 / reference app C 54, read-only.
 
 Decision: preserve shipped contracts and developer data. A new `notify.pendingIds`
 declaration needs `since >= max(16, shipped store schema version + 1)` and app
@@ -28,7 +28,7 @@ Extended gates on the fresh combined integration are recorded in integration.md.
 
 This is a documentation repair, not app acceptance or a new device run.
 Fieldnote's existing since-16 declaration needs no change. Historical intermittent
-findings remain open; no test-app finding was edited or closed here. Kundalini
+findings remain open; no test-app finding was edited or closed here. reference app B
 has not accepted S6/S7/S8. S1 remains parked and S2 needs a Play account.
 Security-path review: the delta is prose only; canonical verification, nonce,
 decoding, navigation, atomic writes, key storage, account isolation and release

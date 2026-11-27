@@ -1100,7 +1100,7 @@ test('codegen requires event-only plugin namespaces without adding wire methods'
   assert.match(dart, /requiredNamespaces: hostPluginNamespaces, requiredMethods: hostPluginMethods/);
 });
 
-// C F-43 (ledger I-122). App-c's 25,962-file checkout had `doctor --tests` killed by a 300-second
+// C F-43 (ledger I-122). reference-app-c's 25,962-file checkout had `doctor --tests` killed by a 300-second
 // wrapper timeout: stdout was empty, so not one completed check survived and nothing named the check
 // that was still running. The run before it reported a FAIL for the mapped bridge test while the same
 // suite passed standalone — because a `flutter test` killed at its own 180-second bound and a
@@ -1136,7 +1136,7 @@ test('doctor streams named check boundaries with durations, and reports a killed
   assert.match(failed[2], /flutter test failed for bridge/);
   assert.doesNotMatch(failed[2], /timeout/);
   // ...and it says what the child said, because "flutter test failed" on its own names a failure and
-  // withholds the only thing that explains it: app-c read that row, ran the tests by hand, got twelve
+  // withholds the only thing that explains it: reference-app-c read that row, ran the tests by hand, got twelve
   // passes, and had nothing left to reconcile them with (C F-54). Bounded: the last 8 lines at 200
   // characters, and the exit status, which is null when a signal killed it. On **one** line, because the
   // row formatter keeps the message's first line only — a tail joined with newlines arrives as the word
@@ -1173,7 +1173,7 @@ test('doctor streams named check boundaries with durations, and reports a killed
   assert.match(scan[2], /the Git private-key scan was killed by its own 180s timeout/);
   assert.match(scan[2], /a scan that did not finish is not a clean result/);
 });
-// The other half of C F-43, asked for again in app-c's iterations 143 to 145: the bound is right for an
+// The other half of C F-43, asked for again in reference-app-c's iterations 143 to 145: the bound is right for an
 // app-sized checkout and wrong for a 25,962-file one, where the private-key scan and `pub deps` hit 180 s
 // three iterations running and produced FAIL rows that had run no assertion. A fixed bound makes those
 // rows unavoidable; the flag makes them answerable.
@@ -2033,7 +2033,7 @@ test('a retired method keeps its wire contract, loses its handler and stops warn
   writeFileSync(baselinePath, JSON.stringify({ ...baseline, floor: old.manifest.seq + 1 }));
   assert.match((await row())[2], /requires bridge 12/);
   // K F-72, the other half: the WARN was unclearable by any supported action. Publishing a floor above
-  // every referencing bundle is the only lever, kundalini pulled it and watched the row not move, and the
+  // every referencing bundle is the only lever, reference-app-b pulled it and watched the row not move, and the
   // only thing that silenced it was deleting release manifests. The hazard is now split: bundles at or
   // above the floor are reachable by every install and keep the WARN; below it, only an install that
   // never committed the floor is affected, which is residual risk no checkout can measure — a sentence,

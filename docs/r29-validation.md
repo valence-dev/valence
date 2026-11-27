@@ -5,7 +5,7 @@
 Startup now identifies the phase it entered and how long it took. Database work
 that stays pending names the operation instead of leaving only sqflite's generic
 lock warning. This supplies evidence for a recurrence; it does not establish or
-fix the cause of app-a F-33/F-35. The database, account, transaction bodies,
+fix the cause of reference app A F-33/F-35. The database, account, transaction bodies,
 lease ownership, retry budgets and original errors retain their behavior.
 
 Base: code `131f7ef45a39de17ff7ada2f706817e96de28152`, site
@@ -79,13 +79,13 @@ identify a lock holder. Direct app/plugin calls through `store.db` need their
 own diagnostics. First-opener logger ownership is documented and tested. Open
 completion is separate from server/WebView startup and ready/commit evidence.
 
-Read-only adoption inputs: Kundalini `VALENCE_FINDINGS.md` and newest iteration 13,
-app-a `VALENCE_FINDINGS.md` and newest iteration 14. Kundalini's report retains
-device/verification placeholders; app-a's latest slot lacked a booted Android
+Read-only adoption inputs: reference app C `VALENCE_FINDINGS.md` and newest iteration 13,
+reference app A `VALENCE_FINDINGS.md` and newest iteration 14. reference app C's report retains
+device/verification placeholders; reference app A's latest slot lacked a booted Android
 baseline and cancelled its release build. Its F-36 archive/docs mismatch and
 F-33/F-35 still need matched-snapshot adoption and device evidence. This run
 does not certify those apps or close their findings.
 
 No new emulator session, data clearing, test-app writes, shared-branch commits
 or merges, pushes or publications. Android build/unit evidence is separate from
-device acceptance. iOS remains experimental and untested.
+device acceptance. iOS is experimental and untested.

@@ -10,8 +10,8 @@ token-bearing 401 remains `unauthorized`. Local changes and pending writes survi
   final classification `91d825a`; based on `packages` at `ebb0793`.
 - Site: `codex/r26`, documentation `6ab35c2`, upstream merge `776a976`,
   existing-definition correction `1437672`; based on `packages` at `afe2366`.
-- Both apps' findings and newest reports were read: Kundalini iteration 12 and
-  app-a iteration 10. App-a F-29 is the motivating reproduction. No test-app files
+- Both apps' findings and newest reports were read: reference app C iteration 12 and
+  reference app A iteration 10. reference app A F-29 is the motivating reproduction. No test-app files
   were changed. Neither packages nor main was committed to or merged into.
 - No package/schema versions changed. The existing nullable string field already
   transports open reason values; codegen and templates need no shape change.
@@ -68,5 +68,5 @@ from `max_usn` to the protocol's required `max` field.
 
 No new emulator check was performed; this run's evidence is package, generated
 wiring and build evidence. No claim is made about replacement snapshots in the
-test apps or Firebase delivery. iOS remains experimental and untested. Nothing
+test apps or Firebase delivery. iOS is experimental and untested. Nothing
 was pushed or published.

@@ -27,11 +27,11 @@ Lowering the complete schema to R8's reserved 7 would invalidate the already
 integrated since-8 through since-14 surfaces. No since values, package versions,
 recorded schema-1 store baseline or signed example assets changed.
 
-Read both complete app findings and newest reports read-only: Kundalini iteration
-12 and app-a iteration 10. K F-52/A F-32 reproduce mismatched generator/bridge
+Read both complete app findings and newest reports read-only: reference app C iteration
+12 and reference app A iteration 10. K F-52/A F-32 reproduce mismatched generator/bridge
 artifacts, directly affecting appearance event gates. The upstream prepack
 regression passed locally; this does not prove the supplied app snapshots have
-been replaced. App-a F-28 still needs page inset adoption and separate investigation
+been replaced. reference app A F-28 still needs page inset adoption and separate investigation
 of intermittent blank navigation; its cause is unproven. Neither report establishes
 R8 accessibility acceptance. Retention, anonymous-401 reporting and stale update
 status remain separate findings, not reasons to widen this refresh.
@@ -66,7 +66,7 @@ validation run.
 
 No new emulator run. Earlier R8 device evidence below is historical; TalkBack
 and true split-screen remain unverified. Push delivery needs the maintainer's
-Firebase project. iOS remains experimental and untested. The app repositories
+Firebase project. iOS is experimental and untested. The app repositories
 were not modified and their supplied snapshots were not repackaged.
 
 Exactly one queue item was refreshed. No push, publication, version change or
@@ -95,8 +95,8 @@ or advertise appearance to an older internal schema-13 host that lacks it.
 The recorded example store baseline and signed built-in were not changed today.
 Package versions were not changed.
 
-Read both apps' VALENCE_FINDINGS.md and newest reports: Kundalini iteration 11
-(2026-10-23), app-a iteration 9 (2026-10-26). The newest app-a report adds F-32:
+Read both apps' VALENCE_FINDINGS.md and newest reports: reference app C iteration 11
+(2026-10-23), reference app A iteration 9 (2026-10-26). The newest reference app A report adds F-32:
 the supplied generator emits an event table argument that the supplied bridge
 snapshot cannot accept. Both accessibility guides now explain that tooling and
 bridge must be updated together before regeneration (code 053d250, site 2959842).
@@ -124,8 +124,7 @@ attributed to R8. App nav clipping still requires actual page inset padding.
   sqlite3.dll; its crash log was removed. The main full runtime gate passed.
 
 No new emulator run was attempted for this queue refresh. Earlier Android evidence
-below is historical; TalkBack and true split-screen remain unverified. iOS remains
-experimental and untested. No pushes, publications, test-app writes or merges into
+below is historical; TalkBack and true split-screen remain unverified. iOS is experimental and untested. No pushes, publications, test-app writes or merges into
 packages/main. Shared ROADMAP edits are restricted to R8's Status cell; this file
 carries the requested plain-language note.
 
@@ -159,8 +158,8 @@ storeRoutes and floor. Only lastSeq advances to 1792706013. No store baseline
 or package version was changed. The example includes the corrected auth
 pane's has() gate and R8's layout probe.
 
-Input evidence: both apps' VALENCE_FINDINGS.md; Kundalini iteration 11
-(2026-10-23) and app-a iteration 8 (2026-10-22). Findings about paging,
+Input evidence: both apps' VALENCE_FINDINGS.md; reference app C iteration 11
+(2026-10-23) and reference app A iteration 8 (2026-10-22). Findings about paging,
 capability gates, update notifications, insets and retained auth warnings
 inform review; app reports are not fresh framework device verification.
 Both test-app repositories were read only.
@@ -185,7 +184,7 @@ Both test-app repositories were read only.
 Implementation commits: 84b9fc6 (merge and rebuilt signed example), ab16280
 (import correction); site merge dfc65a6. Earlier records below are historical.
 No new emulator run; TalkBack and true split-screen remain unverified, and
-iOS remains experimental and untested. Exactly one queue item refreshed.
+iOS is experimental and untested. Exactly one queue item refreshed.
 No test-app writes, package-version changes, pushes, publications or merges
 into shared branches.
 
@@ -221,8 +220,8 @@ internal version-13 host without R8 must not receive OTA metadata advertising
 appearance since 7: its numeric capability comparison could overstate support.
 These branch snapshots are integration candidates, not releasable store builds.
 
-Read both apps' VALENCE_FINDINGS.md and newest reports: Kundalini iteration 11
-(2026-10-23), app-a iteration 8 (2026-10-22). Their paging, capability-gate,
+Read both apps' VALENCE_FINDINGS.md and newest reports: reference app C iteration 11
+(2026-10-23), reference app A iteration 8 (2026-10-22). Their paging, capability-gate,
 update-notification and retained-auth-warning observations are app evidence,
 not new device verification. Both test app repositories were read only.
 
@@ -262,8 +261,8 @@ packages at f77979aa2bead2aca2b14af08c00768ac482e8e9. Both worktrees remain on
 codex/r8. Code merge: 985a8b9. Site merge: d0b18cd; README correction: e10f193.
 Template/example schema remains 7 and app.appearance remains since 7.
 
-Read both apps' VALENCE_FINDINGS.md and newest iteration reports: Kundalini
-iteration 11 (2026-10-23) and app-a iteration 8 (2026-10-22). App observations
+Read both apps' VALENCE_FINDINGS.md and newest iteration reports: reference app C
+iteration 11 (2026-10-23) and reference app A iteration 8 (2026-10-22). App observations
 remain historical evidence; test-app repositories were read only.
 
 Decision: retain required EVENT_SINCE regeneration, method/event collision
@@ -293,7 +292,7 @@ capability gating, JSON-only appearance publication, nonce/navigation/CSP retent
 status publication after lease release and before updateReady, and site consistency.
 
 No new emulator run. Earlier Android evidence below is historical; TalkBack and
-true split-screen remain unverified. iOS remains experimental and untested.
+true split-screen remain unverified. iOS is experimental and untested.
 No pushes, publications, shared-branch merges or test-app writes.
 
 ---
@@ -307,8 +306,8 @@ site packages at f5ed69395766afe9a958a1876943838b4a14493d. Both worktrees are
 on codex/r8. The code merge is ee63bfd; the site merge is f9bdf72.
 Template/example schema remains 7 and app.appearance remains since 7.
 
-Read both apps findings and latest reports: Kundalini iteration 11 (2026-10-23)
-and app-a iteration 8 (2026-10-22). Their device observations remain historical
+Read both apps findings and latest reports: reference app C iteration 11 (2026-10-23)
+and reference app A iteration 8 (2026-10-22). Their device observations remain historical
 app evidence; this refresh does not claim a new app or emulator run.
 
 Decision: preserve all incoming doctor failures, data protections and host-widget
@@ -336,8 +335,7 @@ Review covered schema/delegations, optional fontScale, appearance publication,
 native zoom, navigation/nonce retention, completed update status ordering, both
 merged features and website consistency. Both worktrees were clean after merges.
 
-No new emulator run. TalkBack and true split-screen remain unverified; iOS remains
-experimental and untested. Test-app repositories were read only. No pushes,
+No new emulator run. TalkBack and true split-screen remain unverified; iOS is experimental and untested. Test-app repositories were read only. No pushes,
 publications or merges into shared branches occurred.
 
 ---
@@ -351,7 +349,7 @@ packages at `f0db1cd518bc6dd2af8663097845da980f8b3580`. Both worktrees remain on
 all earlier method/event versions remain unchanged. No package versions changed.
 
 Read both test apps' VALENCE_FINDINGS.md and their newest iteration reports:
-Kundalini iteration 11 (2026-10-23) and app-a iteration 8 (2026-10-22). Shared
+reference app C iteration 11 (2026-10-23) and reference app A iteration 8 (2026-10-22). Shared
 updates now address the reported paging, event capability and update-ready gaps.
 The appearance guides use has('app.appearance'), with browser/older-host fallbacks,
 rather than comparing an app's own bridge number with the default template's 7.
@@ -384,7 +382,7 @@ appearance publication, optional fontScale, retained trust boundaries and docs.
 
 No new emulator check ran. Historical Android evidence below is not fresh device
 validation of this combined build. TalkBack and true split-screen remain unverified;
-iOS remains experimental and untested. Test-app repos were read only. No pushes,
+iOS is experimental and untested. Test-app repos were read only. No pushes,
 publications, package-version changes or merges into shared branches occurred.
 
 ---
@@ -407,8 +405,8 @@ conflicting generated output by choosing one side. The new built-in is seq 17926
 requires bridge 7, and signature/file verification passes. Adaptive layout now occupies
 contracts section 4.7; lifecycle remains section 4.6.
 
-Fresh input: both apps' VALENCE_FINDINGS.md, Kundalini ITERATION_10_REPORT.md and app-a
-ITERATION_7_REPORT.md. App-a's system-bar overlap informs this feature; delayed label painting
+Fresh input: both apps' VALENCE_FINDINGS.md, reference app C ITERATION_10_REPORT.md and reference app A
+ITERATION_7_REPORT.md. reference app A's system-bar overlap informs this feature; delayed label painting
 is not established as an inset bug. Test-app repositories were read only.
 
 ## Fresh gates
@@ -430,7 +428,7 @@ regression and the example codegen check.
 No new emulator run was attempted for this merge refresh (optional for the rebase queue).
 The device observations below are historical 2026-10-21 evidence on bridge 5, not a claim
 that the combined schema-7 build was device-tested. TalkBack and true split-screen remain
-unverified; iOS remains experimental and untested. No package versions changed.
+unverified; iOS is experimental and untested. No package versions changed.
 
 ---
 
@@ -520,6 +518,6 @@ no device high-contrast behavior is claimed. TalkBack spoken output and true spl
 exercised. The accessibility guide documents semantic HTML, contrast, focus and touch-target checks
 for adopters. These signals do not certify an arbitrary page as accessible.
 
-Input context: both apps' `VALENCE_FINDINGS.md`, Kundalini's newest `ITERATION_9_REPORT.md`, and app-a's
+Input context: both apps' `VALENCE_FINDINGS.md`, reference app C's newest `ITERATION_9_REPORT.md`, and reference app A's
 latest standalone handoff `NEXT.md` (cycle 5), with its later F-21–F-25 findings in the findings file.
 Their update/cache, sync and identity reports were read as context, without widening R8 into those fixes.

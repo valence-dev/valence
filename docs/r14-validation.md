@@ -27,12 +27,11 @@ codegen freshness and signature/file verification. Inherited risk: upstream's
 account switch can persist a token before its identity on a secure-write failure.
 Merge R7 first and retain its serialized fail-closed account writes during integration.
 
-Both full app findings and newest reports were read read-only: Kundalini iteration
-11 and app-a iteration 10. Preserve Kundalini's custom since-3 sharing shape.
-App-a F-32 still reproduces in its supplied snapshot pair; this branch's compiling
+Both full app findings and newest reports were read read-only: reference app C iteration
+11 and reference app A iteration 10. Preserve reference app C's custom since-3 sharing shape.
+reference app A F-32 still reproduces in its supplied snapshot pair; this branch's compiling
 generated bridge does not prove that the harness snapshots were replaced.
-No new emulator check; the Android evidence below is historical. iOS remains
-experimental and untested.
+No new emulator check; the Android evidence below is historical. iOS is experimental and untested.
 
 ## Historical validation - 2026-10-22
 
@@ -62,9 +61,9 @@ Data safety: no database, token, sync or updater behavior changed. The Android
 example upgraded in place and retained its existing queued note. Developer
 compatibility: pre-14 custom `share.image` declarations still generate their own
 handlers, even when the overall schema version rises. Only `since >= 14` selects
-the package built-in. This avoids breaking Kundalini's existing method.
+the package built-in. This avoids breaking reference app C's existing method.
 
-Inputs read: Kundalini's findings and iteration 10 report, and app-a/Fernwise's
+Inputs read: reference app C's findings and iteration 10 report, and reference app A/Fernwise's
 findings and iteration 8 report. Their migration/data, pagination, authentication
 and startup observations informed the boundary; neither app repo was written.
 
@@ -128,6 +127,6 @@ the existing section 4.2 requirement; a regression verifies cleanup stays inside
 that child and denied calls do not erase files. Related old no-inline-byte guidance was updated to name the bounded
 sharing exception.
 
-iOS remains experimental and untested. Android JPEG format routing is unit-tested;
+iOS is experimental and untested. Android JPEG format routing is unit-tested;
 the device run used PNG. Recipient-specific caption support and delivery are not
 claimed. No pushes, publications or merges into shared branches were performed.

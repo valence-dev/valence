@@ -29,7 +29,7 @@ Security first, then users' data, then developer compatibility:
   account declarations before lowering its schema to 11. Regression coverage
   checks combined schema 13, account since 13, push since 12 and legacy delegation.
 - Both push guides now explain app-owned schema numbering and updating codegen
-  together with the web bridge package, prompted by app-a F-32.
+  together with the web bridge package, prompted by reference app A F-32.
 
 ## Merge dependency and inherited limits
 
@@ -78,13 +78,12 @@ focused runtime tests, 16 CLI schema/builtin/push checks, all 21 bridge tests,
 strict TypeScript, Dart analysis, codegen check and built-in verification.
 The account-switch issue above is an inherited dependency on the earlier queue.
 
-Both complete app findings and newest reports were read only: Kundalini
-`ITERATION_11_REPORT.md`, app-a `ITERATION_9_REPORT.md`. Their device observations
-remain historical evidence. The app-a supplied wizard/bridge tarball mismatch
+Both complete app findings and newest reports were read only: reference app C
+`ITERATION_11_REPORT.md`, reference app A `ITERATION_9_REPORT.md`. Their device observations
+remain historical evidence. The reference app A supplied wizard/bridge tarball mismatch
 is not resolved merely by testing matching source here; harness snapshots were
 not replaced. No test app or other builder's worktree was written.
 
 No emulator was acquired because there is no configured Firebase project to test
-end-to-end push. iOS/APNs and its service extension remain experimental and
-untested. Exactly one queue item was refreshed. Nothing was pushed, published,
+end-to-end push. iOS is experimental and untested. Exactly one queue item was refreshed. Nothing was pushed, published,
 or merged into `packages` or `main`; no release versions changed.

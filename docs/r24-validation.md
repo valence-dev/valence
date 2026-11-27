@@ -20,8 +20,8 @@ Bases: code `ebb0793d576c74c6841686298c9ad828479f02b7`, site
   A live interface does not prove reachability. An immediate page read can race the asynchronous check;
   `bundle.updateReady` is still the signal for a newly pending bundle.
 - The review found no confirmed security/correctness defect. Its home-FAQ documentation gap was fixed.
-  Both complete app findings ledgers and newest reports were read without edits: Kundalini iteration 12
-  and app-a iteration 10. Older missing-pair, shared-database, startup, rollback and identity constraints
+  Both complete app findings ledgers and newest reports were read without edits: reference app C iteration 12
+  and reference app A iteration 10. Older missing-pair, shared-database, startup, rollback and identity constraints
   still use the established updater/sync paths. Snapshot replacement remains outside this item.
 
 ## Gates
@@ -70,7 +70,7 @@ The checked-in OTA URL is deliberately `.invalid`; no successful device download
 claimed. The ANR cause is unisolated and no claim is made that R24 caused or fixes it. Verified-pending
 success, no reload, coalescing and rejection are deterministic widget evidence. No new release APK was
 built, and reconnect-under-dev-define behavior relies on the unchanged early dev guard and existing
-guard tests. iOS remains experimental and untested.
+guard tests. iOS is experimental and untested.
 
 Airplane mode was restored to off, Wi-Fi enabled, the example force-stopped and the emulator lock
 released. No push, publication, version bump or merge into a shared branch occurred.

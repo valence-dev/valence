@@ -34,11 +34,11 @@ was introduced.
 
 ## Current app evidence
 
-Read both VALENCE_FINDINGS.md inventories and newest reports: Kundalini 24 and
-App C 162. All must-haves and original queue items are done; S1 remains parked,
+Read both VALENCE_FINDINGS.md inventories and newest reports: reference app B 24 and
+reference app C 162. All must-haves and original queue items are done; S1 remains parked,
 S2 requires Play, and S10/P1 remain deferred.
 
-Kundalini reports a rebuilt-host reproduction of the sibling-isolate contention
+reference app B reports a rebuilt-host reproduction of the sibling-isolate contention
 window: a background holder for 102.9 seconds, three foreground refusals, no
 takeover or negative age. Its report closes F-83, F-58 and F-84 and records a
 fresh offline seed install, reconnect and signed two-strike rollback. These are
@@ -48,7 +48,7 @@ was performed here. Its new F-85 logging lag is already corrected in packages
 not a post-fix device check in that report. F-30's background freshness limit and
 unconfirmable physical haptics remain qualified.
 
-App C's initial release UI observer failed before its screenshot step; later
+reference app C's initial release UI observer failed before its screenshot step; later
 painted list/detail/photo observations remain separate. R29 records release
 PID4727/open5705ms with no paired named wait. This does not measure web paint,
 exclude locks or establish a cause. Historical process-loss and observer findings
@@ -56,7 +56,7 @@ remain open. The cold-widget receipt now records same-document/PID list reveal.
 Inspected the canonical fresh-offline screenshot: six seed units, zero photos,
 no installed widget; its 31425ms observation window is not exact paint latency.
 
-Independently resolved all 45 local App C report links; rehashed both archived
+Independently resolved all 45 local reference app C report links; rehashed both archived
 APKs and all five embedded file hashes/sizes each, builtin1794165390:
 release 667e27e51d1d452e999c10675725ec0eff279f0011b1da6d2c9f6c9fa3b58cd0;
 debug 3889c9e11874ff9a0af959d4b171902b4c93a9c9091f0fa2c456e366e849e4f8.
@@ -74,7 +74,7 @@ Final native receipts retain the original inspection with outbox0/current fixtur
 
 F-27 remains open: saved host publications985884KiB/10155files versus224KiB
 source media, with removed fixture publications still answering200. No retention,
-leak-rate or startup-cause inference. App C's F-55 capture still shows the old
+leak-rate or startup-cause inference. reference app C's F-55 capture still shows the old
 migration wording; packages already retains the correction explicitly marking
 the dbus conflict historical. No additional dependency patch is needed.
 Test-app repos stayed read only. No fresh emulator or iOS acceptance is claimed.

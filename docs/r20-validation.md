@@ -61,8 +61,7 @@ One auxiliary npx compiler lookup from the example failed to locate tsc; the exa
 same strict/verbatim check passed with the compiler installed in packages/bridge.
 No dependency change or suppressed compiler error was used.
 
-Inputs: both test apps' VALENCE_FINDINGS.md, Kundalini iteration 12 and app-a
+Inputs: both test apps' VALENCE_FINDINGS.md, reference app C iteration 12 and reference app A
 iteration 11, read-only. Snapshot pairing, retention/tombstone storage and Android
 desugaring friction remain separate findings. No new emulator check is claimed.
-Firebase delivery still requires a maintainer project; iOS remains experimental
-and untested. No push, publication or shared-branch mutation.
+Firebase delivery still requires a maintainer project; iOS is experimental and untested. No push, publication or shared-branch mutation.

@@ -1,7 +1,7 @@
 # R33: bounded API session persistence — 2026-11-02
 
 Based on code packages 0302556 / site packages 62f950b. Read both test-app findings
-and latest completed reports at intake, Kundalini 18 / app-c 63, read-only.
+and latest completed reports at intake, reference app B 18 / reference app C 63, read-only.
 The original queue is done; refreshed integration first, then selected R33 from
 the bottom of the new must-have items. R32 remains for a later run.
 
@@ -32,9 +32,9 @@ origin, read-only storage, invalid manual policy, account switch and sign-out.
 Generated Dart compilation includes the new constructor field; doctor reports
 memory-only versus fixed-day persistence.
 
-App-c's current renderer loss and startup ANR remain major release qualifications;
+reference app C's current renderer loss and startup ANR remain major release qualifications;
 recovered feature successes do not close them. This item has no new emulator
-acceptance; iOS remains experimental and untested. No test-app writes, protected
+acceptance; iOS is experimental and untested. No test-app writes, protected
 branch changes, push or publication.
 
 ## Gates

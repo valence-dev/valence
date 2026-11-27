@@ -27,14 +27,14 @@ neither downgrading the inherited schema nor allocating a revision is justified.
 Only R4's Status cell changes in the shared roadmap. This is one queue refresh,
 not a fresh integration build or a new feature item.
 
-Read both findings and newest completed reports read-only: Kundalini 18 and
-app-c 45. Kundalini verified F-68/F-69/F-70, adopted store-update policy at its
+Read both findings and newest completed reports read-only: reference app B 18 and
+reference app C 45. reference app B verified F-68/F-69/F-70, adopted store-update policy at its
 own schema 19 and reports new retirement-warning, since-guidance and status-event
 gaps F-72/F-73/F-74. Upstream addresses the since diagnostic and site guidance;
 this refresh does not claim app adoption or close the other findings. Its signed
 blocking/withdrawal probes are reported app evidence, not repeated here.
 
-App-c still reproduces F-36. Independently checked its full log: Chromium names
+reference app C still reproduces F-36. Independently checked its full log: Chromium names
 renderer 4983 and explicitly terminates host 4897 at 01:33:08.294 after renderer
 loss. Replacement PID 6311 and later recovery do not establish survival. Its
 event-contract receipt passes with one observed tap and no violations. All 51
@@ -53,7 +53,7 @@ and nullable action on taps. No local trust-boundary implementation changes:
 nonce/navigation, adapter structural validation, strict decoding, bounded queues,
 signature order, atomic state, account isolation and release dev-mode exclusion
 remain intact. No new independent security review is claimed. Android renderer
-loss remains the documented limitation; iOS remains experimental and untested.
+loss remains the documented limitation; iOS is experimental and untested.
 
 Fresh gates passed 2026-11-02: 110 root tests with zero failures/skips (generated
 Dart and strict/verbatim generated TS ran); 576 core, 2 push, 29 example and
@@ -75,7 +75,7 @@ note differs from the recorded packages bases in each worktree.
 
 The notification compatibility branch now includes the latest renderer-loss work
 and its test cleanup. Existing string-ID notification events keep their shipped
-shape. App-c's iteration 26 passes warm/cold reminder acceptance, but its
+shape. reference app C's iteration 26 passes warm/cold reminder acceptance, but its
 intermittent startup, sync, ANR and memory-pressure findings remain open.
 
 Bases: code `778b20cdc33f2014ec0ebf72323acd2bdf5e52be`; site
@@ -87,13 +87,13 @@ Resolved that test-only conflict with the upstream file: no implementation,
 test, schema, codegen or template delta remains against the final packages base.
 
 Read both VALENCE_FINDINGS.md files and newest reports read-only:
-Kundalini 17 / app-c 26. Kundalini's app-specific schema 18, live allow-listed
+reference app B 17 / reference app C 26. reference app B's app-specific schema 18, live allow-listed
 API and complete offline SQLite paint remain app evidence; F-66/F-71 cookie
 and caching gaps require their own designs, not incidental notification changes.
 S5 is answered upstream for 0.4; Android renderer-loss handling remains deferred,
-and iOS remains experimental and untested.
+and iOS is experimental and untested.
 
-Independently checked app-c's saved iteration-26 artifacts:
+Independently checked reference app C's saved iteration-26 artifacts:
 event-contract-check.json has passed=true, observedTaps=1 and no violations.
 All 43 evidence-audit checks pass. The supplied pre-resume SQLite capture has
 outboxCount=0, inbound origin 450000 / USN 450002 and two outgoing object rows.
@@ -144,7 +144,7 @@ branch commits, pushes or publication occurred. Logs: %TEMP%/valence-r4-refresh-
 ### In plain terms
 
 The notification compatibility branch now includes the newest reviewed packages.
-Existing string-ID notification events keep their shipped shape; app-c's newest
+Existing string-ID notification events keep their shipped shape; reference app C's newest
 warm/cold reminder checks pass through its supported adapter. Open sync, permission
 ANR and memory-pressure findings remain open. This refresh changes no runtime behavior.
 
@@ -153,8 +153,8 @@ worktrees: code 3610aa38c52f496bed93e24897f713f229030441 and site
 747013a6469ae1bbc5c1a97993634e7e8cebb129. R4 is the first unfinished queue
 entry; the other queue items and R14 are marked done. No must-have is todo.
 
-Read both VALENCE_FINDINGS.md files and newest reports read-only: Kundalini 17
-and app-c 25. Kundalini reports adoption of retired notify.daily, live allow-listed
+Read both VALENCE_FINDINGS.md files and newest reports read-only: reference app B 17
+and reference app C 25. reference app B reports adoption of retired notify.daily, live allow-listed
 HTTP and complete offline SQLite paint. Its app-specific schema 18 does not
 allocate a framework revision. New F-66/F-71 describe cookie-CSRF and offline
 cache gaps; do not grant cookies or page writes into read-only sync buckets as
@@ -163,7 +163,7 @@ and sanitized HTTP failure codes (parts of F-67/F-68); f3bce56 improves retired
 method reference scanning and missing test-map diagnostics (F-69/F-70).
 Those changes are included here, not claimed as adopted by the test apps.
 
-App-c's iteration-25 event-contract-check.json has passed=true, observedTaps=1
+reference app C's iteration-25 event-contract-check.json has passed=true, observedTaps=1
 and no violations. Its report records warm string-ID and cold routing acceptance.
 Independently compared both raw background activation files: byte-identical,
 SHA256 342442743914247fe05a6d471a3c5390c25bc5a7aa0d308129e379447a1256c8,
@@ -208,19 +208,19 @@ No test-app writes, protected-branch commits/merges, version changes, pushes or
 publications. Optional emulator execution is skipped for this report-only queue
 refresh; iOS and real remote push remain unverified.
 
-## App-c iteration-10 acceptance refresh - 2026-10-31
+## reference app C iteration-10 acceptance refresh - 2026-10-31
 
 ### In plain terms
 
-App-c has now adopted the supported adapter without changing its shipped schema.
+reference app C has now adopted the supported adapter without changing its shipped schema.
 Its real warm tap preserves the string ID, and the cold reminder opens the intended
 inspection with its retained photo. This closes F-30 for that app and snapshot.
 A separate foreground sync transaction error, F-33, remains open; a successful
 retry and this branch's package tests do not close it.
 
-Both apps' findings and newest reports were read read-only: Kundalini 16 and
-app-c 10. The earlier iteration-9 failure below is historical. Independently
-checked app-c's iteration-10 captures:
+Both apps' findings and newest reports were read read-only: reference app B 16 and
+reference app C 10. The earlier iteration-9 failure below is historical. Independently
+checked reference app C's iteration-10 captures:
 
 - `warm-tap-events.json` contains string ID `iteration-10-warm` and the page on
   Flat 1; `event-contract-check.json` has one tap, no violations and passed=true.
@@ -280,7 +280,7 @@ remains. No installation or F-33 device acceptance is inferred.
 ### In plain terms
 
 The notification compatibility branch now includes the last upstream retirement-review
-fixes. App-c's latest warm-tap audit still fails on its unadapted host; this refresh does
+fixes. reference app C's latest warm-tap audit still fails on its unadapted host; this refresh does
 not close F-30 or change its shipped event. No runtime implementation changes were needed.
 
 Merged newest refs/heads/packages without conflicts in both worktrees:
@@ -290,14 +290,14 @@ These supersede the bases in the preceding refresh below. All 27 earlier numbere
 link-compat and sync-fixes tips remain ancestors of packages in both repositories.
 Only this report branch remains unmerged; a second ready feature does not require integration.
 
-Read both VALENCE_FINDINGS.md files and newest reports, Kundalini 16 and app-c 9.
-Independently read app-c's event-contract-check.json (passed=false, integer 1997876972
+Read both VALENCE_FINDINGS.md files and newest reports, reference app B 16 and reference app C 9.
+Independently read reference app C's event-contract-check.json (passed=false, integer 1997876972
 against string), background-state-comparison.json (identical activation hashes), and
 final-state.json (1793383609 committed, pending/trial null, bad 1793383520 retained).
 Its current mobile/lib still contains neither notificationEventAdapter nor
 notificationEventFields. Routing success and a natural background worker run do not
 establish event-shape compatibility or acceptance of the adapter.
-Kundalini reports warm/cold/repeated links, unsafe-path rejection, pinned OTA commitment
+reference app B reports warm/cold/repeated links, unsafe-path rejection, pinned OTA commitment
 and seven alarms restored after reboot; the newest base also addresses F-64 retirement.
 
 Decision, security and data first: retain the reviewed notification adapter and original
@@ -332,11 +332,10 @@ The Windows py audit ran standalone after the build and printed PASS; no install
 or device acceptance is inferred.
 
 Only the validation report differs from packages in either repo. No shared-branch
-commits/merges, pushes or publication. App-c F-30 needs tooling/runtime adoption,
+commits/merges, pushes or publication. reference app C F-30 needs tooling/runtime adoption,
 regeneration, native adapter wiring and warm/cold acceptance. F-27's remaining host-file
 lifecycle documentation gap is still open; F-31 is corrected upstream but its captured
-preview remains older. Real remote push and iOS remain unverified; iOS is experimental
-and untested. Only R4's Status cell is edited in the shared roadmap.
+preview remains older. Real remote push and iOS remain unverified; iOS is experimental and untested. Only R4's Status cell is edited in the shared roadmap.
 
 ## Retirement-base R4 queue refresh - 2026-10-31
 
@@ -344,7 +343,7 @@ and untested. Only R4's Status cell is edited in the shared roadmap.
 
 The notification compatibility fix remains included on the newest shared candidate.
 This refresh also carries the upstream method-retirement feature and its follow-up tests
-and Doctor wording. No new runtime behavior is introduced on this branch. App-c still
+and Doctor wording. No new runtime behavior is introduced on this branch. reference app C still
 needs updated tooling, regeneration, its native adapter and fresh warm/cold tap acceptance;
 its iteration-9 event audit remains a failure rather than a closed finding.
 
@@ -360,8 +359,8 @@ b645179f459a247513a1f05927dde92285f65e7b and site
 6a219188edc5d5ccdb962cdb1b0d7b8611803bde (merge commits a40271c / 87b34d3).
 Those are the final packages bases.
 
-Read both apps' findings and newest reports, Kundalini 16 and app-c 9, read-only.
-App-c's actual event-contract-check.json reports one tap, numeric ID 1997876972,
+Read both apps' findings and newest reports, reference app B 16 and reference app C 9, read-only.
+reference app C's actual event-contract-check.json reports one tap, numeric ID 1997876972,
 expected string and passed=false. Its current host has neither notificationEventAdapter
 nor notificationEventFields, so this capture does not validate the merged correction.
 The raw background-state comparison confirms equal activation hashes with 1793383609
@@ -369,7 +368,7 @@ pending; final-state.json confirms that sequence later committed, with pending/t
 and bad 1793383520 retained. Preserve the distinction between successful routing,
 background execution, OTA commitment and typed-event compatibility.
 
-Kundalini confirms warm/cold/repeated links, rejected unsafe paths, pinned OTA commitment
+reference app B confirms warm/cold/repeated links, rejected unsafe paths, pinned OTA commitment
 and restoration of seven alarms after reboot. F-63/F-65 fixes remain in the shared base.
 The earlier sections' statement that F-64/S4 is deferred is historical: packages now
 includes retirement and the site documents it. Retirement keeps the wire declaration and
@@ -414,8 +413,8 @@ All gates were rerun after the final documentation-base merges.
 The APK commands used a process-scoped 2 GiB Gradle heap, 1 GiB metaspace,
 ActiveProcessorCount=2 and two workers. The existing app_badge_plus Kotlin migration
 warning remains. No APK install, emulator session or new device acceptance is inferred.
-App-c F-30, real remote-push delivery and iOS remain unverified by these gates;
-iOS is experimental and untested. App-c F-27's remaining lifecycle documentation
+reference app C F-30, real remote-push delivery and iOS remain unverified by these gates;
+iOS is experimental and untested. reference app C F-27's remaining lifecycle documentation
 gap is still open; F-31 is corrected upstream but its captured preview remains old.
 
 The only delta beyond packages is this validation report in each repo. Versions,
@@ -428,7 +427,7 @@ in the shared roadmap; the existing integration entry and other owners' rows are
 ### In plain terms
 
 The shared candidate now includes the review fixes for notification-event migration.
-This branch retains those fixes and the original application IDs. App-c's failing
+This branch retains those fixes and the original application IDs. reference app C's failing
 tap audit still needs a refreshed runtime/CLI, regenerated config and the documented
 adapter before a new warm/cold device run can accept it.
 
@@ -450,20 +449,20 @@ shipped contracts and preventing script injection come before convenience.
 Do not coerce a native integer hash into the application's original string ID,
 erase the baseline or change notification behavior again before adoption.
 
-Read both findings files and newest reports, Kundalini iteration 16 and app-c
-iteration 9, read-only. Spot-checked app-c's actual event-contract-check.json:
+Read both findings files and newest reports, reference app B iteration 16 and reference app C
+iteration 9, read-only. Spot-checked reference app C's actual event-contract-check.json:
 one observed tap, numeric 1997876972, expected string, passed false. Current app
 main/config still contain neither notificationEventAdapter nor
 notificationEventFields. This does not exercise the merged adapter correction.
 Keep F-30 open for adoption and warm/cold acceptance. F-31's permissions floor is
 already corrected upstream; F-27's remaining host-file lifecycle docs stay open.
 
-App-c's worker-full-logcat.txt records background begin, complete and WorkManager
+reference app C's worker-full-logcat.txt records background begin, complete and WorkManager
 SUCCESS; worker-mock.log records the two-operation push. Its raw activation
 comparison has equal SHA256 values with 1793383609 pending; final-state.json
 then records that sequence committed with pending/trial null and bad 1793383520.
 This supports one observed natural due-time worker, not a cadence guarantee.
-Kundalini's before/after reboot captures contain the same seven 06:00 origWhen
+reference app B's before/after reboot captures contain the same seven 06:00 origWhen
 values. F-63/F-65 diagnostics remain included. F-64 retirement stays deferred:
 a bundle's minimum bridge version alone does not prove it never calls an older
 method, so keep shipped handlers and truthful capability reporting.
@@ -500,7 +499,7 @@ publications occurred. Only R4's Status cell is updated in the shared roadmap.
 
 The notification event correction is already merged into packages. Refreshed this branch
 onto the newest shared candidate and kept the existing adapter, shipped event meanings and
-application IDs intact. App-c still needs to adopt that correction before its failing tap
+application IDs intact. reference app C still needs to adopt that correction before its failing tap
 contract can be closed. No new feature is part of this queue run.
 
 ### Bases, queue and decisions
@@ -513,12 +512,12 @@ numbered-feature/link/notification tips are ancestors of packages in both reposi
 Before these report commits, only historical backup branches remained outside packages; no two unmerged ready features
 require a new integration. This run handles the one queued R4 refresh only.
 
-Read both apps' VALENCE_FINDINGS.md and newest reports read-only: Kundalini iteration 16
-and app-c iteration 9. The initial full test/build checks began on 58db7ac / 9772ba5;
+Read both apps' VALENCE_FINDINGS.md and newest reports read-only: reference app B iteration 16
+and reference app C iteration 9. The initial full test/build checks began on 58db7ac / 9772ba5;
 packages moved during validation, so the full set was repeated on the final bases above.
 Earlier passes do not substitute for the final-base gates below.
 
-Kundalini reports installed schema 17, warm/cold/repeated deep links and a pinned
+reference app B reports installed schema 17, warm/cold/repeated deep links and a pinned
 requires.bridge=16 OTA commit. Its before/after reboot captures contain the identical seven
 06:00 alarm times from October 31 through November 6; the post-reboot capture records an
 initially empty queue and later recovery without manual launch. This is inspected app
@@ -528,7 +527,7 @@ association file. That static comparison is not proof of installed OS routing. F
 retirement proposal remains a separate compatibility question; do not remove a shipped
 handler or make has() promise an implementation that merely refuses old calls.
 
-App-c's actual warm-tap audit remains failed: one tap, integer ID 1997876972 where its
+reference app C's actual warm-tap audit remains failed: one tap, integer ID 1997876972 where its
 frozen event requires a string. Current app main/config still contain neither
 notificationEventAdapter nor notificationEventFields. This is unadapted runtime evidence,
 not acceptance or failure of the merged correction. Preserve the event and original
@@ -541,9 +540,9 @@ does not establish a cause or correction for F-32.
 Decision order: preserve trust boundaries, then users' data and shipped contracts. Retain
 upstream diagnostics and the reviewed adapter rather than adding notification behavior
 before adoption. Starter/example stay at schema 16, R4 methods/events at since 11 and
-pendingIds at since 16. Kundalini's app-specific schema 17 does not allocate a new framework
+pendingIds at since 16. reference app B's app-specific schema 17 does not allocate a new framework
 schema number. Keep S1 deferred during candidate acceptance and S2 behind its Play-account
-blocker. Real Firebase delivery and iOS remain untested.
+blocker. Real Firebase delivery and iOS is experimental and untested.
 
 ### Fresh validation
 
@@ -576,16 +575,16 @@ No test-app writes, shared-branch commits/merges, package/schema version changes
 publications occurred. Only R4's Status cell is updated in the shared roadmap; no integration
 top line or other item is changed.
 
-## Queue refresh after app-c iteration 9 - 2026-10-31
+## Queue refresh after reference app C iteration 9 - 2026-10-31
 
-Reviewed both findings files and newest reports: Kundalini iteration 15 and app-c iteration 9
+Reviewed both findings files and newest reports: reference app B iteration 15 and reference app C iteration 9
 (started October 30, completed October 31). Both merges of newest packages report already up to
 date: code `d2e6970a983e8f1e1f030ea39b9861d487ea9db4`, site
 `ce19151baa1fdac40ac3208e70bb69388a8b538a`. All 26 earlier numbered-feature/link-compat
 tips are ancestors of packages in both repositories. This remains the only unmerged implementation
 branch, so a fresh integration is not required. No other must-have is eligible.
 
-App-c's real warm-tap capture contains integer ID `1997876972`, application payload
+reference app C's real warm-tap capture contains integer ID `1997876972`, application payload
 `{"id":"iteration-9-warm","p":"unit-0101"}` and `action: null`. Its contract audit records one
 string-ID violation and exit 1. Flat 2 to Flat 1 routing does not close F-30. Both supplied npm
 hashes match iteration 8. The app's current main/config still contain neither
@@ -601,15 +600,14 @@ scalar writes. Before/after activation SHA256 values match
 `1c5973fdb45c442cdca2227e64ddbc8543fe7e8434c88e9f2dd82881a6b959db`, with good
 OTA `1793383609` pending and trial null. Final activation commits that seq, previous
 `1793383580`, pending/trial null, bad [`1793383520`], floor 0. This is inspected app evidence,
-not a new device run here or proof of periodic cadence. Kundalini's latest report remains
+not a new device run here or proof of periodic cadence. reference app B's latest report remains
 schema-16 device/OTA acceptance and observed reminder delivery, without a new package finding.
 
 Decision: preserve users' data, application IDs and shipped event meanings. Retain the existing
 adapter correction until adoption rather than changing notification behavior again on an unadopted
 fix. Combined schema remains 16, R4 since 11 and pendingIds since 16. S1 remains deferred during
 the candidate freeze; S2 requires a Play account. This refresh changes evidence only; the existing
-security checklist and review retain their original scope. Real Firebase delivery and iOS remain
-untested.
+security checklist and review retain their original scope. Real Firebase delivery and iOS is experimental and untested.
 
 Fresh gates use `%TEMP%/valence-notify-i9-*.log`. Root tests pass 102/102 with zero skips,
 including real generated Dart and strict/verbatim generated TS. Core tests pass 546, push adapter 2,
@@ -624,16 +622,16 @@ files. Implementation trees are unchanged from iteration-8 validation; only this
 in either repository. No APK installation, new device acceptance, test-app writes, shared-branch
 changes, package/schema version changes, pushes or publications occurred.
 
-## Queue refresh after app-c iteration 8 - 2026-10-30
+## Queue refresh after reference app C iteration 8 - 2026-10-30
 
-Reviewed both findings files and newest reports: Kundalini iteration 15 and app-c iteration 8.
+Reviewed both findings files and newest reports: reference app B iteration 15 and reference app C iteration 8.
 Both branches already contain newest packages: code `d2e6970a983e8f1e1f030ea39b9861d487ea9db4`
 and site `ce19151baa1fdac40ac3208e70bb69388a8b538a`. All 26 earlier numbered-feature/link-compat
 tips remain ancestors of packages in both repositories. This is the only unmerged implementation
 branch, so the two-branch integration rule does not require a fresh integration. No other must-have
 is eligible; S1 remains deferred during the candidate freeze and S2 needs a Play account.
 
-App-c's real warm-tap capture now contains integer ID `578327257`, application payload
+reference app C's real warm-tap capture now contains integer ID `578327257`, application payload
 `{"id":"iteration-8-warm","p":"unit-0101"}` and `action: null`. Its contract audit reports
 one string-ID violation. Routing to Flat 1 succeeds but does not close F-30. Supplied npm hashes
 match iteration 7, and the app's current main/config still contain neither
@@ -649,15 +647,14 @@ Spot-checked the eligible forced-worker comparison: exact raw activation SHA256 
 null, bad [`1793379749`], floor 0. The report excludes an earlier contaminated foreground receipt.
 These are inspected app captures, not a new device run here. New F-32's ANR capture names
 `com.android.camera2` with a 5003ms input timeout, followed by a reported successful retry;
-it establishes no Valence cause. Kundalini's latest report remains schema-16 device/OTA
+it establishes no Valence cause. reference app B's latest report remains schema-16 device/OTA
 acceptance and observed reminder delivery, with no new package finding.
 
 Decision: preserve users' data and shipped event meanings. Do not coerce a native hash to a
 string, rewrite the frozen event, change database behavior on recovered latency, or change
 notification behavior again before the reviewed adapter is adopted. Combined schema remains
 16, R4 since 11 and pendingIds since 16. This refresh changes evidence only; the existing
-security checklist and review retain their original scope. Real Firebase delivery and iOS
-remain untested. No test-app writes, emulator run, shared-branch changes, pushes, publication
+security checklist and review retain their original scope. Real Firebase delivery and iOS is experimental and untested. No test-app writes, emulator run, shared-branch changes, pushes, publication
 or package/schema version changes occurred.
 
 Fresh gates use `%TEMP%/valence-notify-i8-*.log`. Root tests pass 102/102 with zero skips,
@@ -672,16 +669,16 @@ and built-in signature verification accepts seq `1793209750`, two files. Debug A
 Implementation trees are unchanged from the preceding iteration-7 validation; only this report
 changed in either repository. No APK installation or device acceptance is inferred.
 
-## Queue refresh after app-c iteration 7 - 2026-10-30
+## Queue refresh after reference app C iteration 7 - 2026-10-30
 
-Read both findings files and the newest reports: Kundalini iteration 15 and app-c iteration 7.
+Read both findings files and the newest reports: reference app B iteration 15 and reference app C iteration 7.
 Newest packages remains code `d2e6970a983e8f1e1f030ea39b9861d487ea9db4`, site
 `ce19151baa1fdac40ac3208e70bb69388a8b538a`; both merges report already up to date.
 All 26 earlier numbered-feature/link-compat tips remain ancestors of packages in both repos.
 This remains the only unmerged implementation branch; the two-branch integration rule does not
 require a fresh integration. No other must-have implementation is eligible.
 
-App-c's iteration-7 `event-contract-check.json` reports one string-ID violation for actual integer
+reference app C's iteration-7 `event-contract-check.json` reports one string-ID violation for actual integer
 ID `1923145494`; its warm tap routes successfully, which does not repair the wire contract.
 The supplied npm hashes remain unchanged from iteration 6. Read-only inspection of the app's
 current main/config finds neither `notificationEventAdapter` nor `notificationEventFields`.
@@ -695,10 +692,10 @@ section 4.9, the dedicated guide and starter schema. Searched site source/public
 schema-9 permissions references; none remain. This is a documentation correction, without a
 schema, runtime or package version change. F-27's remaining host-file lifecycle guidance stays open.
 
-App-c's supplied background comparison records equal raw activation SHA256 values before/after
+reference app C's supplied background comparison records equal raw activation SHA256 values before/after
 its due-time forced periodic worker. Its final state commits `1793376496`, previous `1793376385`,
 pending/trial null, bad [`1793376329`], floor 0. These are inspected app captures, not a new
-device run here. Kundalini's latest report remains schema-16 device/OTA acceptance and observed
+device run here. reference app B's latest report remains schema-16 device/OTA acceptance and observed
 reminder delivery, without a new package finding. Real Firebase delivery remains untested.
 
 Decision: preserve users' data and shipped event meanings; retain the existing correction until
@@ -720,16 +717,16 @@ and built-in signature verification accepts seq `1793209750`, two files. Debug A
 No new emulator run or device acceptance is claimed. No test-app writes, shared-branch
 commits/merges, schema/package version changes, pushes or publications were performed.
 
-## Queue refresh after app-c iteration 6 - 2026-10-30
+## Queue refresh after reference app C iteration 6 - 2026-10-30
 
-Read both findings files and the newest reports: Kundalini iteration 15 and app-c iteration 6.
+Read both findings files and the newest reports: reference app B iteration 15 and reference app C iteration 6.
 Newest packages remains code `d2e6970a983e8f1e1f030ea39b9861d487ea9db4`, site
 `ce19151baa1fdac40ac3208e70bb69388a8b538a`; both branch merges report already up to date.
 All 26 numbered-feature/link-compat tips remain ancestors of packages in both repositories.
 This is the only unmerged implementation branch; integration history/backup branches do not
 constitute a second ready feature. No integration rebuild or new must-have item is due.
 
-App-c now independently audits the observed ID against its frozen event. Its iteration-6
+reference app C now independently audits the observed ID against its frozen event. Its iteration-6
 `warm-tap-events.json` records integer ID `1536160051`, the application's encoded payload and
 `action: null`; `event-contract-check.json` reports one string-ID violation and the report
 records exit 1. Routing to Flat 1 does not repair the wire contract. Its npm snapshot hashes match
@@ -744,7 +741,7 @@ the worker runs. Final activation records current `1793340382`, previous `179334
 pending/trial, bad `1793340198` and floor 0. These are app-provided captures, not an independent
 device run here. Its retained media, notification delivery and rollback claims keep the scope
 and exclusions in its report. F-27's remaining host-file lifecycle documentation gap stays open.
-Kundalini's latest report is unchanged: schema-16 device/OTA acceptance and observed delivery,
+reference app B's latest report is unchanged: schema-16 device/OTA acceptance and observed delivery,
 with no new platform finding. Real Firebase delivery remains outside both apps' coverage.
 
 Decision: preserve users' data and the shipped event's meaning. Retain this reviewed correction
@@ -769,15 +766,15 @@ This report-only refresh adds no implementation change or new independent securi
 the existing checklist/review retains its original scope. No test-app write, emulator session,
 shared-branch commit/merge, push or publication was performed.
 
-## Queue refresh after app-c iteration 5 - 2026-10-30
+## Queue refresh after reference app C iteration 5 - 2026-10-30
 
-Read both findings files and the newest reports: Kundalini iteration 15 and app-c iteration 5.
+Read both findings files and the newest reports: reference app B iteration 15 and reference app C iteration 5.
 Rechecked all 26 previous feature/link-compat tips in both repositories; they are ancestors of
 packages. This R4 follow-up is the only unmerged implementation branch. Both merges of newest
 packages reported already up to date: code `d2e6970a983e8f1e1f030ea39b9861d487ea9db4`, site
 `ce19151baa1fdac40ac3208e70bb69388a8b538a`. No integration rebuild is required for a single branch.
 
-App-c's `evidence/iteration-5/warm-tap-events.json` still records integer ID `142341840`, the app's
+reference app C's `evidence/iteration-5/warm-tap-events.json` still records integer ID `142341840`, the app's
 encoded payload and `action: null` over its frozen string-ID event. Correct routing does not close
 F-30. Its supplied npm hashes match iteration 4, and this correction is still outside packages;
 that device result does not test this branch or its adapter. Keep F-30 open until adoption,
@@ -800,17 +797,17 @@ pack dry runs pass. The site build and SEO check pass all 43 pages. Example code
 signed builtin verification accepts seq `1793209750`, two files. The debug APK builds successfully
 (assembleDebug 134.6 seconds, existing app_badge_plus KGP warning). Standalone `py` Firebase audit
 prints PASS for the resolved graph, manifest and all 19 DEX files. No implementation changed after
-these checks. Device acceptance of this correction, real Firebase delivery and iOS remain untested.
+these checks. Device acceptance of this correction, real Firebase delivery and iOS is experimental and untested.
 
 ## Inputs, ownership and decision (initial implementation)
 
-Read both apps' VALENCE_FINDINGS.md and their newest completed reports: Kundalini iteration 15
-and app-c iteration 4. Kundalini reports installed schema-16 acceptance, observed reminder delivery
-and an app-owned day-loading fix. App-c's F-26 tooling issue is resolved in iteration 3; F-27 remains
+Read both apps' VALENCE_FINDINGS.md and their newest completed reports: reference app B iteration 15
+and reference app C iteration 4. reference app B reports installed schema-16 acceptance, observed reminder delivery
+and an app-owned day-loading fix. reference app C's F-26 tooling issue is resolved in iteration 3; F-27 remains
 open for host-file lifecycle guidance. F-28 does not establish a database defect; preserve data
 and retry semantics. F-29's callback replacement is app-owned and its fix exposes distinct F-30.
 
-App-c's `evidence/iteration-4/fixed-warm-tap-events.json` records a numeric ID 1885662976 plus
+reference app C's `evidence/iteration-4/fixed-warm-tap-events.json` records a numeric ID 1885662976 plus
 `action: null` over its frozen since-1 `{id: string, payload: string?}` event. Its schema and newest
 report confirm the mismatch. This is current runtime behavior, unlike the older F-26 artifact.
 
@@ -887,10 +884,10 @@ as a passing gate. A second full root run validated the final generated-legacy f
 
 ## Limits and handoff
 
-This fixes the package integration seam; app-c must adopt the refreshed CLI/runtime, regenerate,
+This fixes the package integration seam; reference app C must adopt the refreshed CLI/runtime, regenerate,
 install its native adapter and rebuild before its warm/cold device acceptance can close F-30.
 Tests do not establish real Firebase delivery, positive biometrics, clock/reboot stress or natural
-background timing. iOS remains experimental and untested. No emulator lock was acquired and no
+background timing. iOS is experimental and untested. No emulator lock was acquired and no
 test app was modified. No shared-branch commit/merge, push, publication or version/schema bump.
 
 Only the R4 Status cell is updated in the shared roadmap for this follow-up; other rows and its

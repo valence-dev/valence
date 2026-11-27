@@ -17,8 +17,8 @@ credential, redirect, deadline and cookie paths remain intact. Security review f
 confirmed actionable defect after checking config/codegen/doctor/runtime and generated
 strict params, request preservation, gzip and escaped envelope tests.
 
-Read both test apps' findings and newest completed reports at intake: Kundalini 18 and
-app-c 64. Kundalini's large rashifal response supports this need; app-c's current busy
+Read both test apps' findings and newest completed reports at intake: reference app B 18 and
+reference app C 64. reference app B's large rashifal response supports this need; reference app C's current busy
 sync expectation failed before later recovery, without proving its original COMMIT
 exception or a lock owner. Historical renderer/startup/worker findings remain qualified.
 Both app repositories were read-only.
@@ -62,7 +62,7 @@ A first launch named the package instead of the namespaced activity and failed b
 execution; corrected launch produced all four PASS lines. Stopped only the example app
 and released the lock. Probe uses synthetic loopback data and opens no user database or
 credential store. This is a native HTTP/envelope probe, not a full WebView end-to-end or
-release-build acceptance test. iOS remains experimental and untested.
+release-build acceptance test. iOS is experimental and untested.
 
 Raw full-gate logs are retained locally in `%TEMP%/valence-r32/`; durable probe receipts
 are linked above. Protected branches, test apps and package versions were not changed;

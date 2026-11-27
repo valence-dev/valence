@@ -3,12 +3,12 @@
 ## November 10: iteration 203 fails retained startup despite passing feature checks
 
 In plain terms: all 33 must-have rows remain done. Reviewed both findings
-inventories and newest reports, Kundalini 24 / App C 203. No eligible must-have
+inventories and newest reports, reference app B 24 / reference app C 203. No eligible must-have
 or priority queue refresh remains. Both integrations contain newest packages
 code `dd1c53d` / site `bb0f34c` and all 47 recorded source tips. No merge,
 schema renumbering or version change is needed; item Status cells stay unchanged.
 
-App C's startup acceptance is **failed**. Initial PID 3818 and rebuilt retained
+reference app C's startup acceptance is **failed**. Initial PID 3818 and rebuilt retained
 release PID 4854 have native startup ANRs with `failed to complete startup`.
 Independently inspected the rebuilt screenshot: Fieldnote's ANR dialog offers
 Close app and Wait over a blank surface. Wrapper exit zero and later app.ready
@@ -63,7 +63,7 @@ in integration; current app receipts do not establish adoption. Historical
 startup/process, transaction, observer, publication and compatibility findings
 remain open. S1 remains parked, S2 needs Play and S10/P1 remain deferred.
 No test-app scripts executed or test-app writes; no fresh emulator acceptance.
-iOS remains experimental and untested.
+iOS is experimental and untested.
 
 Fresh gates against code `c6b1ddc` / site `1ad82e5`:
 
@@ -86,7 +86,7 @@ Passing implementation gates do not close failed startup acceptance.
 ## November 10: iteration 202 separates painted screens from accessibility readiness
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 202. No eligible must-have or queue
+and newest reports, reference app B 24 / reference app C 202. No eligible must-have or queue
 refresh remains. Both integrations contain current packages code `dd1c53d` /
 site `bb0f34c` and all 47 exact source tips in the assembly table. No merge,
 schema renumbering or version change was needed; item Status cells stay unchanged.
@@ -133,7 +133,7 @@ already exist in this integration; current app receipts do not establish adoptio
 S1 remains parked, S2 needs Play and S10/P1 remain deferred. Canonical verification,
 nonce/strict decoding, navigation/subframe locks, atomic state, keys and release
 build exclusion of development mode are unchanged. No app scripts executed or
-test-app writes. No fresh emulator acceptance; iOS remains experimental/untested.
+test-app writes. No fresh emulator acceptance; iOS is experimental and untested.
 
 Fresh gates against code `3345bcc` / site `4b56594`:
 
@@ -153,16 +153,16 @@ note follows the gates. Logs/results: `%TEMP%/valence-20261110-iteration202-*`.
 Read-only artifact review: `%TEMP%/valence-iteration202-review.json` and
 `valence-iteration202-extra.py`. Gates do not close historical reliability findings.
 
-## November 10: App C iteration 201 paints fresh offline seed; retained startup remains qualified
+## November 10: reference app C iteration 201 paints fresh offline seed; retained startup remains qualified
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 201. No eligible must-have or priority
+and newest reports, reference app B 24 / reference app C 201. No eligible must-have or priority
 queue refresh remains; item Status cells stay unchanged. Both integrations
 contain packages code `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 `bb0f34ce600dc73d3f27eae7d9f240ceac5ceb28` and all 47 exact current source
 tips in the assembly table below. No merge or schema renumbering was needed.
 
-App C reports scoped Android acceptance. Independently inspected the saved
+reference app C reports scoped Android acceptance. Independently inspected the saved
 settled launcher and first/confirmed offline app screenshots: all six seed cards,
 six-of-six count, zero photos, widget not added, airplane icon and no blocking
 dialog. The independent AVD matches standard configured 1080x2400 display,
@@ -207,16 +207,15 @@ receipts. No test-app scripts were executed. Review outputs:
 
 Decision: security first, then users' data. Preserve the frozen implementation
 and the distinction between successful fresh launch and qualified retained
-startup. The evidence establishes no runtime cause to fix. Kundalini F-85's
-self-dating lease log and App C F-60/F-61 guidance corrections already exist in
+startup. The evidence establishes no runtime cause to fix. reference app B F-85's
+self-dating lease log and reference app C F-60/F-61 guidance corrections already exist in
 this integration; app receipts do not establish their adoption. Historical
 transaction, startup/process, observer, compatibility and publication
 crash-recovery findings remain open. S1 stays parked, S2 needs Play, S10/P1 stay
 deferred. Verification order, strict decoding/nonce, navigation/subframe locks,
 atomic state, keys and release-build development exclusion remain unchanged.
 No runtime, schema or version change, test-app write, protected-branch commit,
-push or publication. No fresh builder emulator acceptance; iOS remains
-experimental and untested.
+push or publication. No fresh builder emulator acceptance; iOS is experimental and untested.
 
 All 15 fresh gates passed November 10 against code `79b5b1f` / site `bcb5b41`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -236,16 +235,16 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration201-results.json`. Gates do not close device
 reliability findings or erase earlier failed acceptance.
 
-## November 10: App C iteration 200 reaches eventual offline seed paint after white screens
+## November 10: reference app C iteration 200 reaches eventual offline seed paint after white screens
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 200. No eligible must-have or priority
+and newest reports, reference app B 24 / reference app C 200. No eligible must-have or priority
 queue refresh remains; item Status cells stay unchanged. Both integrations
 contain packages code `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 `bb0f34ce600dc73d3f27eae7d9f240ceac5ceb28` and all 47 exact current source
 tips in the assembly table below. No merge or schema renumbering was needed.
 
-App C reports scoped Android acceptance with a current startup qualification.
+reference app C reports scoped Android acceptance with a current startup qualification.
 Independently inspected all three initial white screens and later unobstructed offline
 seed screen: six cards, six-of-six count, zero photos, widget not added and
 airplane icon. Three saved white captures precede eventual paint on the same
@@ -300,8 +299,7 @@ app receipts do not establish their adoption. S1 stays parked, S2 needs Play,
 S10/P1 stay deferred. Verification order, strict decoding/nonce, navigation and
 subframe locks, atomic state, keys and release-build development exclusion remain
 unchanged. No runtime, schema or version change, test-app write, protected-branch
-commit, push or publication. No fresh builder emulator acceptance; iOS remains
-experimental and untested.
+commit, push or publication. No fresh builder emulator acceptance; iOS is experimental and untested.
 
 All 15 fresh gates passed November 10 against code `979d75c` / site `a323d43`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -321,16 +319,16 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration200-results.json`. Gates do not close device
 reliability findings or erase earlier failed acceptance.
 
-## November 10: App C iteration 199 passes scoped acceptance on a smaller independent AVD
+## November 10: reference app C iteration 199 passes scoped acceptance on a smaller independent AVD
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 199. No eligible must-have or priority
+and newest reports, reference app B 24 / reference app C 199. No eligible must-have or priority
 queue refresh remains; item Status cells stay unchanged. Both integrations
 contain packages code `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 `bb0f34ce600dc73d3f27eae7d9f240ceac5ceb28` and all 47 exact current source
 tips in the assembly table below. No merge or schema renumbering was needed.
 
-App C reports scoped Android acceptance. Independently inspected the saved fresh
+reference app C reports scoped Android acceptance. Independently inspected the saved fresh
 offline screenshot: six-of-six seeded-unit count, zero photos, airplane icon and
 no blocking dialog. Only five unit cards fit in the viewport. This independent
 320x640 AVD does not establish memory-pressure equivalence to the standard
@@ -383,7 +381,7 @@ S1 stays parked, S2 needs Play, S10/P1 stay deferred. Verification order, strict
 decoding/nonce, navigation/subframe locks, atomic state, keys and release-build
 development exclusion remain unchanged. No runtime, schema or version change,
 test-app write, protected-branch commit, push or publication. No fresh builder
-emulator acceptance; iOS remains experimental and untested.
+emulator acceptance; iOS is experimental and untested.
 
 All 15 fresh gates passed November 10 against code `b46a123` / site `548a075`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -403,16 +401,16 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration199-results.json`. Gates do not close device
 reliability findings or erase earlier failed acceptance.
 
-## November 10: App C iteration 198 has an unforced callback and scoped offline acceptance
+## November 10: reference app C iteration 198 has an unforced callback and scoped offline acceptance
 
 In plain terms: all 33 must-have rows remain done. Read both apps' findings and
-newest reports, Kundalini 24 / App C 198. No eligible must-have or priority queue
+newest reports, reference app B 24 / reference app C 198. No eligible must-have or priority queue
 refresh remains. Both integrations contain current packages code
 `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 `bb0f34ce600dc73d3f27eae7d9f240ceac5ceb28` and all 47 exact current source tips
 in the existing assembly table. No merge or schema renumbering was needed.
 
-App C reports scoped Android acceptance. Independently inspected the fresh
+reference app C reports scoped Android acceptance. Independently inspected the fresh
 `fresh-painted.png`: six-of-six seeded units, zero photos, airplane icon and no
 blocking dialog. Package absence before install and installed release hash match
 the archive. Native log records no Fieldnote ANR; it does record ANRs in
@@ -460,7 +458,7 @@ publication crash-recovery findings remain open. F-60/F-61 corrections already
 exist in this integration's guides; app receipts do not establish their adoption.
 S1 stays parked, S2 needs Play, S10/P1 stay deferred. No runtime, schema or version
 change, test-app write, protected-branch commit, push or publication. No fresh
-builder emulator acceptance; iOS remains experimental and untested.
+builder emulator acceptance; iOS is experimental and untested.
 
 All 15 fresh gates passed November 10 against code `162f74a` / site `fda3d85`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -480,16 +478,16 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration198-results.json`. Gates do not close device
 reliability findings or erase earlier failed acceptance.
 
-## November 10: App C iteration 197 passes scoped acceptance after a separate gallery continuation
+## November 10: reference app C iteration 197 passes scoped acceptance after a separate gallery continuation
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 197. No eligible must-have or priority
+and newest reports, reference app B 24 / reference app C 197. No eligible must-have or priority
 queue refresh remains; item Status cells stay unchanged. Both integrations
 contain packages code `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 `bb0f34ce600dc73d3f27eae7d9f240ceac5ceb28` and all 47 exact current source
 tips in the assembly table below. No merge or schema renumbering is needed.
 
-App C's saved fresh-offline evidence now passes scoped acceptance. Inspected the
+reference app C's saved fresh-offline evidence now passes scoped acceptance. Inspected the
 initial and confirmed screenshots: unobstructed six-of-six seeded-unit count,
 zero photos and airplane icon. Native verdict records no Fieldnote ANR or
 environment obstruction during this observation. Package absence before install
@@ -546,7 +544,7 @@ S1 stays parked, S2 needs Play, S10/P1 stay deferred. Verification order,
 nonce/strict decoding, navigation/subframe locks, atomic state, keys and
 release-build development exclusion remain unchanged. No runtime, schema or
 version change, test-app write, protected-branch commit, push or publication.
-No fresh builder emulator acceptance; iOS stays experimental and untested.
+No fresh builder emulator acceptance; iOS is experimental and untested.
 
 All 15 fresh gates passed November 10 against code `5de717b` / site `ae0b542`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -566,17 +564,17 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration197-results.json`. Gates do not close device
 reliability findings or erase earlier failed acceptance.
 
-## November 10: App C iteration 196 has inconclusive fresh first-launch acceptance
+## November 10: reference app C iteration 196 has inconclusive fresh first-launch acceptance
 
-In plain terms: all 33 must-have rows remain done, but App C has not established
+In plain terms: all 33 must-have rows remain done, but reference app C has not established
 responsive fresh first-launch acceptance. Read both findings inventories and
-newest reports, Kundalini 24 / App C 196. No eligible must-have or queue refresh
+newest reports, reference app B 24 / reference app C 196. No eligible must-have or queue refresh
 remains; item Status cells stay unchanged. Both integrations contain packages
 code `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 `bb0f34ce600dc73d3f27eae7d9f240ceac5ceb28` and all 47 exact current source tips
 in the assembly table below. No merge or schema renumbering is needed.
 
-App C's initial fresh screenshot and XML show "System UI isn't responding"
+reference app C's initial fresh screenshot and XML show "System UI isn't responding"
 over the six-seed-unit page. The same native log records System UI ANR at
 13:19:28.584 and Fieldnote PID 2652 starting at 13:20:02.779. These timestamps
 establish ordering within one device log; host receipt times use a separate
@@ -632,8 +630,7 @@ and package-specific ANR evidence. S1 stays parked, S2 needs Play, S10/P1 stay
 deferred. Verification order, nonce/strict decoding, navigation/subframe locks,
 atomic state, keys and release-build development exclusion remain unchanged.
 No runtime, schema or version change, test-app write, protected-branch commit,
-push or publication. No fresh builder emulator acceptance; iOS stays experimental
-and untested. Passing build gates cannot override device acceptance evidence.
+push or publication. No fresh builder emulator acceptance; iOS is experimental and untested. Passing build gates cannot override device acceptance evidence.
 
 All 15 fresh gates passed November 10 against code `b135db8` / site `ddf4094`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -653,18 +650,18 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration196-results.json`. Gates do not close device
 reliability findings or resolve the obstructed first-launch acceptance.
 
-## November 10: App C iteration 195 failed fresh first-launch acceptance
+## November 10: reference app C iteration 195 failed fresh first-launch acceptance
 
-In plain terms: all 33 must-have rows remain done, but App C's current device
+In plain terms: all 33 must-have rows remain done, but reference app C's current device
 acceptance is false. Read both findings inventories and newest reports,
-Kundalini 24 / App C 195. No eligible must-have or queue refresh remains; item
+reference app B 24 / reference app C 195. No eligible must-have or queue refresh remains; item
 Status cells stay unchanged. S1 stays parked, S2 needs Play, S10/P1 stay deferred.
 Both integrations contain current packages code
 `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 `bb0f34ce600dc73d3f27eae7d9f240ceac5ceb28` and all 47 exact current source tips
 in the assembly table below. No merge or schema renumbering is needed.
 
-App C's independent fresh offline first launch fails acceptance. Full native
+reference app C's independent fresh offline first launch fails acceptance. Full native
 logcat names PID 3084 and a 5002ms FocusEvent input-dispatch ANR. Inspected the
 actual ANR dialog over the six-seed-unit list. The main-thread sample records
 state D and WebViewGoogle.apk frames; CPU/I/O pressure and another system ANR
@@ -714,8 +711,7 @@ corrections are already queued; older captured app wording does not establish
 adoption. Verification order, nonce/strict decoding, navigation/subframe locks,
 atomic state, keys and release-build development exclusion remain unchanged.
 No runtime, schema or version change, test-app write, protected-branch commit,
-push or publication. No fresh builder emulator acceptance; iOS stays experimental
-and untested. Passing build gates cannot override this device acceptance failure.
+push or publication. No fresh builder emulator acceptance; iOS is experimental and untested. Passing build gates cannot override this device acceptance failure.
 
 All 15 fresh gates passed November 10 against code `9dfca4d` / site `d583586`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -735,10 +731,10 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration195-results.json`. Gates do not close F-33 or
 any other device reliability finding.
 
-## November 10: App C iteration 194 qualified regression
+## November 10: reference app C iteration 194 qualified regression
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 194. No eligible must-have or queue refresh
+and newest reports, reference app B 24 / reference app C 194. No eligible must-have or queue refresh
 remains; item Status cells stay unchanged. S1 remains parked, S2 needs Play,
 S10/P1 remain deferred. Both integrations contain current packages code
 `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
@@ -746,7 +742,7 @@ S10/P1 remain deferred. Both integrations contain current packages code
 in the assembly table below. No merge or schema renumbering is necessary.
 The original queue order and historical example-revision exclusion remain.
 
-App C reports qualified Android acceptance. Rebuilt Settings continuity preserves
+reference app C reports qualified Android acceptance. Rebuilt Settings continuity preserves
 PID 5317 before explicit relaunch. Initial release Flutter splash/UI Automator
 exit 137 and transient debug discovery/readiness failures remain separate from
 successful continuations. Inspected the retained offline Flat 1 checklist/photo
@@ -791,7 +787,7 @@ does not establish adoption. Canonical verification order, nonce/strict decoding
 navigation/subframe locks, atomic state, keys and release-build development
 exclusion remain unchanged. No runtime, schema or package-version change,
 test-app write, protected-branch commit, push or publication. No fresh emulator
-acceptance in this builder run; iOS remains experimental and untested.
+acceptance in this builder run; iOS is experimental and untested.
 
 All 15 fresh gates passed November 10 against code `a8cd736` / site `4db7e5b`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -811,10 +807,10 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration194-results.json`. Gates do not close F-33 or
 any other device reliability finding.
 
-## November 10: App C iteration 193 qualified regression
+## November 10: reference app C iteration 193 qualified regression
 
 In plain terms: all 33 must-have rows remain done. Read both apps' findings
-inventories and newest reports, Kundalini 24 / App C 193. No eligible must-have
+inventories and newest reports, reference app B 24 / reference app C 193. No eligible must-have
 or queue refresh remains; item Status cells stay unchanged. S1 remains parked,
 S2 needs Play, S10/P1 remain deferred. Both integrations contain current packages
 code `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
@@ -822,7 +818,7 @@ code `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
 in the assembly table below. No merge or schema renumbering is necessary.
 The original queue order and historical example-revision exclusion remain.
 
-App C reports qualified Android acceptance. Rebuilt Settings continuity passes
+reference app C reports qualified Android acceptance. Rebuilt Settings continuity passes
 in PID 5765 before explicit relaunch. Initial release Flutter logo/spinner,
 follow-on UI Automator failure and transient debug discovery/unready observations
 remain separate from successful continuations. Inspected the retained offline
@@ -875,8 +871,7 @@ integrations; continued wording in captured app docs does not prove its adoption
 Canonical verification order, nonce/strict decoding, navigation/subframe locks,
 atomic state, keys and release-build development exclusion remain unchanged.
 No runtime, schema or package-version change, test-app write, protected-branch
-commit, push or publication. No fresh emulator/iOS acceptance; iOS remains
-experimental and untested.
+commit, push or publication. No fresh emulator/iOS acceptance; iOS is experimental and untested.
 
 All 15 fresh gates passed November 10 against code `71c2987` / site `e49176e`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -896,10 +891,10 @@ The existing app_badge_plus Kotlin migration warning remains. Gate logs:
 `%TEMP%/valence-20261110-iteration193-results.json`. Gates do not close F-33 or
 any other device reliability finding.
 
-## November 10: App C iteration 192 and the retained COMMIT failure
+## November 10: reference app C iteration 192 and the retained COMMIT failure
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 192. No eligible must-have or queue refresh
+and newest reports, reference app B 24 / reference app C 192. No eligible must-have or queue refresh
 remains; item Status cells stay unchanged. S1 remains explicitly parked, S2 needs
 Play, S10/P1 remain deferred. Both integrations contain current packages code
 `dd1c53dd9ce7a54588d22c54bf3c0183548b4a75` / site
@@ -908,7 +903,7 @@ in the assembly table below. No merge, schema renumbering or new feature branch
 is needed. The original queue order and historical example-revision exclusion
 remain unchanged.
 
-App C reports qualified Android acceptance. Rebuilt Settings continuity passes
+reference app C reports qualified Android acceptance. Rebuilt Settings continuity passes
 in PID 5158 before explicit relaunch. The initial Flutter splash/UI Automator
 exit 137, initial 122044ms media observer timeout, separate unready-page failure
 and supplemental background discovery failure remain distinct from successful
@@ -968,8 +963,7 @@ actual failure rather than infer a concurrency fix from temporal proximity.
 Canonical verification order, nonce/strict decoding, navigation/subframe locks,
 atomic state, key handling and release-build development exclusion are unchanged.
 No runtime, schema or package-version change, test-app write, protected-branch
-commit, push or publication. No fresh emulator/iOS acceptance; iOS remains
-experimental and untested. Historical reliability findings remain open.
+commit, push or publication. No fresh emulator/iOS acceptance; iOS is experimental and untested. Historical reliability findings remain open.
 
 All 15 fresh gates passed November 10 against code `c583007` / site `d89c36c`;
 only this mirrored validation note follows those gates. Flutter commands ran serially.
@@ -991,18 +985,18 @@ any other device reliability finding.
 
 ## November 10: periodic scheduling correction and iteration 191
 
-In plain terms: App C F-61 exposed a reversed scheduling promise in contracts
+In plain terms: reference app C F-61 exposed a reversed scheduling promise in contracts
 section 5.6 and the host guide. Android's 15 minutes is a minimum repeat interval,
 not a freshness deadline; constraints and system optimizations can delay or skip
 runs. The package README and site data/sync guide now agree. Foreground and
-reconnect triggers remain essential. iOS remains experimental and untested.
+reconnect triggers remain essential. iOS is experimental and untested.
 [Decision, evidence and branch validation](periodic-sync-validation.md).
 
-Read both findings inventories and newest reports: Kundalini 24 / App C 191.
+Read both findings inventories and newest reports: reference app B 24 / reference app C 191.
 All 33 must-have rows remain done; no eligible must-have or changes-requested
 item remains, and item Status cells stay unchanged. S1 remains parked, S2 needs
 Play, S10/P1 deferred. Historical Android startup, renderer, observer and
-publication crash-recovery findings remain open. App C reports qualified
+publication crash-recovery findings remain open. reference app C reports qualified
 acceptance; a successful continuation does not erase its initial spinner,
 observer exit 137 or media CDP timeout. Its explicitly triggered eligible worker
 proves one callback and data effects, not natural cadence. Native startup 6432ms
@@ -1100,17 +1094,17 @@ Only this validation/handoff note follows the integration gates.
 | 46 | codex/observer-evidence | `771b641a63ba16d67bce787ea5167e76952f3626` | `f1906543004823d7c26a778d3b053b1bbb439cd1` |
 | 47 | codex/periodic-sync-docs | `512a0d4c4293640b3429c3548acb664089385775` | `2e8fc20845c91c60bdb4b05f8f7dd187449bd690` |
 
-## November 10: App C iteration 190 qualified regression
+## November 10: reference app C iteration 190 qualified regression
 
 In plain terms: all 33 must-have rows remain done. Reviewed both findings
-inventories and newest reports, Kundalini 24 / App C 190. No eligible must-have
+inventories and newest reports, reference app B 24 / reference app C 190. No eligible must-have
 or changes-requested item remains; Status cells stay unchanged. Both integrations
 contain current packages dd1c53d / bb0f34c and all 46 recorded source branches.
 Original merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, followed by
 the recorded follow-ups; the historical example-revision exclusion remains.
 No merge or schema renumbering is needed.
 
-App C reports qualified Android acceptance. Rebuilt Settings continuity passes
+reference app C reports qualified Android acceptance. Rebuilt Settings continuity passes
 in PID 5892 before explicit relaunch; historical reliability findings, including
 iteration 186's failure, remain open. Independently inspected the initial Flutter
 splash, later retained offline detail/photo and independent fresh-offline paint.
@@ -1168,17 +1162,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261110-190-results.json. Only validation and handoff notes
 follow these gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 10: App C iteration 189 qualified regression
+## November 10: reference app C iteration 189 qualified regression
 
 In plain terms: all 33 must-have rows remain done. Reviewed both findings
-inventories and newest reports, Kundalini 24 / App C 189. No eligible must-have
+inventories and newest reports, reference app B 24 / reference app C 189. No eligible must-have
 or changes-requested item remains; Status cells stay unchanged. Both integrations
 contain packages dd1c53d / bb0f34c and all 46 queued source tips each. Original
 merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14 followed by the recorded
 follow-ups; the historical example-revision exclusion remains. No merge or
 schema renumbering is needed.
 
-App C reports qualified Android acceptance. Settings continuity passes before
+reference app C reports qualified Android acceptance. Settings continuity passes before
 explicit relaunch at preinstall PID 4046 and rebuilt PID 5456. This does not
 close historical reliability findings or erase iteration 186's renderer-loss
 failure. Independently inspected initial Flutter splash, later retained offline
@@ -1240,17 +1234,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261110-189-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 10: App C iteration 188 qualified regression
+## November 10: reference app C iteration 188 qualified regression
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 188. No eligible must-have or changes-
+and newest reports, reference app B 24 / reference app C 188. No eligible must-have or changes-
 requested item remains; Status cells stay unchanged. Both integrations contain
 packages dd1c53d / bb0f34c and all 46 queued source tips. Original merge order
 remains R8, R7, R6, R3, R4, R5, R9, R10, R14 followed by the recorded follow-ups;
 the historical example-revision exclusion remains. No merge or schema
 renumbering is needed.
 
-App C reports qualified Android acceptance. Settings continuity passes at
+reference app C reports qualified Android acceptance. Settings continuity passes at
 preinstall PID 3836 and rebuilt PID 5486 before explicit relaunch. This does not
 close historical reliability findings or erase iteration 186's renderer-loss
 failure. Inspected initial Flutter splash, later retained offline detail/photo
@@ -1314,17 +1308,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261110-188-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 10: App C iteration 187 scoped regression
+## November 10: reference app C iteration 187 scoped regression
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 187. No eligible must-have or changes-
+and newest reports, reference app B 24 / reference app C 187. No eligible must-have or changes-
 requested item remains; Status cells stay unchanged. Both integrations contain
 current packages dd1c53d / bb0f34c and all 46 queued source tips each. Original
 merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14 followed by the recorded
 follow-ups; the historical example-revision exclusion remains. No merge or schema
 renumbering is needed.
 
-App C reports scoped Android acceptance. Settings continuity passes at preinstall
+reference app C reports scoped Android acceptance. Settings continuity passes at preinstall
 PID 3939 and rebuilt PID 5422. This does not close historical reliability findings
 or erase iteration 186's renderer-loss failure. Inspected initial retained offline
 list and independent fresh-offline image. The former shows six of seven units left,
@@ -1384,11 +1378,11 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261110-187-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 10: App C iteration 186 failed Settings continuity
+## November 10: reference app C iteration 186 failed Settings continuity
 
-In plain terms: the roadmap's 33 must-have rows remain done, but App C's current
+In plain terms: the roadmap's 33 must-have rows remain done, but reference app C's current
 Android acceptance fails. Read both findings inventories and newest reports,
-Kundalini 24 / App C 186. No eligible must-have or changes-requested item remains;
+reference app B 24 / reference app C 186. No eligible must-have or changes-requested item remains;
 Status cells stay unchanged. Both integrations contain packages dd1c53d / bb0f34c
 and all 46 current queued source tips each. No merge or schema renumbering is
 needed. Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then the
@@ -1455,17 +1449,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261110-186-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 10: App C iteration 185 scoped regression
+## November 10: reference app C iteration 185 scoped regression
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 185. No eligible must-have or changes-
+and newest reports, reference app B 24 / reference app C 185. No eligible must-have or changes-
 requested item remains; Status cells stay unchanged. Both integrations contain
 current packages dd1c53d / bb0f34c and all 46 current queued source tips each.
 Original merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14 followed by
 the recorded follow-ups. The historical example-revision exclusion remains.
 No merge or schema renumbering is needed.
 
-App C reports scoped Android acceptance. Settings continuity passes at preinstall
+reference app C reports scoped Android acceptance. Settings continuity passes at preinstall
 PID 3957 and rebuilt PID 5544. This does not close historical reliability findings
 or erase iteration 182's renderer-loss failure. Inspected the initial Flutter
 splash and independent fresh-offline image; later same-PID 4594 offline list,
@@ -1523,16 +1517,16 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261110-185-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 10: App C iteration 184 scoped regression
+## November 10: reference app C iteration 184 scoped regression
 
 In plain terms: all 33 must-have rows remain done. Reviewed both findings
-inventories and newest reports, Kundalini 24 / App C 184. No eligible must-have
+inventories and newest reports, reference app B 24 / reference app C 184. No eligible must-have
 or changes-requested item remains; Status cells stay unchanged. Both integrations
 contain current packages dd1c53d / bb0f34c and all 46 queued source tips each.
 Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then the recorded
 follow-ups. The historical example-revision exclusion remains. No merge is needed.
 
-App C reports scoped Android acceptance. Settings continuity passes at preinstall
+reference app C reports scoped Android acceptance. Settings continuity passes at preinstall
 PID 4422 and rebuilt PID 6060. This does not close historical F-36 or erase
 iteration 182's renderer-loss failure. Inspected the initial blank white release
 image and independent fresh-offline image. Later same-PID 5053 list/detail/photo
@@ -1593,16 +1587,16 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261110-184-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 9: App C iteration 183 scoped regression
+## November 9: reference app C iteration 183 scoped regression
 
 In plain terms: all 33 must-have rows remain done. Read both findings inventories
-and newest reports, Kundalini 24 / App C 183. No eligible must-have or changes-
+and newest reports, reference app B 24 / reference app C 183. No eligible must-have or changes-
 requested item remains; Status cells stay unchanged. Both integrations contain
 current packages dd1c53d / bb0f34c and all 46 queued source tips. Original order
 remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then the recorded follow-ups.
 The historical example-revision exclusion remains. No merge is needed.
 
-App C reports scoped Android acceptance. Settings continuity passes at preinstall
+reference app C reports scoped Android acceptance. Settings continuity passes at preinstall
 PID 3732 and rebuilt PID 5739. This does not close historical F-36 or erase
 iteration 182's renderer-loss failure. Initial release capture shows a loading
 spinner; later same-PID 4368 offline list/detail/photo paint is separate.
@@ -1657,17 +1651,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-183-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 9: App C iteration 182 failed Settings continuity
+## November 9: reference app C iteration 182 failed Settings continuity
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 182.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 182.
 No eligible must-have or changes-requested item remains; Status cells are unchanged.
 Both integrations contain current packages dd1c53d / bb0f34c and all 46 queued
 source tips each. Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14,
 then the recorded follow-ups. No base or source tip moved; no merge was needed.
 Schema allocations and runtime versions remain unchanged.
 
-App C acceptance is false. Raw logcat records lowmemorykiller killing renderer
+reference app C acceptance is false. Raw logcat records lowmemorykiller killing renderer
 5606 at 21:44:46.479, followed by Chromium in host 5538 reporting unhandled
 renderer loss and killing the application at 21:44:46.607. Exit-info records
 renderer LOW_MEMORY and host SIGNALED/status 9. Inspected the blank screenshot
@@ -1728,17 +1722,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
 
-## November 9: App C iteration 181 qualified regression
+## November 9: reference app C iteration 181 qualified regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 181.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 181.
 No eligible must-have or changes-requested item remains; Status cells are unchanged.
 Both integrations contain current packages dd1c53d / bb0f34c and all 46 queued
 source tips each. Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14,
 then the recorded follow-ups. No base or source tip moved; no merge was needed.
 Schema allocations and runtime versions remain unchanged.
 
-App C reports scoped Android acceptance with 121 saved passing artifact checks.
+reference app C reports scoped Android acceptance with 121 saved passing artifact checks.
 Raw release PID 4749 completes the store phase at elapsed 4736ms (4718ms in that
 phase), then completes open at 4825ms. The initial image shows a loading spinner;
 later same-PID offline list/detail/photo paint is separate evidence. R29's receipt
@@ -1769,7 +1763,7 @@ equality, outbox zero and no current fixtures. Publication mapping survives PID
 
 Decision: security and users' data first; preserve failures and inconclusive
 evidence without speculative runtime changes, mutation replay or storage sweeps.
-F-60 observer wording and Kundalini F-85 guidance are already in integration.
+F-60 observer wording and reference app B F-85 guidance are already in integration.
 S1 remains parked, S2 needs Play, S10/P1 remain deferred. No fresh emulator or
 iOS acceptance, package-version changes, publication or push.
 
@@ -1797,17 +1791,17 @@ follow the gates; runtime behavior and schema/version allocations are unchanged.
 
 
 
-## November 9: App C iteration 180 qualified regression
+## November 9: reference app C iteration 180 qualified regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 180.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 180.
 No eligible must-have or changes-requested item remains; Status cells are unchanged.
 Both integrations contain current packages dd1c53d / bb0f34c and all 46 queued
 source tips each. Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14,
 then the recorded follow-ups. Neither base nor queued tip moved; no merge needed.
 The historical example-revision exclusion remains as previously recorded.
 
-App C reports scoped Android acceptance, with 121 saved passing artifact checks.
+reference app C reports scoped Android acceptance, with 121 saved passing artifact checks.
 Raw PID 5313 startup logs complete the store phase at elapsed 8080ms (7996ms
 in that phase), then complete open at 9663ms. The initial image shows Flutter
 splash; later same-PID offline list/detail/photo paint is separate evidence.
@@ -1839,7 +1833,7 @@ equality, outbox zero and no current fixtures. Publication mapping survives PID
 
 Decision: security and users' data first; preserve failures and inconclusive
 evidence without speculative runtime changes, mutation replay or storage sweeps.
-F-60 observer wording and Kundalini F-85 guidance are already in integration.
+F-60 observer wording and reference app B F-85 guidance are already in integration.
 S1 remains parked, S2 needs Play, S10/P1 remain deferred. No fresh emulator or
 iOS acceptance, version changes, publication, push or protected-branch mutation.
 
@@ -1864,17 +1858,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-180-results.json. Only validation and handoff notes
 follow the gates; runtime behavior and schema/version allocations are unchanged.
 
-## November 9: App C iteration 179 qualified startup regression
+## November 9: reference app C iteration 179 qualified startup regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 179.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 179.
 No eligible must-have or changes-requested item remains; Status cells are unchanged.
 Both integrations contain packages dd1c53d / bb0f34c and all 46 exact current
 source-tip pairs. Neither base nor any source tip moved, so no new merge was needed.
 Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then the recorded
 follow-ups. Schema allocations and runtime versions are unchanged.
 
-App C reports qualified Android acceptance with 121 saved passing artifact checks.
+reference app C reports qualified Android acceptance with 121 saved passing artifact checks.
 Its raw release log names store.open id=1, isolate=418829640, PID 4523: waits at
 10003, 20003 and 30003ms, completion at 36233ms, and startup completion at 37727ms.
 Initial screenshots show splash; later same-PID offline list/detail/photo paint
@@ -1906,7 +1900,7 @@ Retained storage metadata establishes no leak or growth rate.
 
 Decision: security and users' data first; retain failed and inconclusive evidence
 without speculative runtime changes, mutation replay or file sweeps. F-60 observer
-wording and Kundalini F-85 lease-log timing are already addressed in integration.
+wording and reference app B F-85 lease-log timing are already addressed in integration.
 S1 stays parked under the recorded freeze, S2 needs Play, and S10/P1 remain deferred.
 Test apps stayed read only. No fresh emulator or iOS acceptance is claimed.
 
@@ -1932,17 +1926,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-179-results.json. Only these validation and handoff notes
 follow the gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 178 scoped regression
+## November 9: reference app C iteration 178 scoped regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 178.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 178.
 No eligible must-have or changes-requested item remains; Status cells are unchanged.
 Both integrations contain current packages dd1c53d / bb0f34c and all 46 exact
 current source-tip pairs. No base or source tip moved, so no new merge was needed.
 Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then the recorded
 follow-ups. Schema allocations and runtime versions are unchanged.
 
-App C reports scoped Android acceptance. Its saved audit contains 87 passing
+reference app C reports scoped Android acceptance. Its saved audit contains 87 passing
 artifact checks; inspected without rerunning its scripts. Settings continuity
 passes separately at preinstall PID 4194 and rebuilt PID 5709. These passes do
 not close historical F-35/F-36/F-50/F-58 or erase iteration 177's renderer-loss
@@ -1972,7 +1966,7 @@ remains open. Retained storage metadata establishes no leak or growth rate.
 
 Decision: security and users' data first; preserve failed and inconclusive evidence
 without speculative runtime changes, mutation replay or file sweeps. F-60 observer
-wording and Kundalini F-85 lease-log timing are already addressed in integration.
+wording and reference app B F-85 lease-log timing are already addressed in integration.
 S1 stays parked under the recorded freeze, S2 needs Play, and S10/P1 remain deferred.
 Test apps stayed read only. No fresh emulator or iOS acceptance is claimed.
 
@@ -1998,18 +1992,18 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-178-results.json. Only these validation and handoff notes
 follow the gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 177 failed Settings continuity
+## November 9: reference app C iteration 177 failed Settings continuity
 
 In plain terms: the roadmap's 33 must-have rows and original rebase queue remain
-done, but App C's newest acceptance result is **false**. Read both findings
-inventories and newest reports, Kundalini 24 / App C 177. No eligible must-have
+done, but reference app C's newest acceptance result is **false**. Read both findings
+inventories and newest reports, reference app B 24 / reference app C 177. No eligible must-have
 or changes-requested item remains; Status cells are unchanged. Current packages
 dd1c53d / bb0f34c and all 46 exact current source-tip pairs are ancestors of
 integration in both repositories. No base or source tip moved, so no new merge
 was needed. Original order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, followed
 by the recorded follow-ups.
 
-The saved App C audit passes 121 artifact checks while recording acceptance=false.
+The saved reference app C audit passes 121 artifact checks while recording acceptance=false.
 Raw logcat names renderer 5378's low-memory kill at 16:44:46.863, Chromium's explicit
 unhandled-renderer-loss termination at 16:44:46.999 and host 5311's death at
 16:44:47.119. Exit-info records renderer LOW_MEMORY and host SIGNALED/status 9.
@@ -2044,7 +2038,7 @@ registration remain open; the 998780 KiB / 10433-file footprint is not a measure
 growth rate or leak. Decision: security and users' data first; preserve unknown
 ownership and failed continuity evidence, with no speculative runtime patch,
 mutation replay, file sweep, schema or version change. F-60 observer wording and
-Kundalini F-85 lease-log timing are already addressed in integration. S1 stays
+reference app B F-85 lease-log timing are already addressed in integration. S1 stays
 parked under the recorded freeze, S2 needs Play, and S10/P1 remain deferred.
 Test apps stayed read only; no fresh emulator or iOS acceptance is claimed.
 
@@ -2070,17 +2064,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-177-results.json. Only these validation and handoff notes
 follow the gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 176 scoped regression and cleanup continuation
+## November 9: reference app C iteration 176 scoped regression and cleanup continuation
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 176.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 176.
 No eligible must-have or changes-requested item remains; Status cells unchanged.
 Both integrations retain newest packages dd1c53d / bb0f34c and all 46 exact
 source-tip pairs, checked against current branch heads and ancestry. Original
 merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then recorded follow-ups.
 Unchanged bases and source tips require no new integration merge.
 
-App C 176 reports scoped Android acceptance with 122 saved artifact checks.
+reference app C 176 reports scoped Android acceptance with 122 saved artifact checks.
 Preinstall PID 3892 and rebuilt PID 5274 each survive their Settings return.
 These passes do not close historical F-35/F-36/F-50/F-58 or prior direct
 low-memory kills. Initial retained release list/detail/photo observations pass
@@ -2113,7 +2107,7 @@ a growth rate, leak or startup-cause proof. Decision: security and users' data
 first; preserve unknown ownership, require complete native inventory and
 interruption evidence before reconciliation, and never replay potentially
 completed mutations. No speculative runtime, schema, dependency or version
-change is justified. F-60's observer inference and Kundalini F-85's lease-log
+change is justified. F-60's observer inference and reference app B F-85's lease-log
 trail are already addressed in integration; no app adoption closure is claimed.
 S1 stays parked under the recorded candidate freeze, S2 needs Play, and S10/P1
 remain deferred.
@@ -2151,17 +2145,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-176-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 175 scoped regression
+## November 9: reference app C iteration 175 scoped regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 175.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 175.
 No eligible must-have or changes-requested item remains; Status cells unchanged.
 Both integrations retain newest packages dd1c53d / bb0f34c and all 46 exact
 source-tip pairs, checked against current branch heads and ancestry. Original
 merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then recorded follow-ups.
 Unchanged bases and source tips require no new integration merge.
 
-App C 175 reports scoped Android acceptance with 121 saved artifact checks.
+reference app C 175 reports scoped Android acceptance with 121 saved artifact checks.
 Preinstall PID 3822 and rebuilt PID 5117 each survive their Settings return.
 These passes do not close historical F-35/F-36/F-50/F-58 or prior direct
 low-memory kills. Initial retained release list/detail/photo observations pass
@@ -2189,7 +2183,7 @@ a growth rate, leak or startup-cause proof. Decision: security and users' data
 first; preserve unknown ownership, require complete native inventory and
 interruption evidence before reconciliation, and never replay potentially
 completed mutations. No speculative runtime, schema, dependency or version
-change is justified. F-60's observer inference and Kundalini F-85's lease-log
+change is justified. F-60's observer inference and reference app B F-85's lease-log
 trail are already addressed in integration; no app adoption closure is claimed.
 S1 stays parked under the recorded candidate freeze, S2 needs Play, and S10/P1
 remain deferred.
@@ -2229,17 +2223,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-175-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 174 scoped regression and retained gate failure
+## November 9: reference app C iteration 174 scoped regression and retained gate failure
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 174.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 174.
 No eligible must-have or changes-requested item remains; Status cells unchanged.
 Both integrations retain newest packages dd1c53d / bb0f34c and all 46 exact
 source-tip pairs, checked against branch heads and ancestry. Original merge order
 remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then recorded follow-ups.
 No new integration merge is necessary on unchanged bases and source tips.
 
-App C 174 reports scoped Android acceptance with 121 saved artifact checks.
+reference app C 174 reports scoped Android acceptance with 121 saved artifact checks.
 Preinstall PID 3757 and rebuilt PID 4966 survive their Settings return separately;
 this does not close historical F-35/F-36/F-50/F-58 or prior direct low-memory kills.
 Initial retained release list/detail/photo captures pass offline in the saved
@@ -2264,7 +2258,7 @@ a growth rate, leak or startup-cause proof. Decision: security and users' data
 first; preserve unknown ownership, require complete native inventory and
 interruption evidence before reconciliation, and never replay potentially
 completed mutations. No speculative runtime, schema, dependency or version
-change is justified. F-60's observer inference and Kundalini F-85's lease-log
+change is justified. F-60's observer inference and reference app B F-85's lease-log
 trail are already addressed in integration; no app adoption closure is claimed.
 S1 stays parked under the recorded candidate freeze, S2 needs Play, and S10/P1
 remain deferred.
@@ -2310,17 +2304,17 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 separately above. Only validation and handoff notes follow these gates.
 No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 173 scoped regression
+## November 9: reference app C iteration 173 scoped regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 173.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 173.
 No eligible must-have or changes-requested item remains; Status cells unchanged.
 Both integrations retain newest packages dd1c53d / bb0f34c and all 46 exact
 source-tip pairs, checked against branch heads and ancestry. Original merge order
 remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then recorded follow-ups.
 No new integration merge is necessary on unchanged bases and source tips.
 
-App C 173 reports scoped Android acceptance with 121 saved artifact checks.
+reference app C 173 reports scoped Android acceptance with 121 saved artifact checks.
 Preinstall PID 4151 and rebuilt PID 5502 each survive their Settings return;
 these passes do not close historical F-35/F-36/F-50/F-58 or iteration 171's direct
 low-memory kills. The initial retained release list and detail/photo observations
@@ -2346,7 +2340,7 @@ not a growth rate, leak or startup-cause proof. Decision: security and users'
 data first; preserve unknown ownership, require complete native inventory and
 interruption evidence before reconciliation, and never replay potentially
 completed mutations. No speculative runtime, schema, dependency or version
-change is justified. F-60's observer inference and Kundalini F-85's lease-log
+change is justified. F-60's observer inference and reference app B F-85's lease-log
 trail are already addressed in integration; no app adoption closure is claimed.
 S1 stays parked under the recorded candidate freeze, S2 needs Play, and S10/P1
 remain deferred.
@@ -2384,16 +2378,16 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-173-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 172 qualified scoped regression
+## November 9: reference app C iteration 172 qualified scoped regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 172.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 172.
 No eligible must-have or changes-requested item remains; Status cells unchanged.
 Both integrations retain newest packages dd1c53d / bb0f34c and all 46 exact
 source-tip pairs, checked against branch heads and ancestry. Original merge order
 remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then recorded follow-ups.
 
-App C 172 reports qualified scoped Android acceptance, with 121 saved artifact
+reference app C 172 reports qualified scoped Android acceptance, with 121 saved artifact
 checks. Preinstall PID 3946 and rebuilt PID 5276 each survive their Settings
 return; these observations do not close iteration 171's direct low-memory kill
 or historical F-35/F-36/F-50/F-58. Initial release uiautomator exit 137 remains a
@@ -2417,7 +2411,7 @@ ownership registration remain open. Decision: security and users' data first;
 preserve unknown ownership and require complete native inventory and interruption
 evidence before reconciliation. Never replay potentially completed mutations.
 No speculative runtime, schema, dependency or version change is justified.
-F-60's observer inference and Kundalini F-85's lease-log trail are already addressed
+F-60's observer inference and reference app B F-85's lease-log trail are already addressed
 in the current integration; no new patch or app adoption closure is claimed.
 S1 stays parked, S2 needs Play, and S10/P1 remain deferred.
 
@@ -2454,10 +2448,10 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-172-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 171 failed continuity and recovered regression
+## November 9: reference app C iteration 171 failed continuity and recovered regression
 
 In plain terms: all 33 must-have rows and the original rebase queue remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 171.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 171.
 No eligible must-have or changes-requested item remains; Status cells unchanged.
 S1 remains parked, S2 needs Play, and S10/P1 stay deferred.
 
@@ -2466,7 +2460,7 @@ current source-tip pairs, independently checked against branch heads and ancestr
 Original merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, then the
 recorded follow-ups. This refresh adds validation notes only.
 
-App C 171 explicitly reports acceptance=false despite 120 passing artifact checks.
+reference app C 171 explicitly reports acceptance=false despite 120 passing artifact checks.
 Preinstall Settings continuity failed: host 3913 was replaced by 4311. Raw logcat
 names separate lowmemorykiller kills of renderer 3981 at 10:41:49.070 and host
 3913 at 10:41:49.125; exit-info marks both LOW_MEMORY, with host RSS 522 MB.
@@ -2495,7 +2489,7 @@ footprint is a point observation, not a leak rate or startup cause. Decision:
 security and users' data first; preserve unknown ownership, require complete
 native inventory and interruption evidence before reconciliation, and never
 replay potentially completed mutations. No speculative runtime fix is justified.
-F-60's observer inference is already corrected in integration. Kundalini has no
+F-60's observer inference is already corrected in integration. reference app B has no
 newer report; its reported closures retain their original scope.
 
 Independently resolved 51 report links, rehashed both archived APKs and checked
@@ -2531,11 +2525,11 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-171-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 170 evidence refresh
+## November 9: reference app C iteration 170 evidence refresh
 
 In plain terms: every must-have and original rebase-queue item remains done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 170,
-and the intervening App C 169 report. No eligible must-have or changes-requested
+Read both findings inventories and newest reports, reference app B 24 / reference app C 170,
+and the intervening reference app C 169 report. No eligible must-have or changes-requested
 item remains. S1 stays parked, S2 needs Play, and S10/P1 remain deferred.
 Item Status cells are unchanged.
 
@@ -2544,19 +2538,19 @@ current source-tip pairs. Original merge order remains R8, R7, R6, R3, R4, R5,
 R9, R10, R14, followed by the recorded follow-ups. The integration delta against
 packages remains documentation only; this refresh preserves that boundary.
 
-App C 170 moves app-owned first-frame registration before runApp and measures
+reference app C 170 moves app-owned first-frame registration before runApp and measures
 it with a monotonic stopwatch, matching current guidance. Release PID 4781
 records open completion at 8084ms and a first-frame callback after 9ms. Neither
 measures meaningful web paint; no named wait pair or lock owner was captured.
 The initial release screenshot shows Flutter splash; later offline original
 photo and list captures remain separate observations. Failed PID/CDP discovery
-and unpainted observations remain distinct from later success. App C 169's
+and unpainted observations remain distinct from later success. reference app C 169's
 failed initial observer and restored photo-picker task also remain qualified;
 a later working probe cannot establish the earlier dispatch or renderer state.
 F-60 is already corrected in this integration. Historical startup/process/
 observer findings F-35/F-36/F-50/F-58 remain open.
 
-App C 170 explicitly triggered one eligible registered worker. Matched four lease
+reference app C 170 explicitly triggered one eligible registered worker. Matched four lease
 lines plus native begin/complete/SUCCESS lines to raw logcat. Its 601.668s
 observation is neither execution duration nor a scheduling guarantee. Saved
 pre-resume native SQLite records matching outgoing objects, empty outbox and
@@ -2581,7 +2575,7 @@ debug: 193245485 bytes, SHA256
 Inspected the saved 120-check passing audit without rerunning it, and the actual
 fresh-painted.png: six seed units, zero photos, widget absent, airplane icon.
 Final saved native proof records original-row equality, outbox zero and no
-current iteration fixtures. Kundalini has no newer report; its reported
+current iteration fixtures. reference app B has no newer report; its reported
 closures retain their original scope. Test app repositories stayed read only.
 No fresh emulator or iOS acceptance.
 
@@ -2607,10 +2601,10 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-170-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 168 evidence refresh
+## November 9: reference app C iteration 168 evidence refresh
 
 In plain terms: every must-have and original rebase-queue item remains done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 168.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 168.
 No eligible must-have or changes-requested item remains. S1 stays deliberately
 parked, S2 needs Play, and S10/P1 stay deferred. Item Status cells are unchanged.
 
@@ -2619,7 +2613,7 @@ current source-tip pairs. Original merge order remains R8, R7, R6, R3, R4, R5,
 R9, R10, R14, followed by the recorded follow-ups. The delta against packages
 remains documentation only; no source branch or base moved during verification.
 
-App C 168 reports one naturally observed registered background execution, not
+reference app C 168 reports one naturally observed registered background execution, not
 an explicitly triggered worker. Matched all four lease lines and the native
 SUCCESS line to saved raw logcat. The 40.559s observation is neither execution
 duration nor a cadence guarantee. Saved pre-resume native SQLite records matching
@@ -2634,8 +2628,8 @@ successful sample. The input-script review caught stale report values; the final
 report and corrected qualifications now agree with the current evidence.
 Historical F-35/F-36/F-50/F-58 remain open. F-60 is already corrected in this
 integration; a later successful probe cannot explain an earlier missing boundary.
-Kundalini has no newer report; its reported closures retain their original scope.
-F-85's dated lease line is already upstream and visible in App C's worker capture.
+reference app B has no newer report; its reported closures retain their original scope.
+F-85's dated lease line is already upstream and visible in reference app C's worker capture.
 
 Publication receipts show three reused URLs and original mapping continuity
 from PID 5077 to 7868; both removed fixture URLs return 404. Historical unowned
@@ -2679,10 +2673,10 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-168-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 167 evidence refresh
+## November 9: reference app C iteration 167 evidence refresh
 
 In plain terms: all must-haves and original queue items remain done. Read both
-findings inventories and newest reports, Kundalini 24 / App C 167. No eligible
+findings inventories and newest reports, reference app B 24 / reference app C 167. No eligible
 must-have or changes-requested item remains. S1 stays deliberately parked, S2
 needs Play, and S10/P1 stay deferred. Item Status cells are unchanged.
 
@@ -2692,7 +2686,7 @@ Original merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14, followed
 by the recorded follow-ups. No base or source branch moved during verification.
 The integration delta against packages remains documentation only.
 
-App C 167 establishes no new runtime defect. Saved receipts show three reused
+reference app C 167 establishes no new runtime defect. Saved receipts show three reused
 publication URLs, original mapping continuity from PID 5277 to 8020, and both
 removed fixture URLs returning HTTP 404. Its new publication-followup note
 correctly separates successful reuse/removal from interruption safety: ownership
@@ -2710,7 +2704,7 @@ R29 release PID 4510 reports open completion 12117ms and store.open waiting
 readiness retains five unsuccessful attempts before a 9737ms successful sample.
 Historical F-35/F-36/F-50/F-58 remain open. F-60 is already corrected in this
 integration; a successful later probe cannot locate an earlier missing boundary.
-Kundalini has no newer report; its reported closures retain their original scope.
+reference app B has no newer report; its reported closures retain their original scope.
 
 Independently verified 45 report links, both archived APK hashes and five
 embedded payload hashes/sizes each. Release: 54875316 bytes, SHA256
@@ -2748,10 +2742,10 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-167-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: App C iteration 166 regression evidence
+## November 9: reference app C iteration 166 regression evidence
 
 In plain terms: all must-haves and original queue items remain done. Read both
-findings inventories and newest reports, Kundalini 24 / App C 166. No eligible
+findings inventories and newest reports, reference app B 24 / reference app C 166. No eligible
 must-have or changes-requested item remains. S1 stays deliberately parked, S2
 needs Play, and S10/P1 stay deferred. Item Status cells are unchanged.
 
@@ -2761,7 +2755,7 @@ branch head. Original merge order remains R8, R7, R6, R3, R4, R5, R9, R10, R14,
 followed by the recorded follow-ups. No base or source branch moved during this
 run. The integration delta against packages remains documentation only.
 
-App C 166 introduces no app-source change or newly established Valence defect.
+reference app C 166 introduces no app-source change or newly established Valence defect.
 Saved publication receipts show three reused URLs, original mapping continuity
 from PID 5286 to 8097, and both removed fixture URLs returning HTTP 404.
 Historical unowned copies and crash-window reconciliation remain open;
@@ -2773,7 +2767,7 @@ Preserved the release XML observer's ADB daemon connection failure 10060
 separately from later offline list/detail/photo observations. Cold-widget CDP
 socket discovery failures precede a successful bounded readiness observation
 of 9562 ms; this does not establish a failed bridge reply or exact paint latency.
-Historical F-35/F-36/F-50/F-58 remain open. Kundalini has no newer report: its
+Historical F-35/F-36/F-50/F-58 remain open. reference app B has no newer report: its
 reported closures remain its evidence, and F-85 is already corrected upstream.
 Decision: protect security, users' data and failed evidence; do not replay
 potentially completed actions, sweep unowned files or change a runtime without
@@ -2817,10 +2811,10 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-166-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: unchanged feature scope, App C iteration 165
+## November 9: unchanged feature scope, reference app C iteration 165
 
 In plain terms: all must-haves and original rebase-queue items remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 165.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 165.
 No eligible must-have or changes-requested item remains. S1 stays deliberately
 parked, S2 needs Play, and S10/P1 stay deferred. No item Status cell changed.
 
@@ -2830,7 +2824,7 @@ source tip still matches its branch head. Original queue order remains R8,
 R7, R6, R3, R4, R5, R9, R10, R14, followed by the recorded follow-ups.
 The integration delta against packages remains documentation only.
 
-App C 165 retains publication lifecycle adoption without app-source changes.
+reference app C 165 retains publication lifecycle adoption without app-source changes.
 Inspected receipts show three reused URLs, original mapping continuity from
 PID 5363 to 8103, and both removed fixture URLs returning HTTP 404. Historical
 unowned copies and crash-window reconciliation remain open. The 998780 KiB
@@ -2844,7 +2838,7 @@ Preserved the initial gallery-fixture ADB connection failure (Windows 10060,
 before source bytes were read) separately from its successful 571 ms serial
 retry. No Valence cause is established. The app's checkpoint encoding repair
 is a runner correction, not a runtime failure. Historical F-35/F-36/F-50/F-58
-remain open; the Kotlin migration warning recurs. Kundalini's reported closures
+remain open; the Kotlin migration warning recurs. reference app B's reported closures
 remain its device evidence, with no newer report or fresh local acceptance.
 Decision: security and users' data first; preserve failed observations, avoid
 speculative retries or replay, and leave unowned historical files untouched.
@@ -2887,10 +2881,10 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-165-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: publication adoption, App C iteration 164
+## November 9: publication adoption, reference app C iteration 164
 
 In plain terms: all must-haves and original rebase-queue items remain done.
-Read both findings inventories and newest reports, Kundalini 24 / App C 164.
+Read both findings inventories and newest reports, reference app B 24 / reference app C 164.
 There is no eligible must-have to claim. S1 remains deliberately parked, S2
 needs Play, and S10/P1 remain deferred. No item Status cell changed.
 
@@ -2902,14 +2896,14 @@ merges: all 46 exact source-tip pairs recorded below are ancestors, with origina
 queue order R8, R7, R6, R3, R4, R5, R9, R10, R14 and subsequent follow-ups.
 The integration delta against packages remains documentation only.
 
-App C 164 adopts native-only publication revocation and durable URL reuse. Its
+reference app C 164 adopts native-only publication revocation and durable URL reuse. Its
 saved receipts show three reused photo URLs, original mapping continuity from
 PID 5206 to 8017, and both removed fixture publications returning HTTP 404.
 Historical unowned copies and crash-window reconciliation remain unresolved;
 this is neither an automatic collection nor a browser-cache erasure verdict.
 Inspected the app's serialized publication helper read only. No app changes
-were made here. Kundalini's F-83/F-58/F-84 closures remain app-reported evidence;
-there is no newer Kundalini report or fresh local device acceptance.
+were made here. reference app B's F-83/F-58/F-84 closures remain app-reported evidence;
+there is no newer reference app B report or fresh local device acceptance.
 
 F-58's failed inner CDP observation remains separate: 122180 ms wrapper time,
 live painted PID 5206, then an independent 389 ms successful read without restart.
@@ -2959,10 +2953,10 @@ Existing app_badge_plus Kotlin migration warning remains. Logs:
 %TEMP%/valence-20261109-164-results.json. Only validation and handoff notes
 follow these gates. No publication, push or protected-branch mutation.
 
-## November 9: refresh after host-file revocation, App C iteration 163
+## November 9: refresh after host-file revocation, reference app C iteration 163
 
 In plain terms: all must-haves and original queue items remain done. Read both
-findings inventories and newest reports, Kundalini 24 / App C 163. No eligible
+findings inventories and newest reports, reference app B 24 / reference app C 163. No eligible
 must-have remains. S1 stays deliberately parked, S2 needs Play, and S10/P1 remain
 deferred. No item Status cell changed.
 
@@ -2985,7 +2979,7 @@ a later successful request cannot establish that an earlier one was healthy,
 and an observer timeout does not authorize replaying a potentially completed
 action. No speculative runtime, dependency or migration change was added here.
 
-App C 163 predates the new revocation API. Its F-27 observation remains valid
+reference app C 163 predates the new revocation API. Its F-27 observation remains valid
 for its tested host: 993400 KiB / 10242 host files versus 224 KiB original source
 media, with removed fixture publications still returning HTTP 200. It supplies
 no adoption or device verdict on the new API. F-59 records a current Kotlin
@@ -2995,10 +2989,10 @@ while home_widget/workmanager are app-owned. No future-version failure is proven
 The failed permission observer contains an ok/denied bridge reply followed by
 an ETIMEDOUT removing an ADB forward. The separate successful retry is retained
 separately. Historical F-35/F-36/F-50 startup/process reliability and F-58 remain
-open. Kundalini's F-83 closure is app-reported device evidence; F-85's later
-upstream diagnostic correction has no fresh Kundalini device recheck here.
+open. reference app B's F-83 closure is app-reported device evidence; F-85's later
+upstream diagnostic correction has no fresh reference app B device recheck here.
 
-Independently checked all 42 App C report links, both persisted APK hashes and
+Independently checked all 42 reference app C report links, both persisted APK hashes and
 five embedded payload hashes/sizes each. Release: 54858932 bytes,
 2df5e8afc84d2d2fa8314ca12db4ba1313523dc8de3ce6d9947b1fd329d7e240;
 debug: 193236383 bytes,
@@ -3040,7 +3034,7 @@ Logs: %TEMP%/valence-20261109-163-<gate>.log and
 ## November 9: qualify observer evidence on current packages
 
 In plain terms: all must-haves and original queue items remain done. Read both
-findings inventories and newest reports, Kundalini 24 / App C 162. Corrected new
+findings inventories and newest reports, reference app B 24 / reference app C 162. Corrected new
 diagnostic advice that treated a successful later read as proof the earlier
 dispatch path was never broken. Tracing records client refusals and shim calls
 as well as host results; host error logging precedes reply delivery. Missing
@@ -3075,10 +3069,10 @@ newest bases is documentation only.
 | --- | --- | --- | --- |
 | 46 | codex/observer-evidence | 771b641a63ba16d67bce787ea5167e76952f3626 | f1906543004823d7c26a778d3b053b1bbb439cd1 |
 
-Kundalini reports its rebuilt-host F-83 contention check passed and closes
+reference app B reports its rebuilt-host F-83 contention check passed and closes
 F-58/F-84; those are app-reported device results. Its new F-85 logging lag was
 subsequently corrected upstream in 08f072e; no post-fix device check is claimed.
-App C retains initial UI observer failures separately from painted continuation.
+reference app C retains initial UI observer failures separately from painted continuation.
 Its R29 release open at 5705 ms has no paired named wait and establishes no paint
 latency or lock cause. Historical process-loss/observer findings remain open.
 
@@ -3118,10 +3112,10 @@ publication or protected-branch mutation.
 ## November 8: iteration 161 retains the inner observer timeout
 
 In plain terms: every must-have and original queue item remains done. Read both
-findings inventories and newest reports, Kundalini 23 / App C 161. No eligible
+findings inventories and newest reports, reference app B 23 / reference app C 161. No eligible
 must-have remains; S1 stays parked, S2 needs Play, and S10/P1 remain deferred.
 
-App C retains a failed app.state observer: 122658ms elapsed, with an explicit
+reference app C retains a failed app.state observer: 122658ms elapsed, with an explicit
 120000ms inner CDP timeout under the 150000ms parent. PID5978 remains alive and
 the page remains painted. A separate isolated read completes in 384ms without
 restart, followed by a separate successful media retry. These observations do
@@ -3136,7 +3130,7 @@ Matched raw R29 log lines to PID5095, store.open id1/isolate258837557: waiting
 and separate offline continuation with the retained inspection/photo. Neither
 the pending future nor the continuation establishes a lock holder, package cause
 or exact meaningful-paint latency. Initial startup and historical process-loss
-findings remain open; Kundalini F-83 still needs its rebuilt-host device recheck.
+findings remain open; reference app B F-83 still needs its rebuilt-host device recheck.
 
 Independently resolved all 47 local report links and rehashed both APK archives.
 Both contain builtin1794158786, with all five payload hashes and sizes verified.
@@ -3169,7 +3163,7 @@ tip pairs, independently checked against branch heads and ancestry. Bases and
 tips are unchanged, so no reconstruction is needed. Previous integration tips:
 code b966137/site1d0bb4e. Only mirrored validation notes change. Test apps remain
 read only; no protected-branch mutation, push, publication or fresh emulator run.
-iOS remains experimental and untested.
+iOS is experimental and untested.
 
 Fresh combined gates passed November 8: root123/zero skips, generated Dart
 analysis and dispatch executed; core665/clean fatal-info analysis/zero-warning
@@ -3189,11 +3183,11 @@ receipts are distinct from a fresh device acceptance run.
 ## November 8: iteration 160 locates a slow database open
 
 In plain terms: every must-have and original rebase-queue item remains done.
-Read both findings inventories and newest reports, Kundalini 23 / App C 160.
+Read both findings inventories and newest reports, reference app B 23 / reference app C 160.
 No eligible must-have is available. S1 remains parked against the frozen
 candidate, S2 needs Play, and S10/P1 remain deferred.
 
-App C's raw startup log identifies process 4767, operation store.open, id 1,
+reference app C's raw startup log identifies process 4767, operation store.open, id 1,
 isolate 1001416805: waiting at 10002ms and completed at 19213ms. The store
 phase completes at 20651ms and Valence.open at 20765ms. Independently matched
 the saved R29 receipt to those lines. Inspected the three separate screenshots:
@@ -3231,7 +3225,7 @@ SHA256 7fa643eb91831d5194ef96dc87f4a61c2057151ce1f0db433befed6e6ebc2f1e.
 
 F-27 remains open: saved host publications are 970396KiB / 9978 files versus
 224KiB private source media; removed fixture publications still answer HTTP200.
-No leak rate or startup cause is inferred. Kundalini F-83 still needs its
+No leak rate or startup cause is inferred. reference app B F-83 still needs its
 rebuilt-host device recheck. Decision: prioritize security and users' data;
 preserve failed observations and get causal evidence before changing database
 opening, lease ownership, timeouts or publication retention. No schema, version
@@ -3242,7 +3236,7 @@ source-tip pairs, independently checked against branch heads and ancestry.
 No reconstruction is needed while bases and tips remain unchanged. Previous
 tips: code 80c7542 / site fc00e62. Only mirrored integration validation notes
 change. Test app repositories are read only. No protected branch, push,
-publication or fresh device execution; iOS remains experimental and untested.
+publication or fresh device execution; iOS is experimental and untested.
 
 Fresh combined gates passed November 8: root 123 / zero skips, generated Dart
 analysis and dispatch executed; core 665 / clean fatal-info analysis /
@@ -3261,8 +3255,8 @@ unchanged. No fresh emulator or iOS acceptance; no item Status cells changed.
 ## November 8: iteration 159 separates observer failure from recovery
 
 In plain terms: every must-have and original rebase-queue item remains done.
-Read both findings inventories and newest reports, Kundalini 23 / App C 159.
-App C records same-process Settings return before reinstall (4042) and on the
+Read both findings inventories and newest reports, reference app B 23 / reference app C 159.
+reference app C records same-process Settings return before reinstall (4042) and on the
 rebuilt host (5440). Its initial release XML lacks FIELDNOTE, while the following
 screenshot visibly paints retained content; these are different observations.
 Neither this pass nor the later recovered checks close historical reliability
@@ -3302,7 +3296,7 @@ device execution here.
 F-27 remains open: saved footprint is 962868KiB / 9899 host files versus 224KiB
 private source media; removed fixture publications still answer HTTP200.
 Existing lifetime and migration guidance corrections remain included. No leak
-rate or startup cause is inferred. Kundalini F-83 needs its rebuilt-host device
+rate or startup cause is inferred. reference app B F-83 needs its rebuilt-host device
 recheck. Decision: preserve security, users' data and failed evidence; no
 speculative runtime, dependency, schema or version change. S1 remains parked,
 S2 needs Play, S10/P1 deferred.
@@ -3312,7 +3306,7 @@ exact source-tip pairs, independently checked against branch heads and ancestry.
 No reconstruction is needed while bases and tips are unchanged. Previous
 integration tips: code 43c1f80 / site ca9045a. Only these validation notes change.
 Test apps were read only; no Status cells changed, emulator acquired, protected
-branch changed, push or publication. iOS remains experimental and untested.
+branch changed, push or publication. iOS is experimental and untested.
 
 Fresh combined gates passed November 8: root 123 / zero skips, generated Dart
 analysis and dispatch executed; core 665 / clean fatal-info analysis /
@@ -3334,8 +3328,8 @@ unchanged. No fresh emulator or iOS acceptance.
 ## November 8: iteration 157 retains the Settings failure
 
 In plain terms: every must-have and original rebase-queue item remains done.
-Read both findings inventories and newest reports, Kundalini 23 / App C 157.
-App C's rebuilt Settings test reproduces F-36: Android kills renderer 4403 for
+Read both findings inventories and newest reports, reference app B 23 / reference app C 157.
+reference app C's rebuilt Settings test reproduces F-36: Android kills renderer 4403 for
 low memory, Chromium in host 4341 reports unhandled renderer loss and kills the
 application. Replacement 4768 painting is recovery, not same-process survival.
 The initial owner-release Loading/null-accessibility observation also remains a
@@ -3366,7 +3360,7 @@ Decision: preserve security, users' data and failed evidence. No new runtime,
 dependency, schema or version change is justified by this report. F-55 migration
 and F-27 lifetime guidance corrections are already in integration; their older
 captured docs do not justify a second patch or close the open storage finding.
-Kundalini F-83 still requires a rebuilt-host device recheck. S1 remains parked,
+reference app B F-83 still requires a rebuilt-host device recheck. S1 remains parked,
 S2 needs Play, S10/P1 remain deferred. Test apps were read only; no Status cells
 changed, no emulator acquired, no iOS acceptance claimed.
 
@@ -3402,12 +3396,12 @@ or row deletion does not revoke it. F-27 remains open. Decision: protect securit
 and users' data rather than evict copies still referenced by durable rows.
 No executable runtime, generator, template, dependency, schema or version change.
 
-Read both findings inventories and newest reports, Kundalini 23 / App C 156.
+Read both findings inventories and newest reports, reference app B 23 / reference app C 156.
 Independently checked 56 report links, both archived APK hashes and all five
 embedded files per APK (builtin 1794139244), plus the saved 79-check scoped audit.
 Inspected the canonical fresh-offline six-unit screenshot from the independent
 AVD. Initial startup/LOW_MEMORY failures remain separate from recovered runs;
-Kundalini F-83 still needs its rebuilt-host device recheck. No test-app writes.
+reference app B F-83 still needs its rebuilt-host device recheck. No test-app writes.
 
 Reconstructed both integrations from unchanged packages c091bee / 5c17a0d,
 fast-forwarded the prior reviewed e648651 / 0dab7ba (retaining all 44 recorded
@@ -3421,13 +3415,13 @@ hint); bridge37/strict-verbatim TypeScript/pack; example codegen no writes,
 29 tests/debug APK (130.0s); Windows py Firebase PASS over graph/manifest/19 DEX;
 site50/SEO and rendered guidance. Existing Kotlin migration warning remains.
 Only validation/handoff notes change after these gates. No fresh emulator
-acceptance; iOS experimental and untested. S1 parked, S2 needs Play, S10/P1
+acceptance; iOS is experimental and untested. S1 parked, S2 needs Play, S10/P1
 deferred. No item Status cells changed. See [validation](host-file-lifetime-validation.md).
 
 ## November 8: app-owned startup timing and iteration 155
 
 In plain terms: no eligible must-have or original rebase-queue item remains.
-App C 155 requested timing for app initialization after Valence.open. Added a
+reference app C 155 requested timing for app initialization after Valence.open. Added a
 fixed-label Stopwatch helper and separate first Flutter frame marker to contracts
 section 5.1.1 and both startup guides. Preserve existing awaits, results and
 original errors; diagnostic logger failures cannot change startup. Flutter first
@@ -3436,12 +3430,12 @@ frame does not prove meaningful web paint and never replaces ready().
 Decision: protect security and users' data by observing boundaries without a
 speculative runtime patch. No executable runtime, dependency, schema, template or
 package version changed. Read both findings inventories and newest reports,
-Kundalini 23 / App C 155. Rechecked saved worker raw lines, native SQLite,
+reference app B 23 / reference app C 155. Rechecked saved worker raw lines, native SQLite,
 pending-state comparison, final owner retention, PNG MIME and doctor receipts;
 rehashing both APKs and all five embedded files per APK also passed.
-App C's saved audit has 25 passing checks and fullAcceptance=false. Its recovered
+reference app C's saved audit has 25 passing checks and fullAcceptance=false. Its recovered
 native/OTA/forced-worker evidence does not erase initial startup/renderer/host
-low-memory failures or certify canonical fresh installation. Kundalini F-83 still
+low-memory failures or certify canonical fresh installation. reference app B F-83 still
 needs its rebuilt-host device check. F-55's migration correction is already
 included; F-56 was repaired in the app; F-57 is harness feedback. Test app repos
 were read only.
@@ -3460,8 +3454,7 @@ TypeScript and pack dry run; extracted documentation helper analyzes cleanly;
 example codegen clean, 29 tests, debug APK (151.7s); standalone Windows py
 Firebase audit PASS over graph, manifest and 19 DEX files; site50/SEO pass.
 The existing Android Kotlin migration warning remains. Later edits add only
-validation notes. No fresh emulator acceptance; iOS remains experimental and
-untested. S1 parked, S2 needs Play, S10/P1 deferred.
+validation notes. No fresh emulator acceptance; iOS is experimental and untested. S1 parked, S2 needs Play, S10/P1 deferred.
 See [validation](app-startup-timing.md).
 
 ## November 8: iteration 154 incomplete Android regression
@@ -3469,11 +3462,11 @@ See [validation](app-startup-timing.md).
 In plain terms: every must-have and original rebase-queue item remains marked done.
 Both integrations still contain packages c091bee / 5c17a0d and all 43 recorded
 exact source-tip pairs, checked against current branch heads and ancestry.
-Read both findings inventories and newest reports, Kundalini 23 / App C 154.
+Read both findings inventories and newest reports, reference app B 23 / reference app C 154.
 No item Status cell changes. Decision: preserve security, users' data and failed
 evidence; no speculative runtime, dependency, schema or version change.
 
-Independently resolved all 47 App C report evidence links. Its saved audit has
+Independently resolved all 47 reference app C report evidence links. Its saved audit has
 60 passing artifact-consistency checks and acceptance=false. Rehashed both APKs
 and checked the hashes and sizes of all five embedded files per APK, builtin
 1794121128. Release SHA256:
@@ -3496,7 +3489,7 @@ owner host. The isolated package does not prove canonical fresh installation or
 credential continuity. Current OTA rollback/rollforward and isolated-worker
 transfer were not executed; older successes do not replace them.
 
-App C F-55 assigns a distinct ID to the migration dependency inconsistency
+reference app C F-55 assigns a distinct ID to the migration dependency inconsistency
 previously filed under F-44. The correction is already in
 codex/migration-dependencies and both integrations; the report's captured docs
 predate that correction. No second dependency change is warranted. F-56 is an
@@ -3509,9 +3502,9 @@ unchanged, outbox zero and no iteration fixtures; activation has current
 1794121128 with pending/trial null. This is retention evidence, not a new OTA
 transition or a proof of Keystore credential continuity.
 
-Kundalini F-83 still requires a rebuilt-host device recheck. S1 stays parked,
+reference app B F-83 still requires a rebuilt-host device recheck. S1 stays parked,
 S2 requires Play, and S10/P1 remain deferred. No fresh emulator acceptance is
-claimed here; iOS remains experimental and untested.
+claimed here; iOS is experimental and untested.
 
 Fresh integration gates passed on November 8; Flutter commands ran serially.
 
@@ -3531,7 +3524,7 @@ integration tree; they do not recertify the test apps' device acceptance.
 ## November 8: migration dependency correction and reconstructed integration
 
 In plain terms: every must-have and original rebase-queue item is already done.
-App C iteration 153 exposed a stale migration instruction: the website offered a
+reference app C iteration 153 exposed a stale migration instruction: the website offered a
 dbus override for the historical notification 19.x conflict even though the
 current built-in reminder stack resolves without it. Corrected the source
 migration guide, contracts section 6, website migration page and host guide.
@@ -3545,14 +3538,13 @@ cell changed. Package versions, dependency constraints, schemas and behavior are
 unchanged. Decision: preserve security and users' data; correct contradictory
 instructions without altering a working runtime or suggesting a data reset.
 
-Read both findings inventories and newest reports, Kundalini 23 / App C 153.
-Independently resolved all 52 App C evidence links and counted its saved audit:
-102 passing checks with scopedAcceptance=false. App C's release accessibility
+Read both findings inventories and newest reports, reference app B 23 / reference app C 153.
+Independently resolved all 52 reference app C evidence links and counted its saved audit:
+102 passing checks with scopedAcceptance=false. reference app C's release accessibility
 failures and camera/host-gallery ANRs remain separate from successful retries.
 The isolated offline package does not establish canonical fresh-install or
-credential continuity. Kundalini F-83 still needs a rebuilt-host device recheck.
-This branch supplies no new emulator acceptance; iOS remains experimental and
-untested. S1 remains parked, S2 requires Play, and S10/P1 remain deferred.
+credential continuity. reference app B F-83 still needs a rebuilt-host device recheck.
+This branch supplies no new emulator acceptance; iOS is experimental and untested. S1 remains parked, S2 requires Play, and S10/P1 remain deferred.
 
 Reconstructed both codex/integration branches from newest packages c091bee /
 5c17a0d, replaying the source-tip order below. Then retained the previous reviewed
@@ -3643,10 +3635,10 @@ emulator run, publication, push or protected-branch write was performed.
 In plain terms: no eligible must-have or original rebase-queue item remains.
 Both integrations contain packages c091bee / 5c17a0d and all 42 current exact
 source-tip pairs, checked against branch heads and ancestry. Read both findings
-inventories and newest reports, Kundalini 23 / App C 152. Item Status cells stay
+inventories and newest reports, reference app B 23 / reference app C 152. Item Status cells stay
 unchanged; this is an evidence refresh without runtime or version changes.
 
-Independently resolved all 51 App C report evidence links, rehashed both archived
+Independently resolved all 51 reference app C report evidence links, rehashed both archived
 APKs and checked all five embedded files' hashes and sizes per APK, builtin
 1794113891. Release SHA256:
 654c42aac5adbdc80f408a1e40ae5cf8ff017b87a42dfe5003335f86f0f9d4fe;
@@ -3680,7 +3672,7 @@ records app/mocks stopped and airplane off; the report records probe removal.
 Read-only retained history records 9319 host files / 912420KiB, without leak or
 growth-rate attribution. No owner reset/archive restore was used.
 
-Kundalini 23 is unchanged. K F-83 still needs a rebuilt-host device recheck
+reference app B 23 is unchanged. K F-83 still needs a rebuilt-host device recheck
 against the later correction. Decision: protect users' data and bounded lease
 recovery; this evidence supplies no new isolated cause for a runtime change.
 S1 stays parked, S2 needs Play, S10/P1 stay deferred. No schema/package version
@@ -3697,8 +3689,8 @@ remains. Logs: %TEMP%/valence-20261108-152-*.log and
 valence-20261108-152-results.json. Gate validation covers the unchanged source;
 only matching evidence notes follow it.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_152_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_152_REPORT.md,
 evidence/iteration-152/{audit.json,archived-release.json,archived-debug.json,
 embedded-file-integrity.json,doctor.txt,r29-device-proof.json,
 release-retained-airplane.png,fresh-probe-screen.png,fresh-probe-result.json,
@@ -3715,10 +3707,10 @@ final-inspection-row.json,final-state.json,cleanup.json,storage-metadata.json}}.
 In plain terms: no eligible must-have or original rebase-queue item remains.
 Both integrations contain packages c091bee / 5c17a0d and all 42 current exact
 source-tip pairs, independently checked against branch heads and ancestry.
-Read both findings inventories and newest reports, Kundalini 23 / App C 151.
+Read both findings inventories and newest reports, reference app B 23 / reference app C 151.
 This update records evidence only; no item Status cells change.
 
-Independently resolved App C's 51 report evidence links, rehashed both archived
+Independently resolved reference app C's 51 report evidence links, rehashed both archived
 APKs and verified all five embedded files' hashes and sizes per APK at
 builtin 1794110275. Release SHA256:
 e6d0df01786021df1b204e9cdba706a73f063bc9fcd734a50da71faf2accaf1a;
@@ -3753,7 +3745,7 @@ empty fixtures/queues/outbox, airplane off, probe removed and owned resources st
 Read-only retained test history totals 9306 host files / 910180KiB; no leak or
 growth-rate inference. No owner reset/archive restore was used.
 
-Kundalini 23 remains unchanged; F-83 needs a rebuilt-host device recheck against
+reference app B 23 remains unchanged; F-83 needs a rebuilt-host device recheck against
 the later correction. Decision: protect users' data, preserve bounded lease
 recovery and failed evidence; no new isolated cause warrants another runtime
 change. S1 stays parked, S2 needs Play, S10/P1 stay deferred. No schema/package
@@ -3769,8 +3761,8 @@ Kotlin migration warning remains. Logs: %TEMP%/valence-20261108-151-*.log
 and valence-20261108-151-results.json. Both whitespace checks pass; mirrored
 notes are byte-identical. Only validation notes follow the tested trees.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_151_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_151_REPORT.md,
 evidence/iteration-151/{audit.json,archived-release.json,archived-debug.json,
 embedded-file-integrity.json,doctor.txt,r29-device-proof.json,
 release-retained-airplane.png,release-retained-photo.png,release-offline-continuation.png,
@@ -3788,9 +3780,9 @@ In plain terms: no eligible must-have or original rebase-queue item remains.
 Both integrations include the newest packages heads, code c091bee / site 5c17a0d,
 and all 42 current exact source-tip pairs. Independently checked recorded tips
 against their branch heads and integration ancestry. Read both findings inventories
-and newest reports, Kundalini 23 / App C 150. This update records evidence only.
+and newest reports, reference app B 23 / reference app C 150. This update records evidence only.
 
-App C's saved audit has 96 passing artifact checks and scopedAcceptance=false.
+reference app C's saved audit has 96 passing artifact checks and scopedAcceptance=false.
 Independently resolved all 49 report evidence links, rehashed both archived APKs
 and checked hashes and sizes of all five embedded files per APK, builtin1794106687:
 
@@ -3825,7 +3817,7 @@ records empty fixtures/queues/outbox, airplane off, probe removed and owned
 resources stopped. Read-only host footprint is 9156 files / 897772KiB across retained
 test history; it establishes neither a leak nor a growth rate.
 
-Kundalini23 remains unchanged: F-83 still needs a rebuilt-host device recheck
+reference app B23 remains unchanged: F-83 still needs a rebuilt-host device recheck
 against the later correction. Permanent same-PID ownership would sacrifice bounded
 recovery after isolate loss. Decision: preserve security, users' data, bounded lease
 recovery and failed evidence; no new isolated cause warrants a runtime change.
@@ -3849,8 +3841,8 @@ Flutter commands ran sequentially. APK build used process-local Gradle settings
 Kotlin migration warning remains. Both whitespace checks pass; mirrored notes
 are byte-identical. Only these validation notes follow the tested trees.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_150_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_150_REPORT.md,
 evidence/iteration-150/{audit.json,archived-release.json,archived-debug.json,
 embedded-file-integrity.json,doctor.txt,r29-device-proof.json,
 release-retained-airplane.png,release-retained-photo.png,release-offline-continuation.png,
@@ -3868,10 +3860,10 @@ c091bee15ac0cbb0d46139438460acbb46f72578 and site
 5c17a0d940a07cba81a305ea4522d9fd250e7ac6. Independently matched all 42
 current source-tip pairs to the recorded table and checked them and both packages
 heads as integration ancestors. Read both findings inventories and newest
-reports, Kundalini 23 / App C 149. This update changes
+reports, reference app B 23 / reference app C 149. This update changes
 evidence notes only.
 
-App C's saved audit has 96 passing artifact checks and scopedAcceptance=false.
+reference app C's saved audit has 96 passing artifact checks and scopedAcceptance=false.
 Independently resolved all 49 report evidence links, rehashed both archived APKs
 and verified hashes and sizes of all five embedded files per APK at
 builtin1794102956:
@@ -3910,7 +3902,7 @@ they match. No photo-byte rehash or authenticated-session continuity is claimed.
 Cleanup records empty fixtures/queues/outbox, airplane off, probe removed and
 owned resources stopped.
 
-Kundalini 23 is unchanged: corrected cold launch routing and F-81 have device
+reference app B 23 is unchanged: corrected cold launch routing and F-81 have device
 evidence; F-83 still needs a rebuilt-host device recheck against the later
 correction. Its suggested permanent same-PID lease ownership would remove bounded
 recovery after isolate loss. Decision: retain the tested post-query clock sample
@@ -3940,8 +3932,8 @@ assumed the wrong manifest field layout and failed before verification; the
 corrected read-only script verified the actual files map and h/n fields. No
 package gate failed. Only mirrored validation notes change after these gates.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_149_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_149_REPORT.md,
 evidence/iteration-149/{audit.json,archived-release.json,archived-debug.json,
 embedded-file-integrity.json,doctor.txt,doctor-before-gradle-restored.txt,
 r29-device-proof.json,release-retained-airplane.png,release-retained-photo.png,
@@ -3961,10 +3953,10 @@ code c091bee15ac0cbb0d46139438460acbb46f72578 and site
 5c17a0d940a07cba81a305ea4522d9fd250e7ac6. Independently checked the 42
 current exact source-tip pairs and both packages heads as integration ancestors
 (the check also covered 149 historical table rows). Reviewed both findings
-inventories and newest reports, Kundalini 23 / App C 148. This update changes
+inventories and newest reports, reference app B 23 / reference app C 148. This update changes
 evidence notes only; runtime and public-site behavior stay as previously tested.
 
-App C's saved audit has 93 passing artifact checks and scopedAcceptance=false.
+reference app C's saved audit has 93 passing artifact checks and scopedAcceptance=false.
 Independently resolved all 50 report evidence links, rehashed both archived APKs
 and verified hashes and sizes of all five embedded files per APK at
 builtin1794099474:
@@ -4007,7 +3999,7 @@ receipt; they match. No photo-byte rehash is claimed. Owner installId matches;
 that comparison does not prove authenticated-session continuity. Cleanup records
 empty fixtures/queues/outbox, airplane off and owned resources stopped.
 
-Kundalini 23 is unchanged: corrected cold launch routing and F-81 have device
+reference app B 23 is unchanged: corrected cold launch routing and F-81 have device
 evidence, but F-83 still needs a rebuilt-host device recheck against the later
 correction. Clean-install offline and felt haptics retain their qualifications.
 F-84's CLI-only build-identity wording is already corrected in packages.
@@ -4039,8 +4031,8 @@ Gradle settings (2 GiB heap, two workers, ActiveProcessorCount=2); its existing
 app_badge_plus Kotlin migration warning remains. Only mirrored validation notes
 change after these implementation gates.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_148_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_148_REPORT.md,
 evidence/iteration-148/{audit.json,archived-release.json,archived-debug.json,
 embedded-file-integrity.json,doctor.txt,doctor-stderr.txt,r29-device-proof.json,
 release-visual-proof.json,fresh-probe-result.json,fresh-probe-builtin-integrity.json,
@@ -4058,10 +4050,10 @@ No eligible feature or queue refresh remains; packages heads are unchanged at
 code c091bee15ac0cbb0d46139438460acbb46f72578 and site
 5c17a0d940a07cba81a305ea4522d9fd250e7ac6. Independently verified all 42
 recorded exact source tips and both packages heads as integration ancestors.
-Read both findings inventories and newest reports: Kundalini 23 / App C 147.
+Read both findings inventories and newest reports: reference app B 23 / reference app C 147.
 This update changes evidence notes only, with no runtime or public-site delta.
 
-App C's saved audit has 89 passing artifact checks and scopedAcceptance=false.
+reference app C's saved audit has 89 passing artifact checks and scopedAcceptance=false.
 Independently resolved all 51 report evidence links, rehashed both archived APKs,
 and checked the hashes and sizes of all five embedded files in each APK at
 builtin1794095872:
@@ -4100,7 +4092,7 @@ Saved final state commits1794097294; original and final inspection/photo metadat
 compare equal, and cleanup records empty fixtures/queues/outbox, airplane off and
 owned resources stopped. No independent photo-byte rehash is claimed here.
 
-Kundalini 23 remains unchanged: F-81 and cold launch routing have device evidence;
+reference app B 23 remains unchanged: F-81 and cold launch routing have device evidence;
 F-83 still needs a rebuilt-host device recheck against the later correction.
 Clean-install offline and felt haptics retain their qualifications. F-84's CLI-only
 build identity wording is already corrected in packages.
@@ -4127,8 +4119,8 @@ The APK used process-local Gradle settings (2 GiB heap, two workers and
 ActiveProcessorCount=2); its existing app_badge_plus Kotlin migration warning
 remains. Only mirrored integration notes changed; app receipts remain read-only.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_147_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_147_REPORT.md,
 evidence/iteration-147/{audit.json,archived-release.json,archived-debug.json,
 embedded-file-integrity.json,doctor.txt,doctor-stderr.txt,r29-device-proof.json,
 isolated-fresh-qualification.json,owner-activation-identity.json,
@@ -4144,11 +4136,11 @@ In plain terms: every must-have and original rebase-queue item is done. No new
 eligible item or packages movement was found: code base c091bee15ac0cbb0d46139438460acbb46f72578,
 site base 5c17a0d940a07cba81a305ea4522d9fd250e7ac6. Independently checked
 all 42 selected exact source tips and both packages heads as ancestors of the
-integrations. Reviewed both findings inventories and newest reports, Kundalini
-23 / App C 146. This is an evidence-only update; fresh gate results for the
+integrations. Reviewed both findings inventories and newest reports, reference app B
+23 / reference app C 146. This is an evidence-only update; fresh gate results for the
 unchanged implementation are recorded below.
 
-App C's saved audit contains 87 passing artifact checks and scopedAcceptance=false.
+reference app C's saved audit contains 87 passing artifact checks and scopedAcceptance=false.
 Independently resolved all 47 current report evidence links, rehashed both archived
 APKs, and checked every embedded content hash and size (five files per APK,
 builtin 1794092376):
@@ -4183,11 +4175,11 @@ behavior. Saved final state commits1794093524 and records original inspection/ph
 retention and empty fixtures/queues/outbox. Current footprint metadata alone
 establishes no leak or growth rate.
 
-Kundalini 23 is unchanged: F-81 age and launch routing have device evidence;
+reference app B 23 is unchanged: F-81 age and launch routing have device evidence;
 F-83 still needs a rebuilt-host device recheck against the later correction.
 Clean-install offline and felt haptics retain their stated limits. F-84's CLI-only
 build identity clarification is already in packages. No older finding is closed
-by the recovered successes in App C 146.
+by the recovered successes in reference app C 146.
 
 Decision: protect security and users' data before feature scope. Preserve failed
 readiness and platform qualifications, retain lease recovery and transaction
@@ -4213,8 +4205,8 @@ Flutter gates ran sequentially. The APK command used a 2 GiB Gradle heap and two
 workers through process-local settings. Its existing Kotlin plugin migration
 warning remains. No validation assertion was weakened.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_146_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_146_REPORT.md,
 evidence/iteration-146/{audit.json,archived-release.json,archived-debug.json,
 embedded-file-integrity.json,doctor.txt,doctor-stderr.txt,r29-device-proof.json,
 current-debug-ready-attempts.json,current-debug-later-ready-attempts.json,
@@ -4283,12 +4275,12 @@ copies. Final read-only review found no remaining concrete finding. Existing
 app_badge_plus KGP build warning remains; the push pub hint is its local override.
 An initial gate-launch redirection error executed no gate and is excluded.
 
-Read both findings inventories and newest reports, Kundalini 23 / App C 145.
-Kundalini still needs a rebuilt-host F-83 device recheck; clean-install-offline
+Read both findings inventories and newest reports, reference app B 23 / reference app C 145.
+reference app B still needs a rebuilt-host F-83 device recheck; clean-install-offline
 and felt haptics remain qualified. Its report confirms corrected cold launch
 routing and F-81 age diagnostics, not acceptance of the later F-83 correction.
 
-App C's saved audit has 88 passing consistency checks with acceptance=false.
+reference app C's saved audit has 88 passing consistency checks with acceptance=false.
 Independently checked 49 current Markdown report links (the report says 50),
 rehashed both archives and verified five embedded files per manifest at
 builtin1794087098:
@@ -4321,8 +4313,8 @@ S10/P1 remain deferred. Only R31/S11 follow-up Status cells and the roadmap top
 handoff note change. No fresh emulator or iOS acceptance. Test-app repositories
 remained read-only; no protected branch writes, version changes, pushes or releases.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_145_REPORT.md,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_145_REPORT.md,
 evidence/iteration-145/{evidence-audit.json,archived-release.json,
 archived-debug.json,embedded-file-integrity.json,doctor.txt,
 initial-exit-after-death.txt,settings-outcome.json,current-failure-correlated.txt,
@@ -4369,11 +4361,11 @@ retained those exact sources. Only validation/integration notes followed.
 Nonfatal app_badge_plus KGP build warning remains. Initial uncommitted-README pub
 warning was corrected by committing it and rerunning; the final dry run counts.
 
-Reviewed both findings inventories and newest reports, Kundalini 23 / App C 144.
-Kundalini reports F-81 fixed and cold link/reminder restoration correct; F-83
+Reviewed both findings inventories and newest reports, reference app B 23 / reference app C 144.
+reference app B reports F-81 fixed and cold link/reminder restoration correct; F-83
 requires a native rebuild and device recheck. Clean-install offline and haptics
 acceptance remain qualified. Independently counted its doctor 21 PASS/6 WARN.
-App C remains acceptance-incomplete: checked 22 report links, both APK hashes and
+reference app C remains acceptance-incomplete: checked 22 report links, both APK hashes and
 five embedded files per manifest (builtin1794082626); doctor16PASS/10WARN/1FAIL
 is a key-scan timeout without assertions. Its R29 open completion is not paint;
 nonstreamed install success does not erase readiness failures. No new framework
@@ -4395,9 +4387,9 @@ In plain terms: every must-have and original queue item remains done. No eligibl
 queue refresh or new item remains. Packages bases are unchanged: code d037f23,
 site d14ece8. Independently verified all 39 recorded exact tips and each packages
 base as ancestors of the corresponding integration. Reviewed both findings
-inventories and newest reports: Kundalini 22 / App C 143. Kundalini still lacks
+inventories and newest reports: reference app B 22 / reference app C 143. reference app B still lacks
 complete release acceptance and dedicated post-fix F-81/F-82/cold-tap acceptance.
-App C began November 7 and ended November 8; its current regression is incomplete.
+reference app C began November 7 and ended November 8; its current regression is incomplete.
 
 Independently checked all 22 report evidence links. Counted the mechanical doctor
 stream: 14 PASS, 11 WARN, 2 FAIL. The signing-key scan timed out at 187484ms and
@@ -4421,7 +4413,7 @@ records boot=1, then readiness status1 and adb screencap ETIMEDOUT. Crucially,
 postdirect-initial-exit-info.txt is empty: its existence supplies no exit cause or
 PID proof. No current meaningful paint, native/offline/OTA/isolated-worker or
 retention acceptance follows. No crash, leak or Valence root cause is established.
-Saved cleanup records airplane0/App C absent; the first mock-stop timeout remains
+Saved cleanup records airplane0/reference app C absent; the first mock-stop timeout remains
 separate from corrected identity-scoped stop and bindable-port receipts. No current
 outbox-zero, queue-empty or activation-byte comparison is supplied.
 
@@ -4436,8 +4428,8 @@ report links, APK hashes/manifests, doctor counts, mirrored text and whitespace.
 Both test-app repositories stayed read-only; no versions, protected branches,
 pushes or releases changed.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_143_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_143_REPORT.md}; reference app C
 evidence/iteration-143/{doctor-mechanical.txt,doctor-current-summary.json,
 archived-release.json,archived-debug.json,embedded-both-manifests.json,
 verify-builtin.txt,flutter-console-outcome.json,runner-notes.md,
@@ -4453,11 +4445,11 @@ eligible feature or queue refresh remains. Packages bases remain code
 d037f233f8ffbdd0a72d22a42715974deb50287c and site
 d14ece8ea97e17f9b753b31e52d15843db40abdd. Independently checked all 39 recorded
 exact code/site tips and both packages bases as ancestors of the integrations.
-Reviewed both findings inventories and newest reports: Kundalini 22 / App C 142.
-Kundalini's release acceptance remains incomplete; dedicated post-fix acceptance
+Reviewed both findings inventories and newest reports: reference app B 22 / reference app C 142.
+reference app B's release acceptance remains incomplete; dedicated post-fix acceptance
 of F-81/F-82 and cold notification routing is not supplied by that report.
 
-App C's saved audit has 93 passing receipt-consistency checks, acceptance=false.
+reference app C's saved audit has 93 passing receipt-consistency checks, acceptance=false.
 Independently checked all 36 evidence links in its report and counted doctor's
 17 PASS, 10 WARN and zero FAIL. That successful invocation does not explain or
 erase iteration 141's mapped-test failure or key-scan timeouts; F-54 stays open.
@@ -4503,8 +4495,8 @@ implementation scope. This evidence-only review ran no fresh full gates,
 emulator session or iOS acceptance. Both test-app repositories stayed read-only;
 no package-version changes, protected-branch writes, pushes or releases.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_142_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_142_REPORT.md}; reference app C
 evidence/iteration-142/{evidence-audit.json,doctor.txt,archived-release.json,
 archived-debug.json,embedded-both-manifests.json,initial-settings-outcome.json,
 initial-settings-return-full-logcat.txt,initial-settings-return-exit-info.txt,
@@ -4523,11 +4515,11 @@ eligible new feature or queue refresh remains. Packages bases remain code
 d037f233f8ffbdd0a72d22a42715974deb50287c and site
 d14ece8ea97e17f9b753b31e52d15843db40abdd. Independently checked all 39 recorded
 exact code/site tips and both packages bases as ancestors of the integrations.
-Read both findings inventories and newest reports: Kundalini 22 / App C 141.
-Kundalini's release acceptance remains incomplete; the upstream F-81/F-82 and
+Read both findings inventories and newest reports: reference app B 22 / reference app C 141.
+reference app B's release acceptance remains incomplete; the upstream F-81/F-82 and
 cold-launch routing fixes do not replace dedicated post-fix app acceptance.
 
-App C's saved audit has 46 passing receipt-consistency checks, acceptance=false.
+reference app C's saved audit has 46 passing receipt-consistency checks, acceptance=false.
 Independently checked all 21 evidence links in its latest report. Official offline
 CLI refresh, bridge integrity, web build, three Node tests, twelve Flutter tests
 and Dart analysis have successful saved receipts. Builtin verification records
@@ -4546,7 +4538,7 @@ speculative runtime change or historical finding closure follows from it.
 
 Independently matched two activity-service 10000ms dump timeouts and widespread
 system-app ANRs in raw startup logs. F-53 records this external startup/service
-failure, not an established App C crash or Valence cause. The saved direct boot
+failure, not an established reference app C crash or Valence cause. The saved direct boot
 probe reports booted=false, ending at 295126ms with device offline. Harness
 recovery and direct-launch observations remain separate from build results.
 Initial CLI timeout and overlapping pub-get failure remain separate from the
@@ -4569,8 +4561,8 @@ raw diagnostics, report links, mirrored text and whitespace; it ran no fresh ful
 gates, emulator session or iOS acceptance. Both test-app repositories stayed
 read-only; no package-version changes, protected-branch writes, pushes or releases.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_141_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_141_REPORT.md}; reference app C
 evidence/iteration-141/{evidence-audit.json,runner-notes.md,doctor-current.txt,
 doctor-rows.json,extended-key-scan.json,flutter-tests.txt,iteration-outcome.json,
 build-release-execution.json,verify-builtin.txt,startup-full-logcat.txt,
@@ -4626,15 +4618,15 @@ Fresh gates on those implementation merge heads, 2026-11-07:
 No assertions, timeouts or gates were weakened. Package tests and these build
 checks do not establish test-app acceptance or natural worker cadence.
 
-Read both findings inventories and newest reports: Kundalini 22 / App C 140.
-Kundalini's release acceptance remains incomplete: cold notification routing was
+Read both findings inventories and newest reports: reference app B 22 / reference app C 140.
+reference app B's release acceptance remains incomplete: cold notification routing was
 unresolved, widget/share/haptics were not rerun and F-81 lacks dedicated post-fix
 renewal-age device acceptance. R34's upstream example-device check covers the
 link mailbox; it does not establish notification or push device acceptance.
 Its doctor artifact records 21 PASS, 6 WARN, zero FAIL. Preserve F-81/F-82's
 historical evidence despite their upstream fixes.
 
-App C's saved audit has 84 passing artifact checks and scoped acceptance=false.
+reference app C's saved audit has 84 passing artifact checks and scoped acceptance=false.
 Independently matched the system_server728 fatal NullPointerException at
 20:00:06 in AppCompatCameraDisplayRotationPolicy. The report also retains
 post-reboot App C2323 startup ANR and external photo-picker5923 ANR; no Valence
@@ -4645,12 +4637,12 @@ in PID3667 and explicit postrestore sync is ok/pending0. Doctor records 16 PASS,
 extended scan passed; it does not replace that FAIL or the initial 300-second
 outer-wrapper timeout. Historical startup/process/storage findings stay open.
 
-Independently rehashed the archived App C release APK (54777012 bytes,
+Independently rehashed the archived reference app C release APK (54777012 bytes,
 52eb23e7a4c24e2d8d8f62396c0a2a7fd97954d1468f96e2eb8685d0a61a7d5d) and debug
 APK (193198547 bytes,
 e60ea6e7bf2dbbc164dfb1c749807660e1f58bbf1f094c90977ed41191a36af6).
 Both embedded manifests name builtin1794059919. These are archive/receipt checks,
-not fresh App C builds or signature verification. Saved rollback has
+not fresh reference app C builds or signature verification. Saved rollback has
 current1794062590/no trial/broken1794062600 in bad.
 
 Matched all seven PID8026 callback/lease/SUCCESS lines against raw worker logs
@@ -4664,10 +4656,10 @@ neither sustained natural cadence nor cancellation/expiry correctness.
 S1 stays parked, S2 needs a Play account, S10 stays deferred. Item Status cells
 unchanged. Both test-app repos stayed read-only. No protected-branch commits or
 merges, package-version changes, pushes or publications. No fresh emulator or
-iOS acceptance; iOS remains experimental and untested.
+iOS acceptance; iOS is experimental and untested.
 
 Evidence: both VALENCE_FINDINGS.md files and newest iteration reports;
-Kundalini test-evidence/it22/doctor.json; App C evidence/iteration-140/
+reference app B test-evidence/it22/doctor.json; reference app C evidence/iteration-140/
 {evidence-audit.json,runner-notes.md,archived-release.json,archived-debug.json,
 native-failure-logcat.txt,settings-outcome.json,postrestore-outcome.json,
 rollback-confirmed.json,worker-execution.json,worker-completion-proof.json,
@@ -4726,21 +4718,21 @@ Fresh gates on those implementation heads, 2026-11-07:
 No assertions, timeouts or gates were weakened. No fresh emulator session,
 remote-push acceptance, sustained worker-cadence test or iOS acceptance.
 
-Read both findings inventories and newest reports: Kundalini 22 / App C 139.
-Kundalini reports F-79 adoption, signed store/OTA/rollback and offline seed
+Read both findings inventories and newest reports: reference app B 22 / reference app C 139.
+reference app B reports F-79 adoption, signed store/OTA/rollback and offline seed
 checks; cold notification routing remains unresolved and widget/share/haptics
 were not rerun. Its doctor artifact totals 21 PASS, 6 WARN, zero FAIL.
 F-81/F-82 now have upstream fixes and passing package regressions; the app has
 not yet supplied dedicated post-fix renewal-age device acceptance. Do not close
-its findings on the strength of App C's unrelated successful worker.
+its findings on the strength of reference app C's unrelated successful worker.
 
-App C's saved audit records 82 checks and scoped acceptance=true. Independently
+reference app C's saved audit records 82 checks and scoped acceptance=true. Independently
 rehashed release APK (54777012 bytes,
 78eb224a60070702ad6c00045fc428a0772a45056bb59746c70d0fec62fc4163) and debug
 APK (193194989 bytes,
 39a9a9e1f1a917a32edd309443cda8a16c3629144cebade01c3d5cca2721358f);
 both embedded manifests name builtin1794056348. These are archive/receipt
-checks, not fresh App C builds or signature verification. Settings returned
+checks, not fresh reference app C builds or signature verification. Settings returned
 painted in PID5575; explicit postrestore sync is ok/pending0, separately from
 the earlier offline/pending0 receipt. Saved rollback has current1794057279,
 no trial and broken1794057289 in bad.
@@ -4762,8 +4754,8 @@ marked done and is not available to this builder. Item Status cells unchanged.
 Both test-app repos stayed read-only. No protected-branch commits/merges,
 version changes, pushes or publications.
 
-Evidence: both apps' VALENCE_FINDINGS.md and ITERATION reports; Kundalini
-test-evidence/it22/doctor.json; App C evidence/iteration-139/{evidence-audit.json,
+Evidence: both apps' VALENCE_FINDINGS.md and ITERATION reports; reference app B
+test-evidence/it22/doctor.json; reference app C evidence/iteration-139/{evidence-audit.json,
 archived-release.json,archived-debug.json,settings-outcome.json,
 postrestore-outcome.json,rollback-confirmed.json,worker-execution.json,
 worker-completion-proof.json,worker-lease-diagnostics.json,worker-full-logcat.txt,
@@ -4771,18 +4763,18 @@ background-full-log-before.txt,background-state-before-raw.json,
 background-state-after-raw.json,background-sqlite-before-resume.json,
 initial-cleanup.json,cleanup.json,runner-notes.md}.
 
-## November 7: Kundalini 22 and App C 138 evidence review
+## November 7: reference app B 22 and reference app C 138 evidence review
 
 In plain terms: all must-haves and the original rebase queue remain done. No
 eligible item is available. Code packages remains
 0fe3391faf2ba25e69ccae3079382be2179be4be; site packages remains
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Independently verified all 39 recorded
 exact feature tips and the packages bases as ancestors of both integrations.
-Read both findings inventories and newest reports, Kundalini 22 and App C 138.
+Read both findings inventories and newest reports, reference app B 22 and reference app C 138.
 S1 remains deliberately parked, S2 requires a Play account, S10 is deferred.
 No shared roadmap cells or top-line gate date changed.
 
-Kundalini reports successful F-79 adoption: the onLink initial flag replaces its
+reference app B reports successful F-79 adoption: the onLink initial flag replaces its
 handwritten link subscription/mailbox wrapper. It reports a fresh store build,
 offline seed launch, good OTA commitment and two-strike rollback, but its final
 release check remains incomplete: cold notification routing is unresolved,
@@ -4808,7 +4800,7 @@ F-82 separately reports a stale bridge package after CLI refresh; reinstalling
 the bridge resolved the generated ReceivedLink type error in the app. No new
 dependency check or runtime fix is claimed by this review.
 
-App C's saved audit has 82 passing artifact checks, acceptancePassed=false.
+reference app C's saved audit has 82 passing artifact checks, acceptancePassed=false.
 The initial retained-release observation exhausted its polls under Android
 service dialogs; the initial mixed-link CDP read timed out. Later recovered
 checks remain separate. Settings returned painted in the same PID5937.
@@ -4824,7 +4816,7 @@ e6c016e5facfbc4ca54ce3852be5413de7f2a0a54ceca4b9b5b0aea44c3e48ad.
 These checks establish archive/receipt agreement, not a fresh build, signature
 verification or device installation. Saved rollback state now really records
 current1794054650, trial=null and broken1794054661 in bad; the second-start
-ownership receipt identifies App C. This is current evidence, not retroactive
+ownership receipt identifies reference app C. This is current evidence, not retroactive
 acceptance of iteration137's interrupted rollback.
 
 Independently matched all seven callback/lease/SUCCESS lines for PID9401 in raw
@@ -4837,7 +4829,7 @@ receipt records outbox0 and incoming/outgoing fixture rows before foreground;
 those database effects were read, not replayed. Independently compared raw
 activation bytes: equal, SHA256
 1cfb20b14a25a585d01f49f5c4fb85e5be1ebe3ed0e6d03c3db670248bff3a42,
-current1794054721/pending1794054731/no trial. Cleanup records stopped App C and
+current1794054721/pending1794054731/no trial. Cleanup records stopped reference app C and
 owned mocks, airplane0 and scoped forwards removed.
 
 Decision: security first, then users' data. Preserve transaction ownership and
@@ -4848,9 +4840,9 @@ schema, version or migration change; no fresh full gates, emulator session,
 independent runtime review or iOS acceptance. Earlier gate results retain their
 original scope. Both test-app repositories stayed read-only.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md,
-test-evidence/it22/doctor.json}; valence-test-app-c/{VALENCE_FINDINGS.md,
-ITERATION_138_REPORT.md}; App C evidence/iteration-138/{evidence-audit.json,
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_22_REPORT.md,
+test-evidence/it22/doctor.json}; valence-test-reference app C/{VALENCE_FINDINGS.md,
+ITERATION_138_REPORT.md}; reference app C evidence/iteration-138/{evidence-audit.json,
 archived-release.json,archived-debug.json,settings-outcome.json,
 postrestore-outcome.json,rollback-confirmed.json,
 rollback-second-start-ownership.json,worker-execution.json,
@@ -4865,7 +4857,7 @@ In plain terms: no eligible must-have or queue refresh remains. Packages bases
 remain code 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Verified all 39 recorded exact feature
 tips as ancestors of both integrations. Read both findings inventories and newest
-reports, Kundalini 21 and App C 137. App C's session began November 6 and ended
+reports, reference app B 21 and reference app C 137. reference app C's session began November 6 and ended
 November 7; preserve those evidence dates. S1 stays parked, S2 requires a Play
 account and S10 stays deferred.
 
@@ -4873,7 +4865,7 @@ The saved audit records 41 passing artifact checks, acceptance=false and
 regressionComplete=false. Corrected native/media/reminder/link/widget results
 are recovery results, not a completed regression. Independently matched raw
 system_server PID684 Invalid IntRange exceptions at November 6 07:21:05.933,
-App C ANR at November 7 16:00:38.161, renderer PID5623 LOW_MEMORY exit at
+reference app C ANR at November 7 16:00:38.161, renderer PID5623 LOW_MEMORY exit at
 16:04:03.134, Chromium's host PID4204 termination diagnostic at .212 and
 host SIGNALED/status9 exit at .858. Keep the system-service loss, startup ANR,
 renderer loss, SystemUI overlay, orphan permission task and runner sequencing
@@ -4886,7 +4878,7 @@ Settings later returned painted in the same PID8040. The saved stopped-native
 receipt records original inspection fields and photo retained, matching photo
 SHA256 and outbox0; these database/media checks were read, not replayed.
 Neither recovery nor the current checks close historical F-33/F-35/F-36 or
-Kundalini F-79/F-80. In particular, a replayed job holding a database lease does
+reference app B F-79/F-80. In particular, a replayed job holding a database lease does
 not justify pre-empting its transaction without ownership evidence.
 
 Independently rehashed both archived APKs and extracted their embedded builtin
@@ -4904,7 +4896,7 @@ foreground during the second-strike observation, so the test is inconclusive.
 Recovery offer1794047841 is locally verified in a saved receipt only; device
 download/apply remains false. Isolated worker regression was not begun, and no
 new worker execution or cadence claim is available. Final notification queue
-reads failed. Cleanup receipts record only App C/owned mocks stopped, its two
+reads failed. Cleanup receipts record only reference app C/owned mocks stopped, its two
 recorded forwards removed and airplane mode observed off without mutation.
 
 Decision: security first, then users' data. Preserve the frozen runtime,
@@ -4916,8 +4908,8 @@ scope. This evidence-only review ran ancestry, archive hashes, embedded-seq,
 saved-audit and diff checks; no fresh full gates, emulator session, independent
 runtime review or iOS acceptance. Both test-app repositories stayed read-only.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_137_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_137_REPORT.md}; reference app C
 evidence/iteration-137/{evidence-audit.json,runner-notes.md,
 system-service-interruption.json,second-basic-logcat.txt,
 f35-current-anr.json,after-systemui-full-logcat.txt,after-systemui-exit-info.txt,
@@ -4933,10 +4925,10 @@ feature or queue refresh remains. Packages bases remain code
 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Verified all 39 recorded exact feature
 tips as ancestors of both integrations. Reviewed both findings inventories and
-newest reports, Kundalini 21 and App C 136. S1 stays parked, S2 requires a Play
+newest reports, reference app B 21 and reference app C 136. S1 stays parked, S2 requires a Play
 account and S10 stays deferred.
 
-App C's saved audit records 98 passing artifact checks but scoped
+reference app C's saved audit records 98 passing artifact checks but scoped
 acceptance=false. The initial bounded CDP paint probe failed with null
 document.body; its raw error survives only in session output, not a persisted
 receipt. Later readiness passed without restart or data clear. Separately, a
@@ -4948,8 +4940,8 @@ observation. First fresh paint at 15057ms and fresh open completion at 647ms
 have separate boundaries; none establishes exact first-paint latency.
 
 Settings records painted return in PID5419, and explicit postrestore sync is
-ok/pending0. These successes do not close historical F-33/F-36, or Kundalini
-F-79/F-80. Kundalini's replayed background job, database wait and skipped update
+ok/pending0. These successes do not close historical F-33/F-36, or reference app B
+F-79/F-80. reference app B's replayed background job, database wait and skipped update
 remain observations requiring diagnosis; pre-empting a lease without identifying
 transaction ownership would put users' data at risk.
 
@@ -4977,8 +4969,8 @@ change; item Status cells remain untouched. Earlier November 6 full gates retain
 their scope; this evidence review ran no fresh full gates, emulator session,
 independent runtime review or iOS acceptance. Test apps stayed read-only.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_136_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_136_REPORT.md}; reference app C
 evidence/iteration-136/{evidence-audit.json,runner-notes.md,
 initial-startup-probe-qualification.json,install-release.txt,
 retained-observation-continuation-execution.json,settings-outcome.json,
@@ -4993,10 +4985,10 @@ In plain terms: no eligible must-have or queue refresh remains. Packages bases
 remain code 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Verified all 39 current recorded exact
 feature tips as ancestors of both integrations. Read both findings inventories
-and newest reports: Kundalini 21 and App C 135. S1 stays deliberately parked,
+and newest reports: reference app B 21 and reference app C 135. S1 stays deliberately parked,
 S2 requires a Play account, and S10 stays deferred.
 
-App C's saved audit records 98 passing artifact checks but scoped
+reference app C's saved audit records 98 passing artifact checks but scoped
 acceptance=false. Independently matched the preserved Camera ANR in lastanr and
 raw logcat: com.android.camera2/CaptureActivity, PID6612, input-dispatch timeout
 at 06:18:33 after waiting 5003ms for MotionEvent. The earlier null-root UI dump,
@@ -5004,7 +4996,7 @@ whose lastanr reported none, is a separate failed observation. Successful
 camera/gallery decoding after closing the Camera dialog is recovery, not a fix;
 no Valence cause is established. Settings records painted return in the same
 PID5224; explicit postrestore sync is ok/pending0 and restore execution status 0.
-Current recovery does not close F-33/F-36 or Kundalini F-79/F-80.
+Current recovery does not close F-33/F-36 or reference app B F-79/F-80.
 
 Retained paint was observed at 38598ms after four unsuccessful observations;
 first fresh paint at 15527ms is separate from fresh open completion at 961ms.
@@ -5043,8 +5035,8 @@ note change; item Status cells remain untouched. Earlier November 6 full gates
 retain their scope; no fresh full gates, emulator acceptance, independent runtime
 review or iOS acceptance is claimed. Test apps stayed read-only.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_135_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_135_REPORT.md}; reference app C
 evidence/iteration-135/{evidence-audit.json,runner-notes.md,
 camera-retry-lastanr.txt,camera-retry-full-logcat.txt,settings-outcome.json,
 postrestore-outcome.json,restore-execution.json,binary-delivery-state.json,
@@ -5059,10 +5051,10 @@ In plain terms: no eligible must-have or queue refresh remains. Packages bases
 remain code 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Verified all 39 current recorded exact
 feature tips as ancestors of both integrations. Reviewed both findings inventories
-and newest reports: Kundalini 21 and App C 134. S1 stays deliberately parked,
+and newest reports: reference app B 21 and reference app C 134. S1 stays deliberately parked,
 S2 requires a Play account, and S10 stays deferred.
 
-App C's saved audit passes 97 artifact checks with scoped acceptance=true.
+reference app C's saved audit passes 97 artifact checks with scoped acceptance=true.
 Settings records same PID 5082 and painted return; explicit postrestore sync is
 ok/pending0. Restore execution records status 0. The initial retained probe ran
 before the startup page installed the bridge and returned TypeError reading r;
@@ -5072,7 +5064,7 @@ observed at 16797ms and first fresh paint observed at 15465ms are separate from
 fresh open completion at 1042ms. No exact first-paint latency or cause is proven;
 the inherited fresh-retry filename names the first current bounded observation.
 Current success does not close iteration 129's F-33 or iteration 130's F-36.
-Kundalini F-79/F-80 and historical reliability findings remain open.
+reference app B F-79/F-80 and historical reliability findings remain open.
 
 Independently rehashed both archived iteration134 APKs: release 54777012 bytes,
 SHA256 4d89bc3946148b61106c0a123406768a0e76b44d301855233e2211b1416b2b9e;
@@ -5102,11 +5094,11 @@ failures. Preserve the frozen runtime. No behavior, schema, package version or
 host migration changes. Only mirrored integration evidence notes and the roadmap
 top note change; item Status cells remain untouched. Earlier November 6 full
 gates retain their recorded scope; no fresh full gates, emulator acceptance or
-independent runtime review is claimed. iOS stays experimental and untested.
+independent runtime review is claimed. iOS is experimental and untested.
 Test apps stayed read-only; no protected-branch commit/merge, push or publication.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_134_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_134_REPORT.md}; reference app C
 evidence/iteration-134/{evidence-audit.json,settings-outcome.json,
 postrestore-outcome.json,restore-execution.json,binary-delivery-state.json,
 background-state-before-raw.json,background-state-after-raw.json,
@@ -5119,10 +5111,10 @@ In plain terms: no eligible must-have or queue refresh remains. Packages bases
 remain code 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Verified all 39 current recorded exact
 feature tips as ancestors of both integrations. Reviewed both findings inventories
-and newest reports: Kundalini 21 and App C 133. S1 stays deliberately parked,
+and newest reports: reference app B 21 and reference app C 133. S1 stays deliberately parked,
 S2 requires a Play account, and S10 stays deferred.
 
-App C's saved audit passes 97 artifact checks with scoped acceptance=true.
+reference app C's saved audit passes 97 artifact checks with scoped acceptance=true.
 Settings records same PID 5233 and painted return; explicit postrestore sync is
 ok/pending0. Restore execution records status 0. Initial retained baseline failed
 with UND_ERR_SOCKET during startup; the preserved failure and later successful
@@ -5131,7 +5123,7 @@ observed at 16310ms and first fresh paint observed at 14945ms are separate from
 fresh open completion at 651ms. No exact first-paint latency or cause is proven;
 the inherited fresh-retry filename names the first current bounded observation.
 Current success does not close iteration 129's F-33 or iteration 130's F-36.
-Kundalini F-79/F-80 and historical reliability findings remain open.
+reference app B F-79/F-80 and historical reliability findings remain open.
 
 Independently rehashed both archived iteration133 APKs: release 54777012 bytes,
 SHA256 995919c40a914cbd0ac14347af09534910757f067d044916e7b594b1068bf830;
@@ -5162,11 +5154,11 @@ failures. Preserve the frozen runtime. No behavior, schema, package version or
 host migration changes. Only mirrored integration evidence notes and the roadmap
 top note change; item Status cells remain untouched. Earlier November 6 full
 gates retain their recorded scope; no fresh full gates, emulator acceptance or
-independent runtime review is claimed. iOS stays experimental and untested.
+independent runtime review is claimed. iOS is experimental and untested.
 Test apps stayed read-only; no protected-branch commit/merge, push or publication.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_133_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_133_REPORT.md}; reference app C
 evidence/iteration-133/{evidence-audit.json,settings-outcome.json,
 postrestore-outcome.json,restore-execution.json,binary-delivery-state.json,
 background-state-before-raw.json,background-state-after-raw.json,
@@ -5179,14 +5171,14 @@ In plain terms: no eligible must-have or queue refresh remains. Packages bases
 remain code 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Verified all 39 current recorded exact
 feature tips as ancestors of both integrations. Read both findings inventories
-and newest reports: Kundalini 21 and App C 132. S1 stays deliberately parked,
+and newest reports: reference app B 21 and reference app C 132. S1 stays deliberately parked,
 S2 requires a Play account, and S10 stays deferred.
 
-App C's saved artifact audit passes 96 checks with scoped acceptance=true.
+reference app C's saved artifact audit passes 96 checks with scoped acceptance=true.
 Settings records same PID 6480 and painted return; explicit postrestore sync is
 ok/pending0. The current restore command completed successfully. These current
 successes do not reverse iteration 129's F-33 COMMIT failure or iteration 130's
-F-36 renderer loss. Kundalini F-79/F-80 and historical reliability findings remain
+F-36 renderer loss. reference app B F-79/F-80 and historical reliability findings remain
 open. Retained paint observed at 17360ms and fresh paint observed at 20395ms are
 separate from fresh open completion at 849ms; no exact first-paint latency or
 cause is established. The inherited fresh-retry filename names the first current
@@ -5220,11 +5212,11 @@ failures. Preserve the frozen runtime. No behavior, schema, package version or
 host migration changes. Only mirrored integration evidence notes and the roadmap
 top note change; item Status cells remain untouched. Earlier November 6 full
 gates retain their recorded scope; no fresh full gates, emulator acceptance or
-independent runtime review is claimed. iOS stays experimental and untested.
+independent runtime review is claimed. iOS is experimental and untested.
 Test apps stayed read-only; no protected-branch commit/merge, push or publication.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_132_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_132_REPORT.md}; reference app C
 evidence/iteration-132/{evidence-audit.json,settings-outcome.json,
 postrestore-outcome.json,binary-delivery-state.json,
 background-state-before-raw.json,background-state-after-raw.json,
@@ -5238,13 +5230,13 @@ In plain terms: no eligible must-have or queue refresh remains. Packages bases
 remain code 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Checked all 39 current recorded exact
 feature tips as ancestors of both integrations. Read both findings inventories
-and newest reports: Kundalini 21 and App C 131. S1 remains deliberately parked,
+and newest reports: reference app B 21 and reference app C 131. S1 remains deliberately parked,
 S2 requires a Play account, and S10 is deferred.
 
-App C's saved artifact audit passes 96 checks with scoped acceptance=true.
+reference app C's saved artifact audit passes 96 checks with scoped acceptance=true.
 The saved Settings receipt records PID 6397 before and after, samePid=true and
 pagePainted=true. This current success does not reverse iteration 130's F-36
-renderer loss or iteration 129's F-33 COMMIT failure. Kundalini's F-80 contention
+renderer loss or iteration 129's F-33 COMMIT failure. reference app B's F-80 contention
 and historical reliability findings remain open. Startup observations of retained
 paint at 23090ms and first fresh paint at 15009ms are separate from fresh open
 completion at 427ms; they establish neither exact first-paint latency nor cause.
@@ -5289,11 +5281,11 @@ behavior, schema, package version or host migration changes. Only mirrored
 integration evidence notes and the roadmap top note change; item Status cells
 remain untouched. Existing November 6 full gates retain their recorded scope;
 no fresh full gates, emulator acceptance or independent runtime review is claimed.
-iOS remains experimental and untested. Test apps stayed read-only; no protected
+iOS is experimental and untested. Test apps stayed read-only; no protected
 branch commit/merge, push or publication.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_131_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_131_REPORT.md}; reference app C
 evidence/iteration-131/{evidence-audit.json,settings-outcome.json,restore.txt,
 restore-execution.json,initial-postrestore-outcome.json,postrestore-outcome.json,
 binary-delivery-state.json,embedded-both-manifests.json,
@@ -5307,10 +5299,10 @@ In plain terms: no eligible must-have or queue refresh remains. Packages bases
 remain code 0fe3391faf2ba25e69ccae3079382be2179be4be and site
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Independently checked all 39 recorded
 exact feature tips as ancestors of the current integration in both repositories.
-Read both findings inventories and newest reports: Kundalini 21 and App C 130.
+Read both findings inventories and newest reports: reference app B 21 and reference app C 130.
 S1 remains deliberately parked, S2 requires a Play account, and S10 is deferred.
 
-App C's saved audit has 95 passing artifact checks but scoped acceptance=false.
+reference app C's saved audit has 95 passing artifact checks but scoped acceptance=false.
 Independently matched raw Settings logs: lowmemorykiller kills renderer 5557 at
 03:45:50.232; Chromium in host 5482 reports the unhandled renderer termination at
 03:45:50.287; ActivityManager records host death at 03:45:50.369. Exit-info names
@@ -5320,7 +5312,7 @@ This is the F-36 signature, not evidence that Android directly killed the host f
 low memory (F-50). No Valence leak or trial-loss cause is established. Later
 native successes are recovery evidence. The current postrestore reply is
 ok/pending0, which does not explain or close iteration 129's F-33 COMMIT failure.
-Kundalini's F-80 contention and historical reliability findings remain open.
+reference app B's F-80 contention and historical reliability findings remain open.
 
 Independently rehashed both archived iteration130 APKs:
 release 54777012 bytes, SHA256
@@ -5354,11 +5346,11 @@ or the frozen runtime. No behavior, schema, package version or host migration
 changes. Only mirrored integration evidence notes and the roadmap top note change;
 item Status cells remain untouched. Existing November 6 full gates retain their
 recorded scope; no fresh full gates, emulator acceptance or independent runtime
-review is claimed. iOS remains experimental and untested. Test apps stayed
+review is claimed. iOS is experimental and untested. Test apps stayed
 read-only; no protected-branch commit/merge, push or publication.
 
-Evidence: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
-valence-test-app-c/{VALENCE_FINDINGS.md,ITERATION_130_REPORT.md}; App C
+Evidence: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_21_REPORT.md};
+valence-test-reference app C/{VALENCE_FINDINGS.md,ITERATION_130_REPORT.md}; reference app C
 evidence/iteration-130/{evidence-audit.json,settings-outcome.json,
 settings-return-full-logcat.txt,settings-return-exit-info.txt,
 postrestore-outcome.json,binary-delivery-state.json,embedded-both-manifests.json,
@@ -5372,7 +5364,7 @@ In plain terms: the must-have list and rebase queue are done; there is no eligib
 new item. Both integrations still include all 39 recorded exact feature tips and
 current packages bases 0fe3391faf2ba25e69ccae3079382be2179be4be /
 0c468908a7ed412ce13c6b2899efdc50dbd37d6b. Ancestry was checked this run.
-Kundalini's newest report remains iteration 21. App C iteration 129 changes the
+reference app B's newest report remains iteration 21. reference app C iteration 129 changes the
 current reliability verdict: its saved audit passes all 95 artifact checks but
 scoped acceptance is false because F-33 recurred after a retained-data restore.
 This evidence does not invalidate the earlier package gates; it does prevent
@@ -5424,16 +5416,16 @@ explicitly deferred. Item Status cells are unchanged. Only integration evidence
 notes change in the code and site worktrees; public behavior documentation stays
 consistent because behavior is unchanged. Earlier November 6 full gates retain
 their recorded scope; no fresh full gates, emulator or iOS acceptance is claimed.
-iOS remains experimental and untested. Test-app repositories stayed read-only;
+iOS is experimental and untested. Test-app repositories stayed read-only;
 no protected-branch commit/merge, push or publication.
 
-Evidence: read-only valence-test-app-c/ITERATION_129_REPORT.md and
+Evidence: read-only valence-test-reference app C/ITERATION_129_REPORT.md and
 VALENCE_FINDINGS.md; evidence/iteration-129/{f33-current-proof.json,
 postrestore-transaction-logcat.txt,evidence-audit.json,settings-outcome.json,
 embedded-both-manifests.json,background-state-before-raw.json,
 background-state-after-raw.json,worker-execution.json,worker-completion-proof.json,
 worker-full-logcat.txt,background-full-log-before.txt,doctor-progress-proof.json,
-runner-notes.md}; valence-test-kundalini/VALENCE_FINDINGS.md and
+runner-notes.md}; valence-test-reference-app-b/VALENCE_FINDINGS.md and
 ITERATION_21_REPORT.md. Saved receipts were inspected, not re-executed.
 
 In plain terms: the two requested improvements are rebuilt on current packages.
@@ -5575,17 +5567,16 @@ separate TEMP/valence-nov6-review-bridge*.log and site.log paths.
 ## App evidence and limits
 
 Read both VALENCE_FINDINGS.md inventories and latest completed reports:
-Kundalini 21 and App C 128. Kundalini reports F-79 source ambiguity and F-80 launch
+reference app B 21 and reference app C 128. reference app B reports F-79 source ambiguity and F-80 launch
 contention; the current packages contains upstream corrections, while this branch
-improves reporting without claiming to solve contention. App C reports scoped
+improves reporting without claiming to solve contention. reference app C reports scoped
 acceptance=true, Settings painted in PID 5500, and one explicitly triggered ready
 worker in PID 9090 with native data effects and unchanged activation bytes.
 These are app-reported receipts, not a fresh device run of this integration.
 Neither one worker nor deterministic fault injection proves natural cadence,
 competing-isolate cancellation/expiry correctness or production durability.
 Historical reliability findings remain open. S1 stays parked, S2 needs a Play
-account, S10 stays deferred. No fresh emulator or iOS acceptance; iOS remains
-experimental and untested. Test-app repos stayed read-only. No packages/main
+account, S10 stays deferred. No fresh emulator or iOS acceptance; iOS is experimental and untested. Test-app repos stayed read-only. No packages/main
 commit or merge, version change, push or publication.
 
 ## Historical integration evidence
@@ -5597,8 +5588,8 @@ fresh acceptance of the current candidate.
 
 ## November 4: iteration 102 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 102, plus the intervening App C 101 report. No eligible must-have or
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 102, plus the intervening reference app C 101 report. No eligible must-have or
 queue refresh remains. Both integrations contain all 37 current feature tips and
 unchanged packages bases 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5631,7 +5622,7 @@ a8a5e7277ee7fefa8125ceac72713f8f64aea529f2b4c021c1eff8376606f6fb.
 Current 1793783433, pending 1793783446, no trial before foreground. Stable native
 SQLite effects, final commit and original-data/photo retention remain saved
 receipts, not replayed here. Eleven docs pages and npm tarballs match iteration
-101, so F-45 correction adoption remains unverified. Kundalini F-72/F-73/F-74
+101, so F-45 correction adoption remains unverified. reference app B F-72/F-73/F-74
 adoption limits remain open. Retained footprint 581824 KiB / 5733 regular files
 is an observation, not evidence of a leak or per-iteration growth.
 
@@ -5639,16 +5630,16 @@ Decision: preserve security, users' data and the frozen implementation; no runti
 change without a diagnosed fix. S1 remains deliberately parked; S2 needs a Play
 account. Existing combined gates retain their recorded scope and date; no fresh
 full gates, security review or emulator acceptance claimed. Only matching
-integration notes changed. iOS remains experimental and untested. Sources:
+integration notes changed. iOS is experimental and untested. Sources:
 read-only app findings, ITERATION_18_REPORT.md, ITERATION_101_REPORT.md,
-ITERATION_102_REPORT.md and app-c/evidence/iteration-102/. No test-app writes,
+ITERATION_102_REPORT.md and reference app C/evidence/iteration-102/. No test-app writes,
 protected-branch changes, schema/version changes, push or publication. Roadmap
 status cells are unchanged.
 
 ## November 4: iteration 100 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 100. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 100. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5679,7 +5670,7 @@ b3368864e9a22e020d1d1e063dd694de56abb7c4320b9ccff30c9dee7b61b3d3.
 Current 1793779663, pending 1793779672, no trial before foreground. Stable native
 SQLite effects, final commit and original-data/photo retention remain saved
 receipts, not replayed here. Eleven docs pages and npm tarballs match iteration
-99, so F-45 correction adoption remains unverified. Kundalini F-72/F-73/F-74
+99, so F-45 correction adoption remains unverified. reference app B F-72/F-73/F-74
 adoption limits remain open. Retained footprint (570236 KiB / 5618 files) does
 not establish a leak or per-iteration growth.
 
@@ -5687,15 +5678,15 @@ Decision: preserve security, users' data and the frozen implementation; no runti
 change without a diagnosed fix. S1 stays deliberately parked; S2 needs a Play
 account. Existing combined gates retain their recorded scope and date; no fresh
 full gates, security review or emulator acceptance claimed. Only matching
-integration notes changed. iOS remains experimental and untested. Sources:
+integration notes changed. iOS is experimental and untested. Sources:
 read-only app findings, ITERATION_18_REPORT.md, ITERATION_100_REPORT.md and
-app-c/evidence/iteration-100/. No test-app writes, protected-branch changes,
+reference app C/evidence/iteration-100/. No test-app writes, protected-branch changes,
 schema/version changes, push or publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 99 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 99. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 99. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5724,7 +5715,7 @@ Independently hashed both raw activation files: identical SHA256
 Current 1793777888, pending 1793777897, no trial before foreground. Stable native
 SQLite effects, final commit and original-data/photo retention remain saved
 receipts, not replayed here. Eleven docs pages and npm tarballs match iteration
-98, so F-45 correction adoption remains unverified. Kundalini F-72/F-73/F-74
+98, so F-45 correction adoption remains unverified. reference app B F-72/F-73/F-74
 adoption limits remain open. Retained storage metadata (562572 KiB / 5546 files)
 is an observation, not proof of a leak or per-iteration growth.
 
@@ -5732,15 +5723,15 @@ Decision: preserve security, users' data and the frozen implementation; no runti
 change without a diagnosed fix. S1 stays deliberately parked; S2 needs a Play
 account. Existing combined gates retain their recorded scope and date; no fresh
 full gates, security review or emulator acceptance claimed. Only matching
-integration notes changed. iOS remains experimental and untested. Sources:
+integration notes changed. iOS is experimental and untested. Sources:
 read-only app findings, ITERATION_18_REPORT.md, ITERATION_99_REPORT.md and
-app-c/evidence/iteration-99/. No test-app writes, protected-branch changes,
+reference app C/evidence/iteration-99/. No test-app writes, protected-branch changes,
 schema/version changes, push or publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 98 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 98. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 98. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5771,22 +5762,21 @@ SQLite effects, final commit and original-data/photo retention remain saved
 receipts, not replayed here. Stale archive/verifier inputs were corrected before
 execution; the offline probe's older label is qualified by its current replies.
 Eleven docs pages and tarballs match iteration 97, so F-45 correction adoption
-remains unverified. Kundalini F-72/F-73/F-74 adoption limits remain open.
+remains unverified. reference app B F-72/F-73/F-74 adoption limits remain open.
 
 Decision: preserve security, users' data and the frozen implementation; do not
 alter runtime behavior without a diagnosed fix. S1 stays deliberately parked;
 S2 needs a Play account. Existing combined gates retain their recorded scope and
 date; no fresh full gates, security review or emulator acceptance claimed. This
-change updates only matching integration notes. iOS remains experimental and
-untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
-ITERATION_98_REPORT.md and app-c/evidence/iteration-98/. No test-app writes,
+change updates only matching integration notes. iOS is experimental and untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
+ITERATION_98_REPORT.md and reference app C/evidence/iteration-98/. No test-app writes,
 protected-branch changes, schema/version changes, push or publication. Roadmap
 status cells are unchanged.
 
 ## November 4: iteration 97 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 97. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 97. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5819,23 +5809,22 @@ capture before foreground records stable native SQLite, exact outgoing objects,
 incoming rows and outbox 0. The initial failure and resumed cleanup remain
 separate. Final commit and original-data/photo retention remain saved receipts,
 not replayed here. Eleven docs pages and tarballs match iteration 96; F-45
-correction adoption remains unverified. Kundalini F-72/F-73/F-74 adoption limits
+correction adoption remains unverified. reference app B F-72/F-73/F-74 adoption limits
 remain open.
 
 Decision: preserve security, users' data and the frozen implementation; do not
 alter runtime behavior without a diagnosed fix. S1 stays deliberately parked;
 S2 needs a Play account. Existing combined gates retain their recorded scope and
 date; no fresh full gates, security review or emulator acceptance claimed. This
-change updates only matching integration notes. iOS remains experimental and
-untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
-ITERATION_97_REPORT.md and app-c/evidence/iteration-97/. No test-app writes,
+change updates only matching integration notes. iOS is experimental and untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
+ITERATION_97_REPORT.md and reference app C/evidence/iteration-97/. No test-app writes,
 protected-branch changes, schema/version changes, push or publication. Roadmap
 status cells are unchanged.
 
 ## November 4: iteration 96 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 96. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 96. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5864,22 +5853,21 @@ receipts, not replayed here. Initial cold-link/widget runner overlap is retained
 and excluded from sequential acceptance; serial repeats are recorded separately.
 The first post-restore busy/pending0 reply is not a transfer-completion receipt.
 Eleven docs pages and tarballs match iteration 95; F-45 correction adoption
-remains unverified. Kundalini F-72/F-73/F-74 adoption limits remain open.
+remains unverified. reference app B F-72/F-73/F-74 adoption limits remain open.
 
 Decision: preserve security, users' data and the frozen implementation; do not
 alter runtime behavior without a diagnosed fix. S1 stays deliberately parked;
 S2 needs a Play account. Existing combined gates retain their recorded scope and
 date; no fresh full gates, security review or emulator acceptance claimed. This
-change updates only matching integration notes. iOS remains experimental and
-untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
-ITERATION_96_REPORT.md and app-c/evidence/iteration-96/. No test-app writes,
+change updates only matching integration notes. iOS is experimental and untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
+ITERATION_96_REPORT.md and reference app C/evidence/iteration-96/. No test-app writes,
 protected-branch changes, schema/version changes, push or publication. Roadmap
 status cells are unchanged.
 
 ## November 4: iteration 95 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 95. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 95. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5913,21 +5901,20 @@ Current 1793766940, pending 1793766950, no trial before foreground. Stable nativ
 SQLite effects, final commit and original-data/photo retention remain saved
 receipts, not replayed here. Eleven docs pages and tarballs match iteration 94;
 F-45 correction adoption remains unverified. Historical findings, including
-F-29/F-36/F-44 and Kundalini F-72/F-73/F-74 adoption limits, remain open.
+F-29/F-36/F-44 and reference app B F-72/F-73/F-74 adoption limits, remain open.
 
 Decision: preserve security, users' data and the frozen implementation; do not
 alter runtime behavior without a diagnosed fix. S1 stays deliberately parked;
 S2 needs a Play account. Existing combined gates retain their recorded scope and
-date; no fresh full gates, security review or emulator acceptance claimed. iOS
-remains experimental and untested. Sources: read-only app findings,
-ITERATION_18_REPORT.md, ITERATION_95_REPORT.md and app-c/evidence/iteration-95/.
+date; no fresh full gates, security review or emulator acceptance claimed. iOS is experimental and untested. Sources: read-only app findings,
+ITERATION_18_REPORT.md, ITERATION_95_REPORT.md and reference app C/evidence/iteration-95/.
 No test-app writes, protected-branch changes, schema/version changes, push or
 publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 94 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 94. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 94. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5963,7 +5950,7 @@ Current 1793759950, pending 1793759959, no trial before foreground. Final commit
 and original-data/photo retention remain saved receipts. Eleven local docs pages
 and tarballs still match iteration 93, so F-45 correction adoption remains
 unverified. Saved doctor is 14 PASS / 10 WARN / 0 FAIL. Retained-history footprint
-530196 KiB / 5228 files establishes no leak or growth rate. Kundalini
+530196 KiB / 5228 files establishes no leak or growth rate. reference app B
 F-72/F-73/F-74 adoption limits remain.
 
 Decision: preserve security, users' data and the frozen implementation; retain
@@ -5971,15 +5958,15 @@ failed automatic recovery separately from successful explicit relaunch rather
 than changing runtime behavior without a diagnosed fix. S1 stays deliberately
 parked and S2 needs a Play account. This evidence-only update retains existing
 combined gates' recorded scope and date; no fresh full gates, security review or
-emulator acceptance claimed. iOS remains experimental and untested. Sources:
+emulator acceptance claimed. iOS is experimental and untested. Sources:
 read-only app findings, ITERATION_18_REPORT.md, ITERATION_94_REPORT.md and
-app-c/evidence/iteration-94/. No test-app writes, protected-branch changes,
+reference app C/evidence/iteration-94/. No test-app writes, protected-branch changes,
 schema/version changes, push or publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 93 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 93. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 93. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -5987,7 +5974,7 @@ contain all 37 current feature tips and unchanged packages bases
 The saved artifact audit records 74 passing checks, zero failed checks and
 acceptancePassed=false: F-29 recurred in the final refreshed-debug offline smoke.
 The initial ordinary launch reported Activity not started; readiness found no
-App C PID. Preserved activities show PhotoPicker MainActivity in task 1222 rooted
+reference app C PID. Preserved activities show PhotoPicker MainActivity in task 1222 rooted
 in Fieldnote, with resultTo a removed Fieldnote activity. The activity capture
 followed cleanup, so postfailure process absence alone is not precleanup proof;
 the original nested readiness errors are the separate evidence. Explicit Android
@@ -6016,7 +6003,7 @@ Current 1793757977, pending 1793757987, no trial before foreground. Final
 commitment and original-data/photo retention remain saved receipts. Eleven local
 docs pages and tarballs still match iteration 92, so F-45 correction adoption
 remains unverified. Saved doctor is 14 PASS / 10 WARN / 0 FAIL. Retained-history
-footprint 522304 KiB / 5154 files establishes no leak or growth rate. Kundalini
+footprint 522304 KiB / 5154 files establishes no leak or growth rate. reference app B
 F-72/F-73/F-74 adoption limits remain.
 
 Decision: preserve security, users' data and the frozen implementation; retain
@@ -6024,15 +6011,15 @@ the failed launch and recovery separately rather than changing runtime behavior
 without a diagnosed cause. S1 stays deliberately parked and S2 needs a Play
 account. This evidence-only update retains existing combined gates' recorded
 scope and date; no fresh full gates, security review or emulator acceptance
-claimed. iOS remains experimental and untested. Sources: read-only app findings,
-ITERATION_18_REPORT.md, ITERATION_93_REPORT.md and app-c/evidence/iteration-93/.
+claimed. iOS is experimental and untested. Sources: read-only app findings,
+ITERATION_18_REPORT.md, ITERATION_93_REPORT.md and reference app C/evidence/iteration-93/.
 No test-app writes, protected-branch changes, schema/version changes, push or
 publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 92 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 92. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 92. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
@@ -6063,28 +6050,28 @@ commitment and retained original data/photo are saved receipts, not rerun here.
 Eleven fetched docs pages and tarballs still match iteration 91; adoption of the
 integrated F-45 correction remains unverified. Saved doctor is 14 PASS / 10 WARN /
 0 FAIL. Retained-history footprint 517516 KiB / 5104 files establishes no leak or
-growth rate. Kundalini F-72/F-73/F-74 adoption limits remain.
+growth rate. reference app B F-72/F-73/F-74 adoption limits remain.
 
 Decision: preserve security, users' data and the frozen implementation; an
 external-camera failure without a Valence cause does not justify a runtime
 patch. S1 stays deliberately parked and S2 needs a Play account. This is an
 evidence-only update: existing combined gates retain their recorded scope and
 date; no fresh full gates, security review or emulator acceptance claimed.
-iOS remains experimental and untested. Sources: read-only app findings,
-ITERATION_18_REPORT.md, ITERATION_92_REPORT.md and app-c/evidence/iteration-92/.
+iOS is experimental and untested. Sources: read-only app findings,
+ITERATION_18_REPORT.md, ITERATION_92_REPORT.md and reference app C/evidence/iteration-92/.
 No test-app writes, protected-branch changes, schema/version changes, push or
 publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 91 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 91. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 91. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
 Existing combined implementation gates retain their recorded scope and date.
 
-App C's saved artifact audit records 70 passing checks, zero failures and scoped
+reference app C's saved artifact audit records 70 passing checks, zero failures and scoped
 acceptancePassed=true; read, not replayed. Retained/rebuilt offline and reconnect
 passed. Settings receipt records same PID 4801, painted=true. This does not close
 historical F-36/F-44 or establish their cause. Current runner qualifications
@@ -6112,27 +6099,27 @@ data/photo retention and cleanup remain saved receipts. Saved doctor reports
 14 PASS / 10 WARN / 0 FAIL; not rerun here. Eleven fetched docs pages and npm
 tarballs still match iteration 90, so adoption of the integrated F-45 correction
 remains unverified. Retained-history footprint 509880 KiB / 5031 files is not
-evidence of a leak or growth rate. Kundalini F-72/F-73/F-74 adoption limits remain.
+evidence of a leak or growth rate. reference app B F-72/F-73/F-74 adoption limits remain.
 
 Decision: preserve security, users' data and the frozen implementation; no
 speculative lease weakening, discarded writes or late native shim. S1 stays
 deliberately parked; S2 needs a Play account. No fresh full gates, runtime
 security review or emulator acceptance claimed for this evidence-only update.
-iOS remains experimental and untested. Sources: read-only app findings,
-ITERATION_18_REPORT.md, ITERATION_91_REPORT.md and app-c/evidence/iteration-91/.
+iOS is experimental and untested. Sources: read-only app findings,
+ITERATION_18_REPORT.md, ITERATION_91_REPORT.md and reference app C/evidence/iteration-91/.
 No test-app writes, protected-branch changes, schema/version changes, push or
 publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 90 evidence review
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 90. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 90. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 current feature tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Ancestry was checked this run.
 Implementation and existing gate results retain their recorded scope and date.
 
-App C's saved audit records 70 passing artifact checks and scoped
+reference app C's saved audit records 70 passing artifact checks and scoped
 acceptancePassed=true; read, not replayed. Retained/rebuilt offline and reconnect
 passed. Settings receipt records same PID 4746, painted=true. This does not close
 historical F-36/F-44 or establish their cause. Current runner notes explicitly
@@ -6158,21 +6145,21 @@ data/photo retention and cleanup remain saved receipts. Saved doctor reports
 14 PASS / 10 WARN / 0 FAIL; not rerun here. Eleven fetched docs pages and npm
 tarballs still match iteration 89; adoption of the integrated F-45 correction
 remains unverified. Retained-history footprint 503316 KiB / 4967 files is not
-evidence of a leak or growth rate. Kundalini F-72/F-73/F-74 adoption limits remain.
+evidence of a leak or growth rate. reference app B F-72/F-73/F-74 adoption limits remain.
 
 Decision: preserve security, users' data and the frozen implementation; no
 speculative lease weakening, discarded writes or late native shim. S1 stays
 deliberately parked; S2 needs a Play account. No fresh full gates, runtime
 security review or emulator acceptance claimed for this evidence-only update.
-iOS remains experimental and untested. Sources: read-only app findings,
-ITERATION_18_REPORT.md, ITERATION_90_REPORT.md and app-c/evidence/iteration-90/.
+iOS is experimental and untested. Sources: read-only app findings,
+ITERATION_18_REPORT.md, ITERATION_90_REPORT.md and reference app C/evidence/iteration-90/.
 No test-app writes, protected-branch changes, schema/version changes, push or
 publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 89 proves one scheduled-ready worker execution
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 89. No eligible must-have or queue refresh remains. Verified that
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 89. No eligible must-have or queue refresh remains. Verified that
 both integrations include all 37 current recorded branch tips and packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Existing integration gates retain
@@ -6209,22 +6196,21 @@ receipts, not live device verification here. Saved doctor reports 14 PASS /
 
 Eleven fetched docs pages and npm tarballs still match iteration 88, so adoption
 of the integrated F-45 correction remains unverified. Retain F-41/F-43/F-45
-qualifications and Kundalini F-72/F-73/F-74 adoption limits. Read-only retained
+qualifications and reference app B F-72/F-73/F-74 adoption limits. Read-only retained
 footprint 497200 KiB / 4907 files measures history, not a leak or growth rate.
 
 Decision: preserve security, users' data and the frozen implementation; no lease
 weakening, discarded writes or late native recovery shim on unproven causation.
 S1 stays deliberately parked; S2 needs a Play account. No fresh full gates,
-emulator acceptance or runtime security review claimed. iOS remains experimental
-and untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
-ITERATION_89_REPORT.md and app-c/evidence/iteration-89/. No test-app writes,
+emulator acceptance or runtime security review claimed. iOS is experimental and untested. Sources: read-only app findings, ITERATION_18_REPORT.md,
+ITERATION_89_REPORT.md and reference app C/evidence/iteration-89/. No test-app writes,
 protected-branch changes, schema/version changes, push or publication. Roadmap
 status cells are unchanged.
 
 ## November 4: iteration 88 distinguishes transport interruption from app survival
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / App C 88. No eligible must-have or queue refresh remains. Both integrations
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 88. No eligible must-have or queue refresh remains. Both integrations
 contain all 37 exact current recorded branch tips and unchanged packages bases
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 /
 62f950ba1d52632b47fdd0e170bc41e18d467ae1. Verified ancestry again this run.
@@ -6259,7 +6245,7 @@ saved receipts, not live device verification here. Saved doctor reports
 
 The eleven locally fetched docs pages and npm tarballs still match iteration 87;
 F-45's correction is integrated but its adoption is not yet established. Retain
-F-41/F-43/F-45 qualifications, historical reliability findings and Kundalini's
+F-41/F-43/F-45 qualifications, historical reliability findings and reference app B's
 F-72/F-73/F-74 adoption limits. Read-only footprint 491076 KiB / 4848 files measures
 retained history, not a leak or per-iteration growth. The exploratory widget-seven
 image shows the first launcher page; the separate widget-sync receipts carry the
@@ -6271,13 +6257,13 @@ S1 stays deliberately parked; S2 needs a Play account. Implementation and schema
 are unchanged. No fresh full gates were necessary for this evidence-only note;
 no new runtime security review or emulator acceptance claimed. Sources: read-only
 app findings, ITERATION_18_REPORT.md, ITERATION_88_REPORT.md and
-app-c/evidence/iteration-88/. No test-app writes, protected-branch changes,
+reference app C/evidence/iteration-88/. No test-app writes, protected-branch changes,
 schema/version changes, push or publication. Roadmap status cells are unchanged.
 
 ## November 4: F-45 dependency guidance corrected; iteration 87 acceptance failed
 
-In plain terms: read both findings inventories and newest reports, Kundalini 18
-and App C 87. No eligible must-have or queue refresh remains. App C's new F-45
+In plain terms: read both findings inventories and newest reports, reference app B 18
+and reference app C 87. No eligible must-have or queue refresh remains. reference app C's new F-45
 is a documentation defect: two competing section-6 dependency rows and a blank
 line splitting the copied skill's table. Removed the stale duplicate, retained
 the existing compatibility guidance and clarified the site's notification guide.
@@ -6302,7 +6288,7 @@ Decision: correct contradictory instructions without disturbing working pins,
 security boundaries, users' data or shipped schemas. Runtime, spec, codegen and
 templates still match candidate 7385f4e / 1539b66. Only documentation differs.
 S1 stays deliberately parked; S2 needs a Play account. No security path changed,
-so no new runtime security review is claimed. iOS remains experimental/untested.
+so no new runtime security review is claimed. iOS is experimental and untested.
 
 ### Fresh combined gates - 2026-11-04
 
@@ -6324,7 +6310,7 @@ No assertions or timeouts were weakened. Final ledger commits change only notes.
 
 ### Saved app evidence and limits
 
-App C's saved audit records 69 passing artifact checks but acceptancePassed=false.
+reference app C's saved audit records 69 passing artifact checks but acceptancePassed=false.
 Raw Settings log corroborates lowmemorykiller killing renderer 6475 at
 04:15:52.239 and host 6188 at 04:15:52.274. The saved outcome records replacement
 7962 blank before explicit relaunch recovery. This is a survival failure despite
@@ -6354,17 +6340,17 @@ Preserve runner qualifications: premature CDP/accessibility reads, rejected
 missing evidence-dir attempt, reused share-text label, direct restore provenance,
 corrected prior-report filename with exact restoration, and the final permission
 image inspection that superseded a copied black-image exclusion. The app audit
-was read, not replayed. Historical findings and Kundalini F-72/F-73/F-74 adoption
+was read, not replayed. Historical findings and reference app B F-72/F-73/F-74 adoption
 limits remain open. Sources: read-only app findings, ITERATION_18_REPORT.md,
-ITERATION_87_REPORT.md and app-c/evidence/iteration-87/.
+ITERATION_87_REPORT.md and reference app C/evidence/iteration-87/.
 
 No test-app writes, emulator acceptance, protected-branch changes, schema/version
 changes, push or publication. Roadmap status cells are unchanged.
 
 ## November 4: iteration 86 adds a naturally observed worker execution
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / app-c 86. The saved app-c artifact audit records 62 passing checks and scoped
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 86. The saved reference app C artifact audit records 62 passing checks and scoped
 acceptancePassed=true; it was read, not replayed. Retained and rebuilt offline /
 reconnect probes passed without process recovery. Rebuilt receipts report
 reason=offline/pending=1 followed by reason=ok/changed=1/pending=0. No current F-44
@@ -6405,19 +6391,19 @@ frozen implementation candidate 7385f4e / 1539b66. No eligible must-have, queue
 refresh or missing integration merge remains. Decision: preserve security, users'
 data and the candidate; do not weaken leases or discard writes on an unproven
 cause. F-44 needs targeted ownership/cancellation evidence. S1 stays deliberately
-parked; S2 needs a Play account. Kundalini F-72/F-73/F-74 still need adoption and
-verification. iOS remains experimental and untested.
+parked; S2 needs a Play account. reference app B F-72/F-73/F-74 still need adoption and
+verification. iOS is experimental and untested.
 
 Sources: read-only app findings, ITERATION_18_REPORT.md, ITERATION_86_REPORT.md and
-app-c/evidence/iteration-86/. Earlier full gates retain their recorded scope; no
+reference app C/evidence/iteration-86/. Earlier full gates retain their recorded scope; no
 fresh full gates, runtime security review or emulator acceptance. Roadmap status
 cells and integration candidate/gate date are unchanged. No test-app writes,
 protected-branch changes, schema/version changes, push or publication.
 
 ## November 4: iteration 85 passes its scope; F-44 remains open
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / app-c 85. The saved app-c artifact audit records 62 passing checks and
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 85. The saved reference app C artifact audit records 62 passing checks and
 acceptancePassed=true within its stated Android scope. Retained and rebuilt
 offline/reconnect probes passed without process recovery; the rebuilt receipt
 records offline/pending=1, then ok/changed=1/pending=0. No current F-44 recurrence
@@ -6459,19 +6445,19 @@ implementation candidate 7385f4e / 1539b66. No queue refresh, new assembly or
 eligible must-have remains. Decision: preserve security, users' data and the
 candidate; a successful pass cannot justify weakening leases or discarding queued
 writes. F-44 still needs targeted cancellation/ownership evidence. S1 stays
-parked; S2 needs a Play account. Kundalini F-72/F-73/F-74 still need adoption and
-verification. iOS remains experimental and untested.
+parked; S2 needs a Play account. reference app B F-72/F-73/F-74 still need adoption and
+verification. iOS is experimental and untested.
 
 Sources: read-only app findings, ITERATION_18_REPORT.md, ITERATION_85_REPORT.md and
-app-c/evidence/iteration-85/. Earlier full gates retain their recorded scope; no
+reference app C/evidence/iteration-85/. Earlier full gates retain their recorded scope; no
 fresh full gates, runtime review or emulator acceptance. Roadmap status cells and
 integration candidate/gate date are unchanged. No test-app writes, protected-branch
 changes, schema or package-version changes, push or publication.
 
 ## November 4: iteration 84 preserves the busy-sync failure after recovery
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / app-c 84. App-c's saved artifact audit has 63 passing checks but
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 84. reference app C's saved artifact audit has 63 passing checks but
 acceptancePassed=false because new F-44 interrupted the rebuilt offline probe.
 Twenty bounded calls returned busy/pending=1; the saved native SQLite capture has
 one outbox object and lease 1793739542500:4893. Paired device/host clocks qualify
@@ -6514,19 +6500,18 @@ remains. Decision: preserve security, users' data and the frozen candidate; do n
 weaken the sync lease or discard queued writes on an unproven ownership cause.
 F-44 needs targeted cancellation/ownership investigation rather than a claimed
 fix from a successful retry. S1 stays deliberately parked; S2 needs a Play account.
-Kundalini F-72/F-73/F-74 still need adoption and verification. iOS remains
-experimental and untested.
+reference app B F-72/F-73/F-74 still need adoption and verification. iOS is experimental and untested.
 
 Sources: read-only app findings, ITERATION_18_REPORT.md, ITERATION_84_REPORT.md and
-app-c/evidence/iteration-84/. Earlier full gates retain their recorded scope; no
+reference app C/evidence/iteration-84/. Earlier full gates retain their recorded scope; no
 fresh full gates, runtime review or emulator acceptance. Roadmap status cells stay
 unchanged. No test-app writes, protected-branch, schema or version changes, push
 or publication.
 
 ## November 4: iteration 83 preserves the Camera failure after recovery
 
-In plain terms: reviewed both findings inventories and newest reports, Kundalini
-18 / app-c 83, including the iteration-82 continuation handoff. App-c's saved
+In plain terms: reviewed both findings inventories and newest reports, reference app B
+18 / reference app C 83, including the iteration-82 continuation handoff. reference app C's saved
 artifact audit has 63 passing checks but acceptancePassed=false: Android Camera
 ANR interrupted capture at 02:15:50. The native last-ANR receipt names
 com.android.camera2 CaptureActivity and a 5001ms input-dispatch wait. Recovery
@@ -6560,18 +6545,18 @@ ancestors of both integrations. Only integration notes differ from implementatio
 candidate 7385f4e / 1539b66. No queue refresh, new assembly or eligible must-have
 remains. Decision: preserve security, users' data and the frozen candidate rather
 than change runtime behavior on an external Camera failure. S1 stays deliberately
-parked; S2 needs a Play account. Kundalini F-72/F-73/F-74 still need adoption and
-verification. iOS remains experimental and untested.
+parked; S2 needs a Play account. reference app B F-72/F-73/F-74 still need adoption and
+verification. iOS is experimental and untested.
 
 Sources: read-only app findings, ITERATION_18_REPORT.md, ITERATION_82_REPORT.md,
-ITERATION_83_REPORT.md and app-c/evidence/iteration-83/. Earlier full gates retain
+ITERATION_83_REPORT.md and reference app C/evidence/iteration-83/. Earlier full gates retain
 their recorded scope; no fresh full gates, runtime review or emulator acceptance.
 Roadmap status cells stay unchanged. No test-app writes, protected-branch, schema
 or version changes, push or publication.
 
 ## November 4: iteration 82 hands off the completed iteration 81 run
 
-Reviewed both findings inventories, Kundalini iteration 18 and app-c iteration 82,
+Reviewed both findings inventories, reference app B iteration 18 and reference app C iteration 82,
 plus the completed iteration-81 report and saved receipts. Iteration 82 is a
 continuation handoff, not a second fresh install or independent regression. This
 entry supersedes the unfinished checkpoint below. Saved artifact audit records
@@ -6608,19 +6593,18 @@ Packages bases remain 0302556 / 62f950b. Independently verified both bases and a
 integration notes differ from implementation candidate 7385f4e / 1539b66; no queue
 refresh, new assembly or eligible must-have remains. Decision: preserve security,
 users' data and the frozen candidate. S1 stays deliberately parked; S2 needs a Play
-account. Kundalini F-72/F-73/F-74 still need adoption and verification. iOS remains
-experimental and untested.
+account. reference app B F-72/F-73/F-74 still need adoption and verification. iOS is experimental and untested.
 
 Sources: read-only app findings, ITERATION_18_REPORT.md, ITERATION_81_REPORT.md,
-ITERATION_82_REPORT.md and app-c/evidence/iteration-81/. Earlier full gates retain
+ITERATION_82_REPORT.md and reference app C/evidence/iteration-81/. Earlier full gates retain
 their recorded scope; no fresh full gates, runtime review or emulator acceptance.
 This evidence-only update leaves roadmap status cells unchanged. No test-app
 writes, protected-branch, schema or version changes, push or publication.
 
 ## November 4: iteration 81 remains an unfinished checkpoint
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 81.
-App-c's report is a native checkpoint, not a completed acceptance run: it records
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 81.
+reference app C's report is a native checkpoint, not a completed acceptance run: it records
 painted Settings return in the same PID 4944 and permission/plugin/queue/share
 checks, while media, routes, widget sync, OTA and worker checks remain pending.
 The saved Settings outcome agrees on PID and paint; no live visual or device
@@ -6641,18 +6625,18 @@ recorded inclusion tips as ancestors of the integration HEADs. Only integration
 notes differ from implementation candidate 7385f4e / 1539b66. No eligible must-have
 or rebase-queue item remains; no new assembly is needed on unchanged bases.
 Decision: preserve security, users' data and the frozen candidate while the app
-run finishes. S1 stays parked; S2 needs a Play account. Kundalini F-72/F-73/F-74
-still need adoption and verification; iOS remains experimental and untested.
+run finishes. S1 stays parked; S2 needs a Play account. reference app B F-72/F-73/F-74
+still need adoption and verification; iOS is experimental and untested.
 
 Sources: read-only app findings, ITERATION_18_REPORT.md / ITERATION_81_REPORT.md,
-and app-c/evidence/iteration-81/. Earlier full gates retain their recorded scope;
+and reference app C/evidence/iteration-81/. Earlier full gates retain their recorded scope;
 no fresh full gates, emulator acceptance or runtime review. No test-app writes,
 protected-branch, schema or version changes, push or publication.
 
 ## November 4: iteration 80 scoped success; publication footprint measured
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 80,
-including Kundalini's latest handoff. No eligible must-have or rebase-queue item
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 80,
+including reference app B's latest handoff. No eligible must-have or rebase-queue item
 remains. Packages bases remain 0302556 (code) / 62f950b (site). Independently
 verified both bases and all 36 exact recorded inclusion tips as ancestors of the
 integration HEADs. Only integration notes differ from implementation candidate
@@ -6698,17 +6682,17 @@ retained evidence without establishing a fix.
 
 Decision: preserve security, users' data and the frozen candidate. A scoped pass
 does not justify closing earlier failures, weakening rollback strikes or speculative
-runtime changes. S1 stays parked; S2 needs a Play account. Kundalini F-72/F-73/F-74
-still need adoption and verification. iOS remains experimental and untested.
-Sources: read-only app findings, reports and app-c/evidence/iteration-80/.
+runtime changes. S1 stays parked; S2 needs a Play account. reference app B F-72/F-73/F-74
+still need adoption and verification. iOS is experimental and untested.
+Sources: read-only app findings, reports and reference app C/evidence/iteration-80/.
 Earlier full gates retain their recorded scope; no fresh full gates, emulator
 acceptance or runtime review claimed. No test-app writes, protected-branch,
 schema or version changes, push or publication.
 
 ## November 4: iteration 79 Settings failure; deferred worker attempt kept separate
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 79,
-including Kundalini's latest handoff. No eligible must-have or rebase-queue item
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 79,
+including reference app B's latest handoff. No eligible must-have or rebase-queue item
 remains. Packages bases remain 0302556 (code) / 62f950b (site). Independently
 verified both bases and all 36 exact recorded inclusion tips as ancestors of the
 integration HEADs. Only integration notes differ from implementation candidate
@@ -6751,16 +6735,16 @@ invocation exited before building; the report records a successful --no-pub retr
 Decision: preserve security, users' data and the frozen candidate. Retain the
 failed acceptance outcome; direct OS termination does not justify speculative
 runtime changes or weakening rollback strikes. Historical reliability findings
-remain open. S1 stays parked; S2 needs a Play account. Kundalini F-72/F-73/F-74
-still need adoption and verification. iOS remains experimental and untested.
-Sources: read-only app findings, reports and app-c/evidence/iteration-79/.
+remain open. S1 stays parked; S2 needs a Play account. reference app B F-72/F-73/F-74
+still need adoption and verification. iOS is experimental and untested.
+Sources: read-only app findings, reports and reference app C/evidence/iteration-79/.
 Earlier full gates retain their recorded scope; no fresh full gates, emulator
 acceptance or runtime review claimed. No test-app writes, protected-branch,
 schema or version changes, push or publication.
 
 ## November 3: iteration 78 scoped success; restore isolation retry preserved
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 78.
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 78.
 No eligible must-have or rebase-queue item remains. Packages bases remain
 0302556 (code) / 62f950b (site). Independently verified both bases and all 36
 exact recorded inclusion tips as ancestors of both integration HEADs. Only
@@ -6801,17 +6785,17 @@ verification claimed by this evidence intake.
 
 Decision: preserve security, users' data and the frozen candidate. A scoped pass
 does not justify closing prior failures, weakening rollback strikes or speculative
-runtime changes. S1 stays parked; S2 needs a Play account. Kundalini F-72/F-73/F-74
-still need adoption and verification. iOS remains experimental and untested.
-Sources: read-only app findings, reports and app-c/evidence/iteration-78/.
+runtime changes. S1 stays parked; S2 needs a Play account. reference app B F-72/F-73/F-74
+still need adoption and verification. iOS is experimental and untested.
+Sources: read-only app findings, reports and reference app C/evidence/iteration-78/.
 Earlier full gates retain their recorded scope; no fresh full gates, emulator
 acceptance or runtime review claimed. No test-app writes, protected-branch,
 schema or version changes, push or publication.
 
 ## November 3: iteration 77 scoped success; prior Settings failure remains open
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 77,
-including Kundalini's latest handoff. No eligible must-have or rebase-queue item
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 77,
+including reference app B's latest handoff. No eligible must-have or rebase-queue item
 remains. Packages bases remain 0302556 (code) / 62f950b (site). Independently
 verified both bases and all 36 exact recorded inclusion tips as ancestors of the
 integration HEADs. Only integration notes differ from implementation candidate
@@ -6853,9 +6837,9 @@ guard and existing baseline. Neither establishes a Valence failure.
 
 Decision: preserve security, users' data and the frozen candidate. A scoped pass
 does not justify closing earlier failures or weakening rollback strikes. S1 stays
-parked; S2 needs a Play account. Kundalini F-72/F-73/F-74 still need adoption and
-verification. iOS remains experimental and untested. Sources: read-only findings,
-reports and valence-test-app-c/evidence/iteration-77/. Matching notes, ancestry,
+parked; S2 needs a Play account. reference app B F-72/F-73/F-74 still need adoption and
+verification. iOS is experimental and untested. Sources: read-only findings,
+reports and valence-test-reference app C/evidence/iteration-77/. Matching notes, ancestry,
 unchanged implementation trees and diff hygiene checked. Earlier full gates
 retain their recorded scope; no fresh full gates, emulator acceptance or runtime
 review claimed. No test-app writes, protected-branch, schema or version changes,
@@ -6863,7 +6847,7 @@ push or publication.
 
 ## November 3: iteration 76 Settings survival failed; recovered checks stay separate
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 76.
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 76.
 No eligible must-have or rebase-queue item remains. Packages bases remain
 0302556 (code) / 62f950b (site). Verified both bases and all 36 exact recorded
 inclusion tips as ancestors of the integration HEADs. Only integration notes
@@ -6904,9 +6888,9 @@ visual inspection or cleanup verification claimed by this evidence intake.
 Decision: preserve security, users' data and the frozen candidate. Retain the
 failed acceptance outcome; direct OS termination does not justify speculative
 runtime changes or weakening rollback strikes. Historical reliability findings
-remain open. S1 stays parked; S2 needs a Play account. Kundalini F-72/F-73/F-74
-still need adoption/verification. iOS remains experimental and untested. Sources:
-read-only app findings, reports and valence-test-app-c/evidence/iteration-76/.
+remain open. S1 stays parked; S2 needs a Play account. reference app B F-72/F-73/F-74
+still need adoption/verification. iOS is experimental and untested. Sources:
+read-only app findings, reports and valence-test-reference app C/evidence/iteration-76/.
 Matching notes, ancestry, unchanged implementation trees and diff hygiene
 checked. Earlier full gates retain their recorded scope; no fresh full gates,
 emulator acceptance or runtime review claimed. No test-app writes, protected-
@@ -6914,13 +6898,13 @@ branch, schema or version changes, push or publication.
 
 ## November 3: iteration 75 scoped success; historical failures remain open
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 75.
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 75.
 No eligible must-have or rebase-queue item remains. Packages bases remain
 0302556 (code) / 62f950b (site). Independently verified both bases and all 36
 exact recorded inclusion tips as ancestors of the integration HEADs. Only
 integration notes differ from implementation candidate 7385f4e / 1539b66.
 
-Read app-c's saved 60-check artifact audit, scoped acceptancePassed=true,
+Read reference app C's saved 60-check artifact audit, scoped acceptancePassed=true,
 runner qualifications and self-review; did not re-execute its audit or emulator
 regression. Saved receipts report fresh offline and restored startup without
 recovery, and painted Settings return in the same PID 5072. This successful
@@ -6954,9 +6938,8 @@ visual inspection or cleanup verification claimed by this evidence intake.
 Decision: preserve security, users' data and the frozen candidate. A successful
 attempt warrants updating the evidence ledger, not changing runtime behavior
 or dismissing prior failures. S1 stays parked; S2 needs a Play account.
-Kundalini F-72/F-73/F-74 still need adoption/verification. iOS remains experimental
-and untested. Sources: read-only app findings, reports and
-valence-test-app-c/evidence/iteration-75/. Matching notes, ancestry, unchanged
+reference app B F-72/F-73/F-74 still need adoption/verification. iOS is experimental and untested. Sources: read-only app findings, reports and
+valence-test-reference app C/evidence/iteration-75/. Matching notes, ancestry, unchanged
 implementation trees and diff hygiene checked. Earlier full gates retain their
 recorded scope; no fresh full gates, emulator acceptance or runtime review
 claimed. No test-app writes, protected-branch, schema or version changes,
@@ -6964,13 +6947,13 @@ push or publication.
 
 ## November 3: iteration 74 startup failed; recovered worker observed naturally
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 74.
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 74.
 No eligible must-have or rebase-queue item remains. Packages bases remain
 0302556 (code) / 62f950b (site). Verified both bases and all 36 current exact
 inclusion tips as ancestors of their integration HEADs. Only integration notes
 differ from implementation candidate 7385f4e / 1539b66.
 
-App-c's saved audit has 59 passing artifact checks but acceptancePassed=false.
+reference app C's saved audit has 59 passing artifact checks but acceptancePassed=false.
 Read the audit, startup qualification, runner notes and self-review; did not
 re-execute the app audit or emulator regression. Raw logs confirm restored PID
 6834 store.open completed in 66895 ms, system_server 690's null reference in
@@ -7003,9 +6986,9 @@ remain report/audit evidence; no live device-state or cleanup verification claim
 
 Decision: preserve security, users' data and the frozen candidate. These platform
 interruptions justify retaining the failed acceptance result, not a speculative
-runtime change. S1 stays parked; S2 needs a Play account. Kundalini F-72/F-73/F-74
-still need adoption/verification. iOS remains experimental and untested. Sources:
-read-only app findings, reports and valence-test-app-c/evidence/iteration-74/.
+runtime change. S1 stays parked; S2 needs a Play account. reference app B F-72/F-73/F-74
+still need adoption/verification. iOS is experimental and untested. Sources:
+read-only app findings, reports and valence-test-reference app C/evidence/iteration-74/.
 Matching integration notes, ancestry, unchanged implementation trees and diff
 hygiene checked. Earlier full gates retain their recorded scope; no fresh full
 gates, emulator acceptance or runtime security review claimed. No test-app writes,
@@ -7013,13 +6996,13 @@ protected-branch, schema or version changes, push or publication.
 
 ## November 3: iteration 73 scoped success; historical failures remain open
 
-Read both findings inventories and newest reports, Kundalini 18 / app-c 73.
+Read both findings inventories and newest reports, reference app B 18 / reference app C 73.
 No eligible must-have or queue refresh remains. Packages bases remain 0302556
 (code) / 62f950b (site). Independently verified both bases and all 36 exact
 recorded inclusion tips as ancestors. Only integration notes differ from
 implementation candidate 7385f4e / 1539b66.
 
-App-c's completed report records scoped acceptancePassed=true. Read its saved
+reference app C's completed report records scoped acceptancePassed=true. Read its saved
 59-check artifact audit, runner qualifications and self-review; did not re-run
 the app audit or emulator regression. Inspected the saved painted Settings
 return screenshot and same-PID 5082 receipt. This successful attempt does not
@@ -7053,9 +7036,8 @@ cleanup or device-state verification claimed.
 
 Decision: preserve security, users' data and the frozen candidate; no runtime
 change is justified by this evidence intake. S1 stays parked, S2 needs a Play
-account, and Kundalini F-72/F-73/F-74 still need adoption/verification. iOS
-remains experimental and untested. Sources: read-only app findings, reports
-and valence-test-app-c/evidence/iteration-73/. Mirrored notes, ancestry,
+account, and reference app B F-72/F-73/F-74 still need adoption/verification. iOS is experimental and untested. Sources: read-only app findings, reports
+and valence-test-reference app C/evidence/iteration-73/. Mirrored notes, ancestry,
 unchanged implementation trees and diff hygiene checked. Existing gates retain
 their recorded scope; no fresh full gates, emulator acceptance or runtime
 security review claimed. No test-app writes, protected-branch, schema or
@@ -7063,8 +7045,8 @@ version changes, push or publication.
 
 ## November 3: iteration 72 completed; Settings acceptance still failed
 
-Read both findings inventories and newest reports, Kundalini 18 / app-c 72.
-The completed app-c report supersedes the worker-pending checkpoint below.
+Read both findings inventories and newest reports, reference app B 18 / reference app C 72.
+The completed reference app C report supersedes the worker-pending checkpoint below.
 No eligible must-have or queue refresh remains. Packages bases remain 0302556
 (code) / 62f950b (site); independently verified both bases and all 36 recorded
 inclusion tips as ancestors. Only integration notes differ from implementation
@@ -7102,9 +7084,8 @@ Saved sequential doctor remains 14 PASS / 10 WARN / 0 FAIL; not re-run here.
 
 Decision: preserve security, users' data and the frozen candidate. No runtime
 change is justified by this evidence intake. S1 stays parked, S2 needs a Play
-account, and Kundalini F-72/F-73/F-74 still need adoption/verification. iOS remains
-experimental and untested. Sources are read-only app findings, reports and
-valence-test-app-c/evidence/iteration-72/. Mirrored notes, ancestry, unchanged
+account, and reference app B F-72/F-73/F-74 still need adoption/verification. iOS is experimental and untested. Sources are read-only app findings, reports and
+valence-test-reference app C/evidence/iteration-72/. Mirrored notes, ancestry, unchanged
 implementation trees and diff hygiene checked. Existing gates retain their
 recorded scope; no fresh full gates, emulator acceptance or runtime security
 review claimed. No test-app writes, protected-branch, schema or version changes,
@@ -7112,8 +7093,8 @@ push or publication.
 
 ## November 3: iteration 72 checkpoint; Settings survival failed
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 72.
-App-c 72 is a worker checkpoint, not a completed acceptance run. No eligible
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 72.
+reference app C 72 is a worker checkpoint, not a completed acceptance run. No eligible
 must-have or queue refresh remains. Packages bases are unchanged at 0302556
 (code) / 62f950b (site). Both integrations contain their base and all 36 exact
 recorded inclusion tips; only integration notes differ from implementation candidate
@@ -7144,10 +7125,9 @@ background transfer, final activation, natural cadence or cleanup is claimed.
 Decision: preserve security, users' data and the frozen candidate. S1 stays
 parked; S2 requires a Play account. Keep Settings reliability open and await
 completed worker evidence rather than infer a runtime fix from OS eviction.
-Kundalini F-72/F-73/F-74 still need app adoption and verification. iOS remains
-experimental and untested.
+reference app B F-72/F-73/F-74 still need app adoption and verification. iOS is experimental and untested.
 
-Sources: read-only valence-test-app-c/evidence/iteration-72/ and both apps'
+Sources: read-only valence-test-reference app C/evidence/iteration-72/ and both apps'
 findings/reports. Mirrored notes, ancestry, unchanged implementation trees and
 diff hygiene checked. Existing November 3 gates retain their recorded scope;
 no fresh full gates, emulator acceptance or runtime security review claimed.
@@ -7155,17 +7135,17 @@ No test-app writes, protected-branch, schema or version changes, push or publica
 
 ## November 3: iteration 71 evidence intake; implementation unchanged
 
-Reviewed both findings inventories and newest reports, Kundalini 18 / app-c 71.
+Reviewed both findings inventories and newest reports, reference app B 18 / reference app C 71.
 No eligible must-have or queue refresh remains. Packages bases remain 0302556
 (code) / 62f950b (site); both integrations contain their base and all 36 exact
 recorded inclusion tips. Only this note differs from the gated implementation
 candidate 7385f4e / 1539b66.
 
 Decision: preserve security, users' data and the frozen candidate. S1 remains
-parked and S2 requires a Play account. App-c reports no new Valence defect;
+parked and S2 requires a Play account. reference app C reports no new Valence defect;
 success here does not close historical renderer, startup, background, busy-sync,
-media or doctor findings. Kundalini F-72/F-73/F-74 still need app adoption and
-verification. iOS remains experimental and untested.
+media or doctor findings. reference app B F-72/F-73/F-74 still need app adoption and
+verification. iOS is experimental and untested.
 
 Independently rehashed archived iteration-71 APKs against their saved receipts:
 release 54711084 bytes, SHA256
@@ -7189,7 +7169,7 @@ pending 1793666816, no trial. One explicitly triggered registered run establishe
 no natural cadence; the 398.638-second observer wait is not callback duration.
 Native SQLite effects and final foreground commitment are app-reported evidence.
 
-Sources: read-only valence-test-app-c/evidence/iteration-71/ and both apps'
+Sources: read-only valence-test-reference app C/evidence/iteration-71/ and both apps'
 findings/reports. No test-app writes. Mirrored notes, ancestry, unchanged
 implementation trees and diff hygiene checked. Earlier November 3 gates retain
 their scope; no fresh full gates, emulator acceptance or runtime security review
@@ -7198,14 +7178,14 @@ claimed. No protected-branch, schema or version changes, push or publication.
 ## November 3: iteration 70 evidence intake; implementation unchanged
 
 Read both apps' VALENCE_FINDINGS.md inventories and newest completed reports:
-Kundalini 18 and app-c 70. No eligible must-have, changes-requested item or queue
+reference app B 18 and reference app C 70. No eligible must-have, changes-requested item or queue
 refresh remains. Packages bases remain 0302556 (code) and 62f950b (site).
 Verified both bases and all 36 exact tips in the current inclusion table are
 ancestors of their integrations. Only docs/integration.md differs from the
 previously gated implementation candidate 7385f4e / 1539b66.
 
 Decision: preserve security, users' data and the candidate. S1 stays deliberately
-parked; S2 needs a Play account. App-c 70 establishes no new runtime defect.
+parked; S2 needs a Play account. reference app C 70 establishes no new runtime defect.
 Successful retries do not justify weakening trial accounting, resetting accounts,
 deleting durable publications or closing historical reliability findings.
 
@@ -7239,10 +7219,10 @@ child exit 1, with overlapping Flutter commands but no established cause.
 The sequential retry reports 14 PASS / 10 WARN / 0 FAIL, child exit 0.
 The retry does not erase the failure or close F-43. Historical renderer,
 startup, background, busy-sync and media findings remain open or qualified.
-Kundalini F-72/F-73/F-74 remain app-reported pending adoption and verification.
-iOS remains experimental and untested.
+reference app B F-72/F-73/F-74 remain app-reported pending adoption and verification.
+iOS is experimental and untested.
 
-Sources: read-only valence-test-app-c/evidence/iteration-70/ and both apps'
+Sources: read-only valence-test-reference app C/evidence/iteration-70/ and both apps'
 findings/reports. Only mirrored integration notes change. Earlier November 3
 gates retain their scope; no fresh full-gate run, emulator acceptance or runtime
 security review is claimed. Ancestry, unchanged implementation trees, mirrored
@@ -7252,7 +7232,7 @@ changes, push or publication.
 ## November 3: iteration 69 evidence intake; implementation unchanged
 
 Read both apps' VALENCE_FINDINGS.md inventories and newest completed reports:
-Kundalini 18 and app-c 69. No eligible must-have, changes-requested item or queue
+reference app B 18 and reference app C 69. No eligible must-have, changes-requested item or queue
 refresh remains. Packages refs remain 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29
 (code) and 62f950ba1d52632b47fdd0e170bc41e18d467ae1 (site). Both refs and all
 36 exact tips in the current merge-order table are ancestors of their respective
@@ -7261,9 +7241,9 @@ integrations. Implementation remains the tested candidate 7385f4e / 1539b66.
 Decision: preserve security, users' data and the candidate while validation
 continues. S1 stays deliberately parked; S2 needs a Play account. Successful
 retries do not justify weaker trial accounting, account resets or deleting runtime
-publications. App-c 69 establishes no new Valence defect requiring a code change.
+publications. reference app C 69 establishes no new Valence defect requiring a code change.
 
-Replayed the saved app-c 69 artifact audit in an isolated context with its sole
+Replayed the saved reference app C 69 artifact audit in an isolated context with its sole
 write intercepted in memory: all 38 checks pass. The initial replay encountered
 the script's UTF-8 BOM before any audit execution; stripping that BOM in memory
 allowed the read-only replay. Independently hashed archived APKs:
@@ -7299,10 +7279,10 @@ The app reports doctor 14 PASS / 10 WARN / 0 FAIL. Preserve structured child-com
 receipts separately from PowerShell stderr/wrapper status, and retain release
 offline/R27 scope separately from debug bridge/SQLite/OTA scope. Historical
 renderer/startup/background/busy-sync/media/doctor findings remain open or
-qualified. Kundalini F-72/F-73/F-74 remain app-reported pending adoption and
-verification. iOS remains experimental and untested.
+qualified. reference app B F-72/F-73/F-74 remain app-reported pending adoption and
+verification. iOS is experimental and untested.
 
-Sources are read-only valence-test-app-c/evidence/iteration-69/ and both apps'
+Sources are read-only valence-test-reference app C/evidence/iteration-69/ and both apps'
 findings/reports. Only mirrored integration notes change. Earlier November 3 gates
 retain their scope; no fresh full-gate run, device acceptance or runtime security
 review is claimed. Exact-tip ancestry, unchanged implementation trees, mirrored
@@ -7312,7 +7292,7 @@ version/schema changes, push, publication or deployment.
 ## November 3: iteration 68 evidence intake; implementation unchanged
 
 Reviewed both apps' VALENCE_FINDINGS.md inventories and latest completed reports:
-Kundalini 18 and app-c 68. No eligible must-have, changes-requested item or queue
+reference app B 18 and reference app C 68. No eligible must-have, changes-requested item or queue
 refresh remains. Packages refs remain 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29
 (code) and 62f950ba1d52632b47fdd0e170bc41e18d467ae1 (site). Verified all 36
 exact recorded tips and both packages refs are ancestors of their integrations.
@@ -7323,7 +7303,7 @@ continues. S1 stays deliberately parked; S2 needs a Play account. Successful
 retries justify neither weaker trial accounting nor deleting publications or
 resetting accounts. No feature, schema or package-version change is warranted.
 
-Replayed app-c 68's saved artifact audit in an isolated context, intercepting its
+Replayed reference app C 68's saved artifact audit in an isolated context, intercepting its
 only write in memory: all 38 checks pass. Independently rehashed archived APKs:
 release 54711084 bytes, SHA256
 edf89243ca704b08cf6cbb2041c669715c7a90b746c94d19253a32337663e9c1;
@@ -7352,11 +7332,11 @@ Final foreground commitment follows the isolated observation.
 Serial doctor reports 14 PASS / 10 WARN / 0 FAIL. Preserve runner timing mistakes,
 native stderr/build-output qualifications and release/debug scope boundaries.
 Captured preview-doc F-34/F-41 wording remains distinct from adoption fixes already
-included here. Kundalini F-72/F-73/F-74 remain app-reported pending adoption and
+included here. reference app B F-72/F-73/F-74 remain app-reported pending adoption and
 verification. Historical startup/background/busy-sync/media/doctor findings stay
-open or qualified; iOS remains experimental and untested.
+open or qualified; iOS is experimental and untested.
 
-Sources are read-only valence-test-app-c/evidence/iteration-68/ and both apps'
+Sources are read-only valence-test-reference app C/evidence/iteration-68/ and both apps'
 findings/reports. Only mirrored integration notes change. Earlier November 3 gates
 retain their original scope; no fresh full-gate run, device acceptance or runtime
 security-review pass is claimed. No test-app writes, protected-branch changes,
@@ -7364,8 +7344,8 @@ version/schema changes, push, publication or deployment.
 
 ## November 3: iteration 67 evidence intake; implementation unchanged
 
-Reviewed both apps' VALENCE_FINDINGS.md and newest completed reports: Kundalini 18
-and app-c 67. No eligible must-have, changes-requested item or queue refresh
+Reviewed both apps' VALENCE_FINDINGS.md and newest completed reports: reference app B 18
+and reference app C 67. No eligible must-have, changes-requested item or queue refresh
 remains. Packages refs remain 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 (code)
 and 62f950ba1d52632b47fdd0e170bc41e18d467ae1 (site). Verified all 36 exact
 recorded tips and both newest packages refs are ancestors of the integrations.
@@ -7376,7 +7356,7 @@ it. S1 stays deliberately parked; S2 needs a Play account. Do not weaken trial
 accounting, delete runtime publications, reset accounts or infer a lock owner from
 successful retries. No new feature, schema or package version is claimed here.
 
-Replayed app-c 67's saved artifact audit in an isolated context, intercepting its
+Replayed reference app C 67's saved artifact audit in an isolated context, intercepting its
 only write in memory: all 38 checks pass. Independently rehashed both archived
 APKs: release 54711088 bytes, SHA256
 1ede080888847bb2d18b4172da3c0b0c53ae307baa8dd0532c9e29fc9b24f874;
@@ -7406,11 +7386,11 @@ establishes exact first paint. Serial doctor reports 14 PASS / 10 WARN / 0 FAIL.
 Preserve copied-input, quoting and unsupported Flutter invocation corrections,
 raw native stderr/build warnings and failed attempts as qualified by runner notes.
 Captured preview-doc F-34/F-41 observations remain distinct from adoption docs
-already included here. Kundalini F-72/F-73/F-74 remain app-reported observations
+already included here. reference app B F-72/F-73/F-74 remain app-reported observations
 pending adoption and verification. Historical startup, background, busy-sync,
 media lifetime and doctor findings stay open.
 
-Sources are read-only valence-test-app-c/evidence/iteration-67/ and both apps'
+Sources are read-only valence-test-reference app C/evidence/iteration-67/ and both apps'
 findings/reports. Only mirrored integration notes change. Earlier November 3 gates
 retain their original scope; no fresh full-gate run, emulator acceptance or runtime
 security-review pass is claimed. No test-app writes, protected-branch changes,
@@ -7418,8 +7398,8 @@ version/schema changes, push, publication or deployment.
 
 ## November 3: iteration 66 evidence intake; implementation unchanged
 
-Read both apps' VALENCE_FINDINGS.md and newest completed reports: Kundalini 18
-and app-c 66. No eligible must-have, changes-requested item or queue refresh
+Read both apps' VALENCE_FINDINGS.md and newest completed reports: reference app B 18
+and reference app C 66. No eligible must-have, changes-requested item or queue refresh
 remains. Packages refs remain 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 (code)
 and 62f950ba1d52632b47fdd0e170bc41e18d467ae1 (site). All 36 exact recorded tips
 and both newest packages refs are ancestors of their respective integration HEADs.
@@ -7430,7 +7410,7 @@ it. S1 remains deliberately parked; S2 needs a Play account. A successful retry 
 not a reason to weaken trial accounting, delete runtime publications, reset an
 account, infer a lock owner or close a historical reliability finding.
 
-App-c 66 records a painted Settings return in the same PID 5285. Inspected the
+reference app C 66 records a painted Settings return in the same PID 5285. Inspected the
 saved screenshot: the retained list, completed inspection, original photo count
 and installed widget count are visible. This attempt succeeds; iteration 65's
 renderer/host termination and historical F-36 remain failures. The saved Settings
@@ -7457,10 +7437,10 @@ sync during a connectivity transition is separate from settled reconnect success
 Serial doctor reports 14 PASS / 10 WARN / 0 FAIL. Fresh release open completes in
 668 ms; retained positive accessibility sampling at 39050 ms includes polling and
 dump overhead, and is not exact first paint. Historical startup, busy-sync,
-background, media lifetime and doctor qualifications remain open. Kundalini's
+background, media lifetime and doctor qualifications remain open. reference app B's
 F-72/F-73/F-74 remain app-reported observations pending adoption and verification.
 
-Sources are read-only valence-test-app-c/evidence/iteration-66/ and both apps'
+Sources are read-only valence-test-reference app C/evidence/iteration-66/ and both apps'
 findings/reports. This intake changes only mirrored integration notes. Earlier
 November 3 gates retain their original scope; no fresh full-gate, emulator
 acceptance or runtime security-review pass is claimed. No test-app write,
@@ -7469,7 +7449,7 @@ protected-branch change, schema/version change, push, publication or deployment.
 ## November 3: iteration 65 evidence intake; implementation unchanged
 
 Read both apps' VALENCE_FINDINGS.md, including the historical finding inventories,
-and newest completed reports: Kundalini 18 and app-c 65. No eligible must-have,
+and newest completed reports: reference app B 18 and reference app C 65. No eligible must-have,
 changes-requested item or queue refresh remains. Both packages refs are still
 03025560651d9df41fe4a7d6d0cc3ff4a12d3b29 (code) and
 62f950ba1d52632b47fdd0e170bc41e18d467ae1 (site). Verified all 36 exact tips in
@@ -7481,7 +7461,7 @@ exercise it. Keep S1 parked and S2 blocked on a Play account. Do not weaken tria
 accounting, delete runtime publications, reset an account or infer a lock owner from
 a successful retry. No feature or schema number is newly claimed in this intake.
 
-App-c 65 adds another confirmed F-36 Settings failure. Independently matched raw
+reference app C 65 adds another confirmed F-36 Settings failure. Independently matched raw
 settings-return-full-logcat.txt: renderer 5577 killed for minimum watermark at
 00:24:20.634, host 5499 reports unhandled renderer loss/killing application at
 00:24:20.726, and host death at 00:24:20.847. Exit-info identifies renderer LOW_MEMORY
@@ -7510,10 +7490,10 @@ mapped-test failure remains separate. Fresh release open completed in 1922 ms;
 retained positive accessibility sampling at 47350 ms includes dump overhead and
 does not establish exact first paint. Preserve historical startup, background and
 doctor qualifications. Reminder retry listener duplication establishes no event
-cardinality. Kundalini's F-72/F-73/F-74 remain app-reported evidence; existing
+cardinality. reference app B's F-72/F-73/F-74 remain app-reported evidence; existing
 integration work must be adopted before claiming those app observations resolved.
 
-Sources are read-only valence-test-app-c/evidence/iteration-65/ and the two apps'
+Sources are read-only valence-test-reference app C/evidence/iteration-65/ and the two apps'
 findings/reports. This intake changes only mirrored integration notes. Earlier
 November 3 gates below retain their original scope; no fresh full-gate, emulator
 acceptance or runtime security-review pass is claimed. No test-app write, protected
@@ -7550,13 +7530,13 @@ S8 plus all previous sections. Final comparison with the previous integration co
 only the intended additions; its R33 wording correction and historical ledger are
 preserved. The REST FAQ now describes the existing compiled cookie grant accurately.
 
-Read both findings and newest completed reports at intake, Kundalini 18 / app-c 64,
-read-only. App-c's current busy-sync failure remains distinct from later recovery;
+Read both findings and newest completed reports at intake, reference app B 18 / reference app C 64,
+read-only. reference app C's current busy-sync failure remains distinct from later recovery;
 no original COMMIT recurrence, lock holder or root cause is inferred. Historical
 renderer/startup/background/doctor findings remain qualified. R32's native Android
 example probe passes with durable screenshot/log receipts in docs/evidence/r32/;
 its scope is synthetic HTTP and reply encoding, not full WebView or release-device
-acceptance. iOS remains experimental and untested.
+acceptance. iOS is experimental and untested.
 
 ## Fresh combined gates (overnight November 2-3)
 
@@ -7663,12 +7643,12 @@ reserved since values. Package versions are unchanged. The R33 runtime and tests
 remain identical to the independently reviewed feature branch. Both CLI copies
 match. All 35 exact tips below are independently verified ancestors in both repos.
 
-Read both findings and newest completed reports at intake, Kundalini 18 / app-c 63,
-read-only. Raw saved evidence confirms app-c renderer 5193 low-memory kill, Chromium
+Read both findings and newest completed reports at intake, reference app B 18 / reference app C 63,
+read-only. Raw saved evidence confirms reference app C renderer 5193 low-memory kill, Chromium
 terminating host 5113, and replacement 7249 BIND APPLICATION ANR after exact-alarm
 revocation. Recovered checks do not close F-36/F-35, establish a leak/lock cause or
 prove trial loss. Historical doctor F-43 is not erased by current success. No new
-emulator acceptance is claimed; iOS remains experimental and untested.
+emulator acceptance is claimed; iOS is experimental and untested.
 
 ## Fresh combined gates
 
@@ -7754,8 +7734,8 @@ integration ledger intact as historical evidence. Decision: preserve security,
 data and the reserved schema numbers; no behavioral shortcut resolves a conflict.
 Schema 19 and every feature's since remain intact; package versions are unchanged.
 
-Read both findings ledgers and newest completed reports at intake: Kundalini 18 /
-app-c 63, read-only. Raw saved logs independently confirm renderer 5193 low-memory
+Read both findings ledgers and newest completed reports at intake: reference app B 18 /
+reference app C 63, read-only. Raw saved logs independently confirm renderer 5193 low-memory
 kill followed by Chromium terminating host 5113, and replacement 7249 BIND
 APPLICATION ANR after exact-alarm revocation. Recovered successes do not close
 F-36/F-35, establish a leak/lock cause or prove trial loss. Current doctor success
@@ -7786,7 +7766,7 @@ No protected branch writes, pushes, publication or test-app writes occurred.
 
 ## November 2: iteration-62 doctor timeout, startup and artifact qualifications
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 62,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 62,
 read-only. No must-have or original queue refresh is eligible. Packages bases
 remain code 90af361 / site 6eb2bd6; both bases and all 34 exact tips in the current
 merge-order table are ancestors of both integrations. Compared implementation
@@ -7836,7 +7816,7 @@ Successful receipts retain their narrower scope:
   14579332e0b6b32343a8226f37c96b0e3ef9b90c71b120ed9fdca417123e983c,
   matching the build receipt. No final persisted release APK is claimed.
 
-Evidence: valence-test-app-c/evidence/iteration-62, especially
+Evidence: valence-test-reference app C/evidence/iteration-62, especially
 doctor-initial-{execution.json,failed.txt}, doctor-serial-timeout-{execution.json,txt},
 doctor-mechanical-summary.json, r29-startup.json, restore-os-full-log.txt,
 restore-archive-integrity.json, sync-diagnostics-result.json, settings-outcome.json,
@@ -7849,7 +7829,7 @@ Decision: preserve security checks, users' data, durable URL semantics and the
 candidate freeze. F-43 deserves progressive phase/child-command diagnostics,
 but current evidence establishes no runtime fix or permission to weaken checks.
 F-42/F-36/F-27 and startup qualifications remain for the improver's release
-assessment. Kundalini 18 has not accepted S6/S7/S8; S1 remains deliberately parked
+assessment. reference app B 18 has not accepted S6/S7/S8; S1 remains deliberately parked
 and S2 needs a Play account.
 
 Only mirrored integration notes change. Exact-tip ancestry, unchanged
@@ -7860,7 +7840,7 @@ version/schema changes, push or publication.
 
 ## November 2: iteration-61 worker process loss and Settings recurrence
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 61,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 61,
 read-only. All must-haves remain done; no original queue refresh is eligible.
 Packages bases remain code 90af361 / site 6eb2bd6. Both bases and all 34 exact
 recorded branch tips are independently confirmed ancestors of both integrations.
@@ -7905,7 +7885,7 @@ Other independently compared saved receipts:
   The fresh-dump confirmation is after an explicit link; neither pre-link paint,
   exact first paint nor startup cause is established.
 
-Evidence: valence-test-app-c/evidence/iteration-61, particularly
+Evidence: valence-test-reference app C/evidence/iteration-61, particularly
 background-observation-failure.json, background-sqlite-{before-worker,after-bounded-observation}.json,
 bounded-worker-full-log.txt, postboot-app-exit-info.txt, bounded-worker-native-files.json,
 both background-state raw files, settings-outcome.json, settings-return-full-logcat.txt,
@@ -7919,7 +7899,7 @@ do not delete publications without a supported lifetime contract. F-42, F-36
 and F-27 remain major release qualifications for the improver. A cold-worker
 reproduction with phase/owner evidence is needed before assigning a runtime fix.
 Pending-ID and permission adoption corrections already exist in integration;
-older app captures establish no adoption. Kundalini has not accepted S6/S7/S8.
+older app captures establish no adoption. reference app B has not accepted S6/S7/S8.
 S1 remains deliberately parked; S2 needs a Play account.
 
 Only matching integration ledgers change. Ancestry, mirrored notes, unchanged
@@ -7931,7 +7911,7 @@ push or publication.
 
 ## November 2: iteration-60 Settings renderer loss and retained publication evidence
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 60,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 60,
 read-only. All must-haves remain done; no original rebase-queue refresh is eligible.
 Packages bases remain code 90af361 / site 6eb2bd6. Independently checked both bases
 and all 34 exact recorded branch tips as ancestors of the current integrations.
@@ -7971,7 +7951,7 @@ Other independently compared saved receipts:
   current 1793610605, pending 1793610615, trial null. The report records the final
   commit and cleanup after this observation.
 
-Evidence: valence-test-app-c/evidence/iteration-60, especially settings-outcome.json,
+Evidence: valence-test-reference app C/evidence/iteration-60, especially settings-outcome.json,
 settings-return-full-logcat.txt, settings-return-exit-info.txt, evidence-audit.json,
 host-retention-{experiment.json,before.txt,after.txt,size.txt}, r29-retained-startup.json,
 release-retained-paint-observation.json, worker-completion-proof.json,
@@ -7984,7 +7964,7 @@ S5 already prices the native recovery change separately. Do not delete retained
 publications without a supported lifetime contract. F-36 and F-27 remain major
 release qualifications for the improver; successful recovery closes neither.
 Pending-ID and permission adoption corrections already exist in integration;
-older app captures establish no adoption. Kundalini has not yet accepted S6/S7/S8.
+older app captures establish no adoption. reference app B has not yet accepted S6/S7/S8.
 S1 remains deliberately parked; S2 needs a Play account.
 
 Only matching integration ledgers change. Ancestry, mirrored notes, unchanged
@@ -7997,7 +7977,7 @@ No test-app writes, protected-branch changes, version/schema changes, push or pu
 
 ## November 2: iteration-59 retained startup and controlled publication evidence
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 59,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 59,
 read-only. Every must-have remains marked done; no original rebase-queue item is
 eligible. Packages bases remain code 90af361 / site 6eb2bd6. Independently checked
 both bases and all 34 exact recorded tips as ancestors of the integrations.
@@ -8035,7 +8015,7 @@ Independently compared the saved iteration-59 receipts:
   current 1793607051, pending 1793607061, trial null. The app report records the
   final commit and cleanup after this observation.
 
-Evidence: valence-test-app-c/evidence/iteration-59, particularly evidence-audit.json,
+Evidence: valence-test-reference app C/evidence/iteration-59, particularly evidence-audit.json,
 host-retention-{experiment.json,before.txt,after.txt,size.txt}, release-retained-
 logcat.txt, r29-retained-startup.json, release-retained-paint-observation.json,
 mixed-invocation.json, host4-mixed-warm-{launch.txt,ready.json}, settings-outcome.json,
@@ -8051,7 +8031,7 @@ needs rebuilt-host restart/rebind/removal validation and cannot reclaim historic
 publications. No speculative socket, SQLite or media-lifetime change is justified
 by this successful attempt. Historical reliability findings remain open or
 qualified. Pending-ID and permission adoption corrections already exist in the
-integration; older live app captures establish no adoption. Kundalini has not yet
+integration; older live app captures establish no adoption. reference app B has not yet
 accepted S6/S7/S8. S1 remains deliberately parked; S2 needs a Play account.
 
 Only matching integration ledgers change. Ancestry, mirrored notes, unchanged
@@ -8063,7 +8043,7 @@ push or publication.
 
 ## November 2: iteration-58 controlled retention and mixed-picker evidence
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 58,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 58,
 read-only. All must-haves remain done; no original queue refresh is eligible.
 Packages bases remain code 90af361 / site 6eb2bd6. Independently checked both
 bases and all 34 exact tips in the current merge-order table as ancestors of the
@@ -8105,7 +8085,7 @@ Independently compared the saved iteration-58 receipts:
   current 1793603655, pending 1793603665, trial null. The app report records the
   final commit and cleanup after this observation.
 
-Evidence: valence-test-app-c/evidence/iteration-58, especially evidence-audit.json,
+Evidence: valence-test-reference app C/evidence/iteration-58, especially evidence-audit.json,
 host-retention-{experiment.json,before.txt,after.txt,size.txt}, r29-retained-
 startup.json, release-retained-paint-observation.json, mixed-timeout.json,
 mixed-failure-logcat.txt, mixed-settled-after-timeout.json, settings-outcome.json,
@@ -8122,7 +8102,7 @@ validation and would not reclaim historical publications. Mixed-picker ownership
 needs investigation rather than a speculative socket or SQLite change. Historical
 findings remain open or qualified. Pending-ID and permission adoption corrections
 are already in integration; the app's older guide does not establish adoption.
-Kundalini has not yet accepted S6/S7/S8. S1 stays parked; S2 needs a Play account.
+reference app B has not yet accepted S6/S7/S8. S1 stays parked; S2 needs a Play account.
 
 Only matching integration ledgers change. Ancestry, mirrored notes, unchanged
 implementation trees and diff hygiene were checked. Earlier November 2 full gates
@@ -8133,7 +8113,7 @@ push or publication.
 
 ## November 2: iteration-57 startup and publication-retention evidence
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 57,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 57,
 read-only. All must-haves remain done. No original queue refresh is eligible:
 packages bases remain code 90af361 / site 6eb2bd6, and both integrations contain
 all 34 exact branch tips in the current merge-order table. No integration rebuild
@@ -8173,7 +8153,7 @@ Independently checked the saved iteration-57 evidence:
   current 1793599874, pending 1793599884, trial null. The report records final
   commit and cleanup after this observation.
 
-Evidence lives under valence-test-app-c/evidence/iteration-57: release-retained-
+Evidence lives under valence-test-reference app C/evidence/iteration-57: release-retained-
 logcat.txt, r29-fresh-startup.json, host-data-size.txt, host-published-files.txt,
 host-retention-hashes.txt, worker-completion-proof.json, worker-full-logcat.txt,
 worker-execution.json, background-sqlite-before-worker.json, background-sqlite-
@@ -8187,7 +8167,7 @@ roadmap's major-finding rule. A supported retention/revocation contract and a
 controlled publication experiment are still needed before claiming durable
 photo readiness. Historical reliability findings remain open or qualified;
 successful attempts do not close them. The pending-ID and permission adoption
-corrections are already in integration, without app adoption claimed. Kundalini
+corrections are already in integration, without app adoption claimed. reference app B
 has not yet accepted S6/S7/S8. S1 stays parked; S2 needs a Play account.
 
 Only matching integration ledgers change in this follow-up. Ancestry, exact
@@ -8198,10 +8178,10 @@ checks, data, schemas, package versions, templates and build inputs are unchange
 No test-app writes, protected-branch changes, push or publication.
 
 
-## November 2: permissions adoption correction (app-c iteration 56)
+## November 2: permissions adoption correction (reference app C iteration 56)
 
 All must-haves remain done and no original queue refresh was eligible. Read both
-findings and newest completed reports, Kundalini 18 / app-c 56, read-only. The
+findings and newest completed reports, reference app B 18 / reference app C 56, read-only. The
 permissions guide's instruction to copy since 10 regardless of app history
 contradicted the additive-only rule for newly introduced names. Fieldnote's
 already-shipped since-10 declarations need no change.
@@ -8214,7 +8194,7 @@ the general bridge guide, contract, package README and machine-readable site
 summary agree; the subscription example gates the event with has(). No runtime,
 generator, template, schema or package version change was needed. S1 stays parked
 under the candidate freeze; S2 needs a Play account. Historical intermittent
-findings remain open and Kundalini has not yet accepted S6/S7/S8.
+findings remain open and reference app B has not yet accepted S6/S7/S8.
 
 Feature branch codex/permissions-adoption: code 3e7231a / site ee4292c. Independent
 feature gates passed: 113 root tests with zero skips (both compile checks ran),
@@ -8320,13 +8300,13 @@ protected-branch changes, push or publication.
 
 ## November 2: iteration-55 acceptance follow-up
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 55,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 55,
 read-only. All must-haves remain done; no original rebase-queue refresh is eligible.
 Packages bases remain code 90af361 / site 6eb2bd6. Both bases and all 33 exact
 feature/compatibility tips in the current merge-order table are ancestors of the
 current integrations. No integration rebuild or feature branch is needed.
 
-Independently compared app-c's saved iteration-55 receipts:
+Independently compared reference app C's saved iteration-55 receipts:
 
 - The artifact audit contains 57 passing consistency checks and no current observed
   failures. This is artifact consistency, not another device run.
@@ -8354,7 +8334,7 @@ Independently compared app-c's saved iteration-55 receipts:
 Decision: preserve security, users' data and the candidate freeze. These receipts
 justify no speculative change to rollback strikes, sync leases, account isolation
 or notification contracts. Historical findings remain open or qualified;
-Kundalini has not yet accepted S6/S7/S8. S1 stays parked; S2 needs a Play account.
+reference app B has not yet accepted S6/S7/S8. S1 stays parked; S2 needs a Play account.
 
 This follow-up changes matching integration ledgers only. Ancestry, matching
 sections, unchanged implementation trees and diff hygiene were checked. Earlier
@@ -8364,11 +8344,11 @@ version/schema changes, push or publication. The initial ancestry reader include
 historical merge tables and counted 44 rows instead of 33; narrowing it to the
 current table passed. No application or runtime gate failed.
 
-## November 2: pending-ID adoption correction (app-c F-41)
+## November 2: pending-ID adoption correction (reference app C F-41)
 
 All must-haves remain done; no original rebase-queue refresh was eligible. Read
-both findings and newest completed reports, Kundalini 18 / app-c 54, read-only.
-App-c identifies a documentation contradiction, without reproducing a generator
+both findings and newest completed reports, reference app B 18 / reference app C 54, read-only.
+reference app C identifies a documentation contradiction, without reproducing a generator
 or runtime failure: a new pendingIds declaration cannot universally use since 16
 once the app has shipped schema 16 or higher. Fieldnote already shipped its
 since-16 declaration and needs no change. Historical intermittent findings remain
@@ -8474,21 +8454,20 @@ exclusion of dev mode remain unchanged. Inherited feature/security reviews retai
 their recorded scope; no new independent runtime review is claimed for prose.
 The improver still owns review and merging into packages.
 
-No emulator was used; no new device acceptance is claimed. App-c's saved artifact
+No emulator was used; no new device acceptance is claimed. reference app C's saved artifact
 audit and single forced worker remain scoped app evidence, not recurring cadence
-or a runtime repair. Kundalini has not accepted S6/S7/S8. S1 stays parked under
-the candidate freeze and S2 needs a Play account. iOS remains experimental and
-untested. No test-app writes, protected-branch changes, version/schema changes,
+or a runtime repair. reference app B has not accepted S6/S7/S8. S1 stays parked under
+the candidate freeze and S2 needs a Play account. iOS is experimental and untested. No test-app writes, protected-branch changes, version/schema changes,
 push or publication. See pendingids-adoption.md for the focused repair note.
 
 ## November 2: iteration-53 acceptance follow-up
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 53,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 53,
 read-only. All must-haves are done; no rebase-queue item is eligible. Packages
 bases remain code 90af361 / site 6eb2bd6. Both bases and all 32 recorded feature
 tips in the current merge-order table are ancestors of both integrations.
 
-Independently compared app-c's saved iteration-53 receipts:
+Independently compared reference app C's saved iteration-53 receipts:
 
 - Settings returned painted in original PID 4887. Camera/gallery completed
   directly this attempt; neither success closes historical F-36 or F-40.
@@ -8514,7 +8493,7 @@ Independently compared app-c's saved iteration-53 receipts:
 Decision: preserve security, user data and the candidate freeze. Successful
 isolated attempts and corrected reporting scripts do not justify speculative
 changes to rollback strikes, account isolation or sync leases. Historical
-reliability findings remain open or qualified; Kundalini has not yet accepted
+reliability findings remain open or qualified; reference app B has not yet accepted
 S6/S7/S8. S1 stays parked; S2 needs a Play account.
 
 This follow-up changes integration ledgers only. Ancestry, matching sections,
@@ -8527,12 +8506,12 @@ passed. This was a reader error, not an application or runtime gate failure.
 
 ## November 2: iteration-52 acceptance follow-up
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 52,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 52,
 read-only. All must-haves are done; no rebase-queue item is eligible. Packages
 bases remain code 90af361 / site 6eb2bd6. Both bases and all 32 exact current
 feature tips in the merge-order table are ancestors of both integrations.
 
-Independently compared app-c's saved iteration-52 receipts:
+Independently compared reference app C's saved iteration-52 receipts:
 
 - F-40 recurred. The earlier Camera diagnostic says no ANR since boot; after the
   bounded shutter retry, Android identifies an input-dispatch ANR at 06:17:36 in
@@ -8562,7 +8541,7 @@ Independently compared app-c's saved iteration-52 receipts:
 Decision: preserve security, user data and the candidate freeze. An external
 Camera ANR and successful isolated retries do not justify speculative changes
 to rollback strikes, account isolation or sync leases. Historical reliability
-findings remain open or qualified; Kundalini has not yet accepted S6/S7/S8.
+findings remain open or qualified; reference app B has not yet accepted S6/S7/S8.
 S1 stays parked; S2 needs a Play account.
 
 This follow-up changes integration ledgers only. Ancestry, matching sections,
@@ -8576,12 +8555,12 @@ not an application or runtime gate failure.
 
 ## November 2: iteration-51 acceptance follow-up
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 51,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 51,
 read-only. All must-haves are marked done; no rebase-queue item is eligible.
 Packages bases remain code 90af361 / site 6eb2bd6. Both bases and all 32 exact
 feature tips in the current merge-order table are ancestors of both integrations.
 
-Independently compared app-c's saved iteration-51 receipts:
+Independently compared reference app C's saved iteration-51 receipts:
 
 - Settings returned painted in original PID 4734. This successful attempt does
   not close historical F-36 or establish renderer-loss recovery.
@@ -8602,7 +8581,7 @@ Independently compared app-c's saved iteration-51 receipts:
 
 Decision: preserve security, user data and the candidate freeze. Successful
 isolated attempts do not justify changing rollback strikes, account isolation or
-sync leases. Historical reliability findings remain open or qualified; Kundalini
+sync leases. Historical reliability findings remain open or qualified; reference app B
 has not yet accepted S6/S7/S8. S1 stays parked; S2 needs a Play account.
 
 This follow-up changes integration ledgers only. Ancestry, matching sections,
@@ -8613,12 +8592,12 @@ changes, push or publication.
 
 ## November 2: iteration-50 acceptance follow-up
 
-Read both findings ledgers and newest completed reports, Kundalini 18 / app-c 50,
+Read both findings ledgers and newest completed reports, reference app B 18 / reference app C 50,
 read-only. No eligible must-have or rebase item remains. Current packages bases
 remain code 90af361 / site 6eb2bd6; ancestry checks confirm both bases and all
 32 feature tips in the merge-order table are included in both integrations.
 
-App-c's saved receipts were compared independently:
+reference app C's saved receipts were compared independently:
 
 - Settings returned painted in the original PID 4793. This successful attempt
   does not close historical F-36 or establish renderer-loss recovery.
@@ -8641,7 +8620,7 @@ App-c's saved receipts were compared independently:
 Decision: preserve security, user data and the candidate freeze. Successful
 retries do not justify weakening rollback strikes, account isolation or leases.
 S1 remains deliberately parked; S2 needs a Play account. Historical findings
-remain open or qualified; Kundalini has not yet accepted S6/S7/S8.
+remain open or qualified; reference app B has not yet accepted S6/S7/S8.
 
 This is an evidence-ledger change only. Ancestry and diff hygiene were checked;
 implementation trees are unchanged. Earlier November 2 full gates retain their
@@ -8651,12 +8630,12 @@ publication.
 
 ## November 2: iteration-49 acceptance follow-up
 
-Read both apps' VALENCE_FINDINGS.md and newest completed reports, Kundalini 18 /
-app-c 49, read-only. No eligible must-have or queue refresh remains. Current packages
+Read both apps' VALENCE_FINDINGS.md and newest completed reports, reference app B 18 /
+reference app C 49, read-only. No eligible must-have or queue refresh remains. Current packages
 bases are still code 90af361 / site 6eb2bd6; all 32 recorded branch tips and both
 packages bases are ancestors of the existing integration heads.
 
-Independently compared app-c's saved iteration-49 receipts:
+Independently compared reference app C's saved iteration-49 receipts:
 
 - The full Settings-return log records lmkd killing renderer 4684 at 04:44:25.351
   and host 4589 at 04:44:25.373. Saved return PID is 5444 and pagePainted is false.
@@ -8679,7 +8658,7 @@ is not evidence that changing the renderer callback or rollback strikes would re
 this attempt; a successful isolated worker does not resolve historical concurrency.
 No runtime, lease, retry, schema or package-version change is justified by these
 receipts. F-27/F-29/F-33/F-34/F-35/F-36/F-37/F-40 remain open or qualified.
-Kundalini has not yet accepted S6/S7/S8; F-72/F-73 remain recorded adoption/DX issues.
+reference app B has not yet accepted S6/S7/S8; F-72/F-73 remain recorded adoption/DX issues.
 S1 stays parked and S2 needs a Play account.
 
 This follow-up changes the integration ledgers only. Ancestry, matching new sections,
@@ -8768,11 +8747,11 @@ After these gates, only this validation ledger was edited in either repository.
 
 ## Test-app evidence, read-only
 
-Read both VALENCE_FINDINGS.md files and newest completed reports: Kundalini 18 /
-app-c 47. Kundalini has not yet accepted S6/S7/S8; its iteration 18 snapshot predates
+Read both VALENCE_FINDINGS.md files and newest completed reports: reference app B 18 /
+reference app C 47. reference app B has not yet accepted S6/S7/S8; its iteration 18 snapshot predates
 those features. F-72/F-73 remain recorded adoption/DX issues rather than closed findings.
 
-Independently checked saved app-c iteration-47 receipts:
+Independently checked saved reference app C iteration-47 receipts:
 
 - All 51 saved artifact checks pass. Settings before/return PID is 4830 and the
   saved page-painted result is true; this does not close historical renderer loss.
@@ -8807,8 +8786,7 @@ The combined root/core regressions and separate dev-mode regression passed.
 This refresh adds no executable changes beyond the merged branch; no new independent
 reviewer pass is claimed.
 
-No test-app writes, protected-branch changes, pushes or publication. iOS remains
-experimental and untested. The historical receipts below retain their original scope.
+No test-app writes, protected-branch changes, pushes or publication. iOS is experimental and untested. The historical receipts below retain their original scope.
 
 ## Superseded integration receipts
 
@@ -8838,8 +8816,8 @@ package version changed. No must-have item remains; S1 stays deliberately parked
 and S2 needs a Play account. The stale 17+ allocation row was not edited; S8's
 own Status cell records 19, following R31 at 17 and S7 at 18.
 
-Read both findings and newest completed reports read-only: Kundalini 18 / app-c
-46. App-c's F-37 busy/pending-1 failed assertion and later same-PID recovery do
+Read both findings and newest completed reports read-only: reference app B 18 / reference app C
+46. reference app C's F-37 busy/pending-1 failed assertion and later same-PID recovery do
 not identify a lock owner or close the finding. F-40 names external Camera;
 a separate successful retry does not repair it. Earlier renderer-loss failures
 remain open. Saved worker evidence supports one explicitly triggered execution,
@@ -8919,7 +8897,7 @@ or release-dev-guard simplification. The integration adds no new executable delt
 beyond the reviewed S8 branch.
 
 No emulator/device acceptance, test-app writes, protected-branch changes, package
-version changes, push or publication. iOS remains experimental and untested.
+version changes, push or publication. iOS is experimental and untested.
 Gates and saved-receipt checks do not establish unconditional beta acceptance.
 
 ---
@@ -8949,12 +8927,12 @@ remains. S8 is the next available feature; S6 remains named by the other builder
 ## App evidence and limits
 
 Read both VALENCE_FINDINGS.md files and newest completed reports read-only:
-Kundalini 18 and app-c 46. Kundalini reports adoption of HTTP error distinctions,
+reference app B 18 and reference app C 46. reference app B reports adoption of HTTP error distinctions,
 retirement diagnostics and signed store policy; F-72/F-73 have subsequent upstream
 fixes but app adoption of those fixes is not established. F-74's missing status
-notification remains S8. S7's REST cache has not been accepted by Kundalini.
+notification remains S8. S7's REST cache has not been accepted by reference app B.
 
-App-c's failed bounded offline probe reports busy/pending 1, with saved native
+reference app C's failed bounded offline probe reports busy/pending 1, with saved native
 lease 1793565023565:4956. Eight bounded retries later it drains in the same PID
 4956. This does not identify the owner or close F-37. External Camera ANR at
 02:20:15 names com.android.camera2/CaptureActivity; the later successful media
@@ -9037,19 +9015,18 @@ Security review scope: no local executable/spec/schema change. All runtime,
 codegen and website inputs equal the recorded packages bases. The full gates
 exercise the upstream regressions; no independent runtime-security review is
 claimed in this refresh. No emulator lock/device run, test-app writes, protected
-branch change, version change, push or publication. iOS remains experimental and
-untested. Gates are build/test evidence, not unconditional beta acceptance.
+branch change, version change, push or publication. iOS is experimental and untested. Gates are build/test evidence, not unconditional beta acceptance.
 
 ---
 
 # Integration acceptance refresh ? 2026-11-01
 
-## App-c iteration 44 completed evidence - 2026-11-02
+## reference app C iteration 44 completed evidence - 2026-11-02
 
 ### In plain terms
 
-Read both findings and newest completed reports: Kundalini 17 and app-c 44.
-App-c began November 1 and completed after Kathmandu midnight on November 2;
+Read both findings and newest completed reports: reference app B 17 and reference app C 44.
+reference app C began November 1 and completed after Kathmandu midnight on November 2;
 its UTC and device receipt timestamps remain unchanged. No eligible must-have
 or missing integration merge remains. All 31 recorded exact branch tips and
 packages bases 778b20c / 9ed2ee9 are included in both integrations. Pre-refresh
@@ -9058,7 +9035,7 @@ heads are code 61d8206 / site 74ba739.
 Decision: preserve security and users' data. Successful scoped probes supply
 no cause for changing leases, rollback or navigation policy. S1 remains parked,
 S2 needs a Play account, and the other builder's explicit next-item note
-reserves S6. Kundalini has not yet accepted S7. Avoid overlapping the credential
+reserves S6. reference app B has not yet accepted S7. Avoid overlapping the credential
 store or treating successful retries as historical repairs.
 
 ### Independently checked saved evidence
@@ -9100,14 +9077,14 @@ gates were not rerun; the earlier November 1 gate results retain their original
 scope. No roadmap status changes: no item or integration assembly was needed.
 
 No emulator run, test-app write, runtime fix, version change, protected-branch
-change, push or publication. iOS remains experimental and untested. This update
+change, push or publication. iOS is experimental and untested. This update
 closes no historical reliability finding.
 
-## App-c iteration 43 completed evidence - 2026-11-01
+## reference app C iteration 43 completed evidence - 2026-11-01
 
 ### In plain terms
 
-Read both findings and newest completed reports: Kundalini 17 and app-c 43.
+Read both findings and newest completed reports: reference app B 17 and reference app C 43.
 No eligible must-have or missing integration merge remains. All 31 recorded
 exact branch tips are included in both integrations; packages bases remain
 778b20c / 9ed2ee9. Pre-refresh heads are code 64989cf / site 9220495.
@@ -9115,7 +9092,7 @@ exact branch tips are included in both integrations; packages bases remain
 Decision: preserve security and users' data. A successful retry supplies no
 cause for changing leases, rollback or navigation policy. S1 remains parked,
 S2 needs a Play account, and the other builder's explicit next-item note
-reserves S6. Kundalini has not yet accepted S7. Avoid overlapping that
+reserves S6. reference app B has not yet accepted S7. Avoid overlapping that
 credential store or treating a passing regression as a historical repair.
 
 ### Independently checked saved evidence
@@ -9155,17 +9132,17 @@ gates were not rerun; the earlier November 1 gate results retain their original
 scope. No roadmap status changes: no item or integration assembly was needed.
 
 No emulator run, test-app write, runtime fix, version change, protected-branch
-change, push or publication. iOS remains experimental and untested. This update
+change, push or publication. iOS is experimental and untested. This update
 closes no historical reliability finding.
 
-## App-c iteration 41 completed evidence - 2026-11-01
+## reference app C iteration 41 completed evidence - 2026-11-01
 
 ### In plain terms
 
-Read both findings and newest completed reports: Kundalini 17 and app-c 41.
-App-c reports no new framework defect in this scoped pass. Offline/reconnect,
+Read both findings and newest completed reports: reference app B 17 and reference app C 41.
+reference app C reports no new framework defect in this scoped pass. Offline/reconnect,
 original-PID Settings return and camera retry probes pass without closing the
-historical reliability findings. Kundalini has not yet accepted S7.
+historical reliability findings. reference app B has not yet accepted S7.
 
 Decision: preserve security and users' data. A passing retry supplies no cause
 for changing leases, rollback or navigation policy. No eligible must-have or
@@ -9215,15 +9192,15 @@ scope. No roadmap status changed because no item or integration assembly was
 undertaken.
 
 No emulator run, test-app write, runtime fix, version change, protected-branch
-change, push or publication. iOS remains experimental and untested. This update
+change, push or publication. iOS is experimental and untested. This update
 does not establish beta acceptance or close historical reliability gaps.
 
-## App-c iteration 40 completed evidence - 2026-11-01
+## reference app C iteration 40 completed evidence - 2026-11-01
 
 ### In plain terms
 
-Read both findings and the newest completed reports: Kundalini 17 and app-c 40.
-App-c's scoped offline/reconnect and original-PID Settings return pass this time;
+Read both findings and the newest completed reports: reference app B 17 and reference app C 40.
+reference app C's scoped offline/reconnect and original-PID Settings return pass this time;
 neither observation repairs the historical sync, ANR, renderer or task-restoration
 findings. Failed UIAutomator, warm-coordinate and grouped-summary attempts remain
 excluded rather than counted as acceptance.
@@ -9232,7 +9209,7 @@ Decision: preserve security and users' data. Do not change leases, rollback or
 navigation rules on a passing retry without an established cause. No eligible
 must-have or missing integration merge remains. S1 stays deliberately parked,
 S2 needs a Play account, and the other builder explicitly names S6 next. Avoid
-overlapping that credential store. Kundalini has not yet accepted S7.
+overlapping that credential store. reference app B has not yet accepted S7.
 
 ### Independently checked saved evidence
 
@@ -9276,16 +9253,16 @@ not rerun; the earlier November 1 results retain their original scope. No roadma
 status changed because no item was taken and no integration assembly was needed.
 
 No emulator run, test-app write, runtime fix, version change, protected-branch
-change, push or publication. iOS remains experimental and untested. This evidence
+change, push or publication. iOS is experimental and untested. This evidence
 refresh does not establish beta acceptance or close historical reliability gaps.
 
-## App-c iteration 39 completed evidence - 2026-11-01
+## reference app C iteration 39 completed evidence - 2026-11-01
 
 ### In plain terms
 
-Reviewed both findings and the newest completed reports: Kundalini 17 and app-c
+Reviewed both findings and the newest completed reports: reference app B 17 and reference app C
 39. This supersedes the unfinished checkpoint below for completion scope only.
-App-c still records the busy-sync failure and direct renderer/host LOW_MEMORY
+reference app C still records the busy-sync failure and direct renderer/host LOW_MEMORY
 eviction before recovery. Completing the later probes does not repair those
 failures or establish uninterrupted Settings return.
 
@@ -9293,7 +9270,7 @@ Decision: preserve security and users' data; do not change leases, rollback or
 navigation rules without an established cause. No eligible must-have or missing
 integration merge remains. S1 stays deliberately parked, S2 needs a Play account,
 and the other builder explicitly names S6 next. Avoid overlapping that credential
-store. Kundalini has not yet accepted S7.
+store. reference app B has not yet accepted S7.
 
 ### Independently checked saved evidence
 
@@ -9333,14 +9310,14 @@ not rerun; the earlier November 1 results retain their original scope. No roadma
 status changed because no item was taken and no integration assembly was needed.
 
 No emulator run, test-app write, runtime fix, version change, protected-branch
-change, push or publication. iOS remains experimental and untested. This evidence
+change, push or publication. iOS is experimental and untested. This evidence
 refresh does not establish beta acceptance or close historical reliability gaps.
 
-## App-c iteration 39 in-progress checkpoint - 2026-11-01
+## reference app C iteration 39 in-progress checkpoint - 2026-11-01
 
 ### In plain terms
 
-Reviewed both apps' findings, Kundalini's completed iteration 17, app-c's completed
+Reviewed both apps' findings, reference app B's completed iteration 17, reference app C's completed
 iteration 38 and its newest, explicitly unfinished iteration 39 report. Iteration
 39's later findings record busy-sync and Settings-return failures; the short
 report has not yet incorporated those checkpoints. Neither recovery nor later
@@ -9350,7 +9327,7 @@ Decision: preserve security and users' data. Do not weaken lease ownership,
 rollback or navigation rules on these observations. No eligible must-have or
 missing integration merge remains. S1 stays deliberately parked, S2 needs a Play
 account, and the other builder's roadmap note explicitly names S6 next. Avoid
-overlapping that credential-store work. Kundalini has not yet accepted S7.
+overlapping that credential-store work. reference app B has not yet accepted S7.
 
 ### Independently checked saved evidence
 
@@ -9386,15 +9363,15 @@ their earlier November 1 results retain their original scope. No roadmap status
 changed because no item was taken and no new integration assembly was required.
 
 No emulator run, test-app write, runtime fix, version change, protected-branch
-change, push or publication. iOS remains experimental and untested. This
+change, push or publication. iOS is experimental and untested. This
 checkpoint does not establish beta acceptance.
 
-## App-c iteration 38 evidence refresh - 2026-11-01
+## reference app C iteration 38 evidence refresh - 2026-11-01
 
 ### In plain terms
 
-Read both apps' findings and newest completed reports read-only: Kundalini 17 and
-app-c 38. This app-c attempt retains Settings PID 4677 and reports painted return;
+Read both apps' findings and newest completed reports read-only: reference app B 17 and
+reference app C 38. This reference app C attempt retains Settings PID 4677 and reports painted return;
 camera/gallery and mixed-picker links pass within the app report's scope. These
 observations do not close historical intermittent findings or establish a repair.
 F-38's documentation correction is already in this integration; the local preview
@@ -9404,7 +9381,7 @@ Decision: preserve security and users' data; do not change rollback, navigation,
 credential storage or sync leases on a successful observation. No eligible
 must-have or missing integration merge remains. S1 remains deliberately parked,
 S2 needs a Play account, and the other builder explicitly names S6 next.
-Kundalini has not yet accepted S7; its cookie-paired CSRF gap remains open.
+reference app B has not yet accepted S7; its cookie-paired CSRF gap remains open.
 
 ### Independently checked saved evidence
 
@@ -9448,7 +9425,7 @@ No new runtime work, emulator/device run, independent runtime review, app write,
 protected-branch change, version bump, push or publication. iOS and Firebase
 delivery remain unverified; the app report does not establish beta acceptance.
 
-## Renderer diagnostic correction and app-c iteration 37 - 2026-11-01
+## Renderer diagnostic correction and reference app C iteration 37 - 2026-11-01
 
 ### In plain terms
 
@@ -9458,7 +9435,7 @@ cap the page reloads, while the cap shows the native error view. Spec and both
 diagnostic guides now require PID/time-correlated full logs before attributing a
 host exit, rather than treating exit-info alone as conclusive.
 
-Read both findings and latest reports read-only: Kundalini 17 / app-c 37.
+Read both findings and latest reports read-only: reference app B 17 / reference app C 37.
 Independently checked Settings PID receipts (4829 before and after), the external
 camera ANR record (com.android.camera2/CaptureActivity, 18:45:58), and the saved
 three-image decoded-dimension result. The camera retry is a separate success,
@@ -9468,7 +9445,7 @@ automatic media recovery. F-29/F-33/F-35/F-36/F-37 remain open or qualified.
 Decision: correct the documented transition and attribution; preserve rollback,
 navigation policy, credential storage, leases and users' data. No eligible
 must-have remains. S1 stays parked, S2 needs a Play account and the other builder
-explicitly names S6 next. Kundalini has not accepted S7 and its cookie-paired CSRF
+explicitly names S6 next. reference app B has not accepted S7 and its cookie-paired CSRF
 gap remains open.
 
 ### Integration and review
@@ -9514,13 +9491,13 @@ retain their original scope; they are not package gates. Final ledger commits
 change only evidence.
 
 
-## App-c iteration 35 evidence refresh - 2026-11-01
+## reference app C iteration 35 evidence refresh - 2026-11-01
 
 ### In plain terms
 
 Settings return again loses the renderer, followed by Chromium terminating the
 host for unhandled renderer loss. Recovery closes no intermittent finding.
-Read both findings and newest reports read-only: Kundalini 17 and app-c 35.
+Read both findings and newest reports read-only: reference app B 17 and reference app C 35.
 
 Packages remains code 778b20c / site 9ed2ee9. Independently checked all 30 exact
 feature/compatibility tips against their current branches and integration
@@ -9529,7 +9506,7 @@ must-have or missing integration merge remains. S1 remains deliberately parked,
 S2 needs a Play account, and the other builder explicitly names S6 next in the
 roadmap. Decision: preserve security and users' data; avoid overlapping credential
 storage or speculative changes to leases, rollback strikes and navigation policy.
-Kundalini has not accepted S7; its cookie-paired CSRF gap remains open.
+reference app B has not accepted S7; its cookie-paired CSRF gap remains open.
 
 Saved-result checks, without operating either app:
 
@@ -9564,16 +9541,16 @@ Only matching integration ledgers change. Implementation/build inputs remain
 identical to fully gated code 8d800f6 / site 6276993; prior gate results retain
 their original scope/date. No fresh full gates, runtime repair, emulator run,
 app writes, package/schema bump, protected-branch change, push or publication
-is claimed. iOS remains experimental and untested.
+is claimed. iOS is experimental and untested.
 
-## App-c iteration 34 evidence refresh - 2026-11-01
+## reference app C iteration 34 evidence refresh - 2026-11-01
 
 ### In plain terms
 
 Settings return again loses the renderer and host, this time with direct
 lowmemorykiller records for both. A renderer callback cannot promise survival
 of a direct host eviction. Recovery closes no intermittent finding. Read both
-findings and newest reports read-only: Kundalini 17 and app-c 34.
+findings and newest reports read-only: reference app B 17 and reference app C 34.
 
 Packages remains code 778b20c / site 9ed2ee9. Independently checked all 30 exact
 feature/compatibility tips against their current branches and integration
@@ -9582,7 +9559,7 @@ must-have or missing integration merge remains. S1 remains deliberately parked,
 S2 needs a Play account, and the other builder explicitly names S6 next in the
 roadmap. Decision: preserve security and users' data; avoid overlapping credential
 storage or speculative changes to leases, rollback strikes and navigation policy.
-Kundalini has not accepted S7; its cookie-paired CSRF gap remains open.
+reference app B has not accepted S7; its cookie-paired CSRF gap remains open.
 
 Saved-result checks, without operating either app:
 
@@ -9592,7 +9569,7 @@ Saved-result checks, without operating either app:
   exit-info receipts, distinct from the kill log events. Unlike iteration 33,
   this does not establish Chromium termination of the host. Neither a Valence
   leak diagnosis nor a runtime repair follows from these records.
-- Warm mixed-picker link launch names App C MainActivity in this observation;
+- Warm mixed-picker link launch names reference app C MainActivity in this observation;
   this success does not close intermittent F-29. No screenshot inspection is
   claimed here.
 - Compared full before/after worker logs: exact new begin 17:28:03.254,
@@ -9618,23 +9595,23 @@ Only matching integration ledgers change. Implementation/build inputs remain
 identical to fully gated code 8d800f6 / site 6276993; prior gate results retain
 their original scope/date. No fresh full gates, runtime repair, emulator run,
 app writes, package/schema bump, protected-branch change, push or publication
-is claimed. iOS remains experimental and untested.
+is claimed. iOS is experimental and untested.
 
-## App-c iteration 33 evidence refresh - 2026-11-01
+## reference app C iteration 33 evidence refresh - 2026-11-01
 
 ### In plain terms
 
 Settings return again loses the renderer and then the host; a mixed-picker link
 again reaches the picker instead of the requested page. Recovery closes neither
-F-36 nor F-29. Read both findings and newest reports read-only: Kundalini 17 and
-app-c 33. No eligible must-have or missing integration merge remains.
+F-36 nor F-29. Read both findings and newest reports read-only: reference app B 17 and
+reference app C 33. No eligible must-have or missing integration merge remains.
 
 Packages remains code 778b20c / site 9ed2ee9. Independently checked all 30 current
 feature/compatibility tips and both packages bases are ancestors of integration
 in both repos. S1 remains deliberately parked, S2 needs a Play account, and the
 other builder explicitly names S6 next in the roadmap. Decision: preserve security
 and users' data; avoid overlapping credential-store work or speculative changes
-to leases, rollback strikes and navigation policy. Kundalini has not accepted S7.
+to leases, rollback strikes and navigation policy. reference app B has not accepted S7.
 
 Saved-result checks, without operating either app:
 
@@ -9670,23 +9647,23 @@ Only matching integration ledgers change. Implementation/build inputs remain
 identical to fully gated code 8d800f6 / site 6276993; prior gate results retain
 their original scope/date. No fresh full gates, runtime repair, emulator run,
 app writes, package/schema bump, protected-branch change, push or publication
-is claimed. iOS remains experimental and untested.
+is claimed. iOS is experimental and untested.
 
-## App-c iteration 32 evidence refresh - 2026-11-01
+## reference app C iteration 32 evidence refresh - 2026-11-01
 
 ### In plain terms
 
 An unforced isolated worker transfers the queued rows, but ordinary launch still
 restores an orphan photo picker. Recovery through the existing link does not
-repair F-29. Read both findings and newest reports read-only: Kundalini 17 and
-app-c 32. No eligible must-have or missing integration merge remains.
+repair F-29. Read both findings and newest reports read-only: reference app B 17 and
+reference app C 32. No eligible must-have or missing integration merge remains.
 
 Packages remains code 778b20c / site 9ed2ee9. Independently checked all 30 exact
 feature/compatibility tips against their current branches and integration ancestry
 in both repos, plus both packages bases. S1 remains deliberately parked, S2 needs
 a Play account, and the other builder explicitly names S6 next. Decision: preserve
 security and users' data; avoid overlapping credential-store work or changing
-leases, rollback strikes or navigation policy without causal evidence. Kundalini
+leases, rollback strikes or navigation policy without causal evidence. reference app B
 has not accepted S7 yet; its cookie-paired CSRF gap remains S6.
 
 Saved-result checks, without operating either app:
@@ -9726,16 +9703,16 @@ Only matching integration ledgers change. Implementation/build inputs remain
 identical to fully gated code 8d800f6 / site 6276993; the combined gate table below
 retains its original scope and date. No fresh full gates, runtime review,
 emulator execution, app writes, package/schema bump, protected-branch change,
-push or publication is claimed. iOS remains experimental and untested.
+push or publication is claimed. iOS is experimental and untested.
 
-## App-c iteration 31 evidence refresh - 2026-11-01
+## reference app C iteration 31 evidence refresh - 2026-11-01
 
 ### In plain terms
 
 Settings return again loses both renderer and host to direct Android memory
 pressure. Explicit relaunch recovers the app; it does not repair F-36 or prove
 uninterrupted return. No eligible must-have or missing integration merge remains.
-Read both findings and newest reports read-only: Kundalini 17 and app-c 31.
+Read both findings and newest reports read-only: reference app B 17 and reference app C 31.
 
 Packages remains code 778b20c / site 9ed2ee9. Independently checked all 30 exact
 feature/compatibility tips against current branches and integration ancestry in
@@ -9743,7 +9720,7 @@ both repos, together with both packages bases. S1 remains deliberately parked,
 S2 needs a Play account, and the other builder explicitly names S6 next.
 Decision: preserve security and users' data; avoid overlapping credential-store
 work or changing leases, rollback strikes or navigation policy without causal
-evidence. Kundalini has not yet accepted S7; cookie-paired CSRF remains S6.
+evidence. reference app B has not yet accepted S7; cookie-paired CSRF remains S6.
 
 Saved-result checks, without operating either app:
 
@@ -9779,16 +9756,16 @@ Only matching integration ledgers change. Implementation/build inputs remain
 identical to fully gated code 8d800f6 / site 6276993; the combined gate table below
 retains its original scope and date. No fresh full gates, runtime review,
 emulator execution, app writes, package/schema bump, protected-branch change,
-push or publication is claimed. iOS remains experimental and untested.
+push or publication is claimed. iOS is experimental and untested.
 
-## App-c iteration 30 evidence refresh - 2026-11-01
+## reference app C iteration 30 evidence refresh - 2026-11-01
 
 ### In plain terms
 
 The latest Settings return survives in the same process, but that does not
 repair the historical memory-pressure kills or permission ANR. No eligible
 must-have or missing integration merge remains. Read both findings and newest
-reports read-only: Kundalini 17 and app-c 30.
+reports read-only: reference app B 17 and reference app C 30.
 
 Packages remains code 778b20c / site 9ed2ee9. Independently checked all 30 exact
 feature/compatibility tips against their current branches and integration
@@ -9796,7 +9773,7 @@ ancestry in both repos, plus both packages bases. S1 remains deliberately
 parked, S2 needs a Play account, and the other builder explicitly names S6 next.
 Decision: preserve security and users' data; avoid overlapping credential-store
 work or changing leases, rollback strikes or navigation policy without causal
-evidence. Kundalini has not yet accepted S7; its cookie-paired CSRF gap remains.
+evidence. reference app B has not yet accepted S7; its cookie-paired CSRF gap remains.
 
 Saved-result checks, without operating either app:
 
@@ -9827,9 +9804,9 @@ Only matching integration ledgers change. Implementation/build inputs remain
 identical to fully gated code 8d800f6 / site 6276993; the combined gate table
 below retains its original scope and date. No fresh full gates, runtime review,
 emulator execution, app writes, package/schema bump, protected-branch change,
-push or publication is claimed. iOS remains experimental and untested.
+push or publication is claimed. iOS is experimental and untested.
 
-## App-c iteration 29 evidence refresh - 2026-11-01
+## reference app C iteration 29 evidence refresh - 2026-11-01
 
 ### In plain terms
 
@@ -9838,7 +9815,7 @@ records Android killing both the renderer and the host; a later restart and
 successful feature checks do not establish a stability fix. All must-have work
 is done or ready, and the integration queue remains current.
 
-Read both findings and newest reports read-only: Kundalini 17 and app-c 29.
+Read both findings and newest reports read-only: reference app B 17 and reference app C 29.
 Packages remains code 778b20c / site 9ed2ee9. Independently checked all 30 exact
 feature/compatibility tips in the table below against their current branches
 and integration ancestry in both repos, including S7 at schema 18. No missing
@@ -9876,8 +9853,8 @@ Saved-result checks, without operating either app:
   The supplied audit reports 43 passing consistency assertions; this includes
   qualified failures and is not an unconditional stability pass.
 
-App-c F-27/F-29/F-33/F-34/F-35/F-36/F-37/F-38 and pagination remain open or
-qualified. Kundalini has not accepted S7; its cookie-paired CSRF gap remains S6.
+reference app C F-27/F-29/F-33/F-34/F-35/F-36/F-37/F-38 and pagination remain open or
+qualified. reference app B has not accepted S7; its cookie-paired CSRF gap remains S6.
 Decision: preserve security and user data. Do not change leases, rollback
 strikes or navigation policy on the strength of successful retries or an OS
 memory-pressure observation; those changes need evidence identifying their
@@ -9889,9 +9866,9 @@ table below retains its original scope and date. No fresh full gates, runtime
 review, emulator execution, test-app writes, package/schema bump, protected
 branch changes, push or publication are claimed. Fresh verification covers
 ancestry, exact saved log lines, independent hashes, preferences and diff
-hygiene. iOS remains experimental and untested.
+hygiene. iOS is experimental and untested.
 
-## App-c iteration 28 evidence refresh - 2026-11-01
+## reference app C iteration 28 evidence refresh - 2026-11-01
 
 ### In plain terms
 
@@ -9901,7 +9878,7 @@ inspection restored. This needs no runtime change. The ordinary launcher still
 returns to an orphan picker, and successful retries do not close the intermittent
 concurrency, permission ANR or renderer-loss findings.
 
-Read both apps' findings and newest reports read-only: Kundalini 17 and app-c
+Read both apps' findings and newest reports read-only: reference app B 17 and reference app C
 28. Current packages remains code 778b20c / site 9ed2ee9. Independently checked
 all 30 exact tips in the merge table below: every branch still names that tip,
 and every tip plus packages is an ancestor of integration in both repos. The
@@ -9941,7 +9918,7 @@ concurrent APK builds limit attribution, and failed UIAutomator idle captures
 precede the actual taps. Preserve those exclusions. Four successful foreground
 probes, a null lease after settling and a same-PID Settings return do not locate
 a blocked owner or fix F-33/F-35/F-36/F-37. F-27, F-34, F-38 and pagination remain
-open or qualified. Kundalini's cookie gap remains S6; S7 has no app acceptance yet.
+open or qualified. reference app B's cookie gap remains S6; S7 has no app acceptance yet.
 
 Decision: preserve security boundaries and users' data. Keep transaction/lease
 semantics until contemporaneous request, acquisition, renewal, release and
@@ -9955,7 +9932,7 @@ Flutter, analyzer, packaging, APK, site-build, runtime-review or emulator pass i
 claimed. Fresh checks cover branch-tip ancestry, saved receipts, exact worker
 lines, independent raw hashes, matching ledger text and diff hygiene. No test-app
 writes, protected-branch changes, package/schema version changes, push or
-publication occurred. iOS remains experimental and untested.
+publication occurred. iOS is experimental and untested.
 
 ## S7 and ready R4 integration ? 2026-11-01
 
@@ -9988,12 +9965,11 @@ forging server USNs, outbox operations, sync freshness or OTA readiness. Old
 schema overlays remain available for rollback until ordinary pair GC. Review
 findings and fixes are recorded in S7 acceptance.
 
-Both test-app findings and newest reports were read-only: Kundalini 17 / app-c
+Both test-app findings and newest reports were read-only: reference app B 17 / reference app C
 27. No app writes, emulator acceptance or intermittent-runtime repair is claimed.
-App-c F-27/F-29/F-33/F-34/F-35/F-36/F-37/F-38 and its limited pagination remain
+reference app C F-27/F-29/F-33/F-34/F-35/F-36/F-37/F-38 and its limited pagination remain
 open or qualified. S6 is separate. Package/release versions are unchanged. No
-protected branch commit/merge, push or publication occurred. iOS remains
-experimental and untested.
+protected branch commit/merge, push or publication occurred. iOS is experimental and untested.
 
 ### Merge order and exact tips
 
@@ -10068,9 +10044,9 @@ packages bases were independently checked as ancestors. Packages remained
 
 
 
-## App-c iteration 24 completed follow-up
+## reference app C iteration 24 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 24.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 24.
 Packages remains code d771105 / site 53d3a91. All 29 feature and compatibility
 tips, plus packages, are ancestors of integration in both repos. No missing
 merge or eligible must-have remains. S1 stays parked; S2 needs a Play account.
@@ -10094,12 +10070,12 @@ F-37 has stronger diagnostics, not an established lease-expiry defect:
   app-scoped capture helper improves future diagnosis; debuggerd/SIGQUIT still
   yield no accessible blocking-thread trace. Keep F-37 minor/diagnostic.
 
-Ordinary launch again delivers to the orphaned picker without an App C PID
+Ordinary launch again delivers to the orphaned picker without an reference app C PID
 (F-29). Supplied Settings evidence records same PID 8566, painted return before
 explicit relaunch and no current ANR. Four foreground ok/pending0 replies and
 one startup callback do not repair major/open F-33/F-35/F-36 or prove four
 worker overlaps. F-27 host-file lifecycle, F-34 stale banner and pagination
-remain open or limited. Kundalini F-63/F-65 and F-64 adoption are unchanged.
+remain open or limited. reference app B F-63/F-65 and F-64 adoption are unchanged.
 
 Separately verified saved isolated-worker acceptance without operating apps:
 
@@ -10148,9 +10124,9 @@ runtime review, app writes, protected-branch changes, package/schema changes,
 pushes or publications occurred. iOS and real remote push remain unverified.
 
 
-## App-c iteration 23 completed follow-up
+## reference app C iteration 23 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 23.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 23.
 Packages remains code d771105 / site 53d3a91. All 29 feature and compatibility
 tips, plus packages, are ancestors of integration in both repos. No missing merge
 or eligible must-have remains. S1 stays parked; S2 needs a Play account.
@@ -10170,7 +10146,7 @@ New minor F-37 qualifies the sync evidence:
   native lease row/owner/start age and request/worker timelines before changing
   transaction ownership, cancellation or deadlines.
 
-Ordinary launch again delivers to the orphaned picker with no App C PID (F-29).
+Ordinary launch again delivers to the orphaned picker with no reference app C PID (F-29).
 Saved App info XML, matching PID 4243 and the viewed pre-relaunch screenshot
 establish one painted Settings return; current lastanr says no ANR since boot.
 Neither that observation nor four foreground ok/pending0 responses close major
@@ -10198,7 +10174,7 @@ Decision: preserve users' data, shipped contracts, additive R31 revision 17 and
 transaction/lease/retry rules. F-37 supports better diagnosis and test setup,
 not a causal runtime fix on this evidence. F-27 host-file lifecycle, F-29 ordinary
 launch and F-34 stale banner remain open or limited; pagination remains deferred.
-Kundalini F-63/F-65 and F-64 adoption status are unchanged.
+reference app B F-63/F-65 and F-64 adoption status are unchanged.
 
 Evidence validation: saved-result assertions, exact callback lines and baseline
 comparison, independent raw hashes, all 29 branch-tip ancestry checks in both
@@ -10222,9 +10198,9 @@ runtime review, app writes, protected-branch changes, package/schema changes,
 pushes or publications occurred. iOS and real remote push remain unverified.
 
 
-## App-c iteration 22 completed follow-up
+## reference app C iteration 22 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 22.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 22.
 Packages remains code d771105 / site 53d3a91. All 29 feature and compatibility
 tips, including sync-fixes, plus packages are ancestors of integration in both
 repos. No missing merge or eligible must-have remains. S1 stays parked; S2 needs
@@ -10236,7 +10212,7 @@ The current Settings return improves the evidence without closing old failures:
   before explicit relaunch establish one same-process Settings return. Current
   lastanr says no ANR since boot. This does not establish memory-pressure
   resilience or repair major F-35/F-36; their earlier observations remain valid.
-- Ordinary launch again brings up the orphaned picker without an App C PID
+- Ordinary launch again brings up the orphaned picker without an reference app C PID
   (F-29); explicit fresh-task recovery is a separate result. Four foreground
   sync replies report ok/pending0, without establishing four worker overlaps
   or repairing major/open F-33. Settled offline/pending1 and reconnect/ok/pending0
@@ -10265,7 +10241,7 @@ transaction/lease/retry rules. A successful Settings return is useful regression
 evidence, not a reason to dismiss the earlier ANR or process/renderer loss.
 Require blocking-thread/transaction-owner evidence and recovery coverage before
 a causal runtime change. F-27 host-file lifecycle, F-29 ordinary launch and F-34
-stale banner remain open or limited; app pagination remains deferred. Kundalini
+stale banner remain open or limited; app pagination remains deferred. reference app B
 F-63/F-65 and F-64 adoption status are unchanged.
 
 Evidence validation: BOM-aware saved-result assertions, exact new callback lines,
@@ -10300,9 +10276,9 @@ runtime review, app writes, protected-branch changes, package/schema changes,
 pushes or publications occurred. iOS and real remote push remain unverified.
 
 
-## App-c iteration 21 completed follow-up
+## reference app C iteration 21 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 21.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 21.
 Packages remains code d771105 / site 53d3a91. All 29 feature and compatibility
 tips, including sync-fixes, plus packages are ancestors of integration in both
 repos. No missing merge or eligible must-have remains. S1 stays parked; S2 needs
@@ -10318,7 +10294,7 @@ F-36 recurs with a different immediate termination mechanism:
   paint establishes recovery, not uninterrupted Settings return. This identifies
   the immediate system kills, not the source of memory pressure or a Valence leak.
   No new F-35 ANR is established; its historical evidence remains open.
-- Ordinary launch again opens an orphaned picker without an App C PID (F-29).
+- Ordinary launch again opens an orphaned picker without an reference app C PID (F-29).
   Initial offline busy/pending1 after a network-constraint stop fails acceptance;
   the later offline/pending1 and reconnect/ok/pending0 belong to a recovered retry.
   Rootless debuggerd refusal and a SIGQUIT tombstoned receipt do not supply an
@@ -10347,7 +10323,7 @@ transaction/lease/retry rules. Distinguish direct OS process loss from unhandled
 renderer loss; require process/renderer recovery coverage and an accessible
 blocking-thread trace before a causal runtime change. F-27 host-file guidance,
 F-29 ordinary launch, F-34 stale banner and major F-33/F-35/F-36 remain open or
-limited. Pagination remains deferred app scope. Kundalini F-63/F-65 and F-64
+limited. Pagination remains deferred app scope. reference app B F-63/F-65 and F-64
 adoption status are unchanged.
 
 Validation: BOM-aware saved-evidence assertions, raw hashes, corrected timing,
@@ -10360,9 +10336,9 @@ is not beta acceptance. No app writes, protected-branch changes, package/schema
 changes, pushes or publications. iOS and real remote push remain unverified.
 
 
-## App-c iteration 20 completed follow-up
+## reference app C iteration 20 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 20.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 20.
 Packages remains code d771105 / site 53d3a91. All 29 feature and compatibility
 tips, including sync-fixes, plus packages are ancestors of integration in both
 repos. No missing merge or eligible must-have remains. S1 stays parked; S2 needs
@@ -10379,7 +10355,7 @@ New major F-36 has direct saved evidence of renderer eviction and host terminati
   of memory pressure, a Valence leak or the cause of F-35. The saved lastanr
   remains the historical 18:14:22 permission-focus ANR. Loaded App info and
   explicit recovery do not establish uninterrupted Settings return.
-- Initial ordinary launch again opens an orphaned picker without an App C PID.
+- Initial ordinary launch again opens an orphaned picker without an reference app C PID.
   Fresh-task recovery and settled mixed-link retries do not close F-29.
   Startup completion and later successful sync do not repair major/open F-33.
 
@@ -10404,7 +10380,7 @@ transaction/lease/retry rules. Record F-36 as a distinct major release qualifica
 do not infer a causal runtime fix from renderer eviction or fold it into F-35.
 Renderer-loss recovery coverage and actual blocking-thread evidence remain needed.
 F-27 host-file guidance and F-34 stale banner remain open; pagination is deferred
-app scope. Kundalini F-63/F-65 and F-64 adoption status remain unchanged.
+app scope. reference app B F-63/F-65 and F-64 adoption status remain unchanged.
 
 Validation: BOM-aware saved-evidence assertions (the initial UTF-8-only assertion
 failed on UTF-16 diagnostics and passed after encoding detection), raw hashes,
@@ -10417,9 +10393,9 @@ is not beta acceptance. No app writes, protected-branch changes, package/schema
 changes, pushes or publications. iOS and real remote push remain unverified.
 
 
-## App-c iteration 19 completed follow-up
+## reference app C iteration 19 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 19.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 19.
 Packages remains code d771105 / site 53d3a91. All 29 feature and compatibility
 tips, including sync-fixes, plus packages are ancestors of integration in both
 repos. No missing merge or eligible must-have remains. S1 stays parked; S2 needs
@@ -10469,7 +10445,7 @@ transaction/lease/retry rules. F-33 and F-35 remain major/open; successful retri
 and isolated workers do not establish a repair. Actual blocking-thread evidence
 is needed before attributing F-35 to runtime code. F-27 host-file guidance, F-29
 historical launcher recovery and F-34's stale banner remain open; pagination is
-deferred app scope. Kundalini F-63/F-65 and F-64 adoption status are unchanged.
+deferred app scope. reference app B F-63/F-65 and F-64 adoption status are unchanged.
 
 Validation: BOM-aware saved-evidence assertions, raw hashes, all 29 branch-tip
 ancestry checks in both repos, unchanged implementation trees against fully gated
@@ -10481,9 +10457,9 @@ No app writes, protected-branch changes, package/schema changes, pushes or
 publications. iOS and real remote push delivery remain unverified.
 
 
-## App-c iteration 18 completed follow-up
+## reference app C iteration 18 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 18.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 18.
 Packages remains code d771105 / site 53d3a91. All 29 numbered feature and
 compatibility tips, plus packages, are ancestors of integration in both repos.
 No missing merge or eligible must-have remains. S1 stays parked; S2 needs a
@@ -10526,7 +10502,7 @@ Decision: preserve users' data, shipped contracts, additive R31 revision 17 and
 transaction/lease/retry rules. One natural callback strengthens background
 acceptance without closing F-33. F-27 host-file lifecycle guidance, F-29 launcher
 recovery and F-34 documentation remain open; pagination stays deferred app scope.
-Kundalini F-63/F-65 and F-64 adoption status are unchanged; its app schema 17 is
+reference app B F-63/F-65 and F-64 adoption status are unchanged; its app schema 17 is
 separate from runtime R31 revision 17.
 
 Validation: read-only evidence assertions including raw hashes, branch ancestry,
@@ -10539,9 +10515,9 @@ changes, package/schema changes, pushes or publications. iOS and real remote pus
 delivery remain unverified.
 
 
-## App-c iteration 17 completed follow-up
+## reference app C iteration 17 completed follow-up
 
-Reviewed both findings and newest reports read-only: Kundalini 16 and app-c 17.
+Reviewed both findings and newest reports read-only: reference app B 16 and reference app C 17.
 Packages remains code d771105 / site 53d3a91. All 29 checked numbered feature
 and compatibility tips, plus packages, are ancestors of integration in both
 repositories. No missing merge or eligible must-have remains. S1 stays parked;
@@ -10590,7 +10566,7 @@ guidance and F-29's normal-launch picker limitation remain open. New minor F-34
 is confirmed in captured docs and site src/content/docs/docs/index.mdx: its
 banner still says v0.3. Record that documentation correction as outstanding;
 do not infer a runtime version from the banner or change package versions.
-Pagination stays deferred app scope. Kundalini F-63/F-65 and F-64 adoption
+Pagination stays deferred app scope. reference app B F-63/F-65 and F-64 adoption
 status are unchanged; its app schema 17 is separate from runtime R31 revision 17.
 
 Validation: read-only evidence assertions including raw hashes, branch ancestry,
@@ -10603,9 +10579,9 @@ changes, package/schema changes, pushes or publications. iOS and real remote pus
 delivery remain unverified.
 
 
-## App-c iteration 16 completed follow-up
+## reference app C iteration 16 completed follow-up
 
-Read both findings and newest reports read-only: Kundalini 16 and app-c 16.
+Read both findings and newest reports read-only: reference app B 16 and reference app C 16.
 Packages remains code d771105 / site 53d3a91. All 29 checked numbered feature
 and compatibility tips, plus packages, are ancestors of integration in both
 repositories. No missing merge or eligible must-have remains. S1 stays parked;
@@ -10647,9 +10623,9 @@ Checked retained iteration-16 artifacts without operating or modifying either ap
   uninterrupted release-to-debug adoption. Cross-clock latency is not inferred.
 
 Decision: preserve users' data, shipped contracts, additive R31 revision 17 and
-transaction/lease/retry rules. A successful overlap cannot close F-33. App-c
+transaction/lease/retry rules. A successful overlap cannot close F-33. reference app C
 F-27's host-file lifecycle/limits guidance remains open; the existing 50-unit/
-200-inspection pagination limit stays deferred app scope. Kundalini's F-63/F-65
+200-inspection pagination limit stays deferred app scope. reference app B's F-63/F-65
 and F-64 retirement-tooling adoption status are unchanged. Its app schema 17
 for deep-link adoption is separate from the runtime's R31 revision 17.
 
@@ -10663,9 +10639,9 @@ changes, package/schema changes, pushes or publications. iOS and real remote pus
 delivery remain unverified.
 
 
-## App-c iteration 15 completed follow-up
+## reference app C iteration 15 completed follow-up
 
-Read both findings and newest reports read-only: Kundalini 16 and app-c 15.
+Read both findings and newest reports read-only: reference app B 16 and reference app C 15.
 Packages remains code d771105 / site 53d3a91. Ancestry checks find the original
 rebase queue, R14, later numbered feature branches, R4 notification compatibility
 and R31 already included in integration in both repositories. No missing merge
@@ -10710,10 +10686,10 @@ Checked retained iteration-15 evidence without operating or modifying either app
 Decision: preserve users' data, shipped contracts, additive R31 revision 17 and
 transaction/lease/retry rules. A passing overlap does not resolve F-33, and the
 legacy app's routing mitigation does not justify changing built-in link semantics.
-App-c F-27's host-file lifecycle/limits documentation gap remains open; the
+reference app C F-27's host-file lifecycle/limits documentation gap remains open; the
 50-unit/200-inspection pagination limit remains deferred app scope. Latest-versus-
 initial legacy link migration guidance and mixed-task/notification precedence
-remain follow-up needs identified by the app report. Kundalini's F-63/F-65 and
+remain follow-up needs identified by the app report. reference app B's F-63/F-65 and
 F-64 retirement-tooling adoption status are unchanged.
 
 Validation: read-only evidence assertions (including raw hashes), branch ancestry,
@@ -10726,9 +10702,9 @@ changes, package/schema changes, pushes or publications. iOS and real remote pus
 delivery remain unverified.
 
 
-## App-c iteration 14 completed follow-up
+## reference app C iteration 14 completed follow-up
 
-Both findings and newest reports were read read-only: Kundalini 16 and app-c 14.
+Both findings and newest reports were read read-only: reference app B 16 and reference app C 14.
 Packages remains code d771105 / site 53d3a91. The original rebase queue, R14,
 R31 and the R4 notification-compatibility acceptance tip are already ancestors of
 integration in both repositories. No missing merge or eligible must-have remains;
@@ -10763,10 +10739,10 @@ Checked the retained iteration-14 captures without running or modifying either a
 
 Decision: preserve users' data, transaction scopes, lease/retry rules and additive
 R31 revision 17. Non-reproduction does not repair the earlier COMMIT failure.
-F-33 and app-c F-27's host-file lifecycle/limits documentation gap remain open.
+F-33 and reference app C F-27's host-file lifecycle/limits documentation gap remain open.
 The newly documented 50-unit/200-inspection pagination limit is an existing app
 limit, explicitly deferred by its reviewer; it is not a new Valence regression.
-Kundalini's findings and retirement-tooling adoption status are unchanged.
+reference app B's findings and retirement-tooling adoption status are unchanged.
 
 Validation: read-only evidence assertions, branch ancestry, unchanged implementation
 trees against the fully gated R31 integration (code 38a7714 / site fb7bc44),
@@ -10779,17 +10755,17 @@ publication. Integration readiness is not beta acceptance; iOS and real remote
 push delivery remain unverified.
 
 
-## App-c iteration 13 completed follow-up
+## reference app C iteration 13 completed follow-up
 
-Both findings and newest reports were read read-only: Kundalini 16 and the now
-completed app-c 13. Code packages remains d771105 / site packages 53d3a91. The
+Both findings and newest reports were read read-only: reference app B 16 and the now
+completed reference app C 13. Code packages remains d771105 / site packages 53d3a91. The
 original rebase queue, R14 and every later numbered feature tip are included in
 integration. Only R31 and the notification-compatibility report tip are not yet
 ancestors of packages; both are already integrated in the recorded order above.
 No changed base, missing merge or eligible must-have requires new feature work.
 S1 stays parked and S2 needs a Play account.
 
-Independently inspected app-c's retained iteration-13 captures, without running
+Independently inspected reference app C's retained iteration-13 captures, without running
 the app or writing to either test repository:
 
 - PID 14117 starts its worker at 12:40:31.602, before Valence.open completes at
@@ -10823,8 +10799,8 @@ the app or writing to either test repository:
 Decision: prioritize users' data and transaction-ownership evidence. Preserve
 shipped contracts, R31's additive revision 17, lease semantics and retry budgets;
 a successful overlap does not justify a speculative concurrency patch or closing
-F-33. App-c F-27's host-file lifecycle/limits documentation gap also remains open.
-Kundalini's F-63/F-65 reports and F-64 adoption status are unchanged; packages
+F-33. reference app C F-27's host-file lifecycle/limits documentation gap also remains open.
+reference app B's F-63/F-65 reports and F-64 adoption status are unchanged; packages
 already contains S4's retirement tooling. Integration readiness is not beta
 acceptance.
 
@@ -10858,7 +10834,7 @@ to impose or withdraw a block, preserve users' data and trial attempts, retain
 legacy status meanings, and use only compiled store destinations. No package
 version changed. The new built-ins revision/schema is 17; older reservations stay.
 
-Read both app findings and latest reports read-only: Kundalini 16 and app-c 13
+Read both app findings and latest reports read-only: reference app B 16 and reference app C 13
 (still in progress). One successful overlap is not resolution of major F-33.
 F-27 remains open. R31 does not modify transactions, retry budgets or sync leases.
 
@@ -10895,22 +10871,22 @@ heads remain d771105 / 53d3a91. The final changes below this validation are repo
 only; the package/site source and signed artifacts are unchanged.
 
 Earlier full gates below retain their original scope. R31 readiness does not close
-app-c F-33/F-27, establish network policy delivery, or verify iOS or a public store
+reference app C F-33/F-27, establish network policy delivery, or verify iOS or a public store
 upgrade. No additional must-have is eligible; S1 stays parked and S2 needs a Play
 account. All app repositories remained read-only and the shared emulator was released.
 
 
 
-## App-c iteration 12 follow-up
+## reference app C iteration 12 follow-up
 
-Read both apps' findings and newest reports read-only: Kundalini 16 and app-c 12.
+Read both apps' findings and newest reports read-only: reference app B 16 and reference app C 12.
 Packages remains code d771105 / site 53d3a91. Rechecked every numbered feature
 branch, the original rebase queue, R14, link-compat and sync-fixes: all tips are
 ancestors of packages in both repos. The report-only notify-event-compat tip is
 already in integration. No eligible must-have, pending feature merge or changed
 base requires a branch rebuild. S1 remains parked and S2 needs a Play account.
 
-Checked app-c's iteration-12 captures independently, without running the app:
+Checked reference app C's iteration-12 captures independently, without running the app:
 
 - F-33: PID 8306 begins a worker at 10:09:41.038 during Valence.open, which
   completes at 10:09:42.680. f33-before-restart-logcat.txt records the named
@@ -10960,12 +10936,11 @@ Validation for this report-only follow-up: branch ancestry, unchanged implementa
 trees, matching new report sections and git diff --check in both worktrees. Full
 gates below retain their earlier October 31 scope; no fresh gate pass, emulator
 run or independent runtime review is claimed. No test-app writes, protected-branch
-changes, version/schema changes, pushes or publications. iOS remains experimental
-and untested; real remote push delivery remains unverified.
+changes, version/schema changes, pushes or publications. iOS is experimental and untested. real remote push delivery remains unverified.
 
-## App-c iteration 11 follow-up
+## reference app C iteration 11 follow-up
 
-Read both apps' findings and newest reports read-only: Kundalini 16 and app-c 11.
+Read both apps' findings and newest reports read-only: reference app B 16 and reference app C 11.
 No eligible must-have remains. The original queue, R14 and every later numbered
 feature tip are ancestors of packages in both repositories. The only unmerged
 compatibility tip, notify-event-compat, contains reports and is already included
@@ -10973,7 +10948,7 @@ in integration. Packages has not moved: code d771105 / site 53d3a91. Integration
 differs from those bases only in this report and notification-event-compat.md.
 No branch reconstruction or new feature merge is necessary.
 
-Independently checked app-c's iteration-11 captures:
+Independently checked reference app C's iteration-11 captures:
 
 - startup-settled.txt records worker begin at 09:09:40.874, Valence.open completion
   at 09:09:40.948 and worker completion at 09:09:59.354, without the earlier COMMIT
@@ -11007,14 +10982,14 @@ unchanged implementation trees and git diff --check in both worktrees. The full
 package/site gates below remain earlier evidence on the unchanged implementation;
 they were not rerun and no fresh gate pass is claimed. No new emulator run,
 independent runtime review, app writes, protected-branch changes, version/schema
-changes, push or publication. iOS remains experimental and untested; real remote
+changes, push or publication. iOS is experimental and untested. real remote
 push delivery remains unverified.
 
 ## Earlier iteration-10 acceptance refresh
 
 ## In plain terms
 
-App-c iteration 10 now passes the legacy notification event audit using the
+reference app C iteration 10 now passes the legacy notification event audit using the
 supported adapter and unchanged shipped schema. A separate sync COMMIT failure,
 F-33, remains open. Package gates do not turn its successful retry into a fix.
 No new must-have is eligible and no runtime change is made in this refresh.
@@ -11046,11 +11021,11 @@ needs a Play account and the post-beta Playground is not started.
 
 ## App evidence and limits
 
-Read both VALENCE_FINDINGS.md files and newest reports read-only: Kundalini 16,
-app-c 10. Kundalini's link/reboot/pinned-OTA evidence and upstream F-63/F-64/F-65
+Read both VALENCE_FINDINGS.md files and newest reports read-only: reference app B 16,
+reference app C 10. reference app B's link/reboot/pinned-OTA evidence and upstream F-63/F-64/F-65
 fixes remain as recorded below; no newer app adoption of those fixes is inferred.
 
-Independently checked app-c's current host wiring and iteration-10 captures:
+Independently checked reference app C's current host wiring and iteration-10 captures:
 
 - F-30: warm-tap-events.json contains string ID `iteration-10-warm` and Flat 1;
   event-contract-check.json reports one tap, zero violations and passed=true.
@@ -11112,7 +11087,7 @@ by the iteration-10 evidence above.
 
 The latest shared candidate and the notification compatibility validation are now
 together on `codex/integration` in both repositories. Every required gate passed.
-No new feature or runtime change was needed. App-c's notification event audit still
+No new feature or runtime change was needed. reference app C's notification event audit still
 fails on its unadapted host; these package gates do not close that device finding.
 
 ## Current bases, inclusion order and decision
@@ -11157,10 +11132,10 @@ during the candidate freeze; S2 needs a Play account. No new must-have is eligib
 
 ## Latest app evidence and limits
 
-Read both apps' `VALENCE_FINDINGS.md` and newest completed reports: Kundalini
-iteration 16 and app-c iteration 9. Test-app repositories were read-only.
+Read both apps' `VALENCE_FINDINGS.md` and newest completed reports: reference app B
+iteration 16 and reference app C iteration 9. Test-app repositories were read-only.
 
-Kundalini reports schema-17 store adoption, warm/cold/repeated custom links,
+reference app B reports schema-17 store adoption, warm/cold/repeated custom links,
 unsafe-path rejection, pinned requires.bridge 16 OTA commitment and seven alarms
 restored after reboot without a manual launch. Its observed boot delay is not a
 delivery-time guarantee. Upstream packages now includes the F-63 link-manifest
@@ -11168,7 +11143,7 @@ diagnostic, F-65 association-file refusal and F-64 method-retirement work; this
 does not establish adoption of those changes by the app. A bridge floor alone
 does not prove that an old method has no callers.
 
-App-c iteration 9 still reports F-30 FAIL. Independently read its
+reference app C iteration 9 still reports F-30 FAIL. Independently read its
 `event-contract-check.json`: one tap, numeric ID 1997876972, expected string,
 passed=false. Its current mobile/lib contains neither notificationEventAdapter
 nor notificationEventFields, so this is not acceptance of the merged correction.
@@ -11183,8 +11158,7 @@ and bad 1793383520 retained. Routing, background work and OTA success do not rep
 the separately failing event contract. F-27's remaining host-file lifecycle
 documentation gap stays open. F-31's permissions floor is corrected to schema 10
 upstream; its captured local guide is older. F-32 did not recur and does not
-establish a package cause. Real remote push and iOS remain unverified; iOS is
-experimental and untested.
+establish a package cause. Real remote push and iOS remain unverified; iOS is experimental and untested.
 
 ## Fresh gates on the current candidate
 
@@ -11222,7 +11196,7 @@ above; refresh if either moves before merging.
 
 No must-have item is eligible: R1-R29 and the R30 compatibility correction are
 already done. Read both apps' VALENCE_FINDINGS.md and newest completed reports:
-Kundalini iteration 15 and app-c iteration 2. These replace the earlier app-a
+reference app B iteration 15 and reference app C iteration 2. These replace the earlier reference app A
 acceptance input for this period.
 
 Decision: preserve the frozen runtime, users' data and shipped signatures. The new
@@ -11246,13 +11220,13 @@ report-only tip as codex/integration-before-20261030-acceptance.
 No merge into a protected branch occurred. Schema/builtins revision stays 16.
 
 R30's legacy `link.initial` cutoff is already merged (code cdd39f0, site ead9e3b).
-The API-signature part of app-c F-27 is documented by code d2e6970 and site ce19151.
+The API-signature part of reference app C F-27 is documented by code d2e6970 and site ce19151.
 This does not close the app's broader request for persistence, caps and cleanup
 recipes, or establish that it has received these newer docs.
 
 ## App evidence and limits
 
-Kundalini iteration 15 reports its first installed schema-16 release upgrade,
+reference app B iteration 15 reports its first installed schema-16 release upgrade,
 retaining 19,227 panchang rows, saved profiles and preferences; signed OTA
 1793303605 reached pending, trial and commitment. Its former reminder-delivery
 gap is now closed in the app findings. Checked
@@ -11264,7 +11238,7 @@ reboot or device guarantee. The report describes recovery from an emulator
 crash by rearming on launch. Its dayReady loading fix is app-owned; a slow first
 read must not be treated as proof that a stored day is absent.
 
-App-c iteration 2 reports retained release upgrade, fresh airplane seed launch,
+reference app C iteration 2 reports retained release upgrade, fresh airplane seed launch,
 offline edit/reconnect, camera/gallery/removal, share sheets, placed widget
 updates, R3 denial/grant and a mixed task-history reminder tap. Checked its
 rollback-second-logcat.txt and final-logcat.txt: broken 1793305716 failed twice
@@ -11278,7 +11252,7 @@ does not prove natural scheduling or a fresh background push receipt.
 The tested mixed F-29 sequence passed without clean-task recovery, but does not
 reconstruct every historical intent flag/two-activity stack or isolate a package bug.
 
-App-c's supplied create-valence artifact still required its local F-26 workaround.
+reference app C's supplied create-valence artifact still required its local F-26 workaround.
 snapshot-hashes.json records create-valence SHA256
 43de7c06988a9e30516f848f960c056a86fec456bd5438c1c91ae3fc9c63102f and
 bridge SHA256 0d77ac92993e130c7d9b6122ee1877d7d52ea26500689b038ed38296f02db820.
@@ -11321,7 +11295,7 @@ No new independent runtime review is claimed for this report-only change.
 
 No emulator was acquired or operated in this run. App evidence was read only.
 Positive biometrics, Firebase delivery and exact natural background timing remain
-outside these checks; iOS remains experimental and untested. No package-version
+outside these checks; iOS is experimental and untested. No package-version
 change, test-app write, push or publication.
 
 ---
@@ -11330,14 +11304,14 @@ change, test-app write, push or publication.
 
 ## Iteration-17 acceptance update - 2026-10-29
 
-Read both apps' VALENCE_FINDINGS.md and newest reports read-only: Kundalini 14
-and app-a 17. All R1-R29 must-haves remain done. Rechecked all 23 feature tips
+Read both apps' VALENCE_FINDINGS.md and newest reports read-only: reference app B 14
+and reference app A 17. All R1-R29 must-haves remain done. Rechecked all 23 feature tips
 against packages in both repositories; every tip is included. Both integration
 branches contain newest packages code `472bd2f13f71702cd4abb59ede590783ecd8104c`
 and site `bb8d82fc509825f34d45cfd5ca06d72c7237030b`. Only this report differs
 from packages in either tree; no feature merge or rebase remains.
 
-App-a adds these bounded observations:
+reference app A adds these bounded observations:
 
 - During ordinary navigation, `store.get` id 36 waited at 10005ms and completed
   at 11262ms. Later `store.count` ids 39/40 waited at 10002ms, accompanied by
@@ -11371,7 +11345,7 @@ App-a adds these bounded observations:
 
 Spot-checked the wait logs, task inspections, new-task/offline startup logs,
 both failed trials, bad refusal, final commitment/file comparison, reconnect,
-snapshot hashes and independent app review. Evidence is in read-only app-a:
+snapshot hashes and independent app review. Evidence is in read-only reference app A:
 ITERATION_17_REPORT.md, .valence/review-iteration17.md and
 .shots/iteration17-{navigation-wait.log,recents-before.log,
 recents-task-after-settled.txt,recents-task-new.txt,recents-new-task.log,
@@ -11380,7 +11354,7 @@ rollback-2.log,rollback-3.log,final-commit-1.log,final-artifact.json,
 reconnect.log,snapshot-hashes.txt}. Visible UI/count claims remain app-reported;
 no new emulator session or screenshot review was performed here.
 
-Kundalini's newest report remains iteration 14: its installed host is schema 11,
+reference app B's newest report remains iteration 14: its installed host is schema 11,
 schema-16 adoption exists in source/tests only, seven inexact alarms are armed
 and reminder delivery remains unobserved. Its schema-16 OTA is withheld. F-62's
 tooling warning still needs adopter confirmation.
@@ -11395,19 +11369,19 @@ Fresh validation covers ancestry, matching reports, unchanged implementation
 trees and diff hygiene. Full gates below retain their original run and scope;
 this report-only update is not a fresh gate, device or runtime-review pass.
 No test-app writes, shared-branch changes, schema/package-version changes,
-pushes or publications occurred. iOS remains experimental and untested.
+pushes or publications occurred. iOS is experimental and untested.
 
 ## Iteration-16 acceptance update - 2026-10-29
 
 Read both apps' VALENCE_FINDINGS.md and their newest iteration reports read-only:
-Kundalini 14 and app-a 16. No eligible must-have remains: R1-R29 are done.
+reference app B 14 and reference app A 16. No eligible must-have remains: R1-R29 are done.
 Packages is still code `472bd2f13f71702cd4abb59ede590783ecd8104c` / site
 `bb8d82fc509825f34d45cfd5ca06d72c7237030b`. Rechecked all 23 feature
 tips against packages in both repositories; every tip is included and both
 integration branches contain the latest packages base. Only this report differs
 from packages in either implementation tree.
 
-App-a iteration 16 adds evidence beyond the iteration-15 closeout below:
+reference app A iteration 16 adds evidence beyond the iteration-15 closeout below:
 
 - On the first offline start after a retained-data reinstall, PID 6320 logged
   `store.open` waits at 10002ms and 20003ms, completion at 29274ms, and startup
@@ -11441,14 +11415,14 @@ App-a iteration 16 adds evidence beyond the iteration-15 closeout below:
 Spot-checked the live wait capture, reinstall log, process exit-info, restored
 route log, snapshot hashes, independent app review, both failed-trial logs, bad
 refusal, final commit/offline logs and artifact comparison. Evidence lives in
-the read-only app-a repo: ITERATION_16_REPORT.md, .valence/review-iteration16.md
+the read-only reference app A repo: ITERATION_16_REPORT.md, .valence/review-iteration16.md
 and .shots/iteration16-{reinstall-live.log,reinstalled-offline-1.log,
 reclaim-exit.txt,reclaim.log,snapshot-hashes.txt,rollback-1.log,rollback-2.log,
 rollback-3.log,final-commit-1.log,final-force-stop-1.log,final-artifact.json}.
 The shelf counts and visible product behavior above remain app-reported; no
 new emulator session or screenshot review was performed here.
 
-Kundalini's latest evidence is unchanged: schema-16 source/tests exist, but its
+reference app B's latest evidence is unchanged: schema-16 source/tests exist, but its
 installed host remains schema 11. Seven inexact OS alarms are armed; delivery
 has not been observed, and the schema-16 OTA remains withheld. Its F-62 tooling
 warning still needs adopter confirmation.
@@ -11475,8 +11449,8 @@ in the refresh below are ancestors of packages in both repositories. Integration
 differs from those bases only in this report; there is no outstanding feature
 merge or rebase. The prior gate results below retain their original run and scope.
 
-Read both apps' VALENCE_FINDINGS.md and newest reports read-only: Kundalini
-iteration 14 and app-a iteration 15. App-a's new report supersedes the earlier
+Read both apps' VALENCE_FINDINGS.md and newest reports read-only: reference app B
+iteration 14 and reference app A iteration 15. reference app A's new report supersedes the earlier
 iteration-14 adoption limits recorded below:
 
 - F-36 is resolved for the supplied snapshot pair: unmodified codegen accepts
@@ -11495,18 +11469,18 @@ iteration-14 adoption limits recorded below:
   1793234393 committed with floor 1792247440 and served again offline.
 - Firebase disappeared from the app's resolved dependencies. This is adopter
   graph evidence; the separate all-DEX/manifest audit below covers the example
-  APK, not app-a's release APK.
+  APK, not reference app A's release APK.
 - Startup phase diagnostics are visible. F-33 database waits and F-35 ANRs still
   have no established root cause. The app's commit-suffix probe false negative
   was regression-fixed; its original 90.01-second timeout remains a failure.
 
-App-a's report records 10 web, 15 native and 7 diagnostic tests, clean fatal-info
+reference app A's report records 10 web, 15 native and 7 diagnostic tests, clean fatal-info
 analysis, both doctors without FAILs, and a 335.7-second release build. These are
 app-reported results, not tests rerun here. Spot-checked its captured codegen
 warnings, snapshot hashes, anonymous-401 log, same-PID suspension JSON, final
 commit/offline logs and two-strike/bad-refusal logs against the report.
 
-Evidence is in the read-only app-a repo: ITERATION_15_REPORT.md and
+Evidence is in the read-only reference app A repo: ITERATION_15_REPORT.md and
 .shots/iteration15-{snapshot-hashes.txt,reason-codegen.txt,anonymous.log,
 suspension-result.json,rollback-3.log,rollback-4.log,final-2.log,
 final-offline-1.log}. The supplied archives are identified by SHA-256:
@@ -11514,19 +11488,19 @@ wizard `43DE7C06988A9E30516F848F960C056A86FEC456BD5438C1C91AE3FC9C63102F`;
 bridge `0D77AC92993E130C7D9B6122EE1877D7D52EA26500689B038ED38296F02DB820`.
 Version labels alone do not establish snapshot identity.
 
-Kundalini iteration 14 remains the latest report: schema-16 source adoption and
+reference app B iteration 14 remains the latest report: schema-16 source adoption and
 tests passed, but no schema-16 APK installed. Its seven armed alarms are observed
 on the schema-11 host; reminder delivery remains unobserved, and the schema-16 OTA
 was withheld. F-62's stale-tooling diagnostic still needs adoption confirmation
 there. Current source already warns about unknown methods in built-in namespaces
-and names `npx create-valence update`; app-a's captured codegen output exercises
+and names `npx create-valence update`; reference app A's captured codegen output exercises
 that warning without rejecting its historical custom handlers. This does not
-close Kundalini's finding on its behalf.
+close reference app B's finding on its behalf.
 
 Decision: preserve the frozen candidate, users' data and shipped signatures.
 There is no eligible must-have item to claim, no demonstrated new runtime defect
 to patch, and the latest app evidence does not justify reopening S1 or starting
-the post-beta Playground. S2 retains its Play-account blocker. Kundalini's native
+the post-beta Playground. S2 retains its Play-account blocker. reference app B's native
 adoption, reminder delivery, broader device acceptance, Firebase delivery and
 iOS validation remain open; iOS is experimental and untested.
 
@@ -11571,12 +11545,12 @@ contains built-ins. Explicit push-envelope metadata preserves the data-only sync
 boundary. No speculative runtime change is justified by the app stall reports.
 
 Both apps' VALENCE_FINDINGS.md and newest reports (iteration 14) were read
-read-only. Kundalini's report is now complete: its installed schema-11 host has
+read-only. reference app B's report is now complete: its installed schema-11 host has
 seven OS alarms armed through the package receiver, with inexact timing, but a
 reminder firing was not observed. The schema-16 adoption passes app tests but
 neither release nor debug APK completed, so its new signed OTA was deliberately
 withheld. Its swallowed reminder-read error was an app defect and is reported
-fixed there. App-a likewise has no fresh native build or valid boot baseline in
+fixed there. reference app A likewise has no fresh native build or valid boot baseline in
 iteration 14; its last proven installed OTA and retained shelf remain iteration
 13 evidence. Neither report establishes a cause for the historical lock/ANR
 observations. F-62/F-36 still require matched-snapshot adoption; current framework
@@ -11629,7 +11603,7 @@ messages outside the data-only sync-hint path. Database diagnostics retain fixed
 operation labels without SQL, arguments or app data, and preserve transactions,
 errors and retry budgets. Release-only development exclusion is unchanged; its
 earlier AOT evidence retains its original date and scope. No new independent
-review or emulator session is claimed. iOS remains experimental and untested;
+review or emulator session is claimed. iOS is experimental and untested.
 Firebase delivery and test-app release acceptance remain open.
 
 Only this integration report is changed in each worktree. No test-app writes,
@@ -11638,18 +11612,18 @@ shared-branch commits/merges, version changes, pushes or publications occurred.
 ## Adoption follow-up - 2026-10-29
 
 Both apps' findings and newest iteration reports were read without writing to
-either app: initially Kundalini iteration 13 and app-a iteration 14, then the new
-Kundalini iteration-14 report created during this run. Its day-14 finding F-62
+either app: initially reference app B iteration 13 and reference app A iteration 14, then the new
+reference app B iteration-14 report created during this run. Its day-14 finding F-62
 records that the vendored CLI did not recognize `notify.pendingIds`, generated
 an abstract app-owned handler at the correct
 `since: 16`, and gave no tooling-refresh diagnostic. The app reports that
 `create-valence update` restored delegation. This is separate from F-57's
 below-reservation declaration and does not demonstrate failure of the current
-integrated generator. App-a F-36 still records supplied snapshot tooling rejecting
+integrated generator. reference app A F-36 still records supplied snapshot tooling rejecting
 the live docs' nullable `SyncStatus.reason` addition. Matched artifact adoption
 remains necessary; neither finding is closed by framework tests.
 
-Kundalini iteration 14 adopts the guarded ID-only read with the older full-read
+reference app B iteration 14 adopts the guarded ID-only read with the older full-read
 fallback and records a Gradle-daemon disappearance followed by a smaller heap
 configuration. At read time its device and verification sections contained placeholders;
 no completed iteration-14 build or device matrix is inferred from that draft.
@@ -11662,7 +11636,7 @@ the new adoption evidence. Keep this run scoped to integration validation while
 there is no eligible must-have item. No branch reassembly is needed while both
 bases and all ready tips remain unchanged.
 A blanket rejection of unknown names under a built-in namespace would also reject
-valid shipped custom methods such as Kundalini's `notify.daily`; any future
+valid shipped custom methods such as reference app B's `notify.daily`; any future
 diagnostic must preserve that compatibility distinction.
 
 Fresh verification on code `81c452a` / site `b55d0bf`:
@@ -11799,19 +11773,19 @@ timers. Canonical OTA verification order, navigation lock, atomic state and
 account/outbox boundaries remain unchanged. Independent improver review is still
 required before merging into packages.
 
-Read-only inputs: both apps' VALENCE_FINDINGS.md and newest reports, Kundalini 13
-and app-a 14. Kundalini completed report 13 during this run: it now records startup
+Read-only inputs: both apps' VALENCE_FINDINGS.md and newest reports, reference app B 13
+and reference app A 14. reference app B completed report 13 during this run: it now records startup
 recovery after keep.xml and a queue readback, with 114 web tests and 35 native tests
 rerun at iteration-14 startup. F-58 still records Firebase in its supplied binary.
 Reminder firing, OTA, rollback and fresh install are explicitly unverified in that
 iteration. This newer evidence supersedes the placeholder limitation recorded in
 the earlier R27 validation note; no full device matrix is inferred.
 
-App-a's last native build remains cancelled without a completed APK, its F-36
+reference app A's last native build remains cancelled without a completed APK, its F-36
 snapshot/docs mismatch still needs matched snapshots, and F-33/F-35 causes and
 adoption acceptance remain open. R27 removes the framework dependency cause; it
 does not close F-34's local-notification/desugaring cost or prove either app has
 adopted this candidate. No new emulator session, app-data reset or test-app write
 occurred. Android build/unit evidence is separate from delivery/device acceptance;
-iOS remains experimental and untested. Firebase delivery still needs a maintainer
+iOS is experimental and untested. Firebase delivery still needs a maintainer
 project. No shared-branch commit/merge, push, publication or package-version bump.

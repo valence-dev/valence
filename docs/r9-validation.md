@@ -9,7 +9,7 @@ site `37c3928`. Development documentation follow-ups: package `71226b1`, site `2
 Live development now includes upstream account isolation, event capability metadata, mechanical
 doctor checks and real host-widget tests. The generated bridge and installed bridge package
 must be compatible before HMR starts; both development guides now say to regenerate and type-check
-after upgrades. This responds to app-a F-32 without claiming the harness snapshots were replaced.
+after upgrades. This responds to reference app A F-32 without claiming the harness snapshots were replaced.
 
 ## Decisions and review
 
@@ -32,8 +32,8 @@ after upgrades. This responds to app-a F-32 without claiming the harness snapsho
   the new token under the lease. Preserve that implementation when merging R9 and rerun the combined
   auth regression tests and gates. This branch alone is not the account-switch fix.
 
-Read both complete app findings and newest reports, read-only: Kundalini iteration 11 (2026-10-23),
-app-a iteration 9 (2026-10-26). Their device observations and unresolved snapshot compatibility remain
+Read both complete app findings and newest reports, read-only: reference app C iteration 11 (2026-10-23),
+reference app A iteration 9 (2026-10-26). Their device observations and unresolved snapshot compatibility remain
 separate from this framework refresh. No test-app files or other builders' worktrees were changed.
 
 ## Fresh gates
@@ -64,7 +64,7 @@ example README edit and failed with one dirty-worktree warning; the clean-commit
 with zero warnings. No failing gate remains.
 
 No new emulator run. The 2026-10-21 HMR device evidence below is historical. React Fast Refresh
-and a profile APK were not separately exercised. iOS remains experimental and untested.
+and a profile APK were not separately exercised. iOS is experimental and untested.
 Exactly one queue item refreshed. Package versions did not change. Nothing was pushed or published,
 and no merge or commit was made to a shared branch.
 
@@ -89,7 +89,7 @@ with the existing since values intact. No new schema reservation is needed.
 The site index conflict retained both the development guide and the incoming database,
 paging and lifecycle documentation. No package version numbers changed.
 
-Inputs reviewed: Kundalini's VALENCE_FINDINGS.md and ITERATION_10_REPORT.md, and app-a's
+Inputs reviewed: reference app C's VALENCE_FINDINGS.md and ITERATION_10_REPORT.md, and reference app A's
 VALENCE_FINDINGS.md and ITERATION_8_REPORT.md. Their migration/data and authentication findings
 remain distinct from this development-server queue refresh. Neither test app was modified.
 
@@ -124,8 +124,7 @@ and 953.9 s respectively under this host's load; these are build timings, not ap
 No failing gates remain. No push, publication or merge into a shared branch occurred.
 
 Fresh Android device checks were optional and skipped for this refresh. The 2026-10-21 device
-results below are historical, not a claim that HMR was re-exercised after this merge. iOS remains
-experimental and untested; React Fast Refresh and a profile APK were not separately exercised.
+results below are historical, not a claim that HMR was re-exercised after this merge. iOS is experimental and untested. React Fast Refresh and a profile APK were not separately exercised.
 
 ---
 
@@ -222,5 +221,4 @@ and preservation of OTA activation records. Two findings were fixed and regressi
   `bad` candidates and preserve pending/trial/failure evidence on refusal or fallback.
 
 The final review reported no remaining confirmed findings. No security verification step was
-removed. Public signed-bundle serving retains its existing behavior. iOS remains experimental
-and untested; no Apple device execution is claimed.
+removed. Public signed-bundle serving retains its existing behavior. iOS is experimental and untested. no Apple device execution is claimed.

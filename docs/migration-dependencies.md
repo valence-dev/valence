@@ -8,15 +8,15 @@ before upgrading; only overrides added solely for that conflict should be remove
 followed by `flutter pub get` against the app's complete graph.
 
 Branch: `codex/migration-dependencies`, starting at code packages c091bee and site
-packages 5c17a0d. This corrects App C iteration 153's migration-docs F-44 (distinct
+packages 5c17a0d. This corrects reference app C iteration 153's migration-docs F-44 (distinct
 from its historical sync/lease F-44 label). Evidence: its read-only
 `VALENCE_FINDINGS.md`, `ITERATION_153_REPORT.md`, and
 `evidence/iteration-153/docs-review153.md`.
 
-Read both findings inventories and the newest reports, Kundalini 23 / App C 153.
-App C reports 102 artifact checks with scopedAcceptance=false. Its camera and
+Read both findings inventories and the newest reports, reference app B 23 / reference app C 153.
+reference app C reports 102 artifact checks with scopedAcceptance=false. Its camera and
 host/gallery focus-loss ANRs remain separate from successful media retries;
-canonical fresh installation remains unverified. Kundalini F-83 still requires a
+canonical fresh installation remains unverified. reference app B F-83 still requires a
 rebuilt-host device recheck against the queued lease-clock correction. Neither
 report is fresh device acceptance for this branch.
 
@@ -34,7 +34,7 @@ lock has notifications 22.3.3, connectivity 7.3.2 and dbus 0.8.0. The existing
 local-notification guide already describes this compatible stack. This does not
 recertify external package registries or an arbitrary adopter's dependency graph.
 
-Independently checked all 52 evidence links in App C's latest report: none are
+Independently checked all 52 evidence links in reference app C's latest report: none are
 missing. Its saved audit contains 102 passing checks and scopedAcceptance=false.
 These artifact checks do not establish device acceptance.
 
@@ -62,5 +62,4 @@ attempt is not counted as a pass. The corrected runner captured exit 0 and the
 APK completion above; the plugin warning remains. Logs:
 `%TEMP%/valence-migration-20261108-*.log` (APK result in `example-apk-retry.log`).
 
-No emulator run, publication or push is part of this correction. iOS remains
-experimental and untested. Combined integration gates are recorded separately.
+No emulator run, publication or push is part of this correction. iOS is experimental and untested. Combined integration gates are recorded separately.

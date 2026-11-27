@@ -9,9 +9,9 @@ cancel or re-arm requests. Disabled hosts still deny the group, and an unavailab
 native service returns an empty list.
 
 Both apps' findings and newest reports were read without modifying them:
-Kundalini iteration 13 and app-a iteration 14. Kundalini's reminder reconciliation
+reference app C iteration 13 and reference app A iteration 14. reference app C's reminder reconciliation
 motivates this path, but its report retains device/verification placeholders.
-App-a's snapshot/docs mismatch F-36, startup F-35 and lock warnings F-33 still
+reference app A's snapshot/docs mismatch F-36, startup F-35 and lock warnings F-33 still
 need matched-snapshot adoption and device evidence. These tests do not close them.
 
 ## Concurrent upstream implementation and decisions
@@ -84,6 +84,5 @@ and disabled-host denial. The original detailed call still returns `E_TOO_LARGE`
 OTA verification order, navigation lock, atomic state and database writes are
 outside this read-only feature and unchanged by its diff.
 
-No new emulator session or device-delivery claim. iOS remains experimental and
-untested. No test-app or other builder's worktree writes, shared-branch commits
+No new emulator session or device-delivery claim. iOS is experimental and untested. No test-app or other builder's worktree writes, shared-branch commits
 or merges, pushes or publications occurred.

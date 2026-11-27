@@ -95,10 +95,10 @@ gates above supply the test evidence.
 
 No new emulator check was attempted for R22. Haptic platform-channel invocation
 is covered by example tests; felt vibration and device execution of this branch
-are not claimed. iOS remains experimental and untested.
+are not claimed. iOS is experimental and untested.
 
-Read-only app inputs: both complete `VALENCE_FINDINGS.md` files, Kundalini's
-`ITERATION_12_REPORT.md` and App A's `ITERATION_10_REPORT.md`. Both describe a
+Read-only app inputs: both complete `VALENCE_FINDINGS.md` files, reference app C's
+`ITERATION_12_REPORT.md` and reference app A's `ITERATION_10_REPORT.md`. Both describe a
 mismatched supplied CLI/bridge snapshot pair. This branch retains the matching
 source pair and does not claim to repair harness snapshot distribution. Sync,
 retention and seed findings remain separate roadmap work.

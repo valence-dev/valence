@@ -116,11 +116,14 @@ Declare schema-7 app.appearance with bool darkMode, highContrast and reducedMoti
 
 Schema 8 adds `state.save({json})` and `state.restore()` for a task-local UI blob (65,536 JSON UTF-8 bytes). ValenceApp restores the local path/query/hash after OS process reclamation. Explicit task closure starts fresh; a different bundle seq clears the snapshot. Save promptly and keep durable records in SQLite. iOS is experimental and untested. [Guide](https://getvalence.dev/docs/guides/state-restoration/).
 
-## Push events
-
-Import `call`, `has` and `on` from your generated `bridge.g.ts`. Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS/APNs is experimental and untested.** Subscribe to `push.tapped` before calling `push.initial`; render push contents as text and validate route identifiers yourself. [Guide](https://getvalence.dev/docs/guides/remote-push/).
+## Paging data
 
 Guard `has("data.count")` to page `data.list` with `after`: pass the last key of the previous page and the scan resumes strictly after it, which is the only complete read of a bucket larger than `data.list`'s 500-row clamp. `has("data.list")` cannot gate `after` — it is a new parameter on a method that has existed since version 1, and a host older than version 5 rejects the unknown field with `E_PARAMS`. `call("data.count", {bucket, prefix})` returns the number of live rows without reading any of them.
+
+## Push events
+
+Import `call`, `has` and `on` from your generated `bridge.g.ts`. Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS is experimental and untested.** Subscribe to `push.tapped` before calling `push.initial`; render push contents as text and validate route identifiers yourself. [Guide](https://getvalence.dev/docs/guides/remote-push/).
+
 
 ## Route OS links
 
@@ -128,10 +131,8 @@ After `connect()`, install one `onLink()` subscription at the app root. It consu
 
 ## OS permissions
 
-Schema 9 bindings expose `permissions.check`, `permissions.request`, `permissions.openSettings` and `permissions.changed`. Import them through your generated client and guard calls with `has()`. The native host enforces its store-compiled allowlist. Checks do not prompt; request from a user action. Status strings include denial, permanent denial, restriction and limited access; see the [guide](https://getvalence.dev/docs/guides/permissions/). iOS is experimental and untested.
+Schema 10 bindings expose `permissions.check`, `permissions.request`, `permissions.openSettings` and `permissions.changed`. Import them through your generated client and guard calls with `has()`. The native host enforces its store-compiled allowlist. Checks do not prompt; request from a user action. Status strings include denial, permanent denial, restriction and limited access; see the [guide](https://getvalence.dev/docs/guides/permissions/). iOS is experimental and untested.
 
-
-Guard `has("data.count")` to page `data.list` with `after`: pass the last key of the previous page and the scan resumes strictly after it, which is the only complete read of a bucket larger than `data.list`'s 500-row clamp. `has("data.list")` cannot gate `after` — it is a new parameter on a method that has existed since version 1, and a host older than version 5 rejects the unknown field with `E_PARAMS`. `call("data.count", {bucket, prefix})` returns the number of live rows without reading any of them.
 
 ## Local reminders (schema 11)
 
@@ -139,11 +140,11 @@ Use the generated call/has/on surface for notify.* and badge.*. Guard notify.sch
 
 ## Image sharing (schema 14)
 
-Import `call` and `has` through the generated `bridge.g.ts`. Guard `has("share.image")`, then call with exactly one of canonical base64 `bytes` (128 KiB decoded maximum) or active signed bundle `path` (5 MiB), optional `fileName` and `caption`. PNG/JPEG only. The string result is `selected`, `dismissed` or `unavailable`; selection is not proof of delivery. Adding the method requires a native store build. [Image sharing and legacy custom handlers](https://getvalence.dev/docs/guides/image-sharing/). iOS remains experimental and untested.
+Import `call` and `has` through the generated `bridge.g.ts`. Guard `has("share.image")`, then call with exactly one of canonical base64 `bytes` (128 KiB decoded maximum) or active signed bundle `path` (5 MiB), optional `fileName` and `caption`. PNG/JPEG only. The string result is `selected`, `dismissed` or `unavailable`; selection is not proof of delivery. Adding the method requires a native store build. [Image sharing and legacy custom handlers](https://getvalence.dev/docs/guides/image-sharing/). iOS is experimental and untested.
 
 Schema 15 adds nullable AppInfo.builtins, SyncStatus.reason and BundleStatus.urgent; revision 20 adds nullable SyncStatus.leaseKind and SyncStatus.leaseAgeMs, which name the run holding the sync lease and how long it has held it, so a busy reply can be diagnosed. The age counts from when the holder took the lease, so it only increases while one run holds it. Older hosts omit them. See [capability revisions and durable status](https://getvalence.dev/docs/guides/capabilities-and-status/).
 
-Schema 16 adds `notify.pendingIds()` for cancellation by difference even when full notification content exceeds the bridge reply cap. Keep `notify.pending()` unchanged. A new declaration needs `since` at least `max(16, shipped store schema version + 1)` and app schema `version` at least that value; preserve an already-shipped declaration unchanged. Update the tooling, regenerate, ship a store build and guard calls with `has()`. Disabled hosts still deny the group. No delivery guarantee is added; iOS remains experimental and untested.
+Schema 16 adds `notify.pendingIds()` for cancellation by difference even when full notification content exceeds the bridge reply cap. Keep `notify.pending()` unchanged. A new declaration needs `since` at least `max(16, shipped store schema version + 1)` and app schema `version` at least that value; preserve an already-shipped declaration unchanged. Update the tooling, regenerate, ship a store build and guard calls with `has()`. Disabled hosts still deny the group. No delivery guarantee is added; iOS is experimental and untested.
 
 Store-host update prompts and signed mandatory policies are documented in
 [Forcing an update](../../docs/forcing-an-update.md). Revision 17 adds fixed-destination `app.openStore`,

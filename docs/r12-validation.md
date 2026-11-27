@@ -47,8 +47,7 @@ initializing the Flutter binding. The example now initializes it before `Valence
 launches passed. The `.invalid` sync/OTA endpoints stayed local failures: no successful production
 network sync is claimed. Successful timestamps and multi-schema imports are covered by runtime tests.
 
-The example is stopped and the shared lock released. No test-app repositories were modified. iOS is
-experimental and untested. No push, merge into a shared branch, release tag or publication was performed.
+The example is stopped and the shared lock released. No test-app repositories were modified. iOS is experimental and untested. No push, merge into a shared branch, release tag or publication was performed.
 
 ## Sprint merge refresh ? 2026-10-21
 

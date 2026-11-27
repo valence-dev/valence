@@ -59,12 +59,11 @@ secure-write-order and overlapping-auth fixes. Permanent regressions cover accou
 adoption/refresh/refusal/switch/sign-out, stale snapshots, unreadable identity,
 account/token write failures with retry and concurrent explicit account changes.
 
-No new emulator run; the Android evidence below is historical. iOS remains
-experimental and untested. No fresh process-reclamation device claim is made for
+No new emulator run; the Android evidence below is historical. iOS is experimental and untested. No fresh process-reclamation device claim is made for
 this merge or its account-failure paths.
 
-Read both apps' VALENCE_FINDINGS.md and their newest reports: Kundalini iteration
-11 (2026-10-23), Fernwise/app-a iteration 9 (2026-10-26). The latter reports a
+Read both apps' VALENCE_FINDINGS.md and their newest reports: reference app C iteration
+11 (2026-10-23), Fernwise/reference app A iteration 9 (2026-10-26). The latter reports a
 mismatched supplied CLI/bridge snapshot pair (F-32) and unisolated lock warnings
 (F-33). This branch's current generated code compiles against its matching bridge;
 it does not replace the harness snapshots or claim to resolve the app's warnings.
@@ -122,7 +121,7 @@ All current gates passed:
 
 Earlier device results below remain historical: no new emulator check was performed
 for this merge.
-iOS remains experimental and untested.
+iOS is experimental and untested.
 
 The read-only security review followed `.claude/agents/valence-reviewer.md` and
 found stale docs, now corrected; no confirmed findings remain. It checked route
@@ -132,7 +131,7 @@ Its targeted restoration tests (5) and lifecycle/runtime tests (10) passed.
 
 ## Current app context
 
-Read both apps' `VALENCE_FINDINGS.md`, Kundalini's `ITERATION_10_REPORT.md` and
+Read both apps' `VALENCE_FINDINGS.md`, reference app C's `ITERATION_10_REPORT.md` and
 Fernwise's `ITERATION_7_REPORT.md`. These reports describe migration, retained data,
 read limits, sync status, startup and layout findings. They provide context for the
 merge; this refresh claims no test-app fixes or fresh reproduction of their results.
@@ -217,7 +216,7 @@ the snapshot. No separate physical-device, iOS or Back-to-exit check was perform
 
 ## Test-app context
 
-Read both apps' VALENCE_FINDINGS.md and their latest available summaries: Kundalini
-ITERATION_9_REPORT.md, and app-a NEXT.md/cycle-5 summary plus its day-6 findings.
-App-a has no separate iteration-report file. Neither app was modified. Kundalini's
+Read both apps' VALENCE_FINDINGS.md and their latest available summaries: reference app C
+ITERATION_9_REPORT.md, and reference app A NEXT.md/cycle-5 summary plus its day-6 findings.
+reference app A has no separate iteration-report file. Neither app was modified. reference app C's
 F-39 immutable-asset cache defect is outside R7; this change does not claim to fix it.

@@ -10,8 +10,7 @@ is an app bridge version, and the app stamps it. Run codegen from the example di
 Native setup: this plugin uses Flutter's built-in haptic platform channel. It needs
 no manifest entries, permission prompts, initialization or disposal. Calls are
 foreground UI actions; no background execution is provided. Android's emulator can
-verify channel invocation but cannot establish felt vibration. iOS is experimental
-and untested. Real plugins must document permissions, native setup and cleanup here.
+verify channel invocation but cannot establish felt vibration. iOS is experimental and untested. Real plugins must document permissions, native setup and cleanup here.
 
 Web consumers call `call('haptics.tap')` through their generated bridge. The matching
 `web-types` npm package exports `HapticsMethods` for shim authors; it neither sends

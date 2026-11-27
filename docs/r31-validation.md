@@ -32,10 +32,10 @@ retain their separate data; adopters must keep their own production identity.
 
 ## App evidence read, without writes
 
-Read both VALENCE_FINDINGS.md files and newest reports: Kundalini iteration 16,
-app-c iteration 13 (still in progress). Kundalini adopts schema-17 link.initial,
+Read both VALENCE_FINDINGS.md files and newest reports: reference app B iteration 16,
+reference app C iteration 13 (still in progress). reference app B adopts schema-17 link.initial,
 records warm/cold/repeated links, rejected destinations, reboot alarm recovery and
-a bridge-16-pinned OTA. F-64 retirement is already addressed upstream. App-c 13
+a bridge-16-pinned OTA. F-64 retirement is already addressed upstream. reference app C 13
 records one startup/worker overlap completing in 4804ms, successful settled sync
 and an offline write draining after reconnect. This is not completed acceptance
 and does not close major F-33; F-27 remains open. No transaction, retry or lease
@@ -107,5 +107,5 @@ strict R31 dispatch assertions, then 28/28 passed. Existing Gradle/Kotlin migrat
 messages remain; they are not pub-package warnings.
 
 iOS is experimental and untested. Real remote-policy delivery, a published store
-upgrade and app-c concurrency acceptance are not established. No protected branch
+upgrade and reference app C concurrency acceptance are not established. No protected branch
 commit/merge, version bump, push or publication was performed.

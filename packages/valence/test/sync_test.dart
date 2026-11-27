@@ -211,7 +211,7 @@ void main() {
     });
 
     // S9 / C F-44: `busy` alone cannot tell a foreground run that is legitimately still working from a
-    // cancelled background isolate that never released, which is what four iterations of app-c's
+    // cancelled background isolate that never released, which is what four iterations of reference-app-c's
     // evidence says about itself. These are the diagnostics that turn the next reproduction into a
     // diagnosis; they deliberately change nothing about acquisition or expiry.
     group('who holds it (S9)', () {

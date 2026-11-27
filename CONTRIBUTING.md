@@ -12,7 +12,7 @@ Thanks for helping. Bug reports, docs fixes and code are all welcome.
 
 ## Setup
 
-You need Node 22.18 or later, Flutter 3.44 or later (it brings `dart`), and Git.
+You need Node 22.18 or later, Flutter 3.47 or later with Dart 3.13 or later, and Git.
 
 ```sh
 git clone https://github.com/valence-dev/valence.git

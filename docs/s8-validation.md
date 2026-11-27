@@ -24,7 +24,7 @@ Branches: codex/s8 in both repos. Bases: code 81e55b9, site 42bde41.
 The other builder's S6 commits arrived during this work and were merged, keeping
 the cookie-jar implementation, configuration, docs and tests. No conflicts.
 
-Read both app findings and latest completed reports: Kundalini 18 / app-c 46.
+Read both app findings and latest completed reports: reference app B 18 / reference app C 46.
 F-74 motivates this change; app adoption and device acceptance are not claimed.
 F-37's failed bounded sync assertion and same-PID recovery, F-40's external
 Camera ANR and the historical renderer-loss failures remain unresolved.
@@ -80,6 +80,5 @@ and the separately defined dev-mode test passed after that merge.
 
 No emulator lock/device run was attempted. The task makes that check optional;
 widget tests do not establish device acceptance. No test-app writes, protected
-branch commits/merges, package version changes, push or publication. iOS remains
-experimental and untested. Review and green gates do not close app reliability
+branch commits/merges, package version changes, push or publication. iOS is experimental and untested. Review and green gates do not close app reliability
 findings or establish unconditional beta acceptance.

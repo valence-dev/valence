@@ -9,15 +9,15 @@ the current ids are random, not hashes of the content.
 ## Decision and evidence
 
 All must-have and original rebase-queue items are done. Read both findings
-inventories and newest reports, Kundalini 23 / App C 156. This documentation
-follow-up addresses the missing retention explanation in App C F-27; it does not
+inventories and newest reports, reference app B 23 / reference app C 156. This documentation
+follow-up addresses the missing retention explanation in reference app C F-27; it does not
 close the finding or implement cleanup. Security first, then users' data: do not
 evict files still referenced by durable rows or reset the owner's database.
 Publication is not account-scoped authorization or secure erasure. No executable
 runtime, generator, template, dependency, schema or package-version change.
 
 Checked runtime.dart's delegation and server.dart's random-id generation, durable
-bytes/MIME writes and serving path. App C's saved publication-lifetime-proof.json
+bytes/MIME writes and serving path. reference app C's saved publication-lifetime-proof.json
 records two fixture URLs still answering 200 after source removal. Its storage
 receipt counts 9685 host files / 943660 KiB, versus 224 KiB source media; this is
 retained history, not a leak rate or a demonstrated startup cause.
@@ -30,7 +30,7 @@ Verified all five embedded files per APK against manifest hashes/sizes, builtin
 Inspected fresh-painted.png: canonical release content shows six seed units,
 zero photos and no widget. The saved receipt identifies an independent AVD and
 offline first launch. This is saved app-run evidence, not a new device execution.
-Initial owner startup failures and LOW_MEMORY exits remain separate; Kundalini
+Initial owner startup failures and LOW_MEMORY exits remain separate; reference app B
 F-83 still needs its rebuilt-host device recheck. F-55's migration correction is
 already included in integration. Test-app repositories were read only.
 
@@ -50,8 +50,7 @@ serially. Subsequent changes add only these validation/handoff notes.
 | Website build / SEO / rendered lifetime guidance | 50 pages passed / passed / present |
 
 Logs: %TEMP%/valence-host-lifetime-*.log. The APK retains its existing Kotlin
-migration warning. No new emulator acceptance was attempted; iOS remains
-experimental and untested. Security checklist: signature/check ordering, nonce,
+migration warning. No new emulator acceptance was attempted; iOS is experimental and untested. Security checklist: signature/check ordering, nonce,
 strict decoding, navigation lock, MIME/CSP protections, atomic state and key
 handling are unchanged. No HTTP deletion route or page-supplied filesystem path
 was introduced. S1 stays parked, S2 needs Play, S10/P1 remain deferred. No pushes,

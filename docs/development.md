@@ -68,5 +68,5 @@ Profile and release builds ignore `VALENCE_DEV_URL`, even when explicitly suppli
 define to return to signed-bundle testing. Validate offline starts and OTA rollback in that mode;
 HMR is development feedback, not a signed-release test.
 
-Android is the target for validation. iOS has the code path but remains experimental and untested.
+Android is the target for validation. iOS is experimental and untested.
 Source: contracts section 3.1. Release-exclusion evidence is recorded in `docs/r9-validation.md`.

@@ -6,13 +6,13 @@ Branch: `codex/link-compat`, based on packages code
 
 ## Evidence and decision
 
-The 2026-10-29 test period uses Kundalini and app-c (Fieldnote). Read their
-VALENCE_FINDINGS.md and newest iteration reports: Kundalini 14 and app-c 1
+The 2026-10-29 test period uses reference app B and reference app C (Fieldnote). Read their
+VALENCE_FINDINGS.md and newest iteration reports: reference app B 14 and reference app C 1
 (the latter completed on 2026-10-30). The previous integration notes concern
-app-a; they are historical evidence, not acceptance for this period's app-c.
+reference app A; they are historical evidence, not acceptance for this period's reference app C.
 All R1-R29 roadmap entries and the original rebase queue are already done.
 
-App-c F-26 establishes a migration blocker: updating tooling rejects its shipped
+reference app C F-26 establishes a migration blocker: updating tooling rejects its shipped
 since-2 `link.initial(): string?`, because codegen claims every declaration of
 that name as the package's nullable structured return. A schema-3 fixture with a
 recorded store baseline reproduced the exact error before the fix. The app's
@@ -38,7 +38,7 @@ app-owned native listeners deliver links. No package implementation changed.
   changes, since changes and event payload changes remain refused.
 - A modern declaration delegates at 9. A modern shape below 9 without a recorded
   baseline is refused with the reserved number; a redefinition at 9 is refused.
-- Read-only `codegen --check` using the patched framework CLI against app-c's
+- Read-only `codegen --check` using the patched framework CLI against reference app C's
   current files passed with `written: []`. Existing unknown-name warnings for
   its custom share/auth/notification methods remain warnings. No app file changed.
 - Generating Dart and TS from the modern template before/after the change gives
@@ -51,7 +51,7 @@ app-owned native listeners deliver links. No package implementation changed.
 
 ## Remaining app evidence
 
-App-c reports scoped Android acceptance including R3 prompts, R4 delivery/cold
+reference app C reports scoped Android acceptance including R3 prompts, R4 delivery/cold
 tap, R10 plugin calls, R28's full queue, retained-data migration, signed OTA and
 two-failure rollback. Those are app results, not gates rerun here. Its capture
 records a recovered 12191ms store.open and a separate background BEGIN EXCLUSIVE
@@ -60,11 +60,11 @@ F-27's host-file API recipe remains a documentation gap. F-29's original mixed
 camera/deep-link task stack remains an app regression target, not an isolated
 package defect; the clean-task notification adapter path passed in the app.
 
-Kundalini still has schema-16 source/tests but an installed schema-11 host and
+reference app B still has schema-16 source/tests but an installed schema-11 host and
 unobserved delivery in its latest iteration. Its schema-16 OTA remains withheld.
 Do not change database ownership, retry budgets or data on these observations.
 Keep the feature freeze, S1 deferral, S2 account blocker and post-beta scope.
-iOS remains experimental and untested.
+iOS is experimental and untested.
 
 ## Validation
 
@@ -87,7 +87,7 @@ site commit `f494813`. Both packages bases remained unchanged through validation
 | Example `flutter build apk --debug` | Exit 0; final run 41.1 seconds, Kotlin-plugin warning for app_badge_plus retained |
 | `py example/tool/check_no_firebase.py` | PASS: core graph and all 19 DEX files / manifest contain no Firebase SDK references |
 | Site `npm run build` | 43 pages; SEO/link/anchor checks passed |
-| App-c read-only codegen / modern output comparison | Passed as described above |
+| reference app C read-only codegen / modern output comparison | Passed as described above |
 
 The initial root run passed 100/101 tests and caught the example's stale vendored
 CLI. Synchronized it and reran the complete suite successfully. The initial APK

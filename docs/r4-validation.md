@@ -39,11 +39,11 @@ codegen check passed. The historical timezone documentation finding was fixed;
 its final copy cleanup and explicit permission wording are included. The bridge
 regression now checks both method and event availability at host 10 versus 11.
 
-Read both apps' findings and latest reports read only: Kundalini iteration 11
-and app-a iteration 9. App-a's supplied generator/bridge snapshot mismatch remains
+Read both apps' findings and latest reports read only: reference app C iteration 11
+and reference app A iteration 9. reference app A's supplied generator/bridge snapshot mismatch remains
 a harness delivery issue; this branch's matched generator and bridge compile. No
 harness snapshots were replaced. No new emulator run was attempted: earlier Android
-observations below remain historical. iOS remains experimental and untested.
+observations below remain historical. iOS is experimental and untested.
 Only R4's shared roadmap Status cell changes; this note stays here to respect the
 shared-file boundary. No push, publication, package version change, test-app edit
 or merge into shared branches occurred. Exactly one queue item was refreshed.
@@ -79,9 +79,8 @@ future Kotlin-plugin compatibility warning. `flutter pub publish --dry-run` pass
 after committing the merge; the earlier dirty-tree warning was resolved by that commit.
 
 No new emulator run was attempted for this queue refresh. The Android results below are historical
-evidence from the original implementation, not a fresh device verification. iOS remains experimental
-and untested. Neither test app was edited. Both apps' current findings and newest reports were read:
-Kundalini iteration 10 and app-a/Fernwise iteration 7. Fernwise's report now records its 0.4 migration,
+evidence from the original implementation, not a fresh device verification. iOS is experimental and untested. Neither test app was edited. Both apps' current findings and newest reports were read:
+reference app C iteration 10 and reference app A/Fernwise iteration 7. Fernwise's report now records its 0.4 migration,
 safe-area workaround, anonymous-401 observation, and refused unsafe identity switching; the original
 note below about its missing iteration report describes the earlier checkout only.
 
@@ -178,9 +177,9 @@ again visually. Logs and screenshots are retained locally under `_package/r4-*`.
 
 ## Test-app evidence read
 
-Read the two apps without editing them. Kundalini's `VALENCE_FINDINGS.md` and `ITERATION_10_REPORT.md`
+Read the two apps without editing them. reference app C's `VALENCE_FINDINGS.md` and `ITERATION_10_REPORT.md`
 describe its 0.4 migration, missing receivers, timezone traps, stale alarms and reminder UI races.
-The app-a checkout's `VALENCE_FINDINGS.md` still identifies 0.3 and its `NEXT.md` is cycle 5; no
+The reference app A checkout's `VALENCE_FINDINGS.md` still identifies 0.3 and its `NEXT.md` is cycle 5; no
 separate iteration-report file was present, including hidden-file search. Its available summary and
 later findings were treated as historical evidence, not as a verified 0.4 run.
 

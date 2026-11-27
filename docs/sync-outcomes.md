@@ -18,5 +18,4 @@ and failure precedence so a public server failure never asks users to replace a
 valid token. No token, cursor, acknowledgement or bridge-security path changes.
 
 The site guide is `/docs/guides/sync-outcomes/`. Older hosts may still return ok for
-these failures, so the new string is not a capability test. iOS is experimental
-and untested.
+these failures, so the new string is not a capability test. iOS is experimental and untested.

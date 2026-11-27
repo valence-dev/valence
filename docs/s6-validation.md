@@ -110,7 +110,7 @@ Site: 45-page build with `check-seo` passing, including the new in-page anchor t
 
 ## Not claimed
 
-- **iOS**, as everywhere else here: the code path is shared and unverified, with no Apple hardware.
+- iOS is experimental and untested.
 - **A session cookie's device behaviour.** The adapter always sets `Max-Age=600`, so the device run
   exercised the persistent path. That a cookie with no expiry never reaches secure storage and is gone
   after a restart is covered by `cookies_test.dart`, not by a device.

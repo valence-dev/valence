@@ -1,10 +1,10 @@
 # S9: the sync lease says who is holding it
 
-**Date:** 2026-11-04. **Built-in revision:** 20. **Finding:** app-c F-44 (major as reported).
+**Date:** 2026-11-04. **Built-in revision:** 20. **Finding:** reference app C F-44 (major as reported).
 
 ## What the finding actually said
 
-App-c spent four iterations (62, 84, 86, 87) capturing one shape: a bounded `sync.now` probe after a
+reference app C spent four iterations (62, 84, 86, 87) capturing one shape: a bounded `sync.now` probe after a
 reconnect answers `busy` / `pending 1` twenty times in a row, a WorkManager run is seen beginning and
 being cancelled about a second later, and a `HOME` / `am kill` / relaunch then drains the queued writes
 on the first try.
@@ -129,7 +129,7 @@ a real collision — `docs/evidence/s9/example-launch-logcat.txt`:
 21:32:09.356  sync: released the lease kind=foreground heldForMs=2390
 ```
 
-The pair brackets correctly on a real device, the refusal names its holder, and `heldForMs` is a real
+The pair brackets correctly on Android, the refusal names its holder, and `heldForMs` is a real
 duration measured from the lease row's own timestamp — which is why it agrees with the refusal line's
 546 ms rather than with the gap between the two log lines.
 
@@ -155,7 +155,7 @@ not closed by this.** It is made diagnosable. The emulator was not taken for thi
 behaviour change a run on it would exercise that the unit suite does not, and the lock is shared with two
 test apps.
 
-iOS remains experimental and untested.
+iOS is experimental and untested.
 
 ---
 
@@ -167,7 +167,7 @@ and two reads during one continuous hold could *decrease*. Only `releaseLease`, 
 in-memory take-time, was right.
 
 The device capture above did not show it because that hold applied no page between the refusal and the
-release. Kundalini's iteration 22 did: one hold reported 628, 69, 81, 785 and 1060 ms while its real age
+release. reference app B's iteration 22 did: one hold reported 628, 69, 81, 785 and 1060 ms while its real age
 ran 301 to 2054 ms, and on an airplane-mode run two refusals reported 28 ms and 58 ms for a lease about
 100 seconds old, whose release then correctly reported 106506 ms.
 

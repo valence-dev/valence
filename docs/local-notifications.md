@@ -1,7 +1,7 @@
 # Local reminders and badges
 
 Local notifications are built into schema 11. They run from the OS scheduler, including when the page
-is closed. Android is the tested platform; iOS paths are experimental and untested.
+is closed. Android is the tested platform; iOS is experimental and untested.
 
 Opt in in `valence.config.json`, run codegen, and ship a store build:
 
@@ -238,7 +238,9 @@ See the package [setup](https://pub.dev/packages/flutter_local_notifications#-an
 [badge permissions](https://pub.dev/packages/app_badge_plus) for launcher-specific permissions.
 Run a release build as well as debug when adopting resource shrinking.
 
-## iOS setup (experimental and untested)
+## iOS setup
+
+iOS is experimental and untested.
 
 Import `UserNotifications` in AppDelegate and set `UNUserNotificationCenter.current().delegate = self`
 in `didFinishLaunchingWithOptions`, as in the example. Initialization installs action categories

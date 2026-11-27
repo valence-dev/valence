@@ -60,7 +60,7 @@ from your own `pubspec.yaml` **only if nothing else in your app uses them direct
 Gradle Plugin and warns on every Android build — so if you register background sync, keep it.
 
 **The old notification dependency conflict is historical.** The current built-in reminder stack uses
-`flutter_local_notifications` 22.3.2+ with `connectivity_plus` 7.3.2 and resolves without a `dbus`
+`flutter_local_notifications` 23.0.4+ with `connectivity_plus` 7.3.2 and resolves without a `dbus`
 override. Follow the [current local-reminder setup](https://getvalence.dev/docs/guides/local-notifications/).
 The conflict observed on 2026-10-17 involved the older 19.x notification plugin's Linux dependencies
 (`dbus ^0.7.8` versus `^0.8.0`). Do not copy that stack's override into a current host. If your app still
@@ -289,4 +289,4 @@ Local reminders: enable Android core library desugaring even in hosts that leave
 
 ## Optional remote push
 
-Schema 12 adds opt-in push methods/events. Add the schema and regenerate, configure Firebase and ship a native store build before using them. Install `valence_push` and pass `createFirebasePush()` after Firebase initialization. Only push hosts inherit Firebase's iOS 15.0 minimum; core-only hosts do not resolve Firebase. Android delivery/image/silent-sync validation is blocked pending a maintainer project; iOS/APNs remains experimental and untested. See [Remote push](remote-push.md).
+Schema 12 adds opt-in push methods/events. Add the schema and regenerate, configure Firebase and ship a native store build before using them. Install `valence_push` and pass `createFirebasePush()` after Firebase initialization. Only push hosts inherit Firebase's iOS 15.0 minimum; core-only hosts do not resolve Firebase. Android delivery/image/silent-sync validation is blocked pending a maintainer project; iOS is experimental and untested. See [Remote push](remote-push.md).
