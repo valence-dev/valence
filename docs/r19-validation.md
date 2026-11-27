@@ -60,8 +60,8 @@ invokes its haptics plugin in the native suite.
 | Site build and SEO/link checks | 37 pages passed |
 | Both worktrees `diff --check` | Clean |
 
-Read both apps' findings and newest reports read-only: Kundalini iteration 12
-and app-a iteration 11. App-a's matched snapshots resolve its F-32; Kundalini's
+Read both apps' findings and newest reports read-only: reference app C iteration 12
+and reference app A iteration 11. reference app A's matched snapshots resolve its F-32; reference app C's
 F-52 describes an earlier mismatched pair. No supplied snapshots were rewritten.
 R24-R26 already address reconnect, seed bookkeeping and failed sync reporting.
 Migration build friction and retention observations remain outside R19.

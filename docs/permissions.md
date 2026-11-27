@@ -123,6 +123,8 @@ Setup sources, checked 2026-10-22:
 The latter reads Android's SDK number to select legacy photos and Bluetooth groups;
 no device identifiers cross the bridge. Its native build requirements also apply
 (Java 17, Kotlin 2.2+, AGP 8.12.1+, Gradle 8.13+, iOS 13+, Xcode 26.1.1+).
+Those are individual dependency minima. A Valence host needs compileSdk 37,
+AGP 9.1.1+ and Gradle 9.3.1+.
 
 ## Interpret the answer honestly
 
@@ -165,7 +167,7 @@ The signed `packages/valence/example` has a Permissions section with a kind sele
 Check, Request, App settings and an event readout. It declares all seven kinds solely
 to exercise this API. A production app should copy only the kinds it uses. On Android,
 deny and grant a permission, open settings, change it there and return to see a resume
-delta. iOS code paths and setup remain experimental and untested.
+delta. iOS is experimental and untested.
 
 Android contacts use the platform contacts permission group. Declare only `READ_CONTACTS` for read access; if another native feature declares `WRITE_CONTACTS`, the OS group request may include it and `GET_ACCOUNTS` too if declared. The allowlist gates permission kinds, not individual Android manifest permissions.
 

@@ -5,15 +5,15 @@ the copied skill. The surviving row already distinguishes the historical 19.x
 notification conflict from the built-in 22.3.2 / connectivity 7.3.2 combination.
 The blank line that split the Markdown table is gone too.
 
-Evidence: App C's read-only `evidence/iteration-87/docs-scout-review.md` identifies
+Evidence: reference app C's read-only `evidence/iteration-87/docs-scout-review.md` identifies
 both rows and recommends the current local-notification guide. That scoped scout
 did not recertify external registries or policies. The retained combination is
 also declared by this repository's `packages/valence/pubspec.yaml` and described
 in the site's local-notifications guide. No version recommendation is newly
 introduced or upgraded here.
 
-Reviewed both findings inventories and newest reports: Kundalini iteration 18
-and App C iteration 87. App C records artifact consistency passing but scoped
+Reviewed both findings inventories and newest reports: reference app B iteration 18
+and reference app C iteration 87. reference app C records artifact consistency passing but scoped
 acceptance failing because Settings survival failed: host PID 6188 was killed
 under memory pressure, replacement 7962 was blank, then explicit relaunch
 recovered readiness. Recovery does not close F-36. Offline/reconnect passed
@@ -24,7 +24,7 @@ tooling adoption before the app can verify the correction.
 Decision: remove contradictory instructions rather than change working pins or
 runtime behavior. Preserve security boundaries, users' data and shipped schemas.
 This documentation-only follow-up changes no spec, package, generator, template,
-runtime version or dependency constraint. iOS remains experimental and untested.
+runtime version or dependency constraint. iOS is experimental and untested.
 
 Fresh branch gates passed on November 4:
 

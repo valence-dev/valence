@@ -64,7 +64,7 @@ does the right thing within its own source: it subscribes before it asks, and dr
 if a live event has arrived. Across sources it is yours to do, and it is one line of discipline: record
 which destination arrived most recently, apply that, and have each handler clear the other's pending
 target. Pass over a pending initial reply once a live event has superseded it, rather than letting the
-await order decide. App-c reproduced the failure in an isolated scheduler before it ever saw it on a
+await order decide. reference app C reproduced the failure in an isolated scheduler before it ever saw it on a
 device, which is the cheap way to find it.
 
 **The third destination your page could not see is fixed in the host.** If Android had reclaimed the
@@ -131,7 +131,9 @@ links.example.com` forces OS approval. This tests intent delivery, not real doma
 verification. Reset with state `0` afterwards. Inspect `pm get-app-links` separately
 to distinguish a fetched verification result from a forced one.
 
-## iOS setup (experimental, untested)
+## iOS setup
+
+iOS is experimental and untested.
 
 Set `FlutterDeepLinkingEnabled` to `false` in Info.plist. Add custom schemes to
 `CFBundleURLTypes`. For Universal Links, enable Associated Domains with
@@ -146,7 +148,7 @@ This writes `.well-known/apple-app-site-association` with `applinks` and `paths:
 ["*"]`. The 10-character prefix is your Apple Team ID. Serve it over HTTPS with
 JSON content type and no redirect. The example includes native setup for the
 placeholder domain `links.example.invalid`; it cannot verify against that domain.
-Custom schemes and Universal Links on iOS have not been tested yet.
+iOS is experimental and untested.
 
 Primary setup references, checked 2026-10-22:
 [app_links](https://pub.dev/packages/app_links),

@@ -4,7 +4,7 @@
 
 **Keep the core. Swap the shell.** Your web app becomes your mobile app's interface. A small Flutter core ships through the stores once; every UI release after that is signed, tried on each phone and rolled back on its own if it fails. Data lives in native SQLite, so it works offline.
 
-> **Android today · iOS experimental.** Everything here has been built and run on Android. The iOS paths are specified and implemented but **nobody has run them yet**. Treat iOS as experimental and untested until that changes.
+> Android is tested. iOS is experimental and untested.
 
 Every UI change to a native app normally waits on App Store and Play review, and teams end up maintaining the same logic twice, once for the web and once for mobile. Valence fixes both:
 
@@ -173,7 +173,7 @@ host with a stub native WebView; Android device verification remains a separate 
 
 **Want Valence set up in your app?** Write to [hello@getvalence.dev](mailto:hello@getvalence.dev).
 
-**Android is tested. iOS is experimental and untested** — its rules are implemented and specified, but nothing about them is claimed as verified yet.
+Android is tested. iOS is experimental and untested.
 
 **Not in scope:**
 
@@ -181,11 +181,11 @@ host with a stub native WebView; Android device verification remains a separate 
 - **CRDTs and real-time collaboration.**
 - **Downloading native code.**
 
-## Your own backend in 0.4
+## Your own backend
 
 `http.request` calls your own API natively, restricted to exact `http.origins` origins compiled into the host. It attaches the stored user token, returns redirects without following them, and supports bounded UTF-8 text bodies. Failures are `E_TIMEOUT`, `E_OFFLINE` (no network interface) or `E_INTERNAL`, and a size refusal names the size and the limit. `http.cookieJar` optionally gives one compiled origin a host-held cookie jar — host-only, cleared with the token, invisible to the page — so the default Django and Rails POST shape (a `csrftoken` cookie plus `X-CSRFToken`) is reachable; without it a session-cookie API is out of scope for this method. New at schema 4; guard with `has()` on older hosts. An origin change needs codegen and a store build. Online HTTP does not replace offline sync: the [reference REST adapter](examples/rest-sync-adapter/) shows durable cursors, tombstones and idempotent pushes. [Guide](https://getvalence.dev/docs/guides/your-backend/). Android is tested; iOS is experimental and untested.
 
-## Task restoration in 0.4
+## Task restoration
 
 Schema 8 adds `state.save({json})` and `state.restore()` for a task-local UI blob
 (65,536 bytes of JSON UTF-8). ValenceApp restores the local path, query and hash
@@ -199,7 +199,7 @@ Task snapshots are bound to the native account as well as the signed bundle: swi
 
 [MIT](LICENSE) © 2026 Bishal Pahari
 
-## Offline tooling in 0.4
+## Offline tooling
 
 Seed completion writes retry database locks without repeating the row import. Logs distinguish
 imported rows from a marker that could not be recorded; the next launch retries safely against
@@ -213,7 +213,7 @@ Run `node valence/valence.mjs doctor --tests` for mechanical checks and mapped u
 
 Sync correctness: pull cursors advance only through returned rows, never push echoes or a later server-head max. Fresh pairs satisfy OTA activation only after all pages or static chunks complete. Progress resumes after an interruption. Pending publication retains the data lease; GC protects in-flight manifests and retries stale snapshots. Step 7 waits up to five seconds for ordinary sync. Outbox operations use a durable insertion ordinal; database version 2 migrates legacy queued ids, values and deletes without changing bucket cursors or user rows.
 
-## Adaptive UI in 0.4
+## Adaptive UI
 
 ValenceApp draws edge-to-edge and publishes safe-area CSS variables on rotation and resize. Android text zoom follows system font size; optional app.info().fontScale reports it. The schema-7 app.appearance event reports system dark mode, high contrast and reduced motion. Your page supplies semantic HTML and content padding. [Accessibility guide](docs/accessibility.md). iOS is experimental and untested.
 
@@ -223,7 +223,7 @@ Schema 11 adds built-in local reminders: notify.schedule/cancel/pending/channels
 
 ### Remote push
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS/APNs is experimental and untested.** See [setup and acceptance checks](docs/remote-push.md).
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS is experimental and untested.** See [setup and acceptance checks](docs/remote-push.md).
 
 Firebase native dependencies ship only through an installed push package or another app dependency. Hosts using `valence_push` must target iOS 15.0 or later and initialize Firebase explicitly; core-only hosts do not inherit that Firebase requirement. iOS is experimental and untested.
 
@@ -238,7 +238,7 @@ not reachability, so it decides whether to *try* while `SyncResult.reason` says 
 worked. `app.state()` returns both, for a page that mounted after the transition. `sync.done` carries
 the whole `SyncResult` after every run the host made on its own, `changed: 0` included — which
 `sync.changed` never could, and most runs move nothing. `bundle.status()` names why the last update
-check stopped, from a closed set of eleven: `rejected` means a release no device will take, and
+check stopped. The current full status has twelve reasons, including `needsStoreUpdate`; legacy shapes map that value to `rejected`. Keep an unknown-value fallback. For example: `rejected` means a release no device will take, and
 `waitingForData` is the healthy stall four hosts read as "no update". Drive it from
 `bundle.updateReady`, which fires for **every** pending bundle rather than only an `--urgent` one —
 polling on resume races the check, so a page otherwise hears about an update one resume late.
@@ -271,11 +271,11 @@ destination is never overwritten, and the move is logged. A locked open (a schem
 `BEGIN EXCLUSIVE` against the WorkManager job the same launch fires) is retried; `backgroundSync` then
 reports `reason: "busy"` rather than failing the job.
 
-Deep links in 0.4: [setup and routing](docs/deep-links.md) covers store-compiled link origins, Android App Links, custom schemes, `onLink()` and website association generators. iOS is experimental and untested.
+Deep links: [setup and routing](docs/deep-links.md) covers store-compiled link origins, Android App Links, custom schemes, `onLink()` and website association generators. iOS is experimental and untested.
 
 ## OS permissions
 
-Schema 9 adds check/request/settings and resume change events for seven permission kinds. Enable only `permissions.kinds` in a store build, add native declarations, and regenerate; OTA cannot expand the allowlist. Permission grants are separate from feature implementations. See [Permissions](docs/permissions.md). iOS is experimental and untested.
+Schema 10 adds check/request/settings and resume change events for seven permission kinds. Enable only `permissions.kinds` in a store build, add native declarations, and regenerate; OTA cannot expand the allowlist. Permission grants are separate from feature implementations. See [Permissions](docs/permissions.md). iOS is experimental and untested.
 
 Schema 15 adds nullable AppInfo.builtins, SyncStatus.reason and BundleStatus.urgent; revision 20 adds nullable SyncStatus.leaseKind and SyncStatus.leaseAgeMs, which name the run holding the sync lease and how long it has held it, so a busy reply can be diagnosed. The age counts from when the holder took the lease, so it only increases while one run holds it. Older hosts omit them. See [capability revisions and durable status](https://getvalence.dev/docs/guides/capabilities-and-status/).
 

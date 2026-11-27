@@ -29,6 +29,6 @@ Use API pagination or `Range` when supported; there is no streaming bridge respo
 A write may already have succeeded when its response is refused: use server-enforced
 idempotency keys for retried writes.
 
-Android is tested; iOS remains experimental and untested. Unit tests cover gzip,
+Android is tested; iOS is experimental and untested. Unit tests cover gzip,
 stream boundaries, request-limit preservation and escaped reply overflow; emulator
 evidence is reported separately in the validation note.

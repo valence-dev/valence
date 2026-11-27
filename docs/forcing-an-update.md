@@ -1,7 +1,7 @@
 # Forcing an update
 
 A release that needs a newer native host can now say so separately from corrupted
-bytes. This follows contracts 2.3, 2.5 and 4.6. iOS remains experimental and untested.
+bytes. This follows contracts 2.3, 2.5 and 4.6. iOS is experimental and untested.
 
 ## Offer an update without blocking use
 
@@ -76,7 +76,7 @@ release signed, so pass `--min-host N` again to keep it.
 **A held pointer can keep a device on a withdrawn block.** The policy is signed, but the unsigned
 pointer still decides which signed release a device evaluates, so a device that never receives the
 withdrawal — a cached CDN edge, a pointer that stops advancing — stays blocked offline and across
-restarts. There is no freshness bound on a policy in 0.4.
+restarts. There is no freshness bound on a policy.
 
 This is an availability policy with consequences: do not require a store build
 that users cannot install yet. Staged rollout still controls discovery; an offline

@@ -55,7 +55,7 @@ void main() {
     });
 
     test('the journal mode that actually took is reported rather than discarded', () {
-      // On a real device a filesystem that cannot do WAL answers `delete`, and the concurrency the rest
+      // On Android a filesystem that cannot do WAL answers `delete`, and the concurrency the rest
       // of §5 assumes is gone. sqflite_common_ffi gives us a real answer here, whatever it is.
       expect(store.journalMode, isNotEmpty);
       expect(store.journalMode, store.journalMode.toLowerCase());

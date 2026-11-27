@@ -35,7 +35,7 @@ and regenerate the host. `GET /rpc` returns only `{native: true, authenticated: 
 `http.request` with no CORS headers or token reflection. Forward loopback on an emulator or a
 USB-connected physical device. Use HTTPS for remote services: an explicitly configured HTTP
 origin can receive the token in release builds too, regardless of Android's network security
-XML. iOS is untested.
+XML. iOS is experimental and untested.
 
 The adapter compares the REST snapshot with durable rows, assigns a new USN only to changes,
 and retains a deletion as `{k, v: null, u, d: 1}`. A pull is ordered by USN; when there is another

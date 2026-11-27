@@ -49,11 +49,11 @@ gates. No production assertion or timeout was weakened. Logs remain at
 TEMP/valence-nov6-review-*.log. Full gates are recorded in integration.md.
 
 Read-only inputs: both apps' VALENCE_FINDINGS.md inventories and latest completed
-reports, Kundalini 21 and app-c 128. App-c reports scoped acceptance=true, Settings
+reports, reference app B 21 and reference app C 128. reference app C reports scoped acceptance=true, Settings
 painted in PID 5500, and one explicitly triggered ready worker in PID 9090. Those
-are app-reported evidence, not fresh device validation of this branch. Kundalini
+are app-reported evidence, not fresh device validation of this branch. reference app B
 F-80 contention and historical reliability findings remain open. No emulator
-session or iOS validation; iOS remains experimental and untested.
+session or iOS validation; iOS is experimental and untested.
 
 The final example codegen check also found inherited staleness: packages now
 emits AppLink/ReceivedLink type re-exports that its checked-in example lacked.

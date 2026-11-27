@@ -2,7 +2,7 @@ import UserNotifications
 import FirebaseMessaging
 
 // Add to a Notification Service Extension target linked with Firebase Messaging.
-// Experimental and untested: requires Xcode, APNs provisioning and a real device.
+// experimental and untested
 final class NotificationService: UNNotificationServiceExtension {
     private var handler: ((UNNotificationContent) -> Void)?
     private var content: UNMutableNotificationContent?

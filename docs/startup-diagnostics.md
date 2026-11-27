@@ -245,9 +245,9 @@ comes back to a cold start. Capture logcat and exit-info before letting the app
 restart; an ordinary relaunch overwrites the evidence. Durable data survives either
 way; the task snapshot behind `state.restore` is best effort (contracts section 4.8),
 so a dropped task starts at `/` with null. Nothing keeps the process alive
-(app-c F-50).
+(reference app C F-50).
 
-0.4 cannot prevent it on Android; the shim is priced for 0.5. Because no host code
+Valence cannot prevent it on Android; no native shim is shipped. Because no host code
 runs, `serving` survives in `state.json` and the next UI start cannot tell the
 eviction from a bundle that crashed the app, so an eviction during a trial spends
 one of its two section 2.4 strikes. Where a platform reports the loss — iOS, as a
@@ -272,7 +272,7 @@ app/native logs for private data before sharing them.
 ## External camera and picker failures
 
 Record the foreground activity's package and the package named in the ANR before
-recovery. An input-dispatch ANR in `com.android.camera2`, as in app-c iteration 37,
+recovery. An input-dispatch ANR in `com.android.camera2`, as in reference app C iteration 37,
 is external camera evidence, not proof of a Valence host ANR or renderer eviction.
 Preserve full logcat, exit-info and the ANR record, exclude the failed capture,
 then verify that a separate retry returns a decodable image. Success on retry does
@@ -282,7 +282,7 @@ results; no automatic recovery is added by these diagnostics.
 
 Decision: instrument pending database futures at their existing boundaries, keeping
 transaction executors, lease ownership, lock classification, retries and data
-unchanged. The app-a F-33/F-35 evidence establishes symptoms, not a runtime cause.
+unchanged. The reference app A F-33/F-35 evidence establishes symptoms, not a runtime cause.
 This change supplies evidence for the next recurrence and does not close them.
 Unit tests exercise held futures, concurrent store/sync boundaries, timer cleanup,
 error identity/trace, logger failure and startup phase order/failure. Device

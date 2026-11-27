@@ -68,11 +68,11 @@ and background sync without closing the UI store or changing activation state.
 OTA verification order, atomic state, navigation locks and account/outbox handling
 were not altered. Independent improver review remains required before merge.
 
-Read-only inputs: both apps' VALENCE_FINDINGS.md, Kundalini iteration 13 and app-a
-iteration 14. R27 addresses the framework cause of Kundalini F-58; it does not
-establish adoption on either app's snapshots or close app-a F-34's remaining
-local-notification/desugaring cost. Kundalini's device/verification placeholders
-and app-a's incomplete latest native build remain acceptance limits. F-33/F-35
+Read-only inputs: both apps' VALENCE_FINDINGS.md, reference app C iteration 13 and reference app A
+iteration 14. R27 addresses the framework cause of reference app C F-58; it does not
+establish adoption on either app's snapshots or close reference app A F-34's remaining
+local-notification/desugaring cost. reference app C's device/verification placeholders
+and reference app A's incomplete latest native build remain acceptance limits. F-33/F-35
 root causes are not inferred here. No new emulator run or test-app modification;
-iOS remains experimental and untested. Firebase delivery still needs a maintainer
+iOS is experimental and untested. Firebase delivery still needs a maintainer
 project. No shared-branch commit/merge, push, publication or package-version bump.

@@ -3,8 +3,7 @@
 ## 0.5.0-beta.0 (2026-11-26)
 
 **Valence moves to the current Flutter and Android toolchain.** This is a breaking release for hosts:
-follow [Migrating to 0.5](docs/migrating-to-0.5.md). **Android is supported; iOS is experimental and
-untested.** A third app built from the docs (a club events app with sign-in, offline RSVPs, reminders,
+follow [Migrating to 0.5](docs/migrating-to-0.5.md). **Android is supported; iOS is experimental and untested.** A third app built from the docs (a club events app with sign-in, offline RSVPs, reminders,
 over-the-air releases, rollback and a staged rollout) ran on 0.5 without a package bug; what it found was
 docs and wizard gaps, fixed below.
 
@@ -15,7 +14,7 @@ docs and wizard gaps, fixed below.
     reminder. `valence codegen` raises Flutter's default `compileSdk` to 37 for you; AGP and the Gradle
     wrapper are yours to update. `create-valence doctor` has a new **Android build** row that checks
     all three.
-  - A host still on AGP 8 needs `android.newDsl=false` and `android.builtInKotlin=false` in
+  - An older host upgraded from AGP 8 to AGP 9 may need `android.newDsl=false` and `android.builtInKotlin=false` in
     `gradle.properties` (the migration guide explains why).
 - **The host's own screens no longer use Material.** The loading, error and "update required" screens
   are drawn with plain Flutter widgets, so they no longer clash with whatever UI library your app uses
@@ -50,8 +49,7 @@ docs and wizard gaps, fixed below.
 
 **Remote push now runs end to end on Android**, and a second app built from the public docs alone (a shared
 expense list with Next.js, two-person sync, over-the-air releases, rollback, staged rollout, local
-reminders and push) turned up only docs and wizard gaps. **Android is supported; iOS is experimental and
-untested.** Nothing in the runtime packages had to change, and nothing in your host has to change.
+reminders and push) turned up only docs and wizard gaps. **Android is supported; iOS is experimental and untested.** Nothing in the runtime packages had to change, and nothing in your host has to change.
 
 - **Rollbacks with Next.js.** Next stamps a random build id into every page, so rebuilding the last good
   commit changed about a third of the files and phones downloaded them again. The wizard now warns when
@@ -91,8 +89,7 @@ untested.** Nothing in the runtime packages had to change, and nothing in your h
 
 ## 0.4.0-beta.1 (2026-11-22)
 
-A patch from building a fresh app with nothing but the public docs. **Android is supported; iOS is
-experimental and untested.**
+A patch from building a fresh app with nothing but the public docs. **Android is supported; iOS is experimental and untested.**
 
 **What you might need to change in your host:**
 
@@ -154,7 +151,7 @@ syncs incrementally when it can.
 
 **Known limits, plainly:**
 
-- **iOS is experimental and untested.** The code paths exist but have not been run yet.
+- **iOS is experimental and untested.**
 - **On Android, if the OS evicts the WebView's renderer under memory pressure, the app closes.** Your data
   is safe, but the event counts against a release's trial, so start rollouts at 10%.
 - **Push is untested on a device** until a Firebase project exists.
@@ -857,7 +854,7 @@ What did change:
 - **Where a platform reports the loss, the host recovers from it.** That is iOS today, which blanks the
   WebView rather than killing the app: the host reloads the same bundle at the route you were on, emits
   nothing the page has to handle, and stops after three recoveries so a device that is genuinely out of
-  memory is not kept in a reload loop. iOS stays experimental and untested on hardware.
+  memory is not kept in a reload loop. iOS is experimental and untested.
 - **Where the loss is reported, it can no longer roll back a good release.** The ready timer belongs to
   the page that died; left running it timed out and spent a trial strike (§2.4), and two of those revert
   a release that was never at fault. It now stops on the loss and starts fresh with the reloaded page,
@@ -1329,7 +1326,7 @@ HTTPS hosting. iOS is experimental and untested. See [setup](docs/deep-links.md)
 
 ### permissions
 
-- Added schema-9 permission checks, serialized foreground requests, app settings and resume changes. Hosts opt in with `permissions.kinds`, native declarations, codegen and a store build. Android checks preserve uncertain denial; iOS remains experimental and untested.
+- Added schema-9 permission checks, serialized foreground requests, app settings and resume changes. Hosts opt in with `permissions.kinds`, native declarations, codegen and a store build. Android checks preserve uncertain denial; iOS is experimental and untested.
 
 ### local reminders
 
@@ -1338,7 +1335,7 @@ Schema 11 adds built-in local reminders: notify.schedule/cancel/pending/channels
 
 ### remote push
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS/APNs is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Device delivery has not yet been validated. iOS is experimental and untested.** Existing hosts must add the additive schema, regenerate, configure Firebase and ship a store build. Unicode line separators are escaped in event/reply scripts without changing JSON values.
 
 ### live development
 
@@ -1486,7 +1483,7 @@ haptic handler is a separate local package. Existing wire shapes stay unchanged.
 
 #### Calling your own backend
 
-Call your API with `http.request` (schema 4): the host enforces compiled `http.origins` origins, attaches the stored token, and never follows redirects. Existing hosts need codegen and a store build to add the capability or origins. A reference Node REST-to-sync adapter demonstrates durable pagination, tombstones and idempotent pushes. iOS remains experimental and untested.
+Call your API with `http.request` (schema 4): the host enforces compiled `http.origins` origins, attaches the stored token, and never follows redirects. Existing hosts need codegen and a store build to add the capability or origins. A reference Node REST-to-sync adapter demonstrates durable pagination, tombstones and idempotent pushes. iOS is experimental and untested.
 
 Two headlines: an app can finally log a user in, and the runtime is two published
 packages instead of generated code. Under them are the test-week fixes, logged by
@@ -1891,6 +1888,6 @@ Each of these has a regression test, and the spec carries the rule.
 - Buckets are key-value only, and that is now said on the first page.
 - **Android is tested; iOS is experimental and untested.**
 
-Firebase dependencies now require iOS 15.0 or later, even with push disabled. Upgrade Runner/extension target settings; iOS remains experimental and untested.
+Firebase dependencies now require iOS 15.0 or later, even with push disabled. Upgrade Runner/extension target settings; iOS is experimental and untested.
 
 Bridge success and error reply caps now include Unicode separator escaping; oversized errors retain only safe numeric correlation ids.

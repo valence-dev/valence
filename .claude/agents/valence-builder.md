@@ -87,7 +87,7 @@ Your job is the part that is genuinely this app's:
   - the generated config carrying what the spec compiles into a host, with `bridgeVersion` equal to
     `hostBridgeVersion` rather than a second literal;
   - one `integration_test/offline_cold_start_test.dart`. This is the **only** thing that shows the database
-    opens on a real device: `sqflite_common_ffi` accepts what Android's `SQLiteDatabase` rejects (§5.1).
+    opens on Android: `sqflite_common_ffi` accepts what Android's `SQLiteDatabase` rejects (§5.1).
 
 ## Web layer checklist
 
@@ -118,4 +118,4 @@ Report in this order:
 
 ## Deep links
 
-For apps accepting OS links, implement contracts ?6.3 native registrations and compiled `links.origins`; use the package listener and generated `onLink()`. Test cold/warm routing, query/hash preservation and denied origins. Record real domain verification separately from forced Android test approval.
+For apps accepting OS links, implement contracts §6.3 native registrations and compiled `links.origins`; use the package listener and generated `onLink()`. Test cold/warm routing, query/hash preservation and denied origins. Record real domain verification separately from forced Android test approval.

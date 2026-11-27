@@ -35,11 +35,11 @@ website consistency and additive schema preservation. Independent example codege
 and two focused Node checks passed; a programmatic comparison confirmed both
 schemas retain every upstream method, event and type.
 
-Read both apps' findings and newest reports read only: Kundalini iteration 11 and
-app-a iteration 9. App-a's mismatched supplied snapshots remain a harness delivery
+Read both apps' findings and newest reports read only: reference app C iteration 11 and
+reference app A iteration 9. reference app A's mismatched supplied snapshots remain a harness delivery
 issue; this branch's matched generator/bridge pass compilation. No harness package
 snapshots were replaced. No new emulator run was made; the Android evidence below
-is historical. iOS remains experimental and untested. Only R3's roadmap Status
+is historical. iOS is experimental and untested. Only R3's roadmap Status
 cell is changed; this note stays here to respect the shared-file boundary. No
 push, publication or merge into shared branches was performed.
 
@@ -78,8 +78,7 @@ merge files; after committing, its rerun passed warning-free. All required gates
 passed. The shared package base was rechecked unchanged before marking ready.
 
 No new emulator run: this refresh merges shared behavior and renumbers the schema;
-the original Android evidence below remains historical. iOS remains experimental
-and untested. Test-app repositories were read only. No pushes, publications or
+the original Android evidence below remains historical. iOS is experimental and untested. Test-app repositories were read only. No pushes, publications or
 merges into shared branches occurred. Only R3's shared roadmap status cell changed;
 this note lives here to honor the roadmap editing boundary.
 
@@ -96,9 +95,9 @@ resume the page hears only about configured permissions whose status changed.
 ## Source context
 
 - Read the shared roadmap and both test apps' `VALENCE_FINDINGS.md`.
-- Kundalini's newest report is `ITERATION_10_REPORT.md` (2026-10-22): native setup,
+- reference app C's newest report is `ITERATION_10_REPORT.md` (2026-10-22): native setup,
   migration correctness and honest device evidence remain essential.
-- App-a now has `ITERATION_7_REPORT.md` (2026-10-22): the packaged migration retained
+- reference app A now has `ITERATION_7_REPORT.md` (2026-10-22): the packaged migration retained
   the shelf, a fresh 54.3 MB seed was exercised, safe-area overlap was reported,
   account switching remained refused, and anonymous 401 reporting needs follow-up.
   These reports describe their snapshots, not a new test of this branch.

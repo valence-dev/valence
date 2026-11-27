@@ -5,7 +5,7 @@ active signed bundle image, plus a caption. The runtime checks paths, size, magi
 and bundle integrity before opening native sharing. Results report selection,
 dismissal or an unavailable outcome, never delivery. See
 [image sharing](https://getvalence.dev/docs/guides/image-sharing/).
-iOS sharing remains experimental and untested.
+iOS is experimental and untested.
 
 The Flutter host runtime for [Valence](https://getvalence.dev): your web app runs inside a native
 app as a **signed over-the-air bundle**, on top of an **offline-first SQLite** store with incremental sync
@@ -20,7 +20,7 @@ Your app supplies two things: its generated config, and its own native bridge me
 
 Task snapshots are bound to the native account as well as the signed bundle: switching or signing out clears the route and draft, including stale OS snapshots. Refresh and first-account adoption retain the live draft.
 
-## Task restoration in 0.4
+## Task restoration
 
 Schema 8 adds `state.save({json})` and `state.restore()` for at most 65,536 JSON
 UTF-8 bytes of task-local UI state. ValenceApp installs its own RootRestorationScope
@@ -146,7 +146,7 @@ The package cannot write native project files, so these are yours:
   media.
 - **`app.ready()` is what commits an OTA release.** A bundle that never calls it fails its trial twice and
   is rolled back. Call it after the first meaningful paint.
-- **A WebView eviction kills the app on Android, and 0.4 cannot stop it.** The page runs in a separate,
+- **A WebView eviction kills the app on Android, and Valence cannot stop it.** The page runs in a separate,
   lower-priority process; under memory pressure the OS kills that one, and because no released
   `webview_flutter_android` exposes `onRenderProcessGone`, the WebView then kills your process too. No
   Dart code runs, so nothing logs it — identify it from `dumpsys activity exit-info` (renderer
@@ -190,7 +190,7 @@ lock, bridge nonce forwarding, event buffering and the ready timer.
 
 A green unit suite is **not** evidence the store opens on a phone — see the first gotcha above. The §8
 integration row is what covers that, and the widget harness replaces only the native WebView calls, so
-it proves host *policy* and never the OS WebView's own behaviour. iOS stays experimental and untested.
+it proves host *policy* and never the OS WebView's own behaviour. iOS is experimental and untested.
 
 ## Versioning
 
@@ -207,7 +207,7 @@ MIT. The spec is `contracts.md`, which ships inside the `/valence` Claude Code s
 
 ## Native HTTP (contracts section 4.5)
 
-Generated `http.request` delegates to `Valence.httpRequest`. Configure exact trusted `http.origins` origins, regenerate, and ship a host; they become `ValenceConfig.httpOrigins` (default deny all). The host reads the stored auth token per request, with `authToken` callback precedence, and emits `auth.expired` for an authenticated 401. Redirects are returned without following them. Request bodies: 64 KiB; decompressed responses: 64 KiB by default, configurable with compiled http.maxBodyBytes (1..262144); headers: 16 KiB; total deadline: 20 seconds (`E_TIMEOUT`). A transport failure while the OS reports no network interface is `E_OFFLINE`; a captive portal or a server that is down stays `E_INTERNAL`. Every size refusal names the observed size and the limit. `ValenceConfig.cookieJar` (compiled from `http.cookieJar`) optionally holds cookies for one origin, which must also be in `http.origins` and must be HTTPS unless it is loopback, and mirrors a named CSRF cookie into a named header the page may not supply — so a cookie-paired CSRF token can be completed. It is host-only by `Domain`, caps at 16 cookies / 8 KiB, keeps a session cookie in memory by default (`sessionCookieDays: 1..30` opts into a fixed lifetime from receipt; [guide](https://getvalence.dev/docs/guides/persistent-sessions/)), is cleared by every path that clears the token, and is revoked at `Valence.open` when a build drops or moves the grant. Without it a session-cookie API is out of scope. Raise compiled `http.maxBodyBytes` and ship a host for larger responses; the escaped 256 KiB bridge envelope still applies. Send `Range` or paginate to read less. Use HTTPS in production and no shared server secrets in an APK. [API and adapter guide](https://getvalence.dev/docs/guides/your-backend/). iOS remains experimental and untested.
+Generated `http.request` delegates to `Valence.httpRequest`. Configure exact trusted `http.origins` origins, regenerate, and ship a host; they become `ValenceConfig.httpOrigins` (default deny all). The host reads the stored auth token per request, with `authToken` callback precedence, and emits `auth.expired` for an authenticated 401. Redirects are returned without following them. Request bodies: 64 KiB; decompressed responses: 64 KiB by default, configurable with compiled http.maxBodyBytes (1..262144); headers: 16 KiB; total deadline: 20 seconds (`E_TIMEOUT`). A transport failure while the OS reports no network interface is `E_OFFLINE`; a captive portal or a server that is down stays `E_INTERNAL`. Every size refusal names the observed size and the limit. `ValenceConfig.cookieJar` (compiled from `http.cookieJar`) optionally holds cookies for one origin, which must also be in `http.origins` and must be HTTPS unless it is loopback, and mirrors a named CSRF cookie into a named header the page may not supply — so a cookie-paired CSRF token can be completed. It is host-only by `Domain`, caps at 16 cookies / 8 KiB, keeps a session cookie in memory by default (`sessionCookieDays: 1..30` opts into a fixed lifetime from receipt; [guide](https://getvalence.dev/docs/guides/persistent-sessions/)), is cleared by every path that clears the token, and is revoked at `Valence.open` when a build drops or moves the grant. Without it a session-cookie API is out of scope. Raise compiled `http.maxBodyBytes` and ship a host for larger responses; the escaped 256 KiB bridge envelope still applies. Send `Range` or paginate to read less. Use HTTPS in production and no shared server secrets in an APK. [API and adapter guide](https://getvalence.dev/docs/guides/your-backend/). iOS is experimental and untested.
 ## Account switching (contracts section 4.4)
 
 `Valence.authSetToken(token, {account, discardPending})` records your own opaque account id beside the
@@ -258,27 +258,27 @@ ValenceApp publishes --valence-inset-top/right/bottom/left CSS variables, applie
 Periodic sync needs a host-owned scheduler; `valence` does not register one for you.
 Android WorkManager's minimum repeat interval is 15 minutes, and constraints or system
 optimizations can delay or skip a run. Keep foreground and reconnect sync enabled;
-periodic work gives no freshness deadline. BGTaskScheduler is best effort on iOS,
-which remains experimental and untested. See [background setup](https://getvalence.dev/docs/guides/host/#background-work).
+periodic work gives no freshness deadline. BGTaskScheduler is best effort on iOS. iOS is experimental and untested. See [background setup](https://getvalence.dev/docs/guides/host/#background-work).
 
-### Remote push
+## Data paging and storage
 
-Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS/APNs is experimental and untested.** Initialize Firebase and install `valence_push`, import `package:valence_push/valence_push.dart` and pass `push: createFirebasePush()` to `Valence.open`; register a top-level background callback using `ValencePush.handleBackground` and `Valence.backgroundSync`. [Setup](https://getvalence.dev/docs/guides/remote-push/).
+`Valence.dataList(bucket, prefix:, limit:, after:)` pages past the 500-row clamp: `after` is the last key of the previous page and the scan resumes strictly after it, which is the only complete read of a bucket larger than the clamp. `Valence.dataCount(bucket, prefix:)` counts live rows without reading them. Both are exposed as the version-5 built-ins `data.list`'s `after` param and `data.count`. The store opens at `<applicationSupportDirectory>/<databaseName>` and adopts a 0.3 database left in the application documents directory, moving its `-wal` and `-shm` sidecars with it and never overwriting an existing destination. A `SQLITE_BUSY` open — a schema migration's `BEGIN EXCLUSIVE` racing the WorkManager job the same launch fires — is retried five times a second apart; `Valence.backgroundSync` then returns `ValenceSyncReason.busy` rather than throwing, while `Valence.open` rethrows, and a failed open is never cached.
+
+## Remote push
+
+Remote push is opt-in in schema 12: `push.token`, passive/explicit `push.permission`, consuming `push.initial`, `push.received`, `push.tapped` and `push.tokenChanged`. Firebase runs only in configured hosts; exact data-only sync hints use the existing native sync without touching OTA state. Android notification images use FCM background display; foreground messages reach the page. **Remote push (FCM) was built and run on Android, end to end. That covers foreground, background, killed-process sync, notification taps and image notifications. Token rotation has not been observed yet. iOS is experimental and untested.** Initialize Firebase and install `valence_push`, import `package:valence_push/valence_push.dart` and pass `push: createFirebasePush()` to `Valence.open`; register a top-level background callback using `ValencePush.handleBackground` and `Valence.backgroundSync`. [Setup](https://getvalence.dev/docs/guides/remote-push/).
 
 Firebase native dependencies ship only through an installed push package or another app dependency. Hosts using `valence_push` must target iOS 15.0 or later and initialize Firebase explicitly; core-only hosts do not inherit that Firebase requirement. iOS is experimental and untested.
 
-`Valence.dataList(bucket, prefix:, limit:, after:)` pages past the 500-row clamp: `after` is the last key of the previous page and the scan resumes strictly after it, which is the only complete read of a bucket larger than the clamp. `Valence.dataCount(bucket, prefix:)` counts live rows without reading them. Both are exposed as the version-5 built-ins `data.list`'s `after` param and `data.count`. The store opens at `<applicationSupportDirectory>/<databaseName>` and adopts a 0.3 database left in the application documents directory, moving its `-wal` and `-shm` sidecars with it and never overwriting an existing destination. A `SQLITE_BUSY` open — a schema migration's `BEGIN EXCLUSIVE` racing the WorkManager job the same launch fires — is retried five times a second apart; `Valence.backgroundSync` then returns `ValenceSyncReason.busy` rather than throwing, while `Valence.open` rethrows, and a failed open is never cached.
 
 ## Deep links
 
 Compile `links.origins` with codegen and register matching native filters. The runtime captures startup links before seed import; `link.initial()` drains the mailbox, then `link.opened` delivers live intents. The WebView remains on loopback. See [setup and security](../../docs/deep-links.md); iOS is experimental and untested.
 
-## Permissions (contracts §4.7)
+## Permissions (contracts §4.9)
 
 Use the generated `permissions.check`, `permissions.request`, `permissions.openSettings` and `permissions.changed` (introduced in the template at 10). For new declarations use `since >= max(10, shipped store schema version + 1)` and an app schema `version` at least that high; preserve already-shipped declarations and gate new names with `has()` on older hosts. The runtime serializes prompts and restricts them to a foreground attached host and its compiled `permissionKinds`. Empty denies all. Add native declarations and ship a store build; see the [permissions guide](https://getvalence.dev/docs/guides/permissions/). iOS is experimental and untested.
 
-
-`Valence.dataList(bucket, prefix:, limit:, after:)` pages past the 500-row clamp: `after` is the last key of the previous page and the scan resumes strictly after it, which is the only complete read of a bucket larger than the clamp. `Valence.dataCount(bucket, prefix:)` counts live rows without reading them. Both are exposed as the version-5 built-ins `data.list`'s `after` param and `data.count`. The store opens at `<applicationSupportDirectory>/<databaseName>` and adopts a 0.3 database left in the application documents directory, moving its `-wal` and `-shm` sidecars with it and never overwriting an existing destination. A `SQLITE_BUSY` open — a schema migration's `BEGIN EXCLUSIVE` racing the WorkManager job the same launch fires — is retried five times a second apart; `Valence.backgroundSync` then returns `ValenceSyncReason.busy` rather than throwing, while `Valence.open` rethrows, and a failed open is never cached.
 
 ## Local reminders
 
@@ -293,7 +293,7 @@ OTA transition. Restart without `VALENCE_DEV_URL` for signed offline and rollbac
 
 Sync outcomes are an open string set: `ok`, `busy`, `offline`, `unauthorized`, `failed`. A non-200 or invalid protocol response reports `failed`, including a 401 sent to a request without a bearer token. Only a bearer-bearing 401 expires authentication. Partial changes remain applied, queued writes remain available for retry, and incomplete runs never advance the last successful unscoped timestamp. Treat every non-`ok` outcome as incomplete, even when `changed` is positive. See contracts section 5.6.
 
-Schema 16 adds `notify.pendingIds()` for cancellation by difference even when full notification content exceeds the bridge reply cap. Keep `notify.pending()` unchanged. A new declaration needs `since` at least `max(16, shipped store schema version + 1)` and app schema `version` at least that value; preserve an already-shipped declaration unchanged. Update the tooling, regenerate, ship a store build and guard calls with `has()`. Disabled hosts still deny the group. No delivery guarantee is added; iOS remains experimental and untested.
+Schema 16 adds `notify.pendingIds()` for cancellation by difference even when full notification content exceeds the bridge reply cap. Keep `notify.pending()` unchanged. A new declaration needs `since` at least `max(16, shipped store schema version + 1)` and app schema `version` at least that value; preserve an already-shipped declaration unchanged. Update the tooling, regenerate, ship a store build and guard calls with `has()`. Disabled hosts still deny the group. No delivery guarantee is added; iOS is experimental and untested.
 
 Store-host update prompts and signed mandatory policies are documented in
 [Forcing an update](../../docs/forcing-an-update.md). Revision 17 adds fixed-destination `app.openStore`,

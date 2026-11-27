@@ -111,7 +111,7 @@ whether your page prunes, and a warning no correct app can clear is a warning no
 
 A compiled ceiling — a per-bucket `maxRows`, or one `cacheMaxBytes`, evicting the oldest write first — is
 the real fix, so that an app which never prunes degrades into a smaller cache instead of a full disk. It
-is **not in 0.4**: the cache table has no written-at column, so "oldest" does not exist yet and adding it
+is **not shipped**: the cache table has no written-at column, so "oldest" does not exist yet and adding it
 is a database migration.
 
 `data.list`, `getMany`, `get` and `count` combine cached and synced rows with one
@@ -144,7 +144,7 @@ endpoint with this example. Static sync needs the equivalent valid empty index
 under the normal static protocol. A 404 makes the run incomplete (`failed`),
 without undoing successful work in other buckets or deleting queued edits;
 it is not an instruction to skip this bucket. With no `sync.base`, no pull is
-attempted. There is no per-bucket cache-only sync exemption in 0.4.
+attempted. There is no per-bucket cache-only sync exemption.
 The reference adapter in `examples/rest-sync-adapter` serves only `items` and
 returns 404 for other names; add empty overlay buckets there explicitly too.
 
@@ -179,5 +179,4 @@ under a previous account. Writes during a transition fail `E_INTERNAL`.
 
 Unknown buckets and dot-segment keys fail `E_PARAMS`. Writable buckets and buckets
 without the compiled cache grant fail `E_DENIED`. Android device acceptance for
-this addition is recorded separately from unit checks; iOS remains experimental
-and untested.
+this addition is recorded separately from unit checks; iOS is experimental and untested.

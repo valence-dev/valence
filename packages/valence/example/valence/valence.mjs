@@ -331,7 +331,7 @@ function notificationFieldMismatches(e) {
 /// Whether the runtime may emit this event by itself.
 ///
 /// Reserved at 11, and `id` must be the `int` the native scheduler actually produces. An event that fails
-/// either test stays the app's own and is never emitted automatically, which is the whole point: app-c
+/// either test stays the app's own and is never emitted automatically, which is the whole point: reference-app-c
 /// shipped `notify.tapped {id: string}` at `since: 1` and received the built-in's integer id over it
 /// (F-30). A host converts such a response itself, through `notificationEventAdapter`.
 ///
@@ -1991,7 +1991,7 @@ export function codegen({ root, cfg, check = false }) {
 
 // Every child command `doctor` spawns is bounded by this, and the number appears in the message a
 // timeout produces, so a developer reading the row knows what it means instead of guessing at a hang.
-// `doctor --timeout <seconds>` moves it: app-c's private-key scan walks a 25,962-file checkout, and three
+// `doctor --timeout <seconds>` moves it: reference-app-c's private-key scan walks a 25,962-file checkout, and three
 // iterations running it hit this bound and reported `FAIL` rows that had run no assertion (C F-43). The
 // bounds on the flag are the point of having them: `0` is `spawnSync`'s "no timeout", which is the
 // unattributable hang the bound exists to prevent, and an hour's ceiling catches a budget handed over in
@@ -2007,14 +2007,14 @@ export const childTimeoutMs = (seconds) =>
 
 // `spawnSync`'s own timeout reports `ETIMEDOUT` with a null status and no output, which read exactly like
 // a command that ran and failed. So a `flutter test` killed at 180 s was indistinguishable from a test
-// that asserted and failed, and app-c spent an iteration hunting a mapped bridge-test failure that never
+// that asserted and failed, and reference-app-c spent an iteration hunting a mapped bridge-test failure that never
 // happened (C F-43). Classify it, and say in the row that nothing asserted.
 const killedByTimeout = (r) => r.error?.code === 'ETIMEDOUT';
 
 /// What the child said, bounded, for a row that reports a child command failing.
 ///
 /// "flutter test failed" with nothing else is a row that names a failure and withholds the only thing
-/// that explains it: app-c read one for a mapped bridge test, then ran `flutter test` by hand and got
+/// that explains it: reference-app-c read one for a mapped bridge test, then ran `flutter test` by hand and got
 /// twelve passes, which cannot explain the earlier failure and left the row unexplainable (C F-54). The
 /// exit status and the tail of the child's own output are what turn it into a diagnosis.
 ///
@@ -2081,7 +2081,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
   // reject its own flag must not first spend three minutes establishing something it then throws away.
   const childMs = childTimeoutMs(timeout);
   // Named in the stream before anything runs, because a saved doctor artifact that carries a timeout row
-  // has to say which budget produced it — app-c's reports are read days later, from the capture alone —
+  // has to say which budget produced it — reference-app-c's reports are read days later, from the capture alone —
   // and because it is the one place both entry points can be *seen* to have forwarded the flag.
   onPhase(`child budget ${childMs / 1000}s`);
   const rows = [];
@@ -2128,7 +2128,7 @@ export async function diagnose({ root, cfg, tests = false, timeout, run = runFlu
   // K F-48, the half the version number cannot close. `VALENCE_VERSION` names a *release*, so two copies
   // of the CLI that differ — a vendored one and a newer published one, or two pre-release snapshots — can
   // report the same string while generating different Dart. That is how a built-in a newer CLI knows about
-  // becomes app-owned in silence (K F-62), and kundalini re-raised it on eight consecutive iterations. A
+  // becomes app-owned in silence (K F-62), and reference-app-b re-raised it on eight consecutive iterations. A
   // content digest of this file is the one identifier that changes whenever the generator does, needs no
   // network, and is free to compute.
   await check('CLI build', () => ({

@@ -2,7 +2,7 @@
 
 This file is the source of truth for every layer. Code must match it. If code and spec disagree, fix the code or change the spec in the same commit. Never let them drift.
 
-**Platform status: Android is tested, iOS is experimental and untested.** Every rule here has been built and run on Android. The iOS rules — App Groups for the widget (§5.6), `NSURLIsExcludedFromBackupKey` (§2.4), WKWebView's App-Bound Domains, `BGTaskScheduler` (§5.6), and the App Store policy reading in §7 — are specified and must be implemented, but **no one has run them yet**. Keep implementing them; do not state them as verified.
+**Platform status: Android is tested. iOS is experimental and untested.**
 
 Layers:
 
@@ -64,9 +64,9 @@ What ships in which update:
   .gitattributes              one pattern per line (see below)
 ```
 
-- **The runtime is two published packages, not generated code.** `valence` on pub.dev is the host: the loopback server and its nonce, the canonical check order, the activation state machine and its rollback, signature and manifest verification, the SQLite store and the §5.1 pragmas, the seed import, sync and its lease, strict bridge decoding, and the WebView with its navigation lock, back gesture and console capture. `@getvalence/bridge` on npm is the web client of §4.3. `valence codegen` emits **only** what is app-specific — the typed method and event tables, the payload types, `bridgeDispatch`, `BridgeEvents`, the `ValenceBuiltins` delegations and `valenceConfig` — and imports the rest.
+- **The two core runtime packages are `valence` and `@getvalence/bridge`. Four packages are published: `create-valence`, `@getvalence/bridge`, `valence` and optional `valence_push`.** `valence` on pub.dev is the host: the loopback server and its nonce, the canonical check order, the activation state machine and its rollback, signature and manifest verification, the SQLite store and the §5.1 pragmas, the seed import, sync and its lease, strict bridge decoding, and the WebView with its navigation lock, back gesture and console capture. `@getvalence/bridge` on npm is the web client of §4.3. `valence codegen` emits **only** what is app-specific — the typed method and event tables, the payload types, `bridgeDispatch`, `BridgeEvents`, the `ValenceBuiltins` delegations and `valenceConfig` — and imports the rest.
   - **An app never vendors, copies or patches either package.** Before this split, every app carried its own 1,500-line host, and a fix to a security path reached none of them. A bug goes upstream; `flutter pub upgrade valence` and `npm update @getvalence/bridge` are how the fix arrives.
-  - Their versions are **independent of the CLI's**, and of each other's, and of the schema's `BRIDGE_VERSION`. `pubspec.lock` and the web lockfile are committed, so CI resolves what the machine resolved.
+  - The four published packages share the runtime release version; the app schema's `BRIDGE_VERSION` is independent. `pubspec.lock` and the web lockfile are committed, so CI resolves what the machine resolved.
   - What an app still owns, because a package cannot write it: the native project files (Android cleartext config and backup rules, iOS ATS and the backup exclusion), the `pubspec.yaml` asset declarations, the background-sync registration, the §6 native-value items and their setup, and its own bridge methods.
 - **`appId` becomes the Android `applicationId`,** and the host's Kotlin package is Flutter's `namespace`, so the two normally differ. That is an ordinary Android arrangement, but a lot of Flutter plugins assume they match and build class names as `<applicationId>.<ClassName>`. **Prefer a fully-qualified class name whenever a plugin asks for one** (§6.2); the failure is a `ClassNotFoundException` inside the plugin's own Kotlin, which no analyzer and no unit test can see.
 - **The signing private key** lives **outside the repo**, at `~/.valence/keys/<appId>.<keyId>.pem`, or comes from the `VALENCE_SIGNING_KEY` CI secret.
@@ -345,8 +345,8 @@ manifest a device evaluates, so a cached CDN edge — or a compromised OTA host 
 at the withdrawn release — can hold a device whose highest verified seq is lower at a block the publisher
 has already withdrawn, durably and offline. This extends §2.1's list of what a compromised CDN can do:
 freezing devices on their current bundle has become a denial of service, not only staleness. Mitigating
-it properly needs a signed freshness field (a policy `notAfter`, or a signed pointer) and is **not** in
-0.4. Until then: do not sign a `minHost` you have not verified, and withdraw at a higher seq promptly,
+it properly needs a signed freshness field (a policy `notAfter`, or a signed pointer), which is **not shipped**.
+Until then: do not sign a `minHost` you have not verified, and withdraw at a higher seq promptly,
 knowing a device that never receives that seq stays blocked.
 
 When verified minHost exceeds the compiled bridge version, ValenceApp shows a
@@ -365,7 +365,7 @@ a newer signed withdrawal. Store-upgrade to a sufficient host unblocks the app.
 https://play.google.com/store/apps/details?id=<compiled appId>. iOS uses the
 optional store-compiled `store.iosAppId` numeric Apple ID; absent configuration
 returns E_UNSUPPORTED. Launch failure returns E_INTERNAL. No market: scheme is
-added to open.external. iOS remains experimental and untested.
+added to open.external. iOS is experimental and untested.
 
 Two things about that destination. The platform is matched **case-insensitively**, because the value the
 runtime has is `defaultTargetPlatform.name` and Flutter spells that member `iOS` — comparing it to a
@@ -580,7 +580,7 @@ The host process is killed **by the WebView**, 70 ms after the renderer went, wi
 between. For an ordinary Flutter app that would cost one screen; here the WebView is the whole UI, so
 the app dies and the user is back on the launcher. Closing it needs native code — an Android
 `WebViewClient` that overrides the callback, installed over the plugin's own — which means `valence`
-becoming a Flutter *plugin* rather than a pure-Dart package. That is priced, not shipped, in 0.4; the
+becoming a Flutter *plugin* rather than a pure-Dart package. No native shim is shipped; the
 test matrix carries a tripwire that fails as soon as the dependency exposes the callback.
 
 **And on Android it costs a trial strike, which nothing here can prevent.** No Dart code runs, so
@@ -590,11 +590,8 @@ eviction during a trial spends a strike, and two of them put a healthy release i
 install. Surviving the kill is the only fix, which is the shim. Weakening step 2 is not: it is what
 catches a bundle that crashes the host, and a release that cannot be rolled back is the worse failure.
 
-**iOS does report it**, as an `onWebResourceError` whose type is `webContentProcessTerminated`
-(`WKErrorDomain` code 2), and WKWebView does not kill the app — it blanks. So the behaviour above is
-live on iOS, which also closes a false-rollback path there: before it, a content-process death during a
-trial left the ready timer running against a dead page. iOS remains experimental and untested on
-hardware.
+iOS is experimental and untested. The host handles a reported
+`webContentProcessTerminated` resource error through the renderer recovery path above.
 
 **One iOS suspend can do both at once**, which is why the reload is not the whole recovery: the OS can
 reclaim the listening socket (above) and kill the content process in the same suspend, so a reload fired
@@ -618,7 +615,7 @@ renderer-loss path above is not what happened, and nothing a shim could do would
 which is what lmkd picks. Durable state survives — SQLite, the secure store, `state.json` and the
 outbox are all on disk — and the task snapshot behind §4.8 `state.restore` is best effort, so a kept
 task resumes the route and a dropped one starts at `/` with null. There is no host-side remedy and
-0.4 claims none; what the spec owes this failure is that it not be mistaken for the renderer path,
+Valence claims none; what the spec owes this failure is that it not be mistaken for the renderer path,
 because the two lead to different conclusions: one is a plugin gap native code could close, the other
 is the OS reclaiming a large backgrounded process. Capture logcat and exit-info **before** an ordinary
 relaunch, which overwrites them. These records do not establish a Valence memory leak or rule out memory
@@ -752,7 +749,7 @@ and so does a scoped run whose buckets match nothing: it attempted no operation,
 so it writes no observation and reports `failed`.
 A migrated or never-attempted database returns null; no-server runs preserve it.
 Account switch/sign-out clears this observation with the other account-owned sync
-observations. It is an open string set; unknown reasons are not success. An anonymous 401 is persisted as `failed` (?5.6), without emitting `auth.expired`;
+observations. It is an open string set; unknown reasons are not success. An anonymous 401 is persisted as `failed` (§5.6), without emitting `auth.expired`;
 the stored reason and the returned result use the same lease-held classification.
 An app needing an acknowledgement tied to
 one authenticated bucket must still track its explicit scoped check.
@@ -1069,8 +1066,7 @@ means, and hands the host the resulting token. That is the whole model: **bring 
 preferences file whose key is wrapped by a hardware-backed RSA key, which is what that plugin now does
 instead of the deprecated `EncryptedSharedPreferences`. It needs `minSdk 23`. iOS: the Keychain, with
 `first_unlock_this_device` accessibility, so a background sync after a reboot-and-no-unlock has no token
-and reports itself offline rather than crashing. **The iOS path is written and unverified**, like every
-other iOS path in this spec.
+and reports itself offline rather than crashing. iOS is experimental and untested.
 
 - **`secure.set` takes a non-null value and `secure.delete` is the only delete.** `prefs.set(key, null)`
   and `data.put(bucket, key, null)` both delete, so this is deliberately the odd one out: there is one way
@@ -1150,7 +1146,7 @@ at the reserved key `valence.auth.account`. It is written only by this method an
   minute ago" over B's empty buckets.
   - Synced/seeded read-only rows and their cursors are **not** touched. They are
     public and remain available while signed out. Disposable REST cache overlays
-    are cleared under ?5.5.1, because their payloads may be account-specific.
+    are cleared under §5.5.1, because their payloads may be account-specific.
   - **The §4.5.1 cookie jar goes with the token,** in the same step and under the same lease: a session
     or CSRF cookie is a credential of the account that just left, and a request made after the switch
     must not carry it. A sign-out clears it even for an app that never recorded an id and therefore
@@ -1296,7 +1292,7 @@ A POST can succeed on the server while the page receives `E_TOO_LARGE` (response
 
 **Existing REST APIs need an adapter for offline sync.** `http.request` is an online RPC:
 it does not itself populate SQLite, retry, queue a write, or work offline.
-For selected disposable responses, revision-18 `data.cache` (?5.5.1) is a local
+For selected disposable responses, revision-18 `data.cache` (§5.5.1) is a local
 SQLite overlay; a sync adapter is still needed for server-managed datasets and
 queued user edits. The reference Node adapter
 in `examples/rest-sync-adapter/` maps a REST snapshot onto §5.3/§5.5, assigns durable monotonic
@@ -1913,7 +1909,7 @@ active-manifest-only lookup, traversal/reserved/URL denial, bounded CAS reads,
 missing files and changed size/hash; generated-dispatch tests for strict params,
 nonce denial and actual native-plugin marshalling; codegen tests for frozen schema-14
 shape and preserved custom pre-14 handlers; Android example checks for inline and
-bundle sharing with a caption, without claiming delivery. iOS remains untested.
+bundle sharing with a caption, without claiming delivery. iOS is experimental and untested.
 
 ## 5. Data layer
 
@@ -2037,7 +2033,7 @@ within the same second by the host at `reason=2 (SIGNALED) status=9`, `importanc
 `assets/valence/seed.db` has the same schema and is built by `valence seed`:
 
 - The build is atomic, so a failure keeps the previous seed.
-- Every pair must match the current `data` schema or an explicit additional `seedSchemas` declaration (?7.1). Multiple schemas can coexist via `<bucket>.v<N>.json`.
+- Every pair must match the current `data` schema or an explicit additional `seedSchemas` declaration (§7.1). Multiple schemas can coexist via `<bucket>.v<N>.json`.
 - Every row is `{k: string, v, u: integer ≥ 1, d}`.
 
 On first launch, and after a host upgrade, the host attaches the seed and, for each `(bucket, schema)` pair, copies the seed rows whose `usn` is above the local `max_usn` for that pair. It then updates the `bucket` row. Count the copied rows with `SELECT changes()`: sqflite's `rawInsert` returns a last-insert-rowid, which is meaningless on a `WITHOUT ROWID` table, so a log line built from it reports 1 for a seed of thousands and reads as a failure.
@@ -2138,7 +2134,7 @@ ones; scoped sync may select fewer pairs. Publish a valid empty dynamic page
 empty bucket) or static index for an overlay-only bucket. Preserve any existing
 server history/cursor. HTTP 404 makes the run incomplete (`failed`), retaining
 successful work in other buckets and queued writes (section 5.6). No `sync.base` means
-no pull; 0.4 has no per-bucket cache-only exemption.
+no pull; Valence has no per-bucket cache-only exemption.
 The reference adapter in `examples/rest-sync-adapter` serves only `items` and
 returns 404 for other names; add empty overlay buckets there explicitly too.
 Null removes only the cached value, revealing any underlying synced value.
@@ -2146,7 +2142,7 @@ JSON values are limited to 65,536 UTF-8 bytes (`E_TOO_LARGE`); the page chooses
 what to retain and removes stale keys explicitly. This is a disposable cache,
 not a way to save user edits or authenticate server data.
 
-**That value cap is the only one, and in 0.4 nothing underneath it stops a page that never prunes.**
+**That value cap is the only one, and nothing underneath it stops a page that never prunes.**
 There is no cap on the number of cached rows, no cap on total cached bytes and no eviction of any kind, so
 a page with a compiled grant can fill the device one 64 KiB value at a time — and the user's only remedy
 is clearing app data, which also destroys their synced rows and their queued writes. **It is not the only
@@ -2173,7 +2169,7 @@ absence of a problem, and it is stated in half a sentence. So:
   granted buckets, so the decision is visible at release time rather than only in this paragraph. It
   passes rather than warns: `doctor` cannot see whether the page prunes, and a warning no correct app can
   clear is a warning nobody reads.
-- **A compiled ceiling is the fix and it is not in 0.4.** A per-bucket `maxRows` or a total `cacheMaxBytes`
+- **A compiled ceiling is the fix and it is not shipped.** A per-bucket `maxRows` or a total `cacheMaxBytes`
   with the oldest write evicted first would let an app that never prunes degrade into a smaller cache
   instead of a full disk. The `cache` table is `WITHOUT ROWID` and keyed by `(bucket, schema, key)` with
   no written-at column, so "oldest" does not exist yet: it needs a database migration, which is why the
@@ -2251,7 +2247,7 @@ authenticated records must read `kv` directly or use a bucket with no cache gran
 - **Triggers:**
   - on UI start, on resume and when connectivity comes back (connectivity_plus);
   - when the web app calls `sync.now`;
-  - periodically in the background through a host-owned scheduler: Android WorkManager has a **minimum repeat interval of 15 minutes**, not a guaranteed cadence. Constraints and system optimizations can delay or skip a run; keep the foreground and reconnect triggers above. On iOS, BGTaskScheduler is best effort; iOS remains experimental and untested. See [Android's periodic-work contract](https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work#schedule_periodic_work) (checked 2026-11-10). One observed callback proves neither the next run's timing nor a recurring cadence.
+  - periodically in the background through a host-owned scheduler: Android WorkManager has a **minimum repeat interval of 15 minutes**, not a guaranteed cadence. Constraints and system optimizations can delay or skip a run; keep the foreground and reconnect triggers above. On iOS, BGTaskScheduler is best effort; iOS is experimental and untested. See [Android's periodic-work contract](https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work#schedule_periodic_work) (checked 2026-11-10). One observed callback proves neither the next run's timing nor a recurring cadence.
 - **The background isolate shares the UI's database connection.** sqflite registers open databases by path in the platform plugin, so each isolate opens the same path, gets the same connection, and neither may close it; a background isolate also needs `DartPluginRegistrant.ensureInitialized()` first (§5.1). The lease below serialises *syncs*; it says nothing about database lifetimes. Because the connection is shared, keep pull pages small (§5.3 caps them at 500) so a long background transaction doesn't queue the UI's reads behind it.
 - **The *open* is not covered by the lease, and the schema upgrade is where the two isolates collide.** A `user_version` migration runs in `BEGIN EXCLUSIVE`, and the launch that runs it is the launch WorkManager fires the already-registered periodic job on — an app update, for every app. The loser gets `SQLITE_BUSY` (`database is locked ... during open, closing...`) and `busy_timeout` does not help, because the lock is refused before the connection that would wait on it exists. The lease cannot help either: **the lease lives inside the database being opened.** So:
   - **Retry a locked open** for about as long as a lease wait — the reference runtime tries five times, one second apart — and then let the caller decide.
@@ -2309,11 +2305,11 @@ Ship at least **two** of these in the host before the first store submission:
 
 **Resolve these packages together, not one at a time.** The conflict observed on 2026-10-17 involved the older 19.x notification plugin: its Linux implementation required `dbus ^0.7.8`, while `connectivity_plus` required `dbus ^0.8.0` through `nm`. The current built-in reminder stack (`flutter_local_notifications` 23.0.4+ with `connectivity_plus` 7.3.2) resolves without that override. If an app still pins 19.x directly, review its app-owned notification calls before upgrading. Remove an override added solely for the old conflict and run `flutter pub get` to verify the complete graph; preserve unrelated constraints the app still needs.
 
-**This is a list of capabilities that need native work, not a list of things that work out of the box.** Every row but the first fails on a real device while the project builds clean, `dart analyze --fatal-infos` passes, the host tests pass and `doctor` is green — so the §8 matrix is the only place that can catch them, and only if the app adds a row. `flutter create` rewrites `MainActivity`, so the `FlutterFragmentActivity` edit needs a comment saying why it is there.
+Capabilities with app-owned native setup need Android checks after configuration; a clean build, passing tests and a green `doctor` result do not verify that setup. `flutter create` also rewrites `MainActivity`, so leave a comment on the `FlutterFragmentActivity` line saying why it is there.
 
 **A capability whose success is asynchronous must report what the host actually knows, not `ok`.** `notify.schedule` is the worst case: on Android 13+ without `SCHEDULE_EXACT_ALARM` or `USE_EXACT_ALARM` the alarm is silently downgraded or refused, so the bridge call succeeds in a few hundred milliseconds, `notify.pending` lists the reminder, the receiver even registers — and it arrives late or not at all. For an app whose purpose is reminding someone, that is the worst failure shape there is. Return `exact` / `inexact` / `blocked` from `AlarmManager.canScheduleExactAlarms()` and surface it on the permission type, so the web app can say so. Google Play restricts `USE_EXACT_ALARM` to apps whose core function is alarms or calendars, so a reminder app either justifies it in review or accepts inexact delivery: that is a §7 question as much as a §5.6 one.
 
-**The §6 capabilities are as fresh as the last UI start, and nothing can make them fresher.** Two rules here are individually right and jointly limiting. §5.6 says a background run cannot reach the WebView; the architecture gives the page sole ownership of the data model and the wording, because the page is the only part that knows the product. So a background sync can pull a fresh week into SQLite and then do nothing with it: it cannot extend the reminder queue past what the last UI start scheduled, and it cannot refresh the widget's snapshot. **A reminder set once and left alone runs dry; a widget shows a stale day** — on exactly the phone whose owner has not opened the app, which is the phone these features exist for. Design for it: re-arm on every UI start and on every `sync.changed`, schedule as far ahead as the data allows rather than as far as the UI is showing, and say in the product what "last updated" means. The alternative — a second copy of the wording in Dart — is a copy that cannot ship over the air, which is the thing Valence exists to avoid. A host-side template a background run could fill is the obvious fix and is **not** in 0.4.
+**The §6 capabilities are as fresh as the last UI start, and nothing can make them fresher.** Two rules here are individually right and jointly limiting. §5.6 says a background run cannot reach the WebView; the architecture gives the page sole ownership of the data model and the wording, because the page is the only part that knows the product. So a background sync can pull a fresh week into SQLite and then do nothing with it: it cannot extend the reminder queue past what the last UI start scheduled, and it cannot refresh the widget's snapshot. **A reminder set once and left alone runs dry; a widget shows a stale day** — on exactly the phone whose owner has not opened the app, which is the phone these features exist for. Design for it: re-arm on every UI start and on every `sync.changed`, schedule as far ahead as the data allows rather than as far as the UI is showing, and say in the product what "last updated" means. The alternative — a second copy of the wording in Dart — is a copy that cannot ship over the air, which is the thing Valence exists to avoid. A host-side template a background run could fill is the obvious fix and is **not** shipped.
 
 **Native state outlives your bundle, and an OTA release cannot reach it.** An over-the-air bundle can change every line of the product *except* the state a native plugin has already persisted: scheduled notifications and their ids in the plugin's own `shared_prefs`, widget key-value storage, granted permissions, and anything else a §6 item wrote. The sharp edge is identifiers. Change how a notification id is derived between two releases and the old cohort is unreachable — the new code cancels only the ids its own scheme can compute, while a boot or an app-update re-arm faithfully restores *both*, so the user gets every reminder twice a day at a time they never chose, for ever. **Cancel by difference, not by a migration flag:** ask the plugin for its pending requests and cancel every id that is neither in the set about to be scheduled nor already on screen. That clears any past scheme and leaves a notification the user is reading alone (§6.1). The general rule: a store release is the only thing that can migrate native state, so treat an id scheme like a database schema, not like a constant.
 
@@ -2335,7 +2331,7 @@ Everything here is silent when it is wrong: the call succeeds, the UI says "Set"
 - **Permission.** Android 13+ needs `POST_NOTIFICATIONS`. The plugin *declares* it for you, so the host's job is to **request it when the user asks for reminders and report the result** (`requestNotificationsPermission()`, through `notify.permission({request: true})`; initialization never prompts, §6.5): a denied permission is otherwise indistinguishable from a working one, and the host schedules into a void on every modern device with no error anywhere.
 - **Create the channel at init, not on first post.** Android drops a notification whose channel does not exist, silently, and the plugin only creates the channel when a notification is *shown* — so if posting is what is broken, the channel never exists and never will.
 - **Delivery is best effort.** `SCHEDULE_EXACT_ALARM` is **not pre-granted to a fresh install** of an app targeting API 33 or later, even when the manifest declares it — and a backup-and-restore onto Android 14 withdraws it from an app that had it, which is worth reading next to §2.4's backup rules (`logcat`: "lost permission to set exact alarms"); the plugin then records `inexactAllowWhileIdle` and the alarm can sit minutes past its due time, still pending. `USE_EXACT_ALARM` is the one granted automatically and Google Play restricts it to alarm-clock and calendar apps. A morning reminder does not need to be exact: prefer `inexactAllowWhileIdle`, and report the mode you got so the UI can say "Android may deliver this late" instead of lying.
-- **Older app-owned wall-clock scheduling (observed plugin 19.x): set `tz.local` from the device's real zone.** The schema-11 built-in uses plugin 23.0.4+ with explicit absolute UTC one-shot deadlines (?6.5); this historical observation is about the custom daily-reminder implementation. The plugin re-derives every stored notification against `tz.local` whenever the clock, the timezone or the device changes. Scheduling an absolute instant (`tz.TZDateTime.from(utc, tz.UTC)`) passes every unit test and then **deletes every scheduled alarm** on the first `TIME_SET` — six before a clock change, zero after, nothing in the log. Building the same times in the device's zone leaves all six intact.
+- **Older app-owned wall-clock scheduling (observed plugin 19.x): set `tz.local` from the device's real zone.** The schema-11 built-in uses plugin 23.0.4+ with explicit absolute UTC one-shot deadlines (§6.5); this historical observation is about the custom daily-reminder implementation. The plugin re-derives every stored notification against `tz.local` whenever the clock, the timezone or the device changes. Scheduling an absolute instant (`tz.TZDateTime.from(utc, tz.UTC)`) passes every unit test and then **deletes every scheduled alarm** on the first `TIME_SET` — six before a clock change, zero after, nothing in the log. Building the same times in the device's zone leaves all six intact.
   - Initialize from `latest_all.dart`, not `latest.dart`. `FlutterTimezone.getLocalTimezone()` can return a legacy alias (`Asia/Katmandu`, one `h`) that the trimmed database does not contain, and `tz.getLocation` throws. Turn an unresolvable zone into a `BridgeError` the page can display.
 - **Re-arm from tomorrow, never `cancelAll`, and key ids by date.** Because a background run cannot reach the WebView (§5.6), the only way to keep a rolling window of reminders alive is to re-arm it on every UI start and after every `sync.changed` — and the obvious `cancelAll()` then reschedule **dismisses the notification the user is reading**: they opened the app *because* the reminder arrived, and the re-arm wipes it out from under them 600 ms later. A sync landing while it is on screen does the same. Clear from tomorrow forward, so the id of a reminder already on screen is one the re-arm never touches; turning reminders off still clears from today. Ids derived from a list position shift when a past day drops out, so a re-arm can also overwrite the wrong day.
 - **Serialise the re-arm against the user's own edits.** Persist the new hour *before* arming, and put arms behind one promise chain. Otherwise changing the hour arms first and persists second, the sync-driven re-arm reads the old value in the gap, and it schedules the old hour over the top — the user's chosen reminder silently does not happen.
@@ -2420,7 +2416,7 @@ so "most recently" is only ever the order a page *observed*, never the order the
 start holding both a tapped reminder and a deep link, whichever mailbox resolves first wins, and it may
 be the older tap. Closing that needs an arrival timestamp on both initial replies — `link.initial() ->
 {url, path, at}` and `notify.initial() -> {payload, at}` — which is a schema bump on two returns and so
-is not in 0.4. Until then the rule is followed to the limit of what a page can observe, and this
+is not shipped. Until then the rule is followed to the limit of what a page can observe, and this
 paragraph is the limit.
 
 **What was closed is the third claim the page could not see at all.** The restored route (§4.8) is also
@@ -2491,7 +2487,7 @@ audit the resolved graph and final binary, not just the schema.
 Local notifications and badges remain core dependencies. Installing `valence_push`
 adds Firebase even if no Dart code calls it: native auto-init is governed by the
 host's project configuration and consent controls, separately from bridge opt-in.
-Firebase's iOS 15.0 minimum applies to push hosts; iOS remains untested.
+Firebase's iOS 15.0 minimum applies to push hosts; iOS is experimental and untested.
 
 | Method | Params | Returns |
 |---|---|---|
@@ -2547,8 +2543,7 @@ the schema, not the installed adapter, so pages catch `E_UNSUPPORTED` on `push.*
 
 Remote push (FCM) was built and run on Android, end to end. That covers
 foreground, background, killed-process sync, notification taps and image
-notifications. Token rotation has not been observed yet. iOS is experimental and
-untested.
+notifications. Token rotation has not been observed yet. iOS is experimental and untested.
 
 ## 7. Store-policy rules (enforced by `valence bundle` and the reviewer)
 
@@ -2587,7 +2582,7 @@ untested.
 
 ---
 
-### 7.1 Mechanical diagnostics and the remaining 0.4 ledger decisions
+### 7.1 Mechanical diagnostics
 
 - `data.getMany({bucket, keys: string[]}) -> Row[]` is a built-in at `since: 3`. It reads the active bundle's schema, returns live rows in first-requested-key order, omits missing keys and tombstones, and deduplicates keys. Empty input returns an empty list. More than 500 input keys fails with `E_PARAMS`; keys are bound SQL parameters, never SQL text. One batch crosses the bridge once, rather than paying a separate WebView round trip per key (about 15 ms in the test-app emulator measurement; not a performance guarantee).
 - `sync.status() -> {pending: int, lastSyncedAt: int?, offline: bool}` is a built-in at `since: 3`, with no network side effect. `pending` counts outbox operations, including deletes and repeated edits. `lastSyncedAt` is the epoch-millisecond time of the last successful **unscoped** sync, persisted in reserved host prefs, or null before one. `offline` describes the last attempted run's transport failure, not current connectivity; it is false before an attempt. Busy runs do not overwrite these observations. A scoped run cannot advance the global timestamp. `SyncResult.pending` is an optional nullable `int?` (§4.3), reporting remaining operations at return time, including busy/offline/no-server results.
@@ -2618,7 +2613,7 @@ documented optional addition (rule 5) read from docs newer than the generator pr
 **And the version number alone cannot answer "is my copy current?".** `VALENCE_VERSION` names a
 *release*, so two copies of the CLI that generate different code can report the same string: a vendored
 `valence/valence.mjs` against a newer published one, or two pre-release snapshots. So `valence version
---build` appends a digest of the CLI file (`0.4.0-beta.0+build.<12 hex>`) and `doctor` opens with a
+--build` appends a digest of the CLI file (`0.5.0-beta.0+build.<12 hex>`) and `doctor` opens with a
 `CLI build` row carrying the same pair and the path it read. Plain `valence version` stays exactly one
 machine-readable line, because scripts compare it. The digest is a *flag*, never a gate: nothing signs,
 verifies or refuses on it, and the remedy it points at is `create-valence update`.
@@ -2804,7 +2799,7 @@ switch/sign-out clearing and in-flight/transition write barriers, **with the swi
 beneath the overlay that goes**; **a given-up trial dropping every overlay on each of the
 two strikes while its server rows, cursor and outbox survive**; v1/v2 database
 migration preserves rows and pending writes; **`doctor`'s `REST cache` row naming the
-granted buckets and the ceiling 0.4 does not have, passing with a grant and without one and
+granted buckets and the ceiling Valence does not have, passing with a grant and without one and
 and failing for a library caller handed an invalid grant, which the CLI itself refuses at
 config load before any row exists — there is no test for a row-count or total-bytes limit because there
 is none to test**. Covered in `cache_test.dart`,

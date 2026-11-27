@@ -70,17 +70,17 @@ transaction-entry and post-query sampling; static inspection verifies the latter
 
 ## Test-app evidence, read only
 
-Read both VALENCE_FINDINGS.md inventories and newest reports: Kundalini 23 and
-App C 144. Kundalini's report supplies new major F-83 evidence; the local
+Read both VALENCE_FINDINGS.md inventories and newest reports: reference app B 23 and
+reference app C 144. reference app B's report supplies new major F-83 evidence; the local
 regression reproduces its failure class, not the exact Android scheduling trace.
-Kundalini reports F-81 fixed and correct link/notification pre-emption. Its
+reference app B reports F-81 fixed and correct link/notification pre-emption. Its
 page-age correction matters: log delivery time is not status-read time. Its
 release checklist still has partial first-install-offline and unconfirmable
 haptics scope; F-83 has no app-layer workaround. Doctor artifact independently
 counts 21 PASS / 6 WARN / 0 FAIL. F-84 is a separate minor CLI-versus-snapshot
 identity documentation finding, addressed by the merged packages changes.
 
-App C 144 remains an incomplete Android regression. Independently checked all 22
+reference app C 144 remains an incomplete Android regression. Independently checked all 22
 report evidence links, counted doctor 16 PASS / 10 WARN / 1 FAIL, and rehashed
 both archived APKs:
 
@@ -98,8 +98,8 @@ failures is established. Iteration144 overwrote iteration143's old ignored relea
 archive path before correcting its destination; the earlier receipt remains
 historical evidence, not proof that the older binary is still at that path.
 
-Sources: valence-test-kundalini/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md,
-test-evidence/iteration-23/doctor.json}; valence-test-app-c/{VALENCE_FINDINGS.md,
+Sources: valence-test-reference-app-b/{VALENCE_FINDINGS.md,ITERATION_23_REPORT.md,
+test-evidence/iteration-23/doctor.json}; valence-test-reference app C/{VALENCE_FINDINGS.md,
 ITERATION_144_REPORT.md,evidence/iteration-144/{doctor.txt,archived-release.json,
 archived-debug.json,embedded-file-integrity.json,r27-core-only.json,
 r29-device-proof.json,scoped-cleanup.json,install-debug-no-streaming-execution.json}}.
@@ -134,5 +134,5 @@ clock sample and queue regressions. Subsequent validation/integration notes do
 not change that runtime. No gate result from the earlier baseline is substituted
 for the merged-tree results above.
 
-No fresh emulator acceptance is claimed. iOS remains experimental and untested.
+No fresh emulator acceptance is claimed. iOS is experimental and untested.
 No test-app writes, protected-branch commits, version changes, pushes or releases.

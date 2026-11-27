@@ -32,7 +32,7 @@ In another terminal run the printed Flutter command. Tap the counter, edit `dev-
 and verify the label changes while the counter stays put. The HMR callback also writes a native
 preference through the generated typed bridge and logs its success. The alias in `vite.config.mjs`
 uses this repository's bridge source; an adopter uses the ordinary npm package. Stop the dev
-server and rebuild without the define for signed-bundle tests. iOS remains untested.
+server and rebuild without the define for signed-bundle tests. iOS is experimental and untested.
 
 The schema-14 example has two image-sharing buttons: one sends small inline PNG
 bytes and the other names `share.png` in the signed bundle. Both include a caption.
@@ -65,11 +65,11 @@ queued delete showed the same pending count in the page and SQLite. The pre-JNI 
 
 A green `flutter test` is **not** evidence that the store opens on a phone: it runs on
 `sqflite_common_ffi`, which accepts pragmas that Android's `SQLiteDatabase` rejects. Android is the tested
-platform for Valence; **iOS is experimental and untested**.
+platform for Valence; **iOS is experimental and untested.**
 
 ## Native HTTP demo
 
-Native HTTP was added at built-in schema 4; the combined example schema is 16.
+Native HTTP was added at built-in schema 4; the combined example schema is 20.
 `http.origins` grants only `http://127.0.0.1:8787` for the local demo. Run the
 reference adapter in `examples/rest-sync-adapter/`, then
 `adb reverse tcp:8787 tcp:8787`. Set its synthetic `ADAPTER_TOKEN` through the
@@ -92,7 +92,7 @@ prints whether the page could see `Set-Cookie` (it cannot) beside the `202`-shap
 
 ## Layout probe
 
-The signed page displays app.appearance and logical insets, pads content with the host variables, uses 48px buttons and exposes optional fontScale through app.info. Rotate, resize, change font size and toggle system dark mode without reloading. See [accessibility](../../../docs/accessibility.md). iOS remains experimental and untested.
+The signed page displays app.appearance and logical insets, pads content with the host variables, uses 48px buttons and exposes optional fontScale through app.info. Rotate, resize, change font size and toggle system dark mode without reloading. See [accessibility](../../../docs/accessibility.md). iOS is experimental and untested.
 
 ## Task restoration
 
@@ -102,18 +102,18 @@ Task snapshots are bound to the native account as well as the signed bundle: swi
 
 ## Deep-link demo
 
-The deep-link surfaces were added at schema 9. This merged example reports schema 16 and accepts `valence-example://app` and `https://links.example.invalid`. Native Android filters and experimental iOS registrations are included. The page shows the routed path/query/hash and uses the wire protocol directly, matching the rest of this no-bundler demo. Production apps use `onLink()` from their generated client. See [setup](../../../docs/deep-links.md). The placeholder HTTPS domain cannot verify; forced approval tests delivery only.
+The deep-link surfaces were added at schema 9. This merged example reports schema 20 and accepts `valence-example://app` and `https://links.example.invalid`. Native Android filters and experimental iOS registrations are included. The page shows the routed path/query/hash and uses the wire protocol directly, matching the rest of this no-bundler demo. Production apps use `onLink()` from their generated client. See [setup](../../../docs/deep-links.md). The placeholder HTTPS domain cannot verify; forced approval tests delivery only.
 
 
 ## Permissions demo
 
-Schema 10 adds a Permissions section: choose any of the seven kinds, Check, Request or open App settings. Resume deltas appear separately. All kinds are declared solely for this demonstration; production apps must enable and declare only the kinds they use. The Android manifest and iOS SPM usage strings are wired; iOS remains experimental and untested. [Setup guide](https://getvalence.dev/docs/guides/permissions/).
+Schema 10 adds a Permissions section: choose any of the seven kinds, Check, Request or open App settings. Resume deltas appear separately. All kinds are declared solely for this demonstration; production apps must enable and declare only the kinds they use. The Android manifest and iOS SPM usage strings are wired; iOS is experimental and untested. [Setup guide](https://getvalence.dev/docs/guides/permissions/).
 
 
 
 ## Local reminder demo
 
-The example schema is 16, with notification methods and events since 11, `notify.pendingIds` since 16, and notifications.enabled set to true. Allow reminders, then schedule 15 seconds ahead: the page shows exact or inexact, displays native pending requests, cancels ID 42 and records warm tap/action or the consumed cold initial response. Images use a tiny PNG; Done and Snooze open the UI and report an action without automatically changing app data. The Android platform files include receivers, a status drawable and desugaring. iOS/AppDelegate is implemented but experimental and untested. See [setup](../../../docs/local-notifications.md).
+The example schema is 20, with notification methods and events since 11, `notify.pendingIds` since 16, and notifications.enabled set to true. Allow reminders, then schedule 15 seconds ahead: the page shows exact or inexact, displays native pending requests, cancels ID 42 and records warm tap/action or the consumed cold initial response. Images use a tiny PNG; Done and Snooze open the UI and report an action without automatically changing app data. The Android platform files include receivers, a status drawable and desugaring. iOS is experimental and untested. See [setup](../../../docs/local-notifications.md).
 
 ## Remote push demo
 
@@ -124,7 +124,7 @@ add `valence_push` and direct Firebase imports, configure the native project and
 initialize `createFirebasePush()` as shown in [the setup guide](../../../docs/remote-push.md).
 A native rebuild is required; no signing or bridge-schema change is needed for
 these existing controls. Device delivery has not yet been validated;
-iOS/APNs remains experimental and untested.
+iOS is experimental and untested.
 
 Schema 15 adds nullable AppInfo.builtins, SyncStatus.reason and BundleStatus.urgent. Older hosts omit them. See [capability revisions and durable status](https://getvalence.dev/docs/guides/capabilities-and-status/).
 
@@ -140,6 +140,6 @@ compiled `cacheBuckets`. Its wiring test writes a disposable REST-shaped value,
 reads it back through the bridge and rejects caching in writable `shelf`. The
 checked-in signed builtin remains the previously verified revision-17 bundle;
 new schema wiring alone is not a new signed UI or Android device acceptance.
-See [REST caching](../../../docs/rest-cache.md). iOS remains experimental and untested.
+See [REST caching](../../../docs/rest-cache.md). iOS is experimental and untested.
 
 The generated schema declares revision-19 bundle.check and bundle.checked. See the explicit-check guide for the subscription and Retry flow; the signed built-in UI is unchanged.

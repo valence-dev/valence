@@ -13,8 +13,8 @@ this branch starts from packages, not from the separate R17 or R26 branches.
 
 ## Evidence and decisions
 
-- Read the two test apps' findings and latest reports read-only: Kundalini iteration 12 and
-  app-a iteration 10. R25 addresses Kundalini F-56. The reports' unmatched CLI/bridge snapshots
+- Read the two test apps' findings and latest reports read-only: reference app C iteration 12 and
+  reference app A iteration 10. R25 addresses reference app C F-56. The reports' unmatched CLI/bridge snapshots
   are separate distribution evidence; neither test app nor its snapshots were modified here.
 - The deterministic reproduction runs `flutter test test/seed_runtime_test.dart --reporter expanded`
   inside `packages/valence`. Before the fix, a marker-only lock left imported data present but
@@ -109,5 +109,4 @@ this change does not modify a security path and still awaits the improver's bran
 Unchanged limits: same-build/same-length seed replacement does not invalidate this existing
 stamp format; rebuild with a changed host build. This item does not retry row imports within a
 launch or change retention/tombstone semantics. R17/R26 still require their own merges; no
-combined feature validation is claimed. No iOS hardware test was possible; iOS is experimental
-and untested. No version bump, push, publication or merge into a shared branch occurred.
+combined feature validation is claimed. No iOS hardware test was possible; iOS is experimental and untested. No version bump, push, publication or merge into a shared branch occurred.

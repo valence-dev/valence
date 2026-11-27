@@ -1,4 +1,4 @@
-# Published host files in 0.4
+# Published host files
 
 `valence.publishHostFile(bytes, contentType: ...)` writes a durable copy and returns
 a relative `/_host/f/<id>` URL. Each call uses a new random id, including calls with
@@ -22,7 +22,7 @@ or automatic eviction. **The absence of automatic collection is deliberate.** A
 published URL lives in durable rows the host cannot read, so a host-side sweep by
 age or size would blank images the app still references, with nothing in either log.
 
-What 0.4 provides is the explicit half:
+Valence provides the explicit half:
 
 ```dart
 // In the same operation that deletes the row or file that owned the URL.

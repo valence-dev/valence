@@ -3,7 +3,7 @@
 Schema 15 adds nullable returned fields. Regenerate the bridge and ship a store
 build; an OTA cannot add native support. Existing store baselines stay unchanged.
 Old hosts omit these fields, so use nullish fallbacks. Android is the validation
-target; iOS remains experimental and untested.
+target; iOS is experimental and untested.
 
 ## Gate grown parameters
 

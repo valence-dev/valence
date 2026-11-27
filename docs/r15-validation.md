@@ -56,7 +56,7 @@ there alongside the final successful results; they are not counted as passing ch
 
 ## Scope and limits
 
-Read the current findings and newest reports for Kundalini (iteration 10) and app-a (iteration 8).
+Read the current findings and newest reports for reference app C (iteration 10) and reference app A (iteration 8).
 Their data migration, paging, authentication and device timing findings informed the separation of
 runtime evidence from device evidence. Both test app repositories remained read-only.
 
@@ -67,5 +67,5 @@ No homepage feature claim is needed for package test infrastructure.
 
 No emulator run was needed for this test-only change. Native HTML rendering, JavaScript execution,
 device WebView isolation and port-reclamation nonce rotation are not proved by this harness. Android
-device evidence remains separate; iOS remains experimental and untested. No shared branches were
+device evidence remains separate; iOS is experimental and untested. No shared branches were
 modified, and nothing was pushed or published.

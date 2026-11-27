@@ -10,7 +10,7 @@ graph and final binary before completing store disclosures.
 
 Remote push (FCM) was built and run on Android, end to end. That covers foreground, background,
 killed-process sync, notification taps and image notifications. Token rotation has not been observed
-yet. iOS/APNs and its rich-image extension are experimental and untested.
+yet. iOS is experimental and untested.
 
 `valence_push` is an **add-on**, not a plugin: `push.*` is a core namespace, so the
 package supplies a `ValencePushTransport` rather than a schema fragment, and it needs

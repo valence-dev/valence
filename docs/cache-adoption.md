@@ -1,6 +1,6 @@
 # REST cache adoption follow-up - 2026-11-04
 
-In plain terms: Kundalini iteration 19 found two adoption traps after successfully
+In plain terms: reference app B iteration 19 found two adoption traps after successfully
 using the cache offline. Revision 18 is a package minimum, while a method newly
 added to a store-19 app must declare 20. Once shipped, that declaration is frozen.
 The CLI now names the recorded built-in definition to restore instead of proposing
@@ -22,9 +22,9 @@ source; F-76's documentation request is addressed. Neither correction is claimed
 as adopted by the test apps.
 
 Read both findings inventories and the newest completed reports read-only:
-Kundalini 19 / App C 103. Kundalini records F-71 and F-72 as fixed and device
+reference app B 19 / reference app C 103. reference app B records F-71 and F-72 as fixed and device
 checks for cache grants, pull eviction and offline rollback disposal. Those are
-saved app reports, not device checks replayed here. App C records artifact audit
+saved app reports, not device checks replayed here. reference app C records artifact audit
 success but scoped acceptance=false after an initial bounded CDP/startup failure;
 later success does not erase it. Its first backup was rejected when a WorkManager
 process appeared during transfer. Historical reliability findings remain open.
@@ -79,8 +79,7 @@ normal additive growth remains ahead of the refusal, and legacy app-owned method
 retain their existing advice. Verification order, signatures, strict decoding,
 nonce, navigation/subframe locks, atomic state writes, key handling, compiled
 cache grants, account clearing and release-mode development exclusion are unchanged.
-No fresh emulator or independent security-review acceptance is claimed. iOS remains
-experimental and untested. No test-app writes, protected-branch changes, package
+No fresh emulator or independent security-review acceptance is claimed. iOS is experimental and untested. No test-app writes, protected-branch changes, package
 version changes relative to packages, pushes or publication.
 
 ## Build-digest packages refresh - 2026-11-04
@@ -100,9 +99,9 @@ Every must-have and original queue item is done. S1 remains explicitly parked,
 S2 needs a Play account, and S9 is explicitly assigned to 0.5 unless device
 evidence establishes a leak. No lease cause is inferred from a busy result.
 
-Read the findings inventories and latest completed reports read-only: Kundalini
-19 and App C 104. Kundalini's F-75/F-76 adoption remains unverified after this
-follow-up. App C's saved audit records 75 passing artifact checks and scoped
+Read the findings inventories and latest completed reports read-only: reference app B
+19 and reference app C 104. reference app B's F-75/F-76 adoption remains unverified after this
+follow-up. reference app C's saved audit records 75 passing artifact checks and scoped
 acceptance=true; its same-PID Settings continuation follows an initial null-root
 UI dump, which remains qualified. The report confirms receipt of corrected
 dependency guidance, while the historical F-45 entry remains open. The legacy-port
@@ -132,7 +131,7 @@ Logs use the prefix `%TEMP%/valence-cache-refresh-` with suffixes `root.log`,
 Flutter gates ran sequentially. No new emulator acceptance is claimed.
 The security-path checklist above remains applicable: relative to packages, this
 branch changes documentation and a regression test, with no runtime, generator,
-template, package-version or schema delta. iOS remains experimental and untested.
+template, package-version or schema delta. iOS is experimental and untested.
 
 ## Reviewer-fix packages refresh - 2026-11-04
 
@@ -184,7 +183,7 @@ In plain terms: refreshed this cache-adoption follow-up on code packages
 fields, diagnostics and docs; no lease acquisition or expiry change was added.
 
 The first root run passed 117 of 118 tests: this branch's regression used the
-moving starter template as Kundalini's store-19 fixture. The revision-20 template
+moving starter template as reference app B's store-19 fixture. The revision-20 template
 correctly demanded 21, so its expectation of 20 failed. Commit `778e69b` pins
 that historical fixture to 19 and omits the later lease fields. The final full
 root run passed all 118 with zero skips, including generated Dart and strict TS.
@@ -198,9 +197,9 @@ checkpoints are not unmerged features. The two-unmerged-branch integration
 trigger is not met. S1 stays parked and S2 still needs a Play account. S9's
 upstream diagnostics are retained without inventing a lease leak or closing F-44.
 
-Read both findings inventories and latest completed reports read-only: Kundalini
-19 / App C 105. Kundalini's F-75/F-76 correction adoption remains unverified.
-App C's saved audit has 74 passing artifact checks and scoped acceptance=true.
+Read both findings inventories and latest completed reports read-only: reference app B
+19 / reference app C 105. reference app B's F-75/F-76 correction adoption remains unverified.
+reference app C's saved audit has 74 passing artifact checks and scoped acceptance=true.
 Independently rehashed both archived APKs against its delivery manifest: both
 match. Rehashed the raw activation snapshots: both are
 `d76bf41f4ef57badf08d57bab4ad1f5d5bd022ddb37aab333d18430755cab3f5`,
@@ -230,8 +229,7 @@ Security checklist relative to packages: no runtime, generator, template, packag
 version or app-schema delta. Signature/check order, nonce, strict decoding,
 navigation/subframe lock, atomic writes, keys, account isolation, cache grants
 and release-build dev exclusion remain unchanged. Diff hygiene passed.
-The matching code/site notes document the same scope. iOS remains experimental
-and untested. No test-app or protected-branch writes, push or publication.
+The matching code/site notes document the same scope. iOS is experimental and untested. No test-app or protected-branch writes, push or publication.
 
 ## Reviewed lease-diagnostics refresh - 2026-11-04
 
@@ -252,8 +250,8 @@ S1 stays explicitly parked; S2 still needs a Play account. No schema or package
 version changed. The branch delta from packages contains docs and one CLI
 regression test, with no runtime, generator or template change.
 
-Read both findings inventories and latest reports read-only: Kundalini 19 / App C
-106. Kundalini has not yet verified adoption of the F-75/F-76 corrections. App C's
+Read both findings inventories and latest reports read-only: reference app B 19 / reference app C
+106. reference app B has not yet verified adoption of the F-75/F-76 corrections. reference app C's
 saved audit has 76 passing checks and scoped acceptance=true; read, not replayed.
 Independently rehashed both archived APKs against its delivery manifest: both match.
 The two raw activation snapshots hash to
@@ -290,15 +288,14 @@ Logs: %TEMP%/valence-cache-refresh4-{root,core,bridge,push,site,apk,firebase}.lo
 Security checklist relative to packages: signature/check order, nonce, strict
 decoding, navigation/subframe lock, atomic writes, key handling, account isolation,
 cache grants and release-build dev exclusion retain the incoming implementation.
-Diff hygiene passed. Matching code/site notes record the same scope. iOS remains
-experimental and untested. No test-app or protected-branch writes, push or publication.
+Diff hygiene passed. Matching code/site notes record the same scope. iOS is experimental and untested. No test-app or protected-branch writes, push or publication.
 
 ## Iteration 107 evidence review - 2026-11-04
 
 In plain terms: the latest app receipts do not establish a new Valence runtime
-fix. Read both findings inventories and newest reports, Kundalini 19 / App C 107,
-without writing into either app. Kundalini has no newer report verifying adoption
-of the F-75/F-76 corrections. App C's saved audit passes all 79 artifact checks
+fix. Read both findings inventories and newest reports, reference app B 19 / reference app C 107,
+without writing into either app. reference app B has no newer report verifying adoption
+of the F-75/F-76 corrections. reference app C's saved audit passes all 79 artifact checks
 but explicitly sets scoped acceptance=false. Its F-47 reminder warning is fixed
 in the app; F-48 missing History API/popstate integration remains open. Android's
 activity dump records the detail activity finishing and the retained Photo Picker
@@ -352,9 +349,9 @@ builder worktree writes, push or publication.
 
 ## Iteration 108 evidence review - 2026-11-05
 
-In plain terms: App C's inspection Back fix now has scoped Android receipts;
+In plain terms: reference app C's inspection Back fix now has scoped Android receipts;
 it does not establish a Valence runtime repair. Read both findings inventories
-and newest completed reports read-only: Kundalini 19 / App C 108. The latter
+and newest completed reports read-only: reference app B 19 / reference app C 108. The latter
 started November 4 and completed November 5. Its saved artifact audit passes
 87 checks and sets scoped acceptance=true; read, not replayed here. F-48 has
 selected-inspection, warm/cold reminder, cold-link and mixed-picker Back receipts,
@@ -386,7 +383,7 @@ F-44 and historical reliability findings remain open.
 
 Eleven refreshed docs pages and tarball hashes are unchanged from iteration 107;
 that refresh does not independently verify adoption of prior documentation
-corrections. Kundalini has no newer report verifying F-75/F-76 correction adoption.
+corrections. reference app B has no newer report verifying F-75/F-76 correction adoption.
 Settings returned painted this attempt; historical renderer/startup findings
 remain open. Initial doctor overlap, accessibility selection failure, early
 page-disposal probe and cleanup failure are preserved apart from corrected

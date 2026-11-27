@@ -47,12 +47,12 @@ require an explicit native grant.
 
 ## Test-app context and limits
 
-Read both findings and latest iteration reports read-only: Kundalini 17 and
-app-c 27. S7 addresses Kundalini F-71's missing local REST-to-SQLite path. It
+Read both findings and latest iteration reports read-only: reference app B 17 and
+reference app C 27. S7 addresses reference app B F-71's missing local REST-to-SQLite path. It
 does not implement S6's cookie jar, bulk API requests or a sync adapter. Apps
 must validate their API payloads and retain only the data they need.
 
-App-c's ordinary-launch recurrence, retained-prior-host timeout with a possible
+reference app C's ordinary-launch recurrence, retained-prior-host timeout with a possible
 harness confound, ANR/memory-pressure and transaction findings remain open.
 Its new F-38 renderer-marker documentation discrepancy is outside S7. Scoped
 native/OTA/worker successes do not close those intermittent findings.
@@ -60,8 +60,7 @@ native/OTA/worker successes do not close those intermittent findings.
 No test-app files were written and no emulator lock was taken. This run does
 not claim Android cache device acceptance. The example proves the generated
 dispatch and compiled grant in a native wiring test; its checked-in signed
-builtin remains the previously verified revision-17 UI. iOS remains
-experimental and untested. No protected branch changes, push or publication.
+builtin remains the previously verified revision-17 UI. iOS is experimental and untested. No protected branch changes, push or publication.
 
 ## Gates
 

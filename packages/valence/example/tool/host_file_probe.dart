@@ -1,5 +1,5 @@
 // Run explicitly with -t tool/host_file_probe.dart, never the example entry point.
-// The §3 publication lifecycle on a real device: publish, serve, list, revoke, 404 — and the reconcile
+// The §3 publication lifecycle on Android: publish, serve, list, revoke, 404 — and the reconcile
 // path for a copy whose owning row was never written. It publishes only its own synthetic bytes, and
 // revokes every one of them before it finishes, so the probe leaves the host directory as it found it.
 import 'dart:convert';

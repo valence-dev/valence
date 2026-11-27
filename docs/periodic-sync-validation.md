@@ -5,9 +5,9 @@ In plain terms: a registered Android periodic job does not promise a sync every
 system optimizations can delay or skip runs. Foreground and reconnect sync remain
 the path to freshness while the app is open.
 
-Read both apps' findings and newest reports: Kundalini iteration 24 and App C
+Read both apps' findings and newest reports: reference app B iteration 24 and reference app C
 iteration 191. All 33 must-have roadmap rows are already done, including the
-original rebase queue. No item is reassigned or reopened. App C F-61 identifies
+original rebase queue. No item is reassigned or reopened. reference app C F-61 identifies
 the reversed interval wording in the host guide; contracts section 5.6 repeats
 it. The correction also reaches the package README and the site's data/sync
 guide. The runtime, codegen, templates and schema allocations need no change:
@@ -26,13 +26,13 @@ retries or changing data ownership. A scheduler guarantee the OS does not offer
 would mislead developers without protecting users' data. Foreground triggers,
 the sync lease and background isolation remain intact.
 
-App C reports qualified Android acceptance, with rebuilt Settings continuity in
+reference app C reports qualified Android acceptance, with rebuilt Settings continuity in
 PID 5122. Its initial offline spinner/UI Automator exit 137 and media CDP timeout
 remain separate from successful continuations. Native startup 6432ms is not a
 paint measurement or a lock-holder diagnosis. The eligible worker was explicitly
 triggered; its 762.208-second observation window proves no execution duration or
 cadence. Historical reliability and publication crash-recovery findings remain
-open. Kundalini's F-85 log timestamp qualification is already addressed in the
+open. reference app B's F-85 log timestamp qualification is already addressed in the
 current base; no additional runtime change is inferred from the retrieved report.
 
 Read-only consistency review resolved 51 local report links, rehashed both archived

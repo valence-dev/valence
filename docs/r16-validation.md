@@ -53,5 +53,5 @@ no remaining confirmed findings. Runtime and bridge sources are unchanged; the r
 checked diagnostic ordering and read-only behavior against the package reviewer checklist.
 
 No emulator run: this item changes host-side CLI diagnostics only. No new Android device
-behavior is claimed. iOS remains experimental and untested. Both test-app repositories and
+behavior is claimed. iOS is experimental and untested. Both test-app repositories and
 the other worktrees were read only. No shared-branch merge, push or publication occurred.

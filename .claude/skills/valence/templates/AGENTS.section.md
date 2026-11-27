@@ -43,7 +43,7 @@ Adaptive UI: use --valence-inset-top/right/bottom/left with 0px fallbacks and a 
 
 Task restoration follows the recorded account: switch/sign-out clears route and blob; refresh/adoption retains the live draft. Redraw account-owned page UI after a switch; do not put secrets in state.save.
 
-OS links use contracts ?6.3: store-compiled `links.origins`, matching native registrations and one generated `onLink()` subscription after `connect()`. Links are untrusted route input; authenticate actions separately.
+OS links use contracts §6.3: store-compiled `links.origins`, matching native registrations and one generated `onLink()` subscription after `connect()`. Links are untrusted route input; authenticate actions separately.
 
 16. **Live development uses an explicit debug build.** `node valence/valence.mjs dev --web-dir <web app dir>` binds loopback and prints the emulator Flutter `VALENCE_DEV_URL` define. For a LAN target, require explicit `--allow-lan` and explain the cleartext full-bridge grant (contracts section 3.1). Use a separate development app id and test accounts. Native/schema changes need a rebuild. Test signed OTA, rollback and offline launch again without the define; HMR does not exercise those paths. Release/profile builds ignore the define (contracts section 3.1).
 

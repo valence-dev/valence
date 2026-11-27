@@ -34,10 +34,10 @@ serialized fail-closed auth writes and rerun combined account regressions/gates.
 R10 does not modify the auth implementation.
 
 **App inputs.** Both complete VALENCE_FINDINGS.md files and newest reports were
-reviewed read-only: Kundalini iteration 11 and app-a iteration 9. App-a F-32 and
-Kundalini event-gating findings informed the two-table fixture and upgrade docs.
+reviewed read-only: reference app C iteration 11 and reference app A iteration 9. reference app A F-32 and
+reference app C event-gating findings informed the two-table fixture and upgrade docs.
 Strict compilation uses this branch's matching source; no harness snapshots were
-replaced or claimed compatible. App-a F-33's database-lock cause remains unproven.
+replaced or claimed compatible. reference app A F-33's database-lock cause remains unproven.
 
 | Gate | Result |
 |---|---|
@@ -60,8 +60,7 @@ check could not resolve the locally uninstalled bridge. A temporary TypeScript
 config mapped it to this branch's source and passed; no dependency files changed.
 
 **Limits.** No new emulator run; device plugin execution and felt vibration remain
-unverified. Android build and mocked native-channel invocation passed. iOS remains
-experimental and untested. No test-app writes, pushes, publications, version bumps
+unverified. Android build and mocked native-channel invocation passed. iOS is experimental and untested. No test-app writes, pushes, publications, version bumps
 or merges into shared branches occurred.
 
 ## Queue refresh — 2026-10-22
@@ -94,8 +93,8 @@ point to section 4.7. Recheck: four plugin CLI tests pass, zero skipped, no
 remaining confirmed findings. Ownership, baseline compatibility, nonce checks,
 strict decoding and restricted `open.external` behavior were reviewed.
 
-**Current app inputs.** Read Kundalini's findings and `ITERATION_10_REPORT.md`,
-and app-a's findings and `ITERATION_8_REPORT.md`, without modifying either repo.
+**Current app inputs.** Read reference app C's findings and `ITERATION_10_REPORT.md`,
+and reference app A's findings and `ITERATION_8_REPORT.md`, without modifying either repo.
 Their database, paging, native setup and authentication observations inform the
 merge decisions above; R10 does not claim to fix their unrelated findings.
 
@@ -119,7 +118,7 @@ merge decisions above; R10 does not claim to fix their unrelated findings.
 Transient gate logs: `%TEMP%/valence-r10-refresh-{npm,flutter,analyze,example,apk,pub,site}.log`.
 
 **Limits.** No emulator check this refresh. No device plugin execution or felt
-vibration is claimed; iOS remains experimental and untested. No publication,
+vibration is claimed; iOS is experimental and untested. No publication,
 push, merge into `packages`/`main`, or release version bump occurred.
 
 ## Original validation — 2026-10-21
@@ -156,7 +155,7 @@ store release.
 | `git diff --check` | Clean |
 
 Local gate logs were moved out of both worktrees to
-`C:/Users/Lenovo/AppData/Local/Temp/valence-r10-20261021-4c7a2ffc43be47bdaab7b2d3aabd5367`.
+`<temporary validation directory>`.
 They are transient local evidence, not required source files.
 
 ## Security review
@@ -187,10 +186,10 @@ branch's device execution are not claimed. iOS is experimental and untested.
 
 ## Test-app evidence considered
 
-Read-only inputs were Kundalini's `VALENCE_FINDINGS.md` and newest
-`ITERATION_9_REPORT.md`, plus app-b's `VALENCE_FINDINGS.md` and newest
+Read-only inputs were reference app C's `VALENCE_FINDINGS.md` and newest
+`ITERATION_9_REPORT.md`, plus reference app B's `VALENCE_FINDINGS.md` and newest
 `ITERATION_2_REPORT.md`. Their native setup failures informed the requirement for
 plugin setup notes and platform-channel tests. New reports also describe stable
-asset-name caching (Kundalini F-39), packaged paging/head-cursor behavior (app-b
-F-29), and sync/update lease collisions (app-b F-30). R10 does not claim to fix
+asset-name caching (reference app C F-39), packaged paging/head-cursor behavior (reference app B
+F-29), and sync/update lease collisions (reference app B F-30). R10 does not claim to fix
 those separate runtime concerns. Neither test-app repository was modified.
