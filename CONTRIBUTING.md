@@ -8,7 +8,9 @@ Thanks for helping. Bug reports, docs fixes and code are all welcome.
 - **Bugs:** open an issue with the bug template. Say which device or emulator and Android version you
   ran on.
 - **Larger changes:** open an issue first so we can agree on the shape before you write the code.
-- **Docs site:** the site's source is not public yet. Report docs problems as issues here.
+- **Docs site:** getvalence.dev lives in [valence-dev/valence-site](https://github.com/valence-dev/valence-site).
+  Open docs issues and pull requests there. A behaviour change here needs a matching docs pull request
+  there.
 
 ## Setup
 
