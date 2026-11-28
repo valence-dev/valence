@@ -51,13 +51,24 @@ The Dart test in `npm test` skips if `dart` is not on your PATH. A skip is not a
    under `--strict --verbatimModuleSyntax`.
 6. **Small and boring wins.** The smallest correct change, no speculative abstractions.
 
-## Pull requests
+## Branches and pull requests
 
-- Branch from `main` and open the pull request against `main`.
+Valence uses trunk-based development. `main` is always releasable: CI is green and the docs match the
+code.
+
+- Branch from `main` with a short-lived branch (`fix/…`, `feat/…`, `docs/…`) and open one pull request
+  against `main`. Keep it small enough to review and merge within a day or two.
+- There are no long-lived release or feature branches. Split big work into several small pull requests,
+  and keep an unfinished feature switched off by default until it is done.
+- Rebase on `main` if your branch falls behind; don't merge other branches into it.
 - Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/):
   `fix(updater): keep the trial marker after a renderer reload`.
-- Add a line to the relevant `CHANGELOG.md` under the next version.
+- Add a line under `## Unreleased` at the top of the relevant `CHANGELOG.md`, in plain language for app
+  developers.
 - CI must be green. Say in the description what you ran by hand, especially anything on a device.
+
+Releases are cut from `main`: a version-bump pull request, then a `vX.Y.Z` tag on its merge commit. A
+fix for a published version lands on `main` and ships in the next release; nothing is backported.
 
 By contributing you agree that your work is released under the [MIT License](LICENSE), and that you
 follow the [Code of Conduct](CODE_OF_CONDUCT.md).
