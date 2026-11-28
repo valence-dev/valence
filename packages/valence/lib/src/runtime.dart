@@ -263,6 +263,9 @@ final class Valence {
   /// [notificationEventAdapter] replaces warm notification scripts for an app-owned
   /// pre-11 event. Use its generated BridgeEvents builder, or return null to drop.
   /// Cold responses remain consume-once through [ValenceNotifications.initial].
+  ///
+  /// [afterFrame] replaces the post-frame scheduler for store garbage collection, so a widget
+  /// test can run that real database work outside the binding's fake async zone. Leave it null.
   static Future<Valence> open(
     ValenceConfig config, {
     int hostBuild = 0,
@@ -273,6 +276,7 @@ final class Valence {
     ValenceSecure? secure,
     ValencePush? push,
     DatabaseFactory? databaseFactory,
+    void Function(Future<void> Function())? afterFrame,
     ValencePermissionBackend? permissionBackend,
     ValenceNotificationPlatform? notificationPlatform,
     String? Function(Map<String, Object?> response)? notificationEventAdapter,
@@ -339,6 +343,7 @@ final class Valence {
         readAsset: readAsset,
         client: client,
         log: log,
+        afterFrame: afterFrame,
       );
 
       await updater.restoreStorePolicy();

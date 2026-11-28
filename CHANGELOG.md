@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Widget tests on Flutter 3.47 can now use the updater's existing scheduling hook through `Valence.open(afterFrame: ...)` to await garbage collection with real database I/O.
+
 ## 0.5.0-beta.0 (2026-11-26)
 
 **Valence moves to the current Flutter and Android toolchain.** This is a breaking release for hosts:

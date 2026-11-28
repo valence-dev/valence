@@ -132,9 +132,10 @@ final class ValenceUpdater {
     required this._readAsset,
     http.Client? client,
     this._log = defaultValenceLogger,
-    this._afterFrame = _postFrame,
+    void Function(Future<void> Function())? afterFrame,
     this.onUpdateReady,
-  })  : _client = client ?? http.Client();
+  })  : _afterFrame = afterFrame ?? _postFrame,
+        _client = client ?? http.Client();
 
   /// The app's configuration.
   final ValenceConfig config;
