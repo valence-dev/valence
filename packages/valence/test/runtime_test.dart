@@ -9,6 +9,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show debugDefaultTargetPlatformOverride;
 import 'package:flutter/widgets.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' show NotificationResponse;
 import 'package:flutter_secure_storage/test/test_flutter_secure_storage_platform.dart';
 import 'package:flutter_secure_storage_platform_interface/flutter_secure_storage_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,7 +17,6 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:valence/valence.dart';
-import 'package:valence/src/restoration.dart';
 import 'package:valence/codegen.dart' show eventScript;
 
 import 'helpers.dart';
@@ -202,36 +202,75 @@ void main() {
     expect(v.launchDestination, isNull, reason: 'the page has drained it');
   });
 
-  test('a restored task does not replay its launch link or notification tap', () async {
-    // Android 12 device row (contracts §4.8, §6.3): open from a link or a notification, Home, the OS
-    // kills the process, then a launcher reopen. The recreated Activity carries the original intent.
-    final native = FakeNotifications()..launch = response();
-    final log = LogSpy();
-    final v = await Valence.open(
-        ValenceConfig(appId: 'com.example.notify', keyring: const {},
-            bridgeVersion: 16, notificationsEnabled: true, linkOrigins: const {'myapp://app'}),
-        supportDir: support, secure: testSecure({}), log: log.call,
-        notificationPlatform: native);
-    final stream = StreamController<String>(sync: true);
-    await v.links.start(
-        getInitial: () async => 'myapp://app/auth-callback?x=1', stream: stream.stream);
-    expect(v.launchDestination, 'link');
+  group('a task the OS restores (Android Home, background process death, launcher reopen)', () {
+    // The recreated Activity carries the intent that first started the task (contracts §4.8, §6.3).
+    Future<(Valence, LogSpy)> launch(Directory dir,
+        {required String? link, NotificationResponse? tap}) async {
+      final log = LogSpy();
+      final v = await Valence.open(
+          ValenceConfig(
+              appId: 'com.example.notify',
+              keyring: const {},
+              bridgeVersion: 16,
+              notificationsEnabled: true,
+              linkOrigins: const {'myapp://app'}),
+          supportDir: dir,
+          secure: testSecure({}),
+          log: log.call,
+          notificationPlatform: FakeNotifications()..launch = tap);
+      await v.links.start(getInitial: () async => link, stream: const Stream<String>.empty());
+      return (v, log);
+    }
 
-    final previous = ValenceRestoration()..activate(7);
-    previous.observe('http://127.0.0.1:1/draft?test=t12#edit', 'http://127.0.0.1:1');
-    previous.save({'draft': 'half-written'});
-    v.restoration.hydrate(previous.snapshot());
-    await v.prepareRestoration(7);
+    Future<String> firstProcess() async {
+      final (v, _) = await launch(support, link: 'myapp://app/auth-callback?x=1', tap: response());
+      v.restoration.activate(7);
+      expect(v.linkInitial()!.path, '/auth-callback?x=1');
+      expect((await v.notifications.initial() as Map)['id'], 42);
+      v.restoration.observe('http://127.0.0.1:1/draft?test=t12#edit', 'http://127.0.0.1:1');
+      v.stateSave({'draft': 'half-written'});
+      return v.restoration.snapshot();
+    }
 
-    expect(v.launchDestination, isNull);
-    expect(v.linkInitial(), isNull, reason: 'the previous process already delivered that link');
-    expect(await v.notifications.initial(), isNull);
-    expect(v.restoration.route, '/draft?test=t12#edit',
-        reason: 'a stale launch must not pre-empt the route the user left');
-    expect(v.stateRestore(), {'draft': 'half-written'});
-    expect(log.lines.where((l) => l.contains('belongs to the previous process')), hasLength(1));
-    expect(log.lines.where((l) => l.contains('pre-empts')), isEmpty);
-    await stream.close();
+    test('does not replay the launch link or tap the previous process delivered', () async {
+      final envelope = await firstProcess();
+      final (v, log) = await launch(await Directory.systemTemp.createTemp('valence-restored'),
+          link: 'myapp://app/auth-callback?x=1', tap: response());
+      v.restoration.hydrate(envelope);
+      await v.prepareRestoration(7);
+      expect(v.launchDestination, isNull);
+      expect(v.linkInitial(), isNull);
+      expect(await v.notifications.initial(), isNull);
+      expect(v.restoration.route, '/draft?test=t12#edit',
+          reason: 'a stale launch must not pre-empt the route the user left');
+      expect(v.stateRestore(), {'draft': 'half-written'});
+      expect(log.lines.where((l) => l.contains('not replaying it')), hasLength(2));
+      expect(log.lines.where((l) => l.contains('pre-empts')), isEmpty);
+    });
+
+    test('still delivers a new link and a new tap that arrive as the task comes back', () async {
+      final envelope = await firstProcess();
+      final (v, log) = await launch(await Directory.systemTemp.createTemp('valence-restored'),
+          link: 'myapp://app/day/2026-11-29', tap: response(id: 99));
+      v.restoration.hydrate(envelope);
+      await v.prepareRestoration(7);
+      expect(v.launchDestination, 'link');
+      expect(v.restoration.route, '/',
+          reason: 'a new tap is a destination, so it pre-empts as before');
+      expect(v.stateRestore(), {'draft': 'half-written'});
+      expect(v.linkInitial()!.path, '/day/2026-11-29');
+      expect((await v.notifications.initial() as Map)['id'], 99);
+      expect(log.lines.where((l) => l.contains('not replaying it')), isEmpty);
+    });
+
+    test('a task with no record of delivery keeps the old behaviour', () async {
+      final (v, _) = await launch(support, link: 'myapp://app/auth-callback?x=1');
+      v.restoration.hydrate(jsonEncode({'seq': 7, 'route': '/draft', 'json': null}));
+      await v.prepareRestoration(7);
+      expect(v.linkInitial()!.path, '/auth-callback?x=1',
+          reason: 'an envelope from an older host, or a process that died before its page '
+              'drained the link');
+    });
   });
 
   group('startup diagnostics', () {

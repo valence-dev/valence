@@ -29,6 +29,9 @@ final class ValenceLinks {
   ValenceLink? _pending;
   bool _pendingIsLaunch = false;
   bool _listening = false;
+
+  /// Called with the URL each time the page drains a link that came from the launch read (§4.8).
+  void Function(String url)? onLaunchDelivered;
   bool _closed = false;
 
   /// Maps a URL to a safe route, or returns null without logging its contents.
@@ -136,11 +139,10 @@ final class ValenceLinks {
     }
   }
 
-  /// Drops the launch intent's link when the OS restores a task instead of starting one (§6.3).
-  ///
-  /// Android hands a recreated Activity the intent that first started its task, so after a background
-  /// process death the launch link is the previous process's, already delivered. A link that arrived
-  /// as a new intent during startup is kept.
+  /// The pending link's URL when it came from the launch read, else null.
+  String? get pendingLaunchUrl => _pendingIsLaunch ? _pending?.url : null;
+
+  /// Drops a pending launch link a previous process in this task already delivered (§4.8).
   void discardLaunch() {
     if (!_pendingIsLaunch) return;
     _pending = null;
@@ -163,7 +165,9 @@ final class ValenceLinks {
   ValenceLink? initial() {
     _listening = true;
     final result = _pending;
+    if (result != null && _pendingIsLaunch) onLaunchDelivered?.call(result.url);
     _pending = null;
+    _pendingIsLaunch = false;
     return result;
   }
 

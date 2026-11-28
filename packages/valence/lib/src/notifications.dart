@@ -197,14 +197,20 @@ final class ValenceNotifications {
   /// is correct: there is no tap to honour.
   bool get hasInitial => _initial != null;
 
-  /// Drops the launch tap when the OS restores a task: the restored Activity carries the intent that
-  /// started the task, a tap the previous process already delivered (§4.8). Live taps are unaffected.
+  /// Called with the launch tap's identity (id, payload, action) when the page drains it (§4.8).
+  void Function(String identity)? onLaunchDelivered;
+
+  /// The pending launch tap's identity, or null; compared with what a previous process delivered.
+  String? get launchIdentity => _key(_initial);
+
+  /// Drops the launch tap a previous process in this task already delivered (§4.8).
   void discardLaunch() => _initial = null;
 
   /// The response that launched the process, consumed once. Does not also emit a warm event.
   Future<Object?> initial() async {
     await initialize();
     final value = _initial;
+    if (value != null) onLaunchDelivered?.call(_key(value)!);
     _initial = null;
     return value;
   }

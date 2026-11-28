@@ -103,32 +103,31 @@ void main() {
     await stream.close();
   });
 
-  test(
-      'a restored task drops the launch intent link and keeps a link that arrived during startup',
+  test('only a drained launch-read link is reported as delivered; a stream link is never discarded',
       () async {
-    // Contracts §6.3, Android 12 row: Home, background process death, then a launcher reopen hands
-    // the recreated Activity its original VIEW intent. That link was the previous process's.
+    final delivered = <String>[];
+    links.onLaunchDelivered = delivered.add;
     final stream = StreamController<String>(sync: true);
     await links.start(
-        getInitial: () async => 'myapp://app/auth-callback?x=1',
-        stream: stream.stream);
-    expect(links.hasPending, isTrue);
-    links.discardLaunch();
-    expect(links.hasPending, isFalse);
-    expect(links.initial(), isNull);
+        getInitial: () async => 'myapp://app/auth-callback?x=1', stream: stream.stream);
+    expect(links.pendingLaunchUrl, 'myapp://app/auth-callback?x=1');
+    expect(links.initial()!.path, '/auth-callback?x=1');
+    expect(delivered, ['myapp://app/auth-callback?x=1']);
+    expect(links.pendingLaunchUrl, isNull);
 
     final second = StreamController<String>(sync: true);
-    final fresh = ValenceLinks(origins: {'myapp://app'}, onOpened: (_) {});
+    final fresh = ValenceLinks(origins: {'myapp://app'}, onOpened: (_) {})
+      ..onLaunchDelivered = delivered.add;
     final initial = Completer<String?>();
-    final start =
-        fresh.start(getInitial: () => initial.future, stream: second.stream);
+    final start = fresh.start(getInitial: () => initial.future, stream: second.stream);
     second.add('myapp://app/old');
     second.add('myapp://app/new-tap');
     initial.complete('myapp://app/old');
     await start;
+    expect(fresh.pendingLaunchUrl, isNull, reason: 'a newer stream link replaced the launch link');
     fresh.discardLaunch();
-    expect(fresh.initial()!.path, '/new-tap',
-        reason: 'a new intent delivered while the task was restored is a real tap');
+    expect(fresh.initial()!.path, '/new-tap');
+    expect(delivered, hasLength(1), reason: 'a stream link is not a launch intent');
     await fresh.close();
     await second.close();
     await stream.close();
