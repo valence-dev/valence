@@ -104,6 +104,37 @@ void main() {
   });
 
   test(
+      'a restored task drops the launch intent link and keeps a link that arrived during startup',
+      () async {
+    // Contracts §6.3, Android 12 row: Home, background process death, then a launcher reopen hands
+    // the recreated Activity its original VIEW intent. That link was the previous process's.
+    final stream = StreamController<String>(sync: true);
+    await links.start(
+        getInitial: () async => 'myapp://app/auth-callback?x=1',
+        stream: stream.stream);
+    expect(links.hasPending, isTrue);
+    links.discardLaunch();
+    expect(links.hasPending, isFalse);
+    expect(links.initial(), isNull);
+
+    final second = StreamController<String>(sync: true);
+    final fresh = ValenceLinks(origins: {'myapp://app'}, onOpened: (_) {});
+    final initial = Completer<String?>();
+    final start =
+        fresh.start(getInitial: () => initial.future, stream: second.stream);
+    second.add('myapp://app/old');
+    second.add('myapp://app/new-tap');
+    initial.complete('myapp://app/old');
+    await start;
+    fresh.discardLaunch();
+    expect(fresh.initial()!.path, '/new-tap',
+        reason: 'a new intent delivered while the task was restored is a real tap');
+    await fresh.close();
+    await second.close();
+    await stream.close();
+  });
+
+  test(
       'dispose during initial lookup drops the result and cancels native delivery',
       () async {
     final stream = StreamController<String>(sync: true);

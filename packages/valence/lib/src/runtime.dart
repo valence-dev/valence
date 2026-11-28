@@ -213,6 +213,17 @@ final class Valence {
           'restoration: account could not be checked; starting with an empty task snapshot');
     }
     restoration.activate(seq);
+    if (restoration.restoredTask) {
+      // ponytail: push taps share one slot with live taps, so a restored push launch tap is not
+      // dropped here yet; it needs a device check of firebase_messaging's initial-message lifetime.
+      final stale = launchDestination;
+      links.discardLaunch();
+      _notifications?.discardLaunch();
+      if (stale != null && stale != launchDestination) {
+        _log('restoration: the OS restored this task, so its launch $stale belongs to the '
+            'previous process and is not replayed');
+      }
+    }
     final launch = launchDestination;
     if (launch != null && restoration.route != '/') {
       _log('restoration: a $launch launch destination pre-empts the restored route '

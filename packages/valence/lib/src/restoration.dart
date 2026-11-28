@@ -14,6 +14,11 @@ final class ValenceRestoration extends ChangeNotifier {
   String? _json;
   String? _account;
   int _accountRevision = 0;
+  bool _restoredTask = false;
+
+  /// Whether the OS handed this process a previous process's task, rather than starting a new one.
+  /// True even when the envelope itself failed validation: the task, and its launch intent, are old.
+  bool get restoredTask => _restoredTask;
 
   /// Invalidates route captures that began before an account change.
   int get accountRevision => _accountRevision;
@@ -156,6 +161,7 @@ final class ValenceRestoration extends ChangeNotifier {
       notifyListeners();
       return;
     }
+    _restoredTask = snapshot != null;
     _seq = envelope?.seq;
     _route = envelope?.route ?? '/';
     _json = envelope?.json;

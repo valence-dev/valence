@@ -22,6 +22,14 @@ void main() {
     expect((ValenceRestoration()..hydrate(null)).restore(), isNull);
   });
 
+  test('a restored task is recognised even when its envelope is refused', () {
+    expect((ValenceRestoration()..hydrate(null)).restoredTask, isFalse);
+    final model = ValenceRestoration()..activate(3);
+    expect((ValenceRestoration()..hydrate(model.snapshot())).restoredTask, isTrue);
+    expect((ValenceRestoration()..hydrate('not json')).restoredTask, isTrue,
+        reason: 'a corrupt envelope still means the OS handed back an old task and its old intent');
+  });
+
   test('64 KiB means encoded JSON UTF-8 bytes and rejection preserves previous blob', () {
     final model = ValenceRestoration()..activate(1);
     model.save('a' * 65534); // quotes count too

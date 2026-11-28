@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:valence/valence.dart';
+import 'package:valence/src/restoration.dart';
 import 'package:valence/codegen.dart' show eventScript;
 
 import 'helpers.dart';
@@ -199,6 +200,38 @@ void main() {
     expect(v.launchDestination, 'notification', reason: 'reading it never consumes the mailbox');
     expect((await v.notifications.initial() as Map)['id'], 42);
     expect(v.launchDestination, isNull, reason: 'the page has drained it');
+  });
+
+  test('a restored task does not replay its launch link or notification tap', () async {
+    // Android 12 device row (contracts §4.8, §6.3): open from a link or a notification, Home, the OS
+    // kills the process, then a launcher reopen. The recreated Activity carries the original intent.
+    final native = FakeNotifications()..launch = response();
+    final log = LogSpy();
+    final v = await Valence.open(
+        ValenceConfig(appId: 'com.example.notify', keyring: const {},
+            bridgeVersion: 16, notificationsEnabled: true, linkOrigins: const {'myapp://app'}),
+        supportDir: support, secure: testSecure({}), log: log.call,
+        notificationPlatform: native);
+    final stream = StreamController<String>(sync: true);
+    await v.links.start(
+        getInitial: () async => 'myapp://app/auth-callback?x=1', stream: stream.stream);
+    expect(v.launchDestination, 'link');
+
+    final previous = ValenceRestoration()..activate(7);
+    previous.observe('http://127.0.0.1:1/draft?test=t12#edit', 'http://127.0.0.1:1');
+    previous.save({'draft': 'half-written'});
+    v.restoration.hydrate(previous.snapshot());
+    await v.prepareRestoration(7);
+
+    expect(v.launchDestination, isNull);
+    expect(v.linkInitial(), isNull, reason: 'the previous process already delivered that link');
+    expect(await v.notifications.initial(), isNull);
+    expect(v.restoration.route, '/draft?test=t12#edit',
+        reason: 'a stale launch must not pre-empt the route the user left');
+    expect(v.stateRestore(), {'draft': 'half-written'});
+    expect(log.lines.where((l) => l.contains('belongs to the previous process')), hasLength(1));
+    expect(log.lines.where((l) => l.contains('pre-empts')), isEmpty);
+    await stream.close();
   });
 
   group('startup diagnostics', () {

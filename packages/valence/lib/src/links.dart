@@ -27,6 +27,7 @@ final class ValenceLinks {
   void Function(ValenceLink) onOpened;
   StreamSubscription<String>? _subscription;
   ValenceLink? _pending;
+  bool _pendingIsLaunch = false;
   bool _listening = false;
   bool _closed = false;
 
@@ -110,6 +111,7 @@ final class ValenceLinks {
     } on Exception {/* No initial intent is a valid startup. */}
     if (_closed) return;
     if (launch != null) receive(launch);
+    _pendingIsLaunch = _pending != null;
     var skippedLaunch = false;
     for (final uri in queued) {
       if (!skippedLaunch && launch == uri) {
@@ -130,7 +132,19 @@ final class ValenceLinks {
       onOpened(link);
     } else {
       _pending = link;
+      _pendingIsLaunch = false;
     }
+  }
+
+  /// Drops the launch intent's link when the OS restores a task instead of starting one (§6.3).
+  ///
+  /// Android hands a recreated Activity the intent that first started its task, so after a background
+  /// process death the launch link is the previous process's, already delivered. A link that arrived
+  /// as a new intent during startup is kept.
+  void discardLaunch() {
+    if (!_pendingIsLaunch) return;
+    _pending = null;
+    _pendingIsLaunch = false;
   }
 
   /// Whether a link is waiting for the page to drain it (§4.8).

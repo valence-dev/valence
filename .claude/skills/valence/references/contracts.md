@@ -1702,6 +1702,20 @@ check runs *after* the account and seq rules above, which still drop both halves
 This is not the host choosing a destination — which destination to apply across sources stays the
 page's decision under §6.3 — it is the host declining to supply a third one the page cannot see.
 
+**A restored task is not a launch, so its launch intent is not replayed.** Android hands an Activity it
+recreates for a retained task the intent that first started that task — after Home, a background
+process death and a launcher reopen, that is still the deep link or reminder tap the previous process
+already delivered. So when the OS hands back a restoration envelope (even one that then fails
+validation), `prepareRestoration` drops the `link.initial` and `notify.initial` launch mailboxes before the
+pre-emption check above, logs
+`restoration: the OS restored this task, so its launch <link|notification> belongs to the previous process and is not replayed`,
+and restores the saved route. A link that arrives as a *new* intent while the task is being restored
+reaches the mailbox through the stream, not the launch read, and is kept — that is the tap that
+pre-empts. The cost is one lost destination when the previous process died before its page drained
+the launch mailbox; replaying an already-used auth callback is worse. `push.initial` is not dropped
+yet: its slot also holds live pre-subscription taps, and the provider's initial-message lifetime
+across a process death has not been checked on a device.
+
 **This is the one case where the blob outlives its route, and a route-scoped blob must say so itself.**
 Everywhere else in this section the two travel together or are dropped together, so a page could read
 `state.restore()` knowing it belonged to the route it was loaded at. After a pre-emption it does not:
@@ -2389,6 +2403,8 @@ links emit `link.opened`; a repeat tap on the same URL is a new event. Initial a
 stream delivery of the same launch intent are deduplicated only during startup.
 Links arriving before the page subscribes replace the pending link (latest wins).
 Each WebView page start re-arms the mailbox until that page calls `link.initial()`, retaining a pending link without replaying already consumed links.
+A new process does not replay a consumed link either: in a task the OS restores, the launch intent is the
+previous process's, and §4.8 drops it.
 Background isolates do not start link listeners. Dispose cancels the subscription.
 
 **`link.initial` and `notify.initial` are separate mailboxes, and a cold start can hold both.** Each
@@ -2884,14 +2900,19 @@ while a matching one still restores**;
 mailbox and a tapped notification captured by `Valence.open` each take the host to `/` with
 `state.restore()` still answering, with the log line naming the source and the mailbox left unconsumed,
 a reload after the pre-emption going to `/` and not to the route that was dropped, and a start carrying
-no launch tap restoring its route unchanged. The decision is asserted at the host's own
+no launch tap restoring its route unchanged; **a restored task does not replay its launch intent** — with a
+restoration envelope present (valid or refused), the launch link and the launch notification tap are
+dropped with their log line, the saved route and draft survive with no pre-emption, and a link that
+arrived on the stream during startup is kept. The decision is asserted at the host's own
 `prepareRestoration` call, not through a widget-tree restart, because a restart in one process is not
 the launch under test: `ValenceApp.dispose` closes the link mailbox that a cold start refills before its
 first frame. The cold start itself is the device row below;
 Android Home → am kill → retained-task reopen restores path/query/hash and blob,
 force-stop and explicit task removal start fresh, **and returning from that kill by a launch intent
 instead — a deep link, or a tapped reminder in an app that schedules one — opens `/` with the draft
-intact and the pre-emption line in the log, while the same kill without an intent restores its route**.
+intact and the pre-emption line in the log, while the same kill without an intent restores its route**;
+**after a cold start from a deep link, Home → am kill → launcher reopen returns `null` from
+`link.initial`** (the Android 12 run of 2026-11-28 found it replayed on 0.5.0-beta.0).
 The link half is exercised on the device by `packages/valence/example`; an app with a scheduled reminder
 owns the notification half.
 
