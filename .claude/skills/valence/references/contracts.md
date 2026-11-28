@@ -1708,7 +1708,8 @@ and a launcher reopen, the launch read can return the deep link or reminder tap 
 already gave its page. So when the page drains a launch link through `link.initial()` or a launch tap
 through `notify.initial()`, the host records a SHA-256 of it in the restoration envelope (field
 `delivered`: at most 8 lowercase-hex fingerprints, never the URL or payload, because a link can carry an
-auth code; a malformed list refuses the whole envelope). Before the pre-emption check above,
+auth code; a malformed or `null` list refuses the whole envelope). One stream echo of the launch link
+that arrives after startup but before the page subscribes is the same launch intent, not a stream link. Before the pre-emption check above,
 `prepareRestoration` drops a launch link or launch tap whose fingerprint is in that list and logs
 `restoration: this task already delivered its launch <link|notification>; not replaying it`; the saved
 route then restores normally. Anything else is delivered: a different URL or tap (including one the

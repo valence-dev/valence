@@ -115,6 +115,19 @@ void main() {
     expect(delivered, ['myapp://app/auth-callback?x=1']);
     expect(links.pendingLaunchUrl, isNull);
 
+    final echoed = ValenceLinks(origins: {'myapp://app'}, onOpened: (_) {});
+    final echo = StreamController<String>(sync: true);
+    await echoed.start(getInitial: () async => 'myapp://app/cb', stream: echo.stream);
+    echo.add('myapp://app/cb');
+    expect(echoed.pendingLaunchUrl, 'myapp://app/cb',
+        reason: 'a late stream echo of the launch link is the same launch intent');
+    echoed.discardLaunch();
+    expect(echoed.initial(), isNull);
+    echo.add('myapp://app/cb');
+    expect(echoed.hasPending, isFalse, reason: 'listening now, so a repeat is a live event');
+    await echoed.close();
+    await echo.close();
+
     final second = StreamController<String>(sync: true);
     final fresh = ValenceLinks(origins: {'myapp://app'}, onOpened: (_) {})
       ..onLaunchDelivered = delivered.add;

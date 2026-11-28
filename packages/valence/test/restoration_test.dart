@@ -43,6 +43,7 @@ void main() {
     expect((ValenceRestoration()..hydrate(model.snapshot())).wasDelivered('link:myapp://app/9'),
         isTrue);
     for (final bad in [
+      null,
       'nope',
       ['XYZ'],
       List.filled(9, 'a' * 64),

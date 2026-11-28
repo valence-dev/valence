@@ -216,7 +216,8 @@ final class ValenceRestoration extends ChangeNotifier {
         return null;
       }
       if (blob != null) jsonDecode(blob as String);
-      final delivered = data['delivered'] ?? const <Object?>[];
+      final delivered =
+          data.containsKey('delivered') ? data['delivered'] : const <Object?>[];
       if (delivered is! List ||
           delivered.length > 8 ||
           delivered.any((f) =>

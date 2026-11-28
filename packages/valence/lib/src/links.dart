@@ -28,6 +28,7 @@ final class ValenceLinks {
   StreamSubscription<String>? _subscription;
   ValenceLink? _pending;
   bool _pendingIsLaunch = false;
+  String? _launchEcho;
   bool _listening = false;
 
   /// Called with the URL each time the page drains a link that came from the launch read (§4.8).
@@ -123,12 +124,19 @@ final class ValenceLinks {
       }
       receive(uri);
     }
+    // A plugin that echoes the launch link on its stream after startup must not turn the launch intent
+    // into a stream link (§4.8 decides on launch links only): one late echo is the same intent.
+    if (launch != null && !skippedLaunch) _launchEcho = launch;
     starting = false;
   }
 
   /// Accepts one OS intent. Repeated taps after startup are intentionally preserved.
   void receive(String uri) {
     if (_closed) return;
+    if (_launchEcho != null && uri == _launchEcho) {
+      _launchEcho = null;
+      return;
+    }
     final link = accept(uri);
     if (link == null) return;
     if (_listening) {

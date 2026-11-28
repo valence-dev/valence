@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- **Fixed: an old deep link or reminder tap no longer fires again after Android restarts the app in the background.** If the app was opened from a link, sent to the background and then killed by Android, reopening it from the launcher delivered the same link to `link.initial` a second time (an old auth callback, for example). The host now remembers (as a hash, never the URL) which launch link or tap the page already received, drops that same one when Android restores the task, logs why, and returns to the screen the user left. A new link or tap still arrives. Push taps are unchanged for now. No host change needed.
+- **Fixed: an old deep link or reminder tap no longer fires again after Android restarts the app in the background.** If the app was opened from a link, sent to the background and then killed by Android, reopening it from the launcher delivered the same link to `link.initial` a second time (an old auth callback, for example). The host now remembers (as a hash, never the URL) which launch link or tap the page already received, drops that same one when Android restores the task, logs why, and returns to the screen the user left. A different link or tap still arrives; re-tapping the identical link or notification while the app is coming back counts as the old one. Push taps are unchanged for now. No host change needed.
 - Widget tests on Flutter 3.47 can now use the updater's existing scheduling hook through `Valence.open(afterFrame: ...)` to await garbage collection with real database I/O.
 
 ## 0.5.0-beta.0 (2026-11-26)
