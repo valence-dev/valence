@@ -319,6 +319,18 @@ test('SvelteKit without kit.version.name is flagged as not reproducible', () => 
   assert.equal(detectWeb(root)[0].stableBuild, true);
 });
 
+test('SvelteKit detects version.name in Vite configs alongside a Svelte config', () => {
+  for (const ext of ['ts', 'js']) {
+    const root = mkdtempSync(join(tmpdir(), 'mrw-kit-vite-'));
+    write(join(root, 'package.json'), JSON.stringify({ name: 'k', devDependencies: { '@sveltejs/kit': '^3' } }));
+    write(join(root, 'svelte.config.js'), 'export default {};');
+    write(join(root, 'vite.config.' + ext), 'export default { plugins: [sveltekit({})] };');
+    assert.equal(detectWeb(root)[0].stableBuild, false);
+    write(join(root, 'vite.config.' + ext), "export default { plugins: [sveltekit({ version: { name: 'local-release-1' } })] };");
+    assert.equal(detectWeb(root)[0].stableBuild, true);
+  }
+});
+
 test('update: hash-tracked installs, safe pruning, backups only for files the user edited', async () => {
   const { root, keyDir } = project();
   await quiet(() => run(['--root', root, '--yes', '--no-launch', '--key-dir', keyDir]));

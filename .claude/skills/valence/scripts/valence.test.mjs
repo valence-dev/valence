@@ -798,6 +798,7 @@ test('_host/ is reserved for the host, and a relative asset base in the entry pa
   html('<script type="module" src="./_app/a.js"></script><link rel="icon" href="favicon.png">');
   const w = bundle({ root, cfg, key, now: NOW }).warnings;
   assert.ok(w.some((x) => x.includes('relative URL') && x.includes('./_app/a.js') && x.includes('favicon.png')));
+  assert.ok(w.some((x) => x.includes("paths: { base: '', relative: false }") && x.includes('vite.config.ts/js') && x.includes('svelte.config.js')));
 
   // Root-relative, scheme-relative, scheme and fragment refs all resolve the same at any depth, so none of them warn.
   html('<script type="module" src="/_app/a.js"></script><link rel="icon" href="data:,"><img src="//cdn/x.png"><a href="#x">');
@@ -1254,6 +1255,63 @@ test('doctor --timeout moves every child budget, the timeout row names the bound
     assert.deepEqual(phases, [], bad);
   }
 });
+test('Windows Flutter discovery scans PATH and invokes the resolved launcher when where misses it', () => {
+  const root = mkdtempSync(join(tmpdir(), 'valence flutter path '));
+  const launcher = join(root, 'flutter.bat');
+  writeFileSync(launcher, '@echo off\r\necho found Flutter %*\r\n');
+  const source = readFileSync(join(import.meta.dirname, 'valence.mjs'), 'utf8');
+  const wrapper = source.slice(source.indexOf('const killedByTimeout'), source.indexOf('\nexport async function diagnose('));
+  for (const entry of [root.replaceAll('\\', '/'), '"' + root + '"']) {
+    const calls = [];
+    const run = runInNewContext(wrapper + '\nrunFlutter', {
+      process: { platform: 'win32', execPath: process.execPath, env: { ...process.env, PATH: entry, PATHEXT: '' } },
+      DEFAULT_CHILD_TIMEOUT_MS: 180_000,
+      spawnSync(command, args, options) {
+        calls.push({ command, args, options });
+        if (command === 'where.exe') return { status: 1 };
+        if (command === process.execPath) return spawnSync(command, args, options);
+        return process.platform === 'win32' ? spawnSync(command, args, options) : { status: 0, stdout: 'found Flutter pub deps --json' };
+      },
+    });
+    const result = run(['pub', 'deps', '--json'], root, 5_000);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /found Flutter pub deps --json/);
+    assert.equal(calls.length, 3);
+    assert.ok(calls[2].args.join(' ').includes(launcher), JSON.stringify(calls));
+    assert.ok(calls.every(({ options }) => options.timeout === 5_000));
+  }
+  rmSync(root, { recursive: true, force: true });
+});
+
+test('Windows Flutter PATH fallback preserves failures and supports executable launchers', () => {
+  const source = readFileSync(join(import.meta.dirname, 'valence.mjs'), 'utf8');
+  const wrapper = source.slice(source.indexOf('const killedByTimeout'), source.indexOf('\nexport async function diagnose('));
+  for (const scan of [
+    { status: 0, stdout: 'C:/SDK with spaces/flutter.exe' },
+    { status: null, signal: 'SIGTERM', error: { code: 'ETIMEDOUT' } },
+    { status: 1, signal: 'SIGKILL' },
+    { status: 2, stderr: 'Cannot inspect Flutter PATH entry: EACCES' },
+  ]) {
+    const calls = [];
+    const run = runInNewContext(wrapper + '\nrunFlutter', {
+      process: { platform: 'win32', execPath: 'node.exe', env: {} }, DEFAULT_CHILD_TIMEOUT_MS: 180_000,
+      spawnSync(command, args, options) {
+        calls.push({ command, args, options });
+        return command === 'where.exe' ? { status: 1 } : command === 'node.exe' ? scan : { status: 0 };
+      },
+    });
+    if (scan.status === 0) {
+      assert.equal(run(['pub', 'deps', '--json'], '.', 5_000).status, 0);
+      assert.equal(calls[2].command, scan.stdout);
+      assert.equal(calls[2].args.join(' '), 'pub deps --json');
+    } else {
+      assert.throws(() => run(['pub', 'deps', '--json'], '.', 5_000), scan.error ? /killed by its own 5s timeout/ : /Windows Flutter PATH scan failed/);
+      assert.equal(calls.length, 2);
+    }
+    assert.ok(calls.every(({ options }) => options.timeout === 5_000));
+  }
+});
+
 test('doctor preserves a failed Windows Flutter discovery instead of reporting an absent SDK', async () => {
   const { root, cfg } = fixture({ latest: true });
   codegen({ root, cfg });
@@ -1282,10 +1340,10 @@ test('doctor preserves a failed Windows Flutter discovery instead of reporting a
     ]) {
       const calls = [];
       const run = runInNewContext(`${wrapper}\nrunFlutter`, {
-        process: { platform: 'win32' }, DEFAULT_CHILD_TIMEOUT_MS: 180_000,
+        process: { platform: 'win32', execPath: 'node.exe', env: {} }, DEFAULT_CHILD_TIMEOUT_MS: 180_000,
         spawnSync(command, args, options) {
           calls.push({ command, args, options });
-          return command === 'where.exe' ? probe : { status: 0, stdout: JSON.stringify({ packages: [{ name: 'valence' }, { name: 'path_provider_android', version: '2.2.23' }] }) };
+          return command === 'where.exe' ? probe : command === 'node.exe' ? { status: 1 } : { status: 0, stdout: JSON.stringify({ packages: [{ name: 'valence' }, { name: 'path_provider_android', version: '2.2.23' }] }) };
         },
       });
       const rows = await diagnose({ root, cfg, tests: true, timeout: '45', run, git: () => ({ status: 128 }) });

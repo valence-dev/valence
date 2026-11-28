@@ -717,7 +717,7 @@ export function bundle({ root, cfg, key, builtin = false, store = false, rebasel
   if (relRefs.length) {
     const shown = relRefs.slice(0, 3).join(', ') + (relRefs.length > 3 ? ', …' : '');
     warnings.push(
-      `${entry} references ${relRefs.length} asset${relRefs.length > 1 ? 's' : ''} by a relative URL (${shown}). The SPA fallback serves the entry page at any depth (contracts §3), so the webview resolves those against the request path and 404s them: a reload or a back gesture on a nested route gives a blank screen with nothing in the log. Build so the output references assets from the origin root — base: '/' in Vite; in SvelteKit it is the setting that controls relative asset paths, not the deployment subpath, so check your version's docs. The host owns the whole origin, so a root-relative URL is always right.`,
+      `${entry} references ${relRefs.length} asset${relRefs.length > 1 ? 's' : ''} by a relative URL (${shown}). The SPA fallback serves the entry page at any depth (contracts §3), so the webview resolves those against the request path and 404s them: a reload or a back gesture on a nested route gives a blank screen with nothing in the log. Build so the output references assets from the origin root — base: '/' in Vite; in SvelteKit use paths: { base: '', relative: false } in sveltekit({...}) in vite.config.ts/js, or kit in older svelte.config.js (getvalence.dev/docs/guides/web-app/#sveltekit-static-build). The host owns the whole origin, so a root-relative URL is always right.`,
     );
   }
 
@@ -2045,7 +2045,7 @@ const timeoutError = (what, fix, ms) => {
 // The budget defaults rather than being required: every caller passes `diagnose`'s validated one, and a
 // future caller that forgets gets 180 s instead of `spawnSync`'s unbounded `undefined`.
 // What doctor says when Flutter is missing, so a developer knows where it looked.
-const FLUTTER_LOOKUP = process.platform === 'win32' ? 'where.exe flutter.bat found nothing on PATH' : 'no flutter on PATH';
+const FLUTTER_LOOKUP = process.platform === 'win32' ? 'where.exe and a direct PATH scan found no flutter.bat or flutter.exe' : 'no flutter on PATH';
 function runFlutter(args, cwd, timeoutMs = DEFAULT_CHILD_TIMEOUT_MS) {
   // Windows Flutter is a .bat entry point. Only fixed flags and the validated relative test paths reach
   // this command string; reject shell syntax here too, so adding another caller cannot widen it.
@@ -2056,14 +2056,47 @@ function runFlutter(args, cwd, timeoutMs = DEFAULT_CHILD_TIMEOUT_MS) {
   // stale UNC entry blocks `where.exe` in name resolution, and an unbounded child here is one
   // `--timeout` cannot move — the same unattributable hang, one spawn earlier.
   const probe = spawnSync('where.exe', ['flutter.bat'], { encoding: 'utf8', timeout: timeoutMs });
+  let launcher = probe.status === 0 ? probe.stdout?.trim().split(/\r?\n/)[0] : undefined;
+  if (probe.status !== 0 && !probe.signal && !killedByTimeout(probe)) {
+    // Keep filesystem discovery in a bounded child too: a PATH entry can be a dead network drive.
+    const scan = spawnSync(process.execPath, ['--input-type=commonjs', '-e', `
+      const { statSync } = require('node:fs');
+      const { join } = require('node:path');
+      let unreadable = false;
+      for (const entry of (process.env.PATH ?? '').split(';')) {
+        const dir = entry.trim().replace(/^"|"$/g, '').replaceAll('\\\\', '/');
+        if (!dir) continue;
+        for (const name of ['flutter.bat', 'flutter.exe']) {
+          const file = join(dir, name);
+          try {
+            if (statSync(file).isFile()) { process.stdout.write(file); process.exit(0); }
+          } catch (e) {
+            if (!['ENOENT', 'ENOTDIR'].includes(e.code)) unreadable = true;
+          }
+        }
+      }
+      if (unreadable) console.error('Cannot inspect one or more Flutter PATH entries');
+      process.exit(unreadable ? 2 : 1);
+    `], { encoding: 'utf8', timeout: timeoutMs, env: process.env });
+    if (killedByTimeout(scan)) {
+      throw timeoutError('the Windows Flutter PATH scan',
+        'check PATH for a dead mapped drive or a stale UNC entry', timeoutMs);
+    }
+    if (scan.status === 0 && scan.stdout?.trim()) launcher = scan.stdout.trim();
+    else if (scan.status !== 1 || scan.signal || scan.error) {
+      const e = new Error(`the Windows Flutter PATH scan failed${childTail(scan)}`);
+      e.fix = 'check PATH entries and that Node can read them';
+      throw e;
+    }
+  }
   // A failed discovery is not evidence that Flutter is absent, so only a **completed no-match** reads as
   // an absent SDK; everything else keeps the row FAIL. And it is named as *itself*, because the callers
   // below all phrase their own failure as the Flutter command — so returning a failed probe to them put
   // `where.exe`'s output under "flutter pub deps --json failed; run flutter pub get in the host" and sent
   // a developer to the pub cache over a dead mapped drive in PATH, which is C F-54's own complaint one
   // spawn earlier. Throwing is what reaches `check`'s row with this message intact.
-  if (probe.status === 1 && !probe.signal && !probe.error) return { error: { code: 'ENOENT' } };
-  if (probe.status !== 0) {
+  if (!launcher && probe.status === 1 && !probe.signal && !probe.error) return { error: { code: 'ENOENT' } };
+  if (!launcher && probe.status !== 0) {
     if (killedByTimeout(probe)) {
       throw timeoutError('where.exe flutter.bat, the Windows Flutter discovery probe',
         'check PATH for a dead mapped drive or a stale UNC entry, which blocks name resolution', timeoutMs);
@@ -2072,7 +2105,10 @@ function runFlutter(args, cwd, timeoutMs = DEFAULT_CHILD_TIMEOUT_MS) {
     e.fix = 'check PATH for a dead mapped drive or a stale UNC entry, and that where.exe is on it';
     throw e;
   }
-  return spawnSync('cmd.exe', ['/d', '/c', `flutter ${args.join(' ')}`], options);
+  if (!launcher) return spawnSync('cmd.exe', ['/d', '/c', `flutter ${args.join(' ')}`], options);
+  if (/\.exe$/i.test(launcher)) return spawnSync(launcher, args, options);
+  if (/["%\r\n]/.test(launcher)) throw new Error('unsafe Flutter launcher path');
+  return spawnSync('cmd.exe', ['/d', '/v:off', '/s', '/c', `""${launcher}" ${args.join(' ')}"`], { ...options, windowsVerbatimArguments: true });
 }
 
 export async function diagnose({ root, cfg, tests = false, timeout, run = runFlutter, keyDir = join(homedir(), '.valence', 'keys'), git = (args, ms) => spawnSync('git', args, { cwd: root, encoding: 'utf8', timeout: ms }), onPhase = () => {} }) {
