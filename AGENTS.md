@@ -54,6 +54,15 @@ Valence is an open-source architecture for shipping a web UI inside a Flutter ap
 8. **Keep it lazy:** the smallest correct change, no speculative abstractions, and stdlib before dependencies. Mark deliberate shortcuts with a `ponytail:` comment that names the ceiling.
 9. **Import order** (JS and TS): framework builtins (`node:*`), then third party, then local, then CSS, with groups separated by a blank line. Within a group, multiline imports come first, then single-line ones, each sorted ascending by the length of the statement's last line. Members inside a multiline `{ }` are sorted by length.
 
+## Branching (trunk-based)
+
+`main` is the trunk, and it is always releasable: CI green and docs matching the code.
+
+- Every change is a short-lived branch (`fix/…`, `feat/…`, `docs/…`) with one pull request into `main`. Merge it within a day or two. Never push straight to `main`.
+- No long-lived release or feature branches. Land big work in small pull requests; keep an unfinished feature off by default (a schema capability or config flag) until it is done.
+- A change that alters behaviour carries its spec, docs, tests and a `CHANGELOG.md` line under `## Unreleased` in the same pull request (rule 1). The site docs follow in a matching `valence-site` pull request.
+- A release is a version-bump pull request on `main`, then the tag on that merge commit. A fix to a published release goes to `main` first and ships in the next version; nothing is backported.
+
 ## Releasing
 
 Runtime release versions stay aligned: `create-valence`, `@getvalence/bridge`, `valence` and the optional `valence_push` pub package share a runtime version number, and `VALENCE_VERSION` in `valence.mjs` equals it (a test enforces that). `RUNTIME_VERSION` in `bin/valence.mjs` is the range the wizard writes into an app's `package.json`, and a test keeps it equal to all three runtime packages' versions — so the release bump updates: `package.json`, `VALENCE_VERSION`, `RUNTIME_VERSION`, and all three runtime package manifests.
