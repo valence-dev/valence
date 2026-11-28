@@ -39,6 +39,14 @@ void main() {
   late List<String> platformCalls;
   late List<(String, String)> messages;
   late StreamController<Object?> connectivity;
+  final collections = <Future<void> Function()>[];
+
+  Future<void> collect() async {
+    while (collections.isNotEmpty) {
+      await collections.removeAt(0)();
+    }
+  }
+
   HttpOverrides? previousHttp;
   final messenger =
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
@@ -51,6 +59,7 @@ void main() {
   });
 
   setUp(() async {
+    collections.clear();
     support = await Directory.systemTemp.createTemp('valence-widget-');
     ValenceStore.resetCacheForTests();
     webview = StubWebViewPlatform();
@@ -105,6 +114,10 @@ void main() {
       supportDir: support,
       documentsDir: support,
       databaseFactory: databaseFactoryFfi,
+      // GC has its own scheduling/retention tests in updater_test.dart. Queue it
+      // here so SQLite work never starts in FakeAsync, including the framework's
+      // final unmount frame (before tearDown on Flutter 3.47).
+      afterFrame: collections.add,
       secure: testSecure({}),
       client: MockClient((request) async {
         requests.add(request.url.toString());
@@ -118,6 +131,9 @@ void main() {
   });
 
   tearDown(() async {
+    // Normal tearDown runs outside testWidgets' FakeAsync zone. Finish every
+    // queued collection before closing its database or deleting its files.
+    await collect();
     await connectivity.close();
     messenger.setMockStreamHandler(
         const EventChannel('dev.fluttercommunity.plus/connectivity_status'),
@@ -221,6 +237,20 @@ void main() {
     }
   }
 
+  testWidgets('queued GC completes with real I/O and removes unused data',
+      (tester) async {
+    await tester.runAsync(() => runtime.store.applyPullPage(
+        bucket: 'obsolete', schema: 1, rows: [], maxUsnAfter: 0));
+    // Hold WebView configuration before foreground sync can take the GC lease.
+    await mount(tester, blocked: true);
+    expect(collections, isNotEmpty);
+    expect(await tester.runAsync(runtime.store.allPairs), contains('obsolete'));
+    await tester.runAsync(collect);
+    expect(collections, isEmpty);
+    expect(await tester.runAsync(runtime.store.allPairs),
+        isNot(contains('obsolete')));
+  });
+
   Future<void> lifecycle(WidgetTester tester, AppLifecycleState state) async {
     await tester.runAsync(
         () async => tester.binding.handleAppLifecycleStateChanged(state));
@@ -295,8 +325,10 @@ void main() {
     });
   }
 
-  Future<http.Response> serveTrial(http.Request request,
-      {bool validSignature = true}) async {
+  Future<http.Response> serveTrial(
+    http.Request request, {
+    bool validSignature = true,
+  }) async {
     if (request.url.host == 'sync.test') {
       return http.Response('{"rows":[],"max":0,"more":false}', 200);
     }
@@ -357,14 +389,16 @@ void main() {
     expect(log.has('dropping messages, a store update is required'), isTrue);
     // Once per state, not once per message: a page that retries in a loop must not bury the reason.
     final lines = log.lines
-        .where((l) => l.contains('dropping messages, a store update is required'))
+        .where(
+            (l) => l.contains('dropping messages, a store update is required'))
         .length;
     webview.controller.channel
         .onMessageReceived(const JavaScriptMessage(message: '{}'));
     await io(tester);
     expect(
         log.lines
-            .where((l) => l.contains('dropping messages, a store update is required'))
+            .where((l) =>
+                l.contains('dropping messages, a store update is required'))
             .length,
         lines,
         reason: 'one line per state, like §5.6 refusals');
@@ -432,13 +466,12 @@ void main() {
     await tester.runAsync(() => tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: MediaQuery(
-          data: const MediaQueryData(),
-          child: ValenceApp(
-              valence: runtime,
-              log: log.call,
-              dispatch: (raw, nonce) async =>
-                  throw StateError('must not dispatch')),
-        ))));
+            data: const MediaQueryData(),
+            child: ValenceApp(
+                valence: runtime,
+                log: log.call,
+                dispatch: (raw, nonce) async =>
+                    throw StateError('must not dispatch'))))));
     addTearDown(() async {
       await tester.runAsync(() => tester.pumpWidget(const SizedBox()));
       await io(tester);
@@ -622,14 +655,10 @@ void main() {
         return http.Response('{"seq":20,"rollout":100}', 200);
       }
       if (request.url.path.endsWith('/20.json.sig')) {
-
         return http.Response(policy.signature, 200);
-
       }
       if (request.url.path.endsWith('/20.json')) {
-
         return http.Response.bytes(policy.bytes, 200);
-
       }
       return http.Response('', 404);
     };
@@ -750,7 +779,11 @@ void main() {
     expect(runtime.restoration.route, '/',
         reason: 'the tap is the destination the user chose; the saved route is '
             'a stale third answer the page cannot arbitrate');
-    expect(runtime.stateRestore(), {'draft': 'half-written'},
+    expect(
+        runtime.stateRestore(),
+        {
+          'draft': 'half-written',
+        },
         reason: "the route is pre-empted; the draft is the user's own work");
     expect(runtime.links.hasPending, isTrue,
         reason: 'the host reads the mailbox and never consumes it');
@@ -761,8 +794,8 @@ void main() {
 
     // The model is what the host navigates to, so a reload after the pre-emption goes to the root page
     // and not to the route that was pre-empted.
-    await tester.runAsync(
-        () async => webview.controller.navigation.resourceError(contentProcessGone));
+    await tester.runAsync(() async =>
+        webview.controller.navigation.resourceError(contentProcessGone));
     await io(tester);
     expect(webview.controller.loads.last.toString(), '$origin/');
   });
@@ -795,7 +828,7 @@ void main() {
     for (final url in [
       'https://evil.invalid/',
       '$origin/_host/alive',
-      '$origin/x%00y'
+      '$origin/x%00y',
     ]) {
       webview.controller.navigation.urlChanged(UrlChange(url: url));
       expect(runtime.restoration.route, '/shelf/fern?q=green#care');
@@ -883,7 +916,7 @@ void main() {
       for (final path in [
         '/_host/media/abc',
         '/%5fhost/media/abc',
-        '//_host/media/abc'
+        '//_host/media/abc',
       ]) {
         expect(await navigate('$origin$path', main), NavigationDecision.prevent,
             reason: path);
@@ -893,14 +926,18 @@ void main() {
         'http://127.0.0.1:1/',
         'http://localhost:${runtime.server!.port}/',
         'javascript:alert(1)',
-        'file:///tmp/page.html'
+        'file:///tmp/page.html',
       ]) {
         expect(await navigate(url, main), NavigationDecision.prevent,
             reason: url);
       }
     }
     await io(tester);
-    expect(launches, ['https://outside.test/a'],
+    expect(
+        launches,
+        [
+          'https://outside.test/a',
+        ],
         reason: 'only allowed main-frame external URLs launch');
   });
 
@@ -1055,7 +1092,8 @@ void main() {
     // The outgoing page speaks. Every seq check passes; only "does this document belong to it" does not.
     await tester.runAsync(runtime.appReady);
     expect(runtime.state.current, builtin.seq,
-        reason: 'seq 30 never rendered, so it cannot be committed: ${log.lines}');
+        reason:
+            'seq 30 never rendered, so it cannot be committed: ${log.lines}');
     expect(runtime.state.trial, next.seq, reason: 'it is still on trial');
     expect(runtime.state.trialFails, 0, reason: 'and it has spent no strike');
     expect(
@@ -1082,7 +1120,8 @@ void main() {
     await tester.runAsync(
         () async => controller.navigation.started(runtime.server!.origin));
     await tester.runAsync(() => runtime.dataCache('days', 'a', {'n': 1}));
-    expect(await tester.runAsync(() => runtime.dataGet('days', 'a')), isNotNull);
+    expect(
+        await tester.runAsync(() => runtime.dataGet('days', 'a')), isNotNull);
 
     // The ready window expires, so the trial is given up on, its overlays are dropped and `current` is
     // reloaded -- but no document has started on it yet, and the given-up page is still on screen and
@@ -1112,7 +1151,9 @@ void main() {
     await tester.runAsync(
         () async => controller.navigation.started(runtime.server!.origin));
     await tester.runAsync(() => runtime.dataCache('days', 'c', {'n': 3}));
-    expect(await tester.runAsync(() => runtime.dataGet('days', 'c')), {'n': 3});
+    expect(await tester.runAsync(() => runtime.dataGet('days', 'c')), {
+      'n': 3,
+    });
     expect(await tester.runAsync(() => runtime.dataGet('days', 'a')), isNull,
         reason: 'the trial took its overlays with it');
     expect(await tester.runAsync(() => runtime.dataGet('days', 'b')), isNull,
@@ -1244,7 +1285,8 @@ void main() {
     await io(tester);
     expect(runtime.state.trialFails, 0, reason: '${log.lines}');
     expect(runtime.state.serving, trial.seq,
-        reason: 'background seconds are not the §2.4 window, so no strike is spent');
+        reason:
+            'background seconds are not the §2.4 window, so no strike is spent');
     // Resuming is what starts it, and the window then runs in full.
     await lifecycle(tester, AppLifecycleState.resumed);
     await io(tester);
@@ -1333,7 +1375,7 @@ void main() {
     expect(requests.length, count);
     expect(runtime.state.trialFails, 0);
     expect(await tester.runAsync(() => runtime.store.db.rawQuery('SELECT 1')), [
-      {'1': 1}
+      {'1': 1},
     ]);
     await tester.runAsync(() async {
       final client = HttpClient()
