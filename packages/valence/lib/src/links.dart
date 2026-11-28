@@ -27,7 +27,12 @@ final class ValenceLinks {
   void Function(ValenceLink) onOpened;
   StreamSubscription<String>? _subscription;
   ValenceLink? _pending;
+  bool _pendingIsLaunch = false;
+  String? _launchEcho;
   bool _listening = false;
+
+  /// Called with the URL each time the page drains a link that came from the launch read (§4.8).
+  void Function(String url)? onLaunchDelivered;
   bool _closed = false;
 
   /// Maps a URL to a safe route, or returns null without logging its contents.
@@ -110,6 +115,7 @@ final class ValenceLinks {
     } on Exception {/* No initial intent is a valid startup. */}
     if (_closed) return;
     if (launch != null) receive(launch);
+    _pendingIsLaunch = _pending != null;
     var skippedLaunch = false;
     for (final uri in queued) {
       if (!skippedLaunch && launch == uri) {
@@ -118,19 +124,37 @@ final class ValenceLinks {
       }
       receive(uri);
     }
+    // A plugin that echoes the launch link on its stream after startup must not turn the launch intent
+    // into a stream link (§4.8 decides on launch links only): one late echo is the same intent.
+    if (launch != null && !skippedLaunch) _launchEcho = launch;
     starting = false;
   }
 
   /// Accepts one OS intent. Repeated taps after startup are intentionally preserved.
   void receive(String uri) {
     if (_closed) return;
+    if (_launchEcho != null && uri == _launchEcho) {
+      _launchEcho = null;
+      return;
+    }
     final link = accept(uri);
     if (link == null) return;
     if (_listening) {
       onOpened(link);
     } else {
       _pending = link;
+      _pendingIsLaunch = false;
     }
+  }
+
+  /// The pending link's URL when it came from the launch read, else null.
+  String? get pendingLaunchUrl => _pendingIsLaunch ? _pending?.url : null;
+
+  /// Drops a pending launch link a previous process in this task already delivered (§4.8).
+  void discardLaunch() {
+    if (!_pendingIsLaunch) return;
+    _pending = null;
+    _pendingIsLaunch = false;
   }
 
   /// Whether a link is waiting for the page to drain it (§4.8).
@@ -149,7 +173,9 @@ final class ValenceLinks {
   ValenceLink? initial() {
     _listening = true;
     final result = _pending;
+    if (result != null && _pendingIsLaunch) onLaunchDelivered?.call(result.url);
     _pending = null;
+    _pendingIsLaunch = false;
     return result;
   }
 

@@ -14,6 +14,23 @@ final class ValenceRestoration extends ChangeNotifier {
   String? _json;
   String? _account;
   int _accountRevision = 0;
+  List<String> _delivered = const [];
+
+  /// Records that the page drained a launch link or tap, so a task the OS later restores with the same
+  /// launch intent does not deliver it again (§4.8). Only a SHA-256 of [identity] is kept: a link can
+  /// carry an auth code, and the OS stores this envelope outside the app's control.
+  void markDelivered(String identity) {
+    final fingerprint = sha256.convert(utf8.encode(identity)).toString();
+    if (_delivered.contains(fingerprint)) return;
+    // ponytail: the newest 8; a task has one launch intent, so more is only defence in depth.
+    final next = [..._delivered, fingerprint];
+    _delivered = next.sublist(next.length > 8 ? next.length - 8 : 0);
+    notifyListeners();
+  }
+
+  /// Whether a previous process in this task already delivered [identity] to its page.
+  bool wasDelivered(String identity) =>
+      _delivered.contains(sha256.convert(utf8.encode(identity)).toString());
 
   /// Invalidates route captures that began before an account change.
   int get accountRevision => _accountRevision;
@@ -132,8 +149,13 @@ final class ValenceRestoration extends ChangeNotifier {
   }
 
   /// Internal OS restoration envelope. The origin and nonce are never included.
-  String snapshot() => jsonEncode(
-      {'seq': _seq, 'route': _route, 'json': _json, 'account': _account});
+  String snapshot() => jsonEncode({
+        'seq': _seq,
+        'route': _route,
+        'json': _json,
+        'account': _account,
+        if (_delivered.isNotEmpty) 'delivered': _delivered,
+      });
 
   /// Validates OS data as untrusted input before it can influence navigation.
   ///
@@ -160,11 +182,18 @@ final class ValenceRestoration extends ChangeNotifier {
     _route = envelope?.route ?? '/';
     _json = envelope?.json;
     _account = envelope?.account;
+    _delivered = envelope?.delivered ?? const [];
   }
 
   /// Strict decoding of one OS envelope; null for anything that fails a check,
   /// which a first restoration turns into an empty task.
-  static ({int seq, String route, String? json, String? account})? _decode(
+  static ({
+    int seq,
+    String route,
+    String? json,
+    String? account,
+    List<String> delivered
+  })? _decode(
       String? snapshot) {
     if (snapshot == null || utf8.encode(snapshot).length > 450000) return null;
     try {
@@ -187,11 +216,20 @@ final class ValenceRestoration extends ChangeNotifier {
         return null;
       }
       if (blob != null) jsonDecode(blob as String);
+      final delivered =
+          data.containsKey('delivered') ? data['delivered'] : const <Object?>[];
+      if (delivered is! List ||
+          delivered.length > 8 ||
+          delivered.any((f) =>
+              f is! String || !RegExp(r'^[0-9a-f]{64}$').hasMatch(f))) {
+        return null;
+      }
       return (
         seq: data['seq'] as int,
         route: data['route'] as String,
         json: blob as String?,
         account: account as String?,
+        delivered: List<String>.unmodifiable(delivered),
       );
     } on FormatException {
       // Corrupt or obsolete restoration data starts fresh.

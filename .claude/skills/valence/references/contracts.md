@@ -1702,6 +1702,25 @@ check runs *after* the account and seq rules above, which still drop both halves
 This is not the host choosing a destination — which destination to apply across sources stays the
 page's decision under §6.3 — it is the host declining to supply a third one the page cannot see.
 
+**A launch the task already delivered is not delivered again.** Android hands an Activity it recreates
+for a retained task the intent that first started that task, so after Home, a background process death
+and a launcher reopen, the launch read can return the deep link or reminder tap the previous process
+already gave its page. So when the page drains a launch link through `link.initial()` or a launch tap
+through `notify.initial()`, the host records a SHA-256 of it in the restoration envelope (field
+`delivered`: at most 8 lowercase-hex fingerprints, never the URL or payload, because a link can carry an
+auth code; a malformed or `null` list refuses the whole envelope). One stream echo of the launch link
+that arrives after startup but before the page subscribes is the same launch intent, not a stream link. Before the pre-emption check above,
+`prepareRestoration` drops a launch link or launch tap whose fingerprint is in that list and logs
+`restoration: this task already delivered its launch <link|notification>; not replaying it`; the saved
+route then restores normally. Anything else is delivered: a different URL or tap (including one the
+plugin reports as initial because it arrived as a new intent), a link that arrived on the stream, and
+any launch in a task whose envelope has no record — an older host, or a process that died before its
+page drained the mailbox. The fingerprints survive a seq change and an account change, because neither
+makes an old intent new. The one trade: re-tapping the *identical* URL or notification while the task
+is being restored is treated as the old one. `push.initial` is not covered yet: its slot also holds
+live pre-subscription taps, and the provider's initial-message lifetime across a process death has not
+been checked on a device.
+
 **This is the one case where the blob outlives its route, and a route-scoped blob must say so itself.**
 Everywhere else in this section the two travel together or are dropped together, so a page could read
 `state.restore()` knowing it belonged to the route it was loaded at. After a pre-emption it does not:
@@ -2389,6 +2408,8 @@ links emit `link.opened`; a repeat tap on the same URL is a new event. Initial a
 stream delivery of the same launch intent are deduplicated only during startup.
 Links arriving before the page subscribes replace the pending link (latest wins).
 Each WebView page start re-arms the mailbox until that page calls `link.initial()`, retaining a pending link without replaying already consumed links.
+A new process does not replay a consumed launch link either: §4.8 records what the task delivered and
+drops the same launch intent when the OS restores the task.
 Background isolates do not start link listeners. Dispose cancels the subscription.
 
 **`link.initial` and `notify.initial` are separate mailboxes, and a cold start can hold both.** Each
@@ -2884,14 +2905,21 @@ while a matching one still restores**;
 mailbox and a tapped notification captured by `Valence.open` each take the host to `/` with
 `state.restore()` still answering, with the log line naming the source and the mailbox left unconsumed,
 a reload after the pre-emption going to `/` and not to the route that was dropped, and a start carrying
-no launch tap restoring its route unchanged. The decision is asserted at the host's own
+no launch tap restoring its route unchanged; **a restored task does not replay a launch it already delivered** —
+the drained launch link and tap are fingerprinted into the envelope (hashes only, capped at 8, kept
+across a seq or account change, a malformed list refusing the envelope), the same launch in the next
+process is dropped with its log line while the route and draft restore with no pre-emption, a
+different link or tap in that process is still delivered and still pre-empts, a stream link is never
+discarded, and an envelope with no record keeps the old behaviour. The decision is asserted at the host's own
 `prepareRestoration` call, not through a widget-tree restart, because a restart in one process is not
 the launch under test: `ValenceApp.dispose` closes the link mailbox that a cold start refills before its
 first frame. The cold start itself is the device row below;
 Android Home → am kill → retained-task reopen restores path/query/hash and blob,
 force-stop and explicit task removal start fresh, **and returning from that kill by a launch intent
 instead — a deep link, or a tapped reminder in an app that schedules one — opens `/` with the draft
-intact and the pre-emption line in the log, while the same kill without an intent restores its route**.
+intact and the pre-emption line in the log, while the same kill without an intent restores its route**;
+**after a cold start from a deep link, Home → am kill → launcher reopen returns `null` from
+`link.initial`** (the Android 12 run of 2026-11-28 found it replayed on 0.5.0-beta.0).
 The link half is exercised on the device by `packages/valence/example`; an app with a scheduled reminder
 owns the notification half.
 

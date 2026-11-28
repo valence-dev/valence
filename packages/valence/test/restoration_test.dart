@@ -22,6 +22,38 @@ void main() {
     expect((ValenceRestoration()..hydrate(null)).restore(), isNull);
   });
 
+  test('delivered launch fingerprints survive the envelope as hashes only, and bad ones refuse it', () {
+    final model = ValenceRestoration()..activate(3);
+    model.markDelivered('link:myapp://app/auth-callback?code=secret');
+    final snapshot = model.snapshot();
+    expect(snapshot, isNot(contains('secret')),
+        reason: 'the OS stores this envelope; a link can carry an auth code');
+    final restored = ValenceRestoration()..hydrate(snapshot);
+    expect(restored.wasDelivered('link:myapp://app/auth-callback?code=secret'), isTrue);
+    expect(restored.wasDelivered('link:myapp://app/other'), isFalse);
+    restored.activate(4);
+    restored.bindAccount('someone-else');
+    expect(restored.wasDelivered('link:myapp://app/auth-callback?code=secret'), isTrue,
+        reason: 'an update or an account change does not make an old intent new');
+    for (var i = 0; i < 10; i++) {
+      model.markDelivered('link:myapp://app/$i');
+    }
+    final capped = jsonDecode(model.snapshot()) as Map<String, dynamic>;
+    expect(capped['delivered'], hasLength(8));
+    expect((ValenceRestoration()..hydrate(model.snapshot())).wasDelivered('link:myapp://app/9'),
+        isTrue);
+    for (final bad in [
+      null,
+      'nope',
+      ['XYZ'],
+      List.filled(9, 'a' * 64),
+    ]) {
+      final hostile = ValenceRestoration()
+        ..hydrate(jsonEncode({'seq': 3, 'route': '/x', 'json': null, 'delivered': bad}));
+      expect(hostile.route, '/', reason: 'a malformed delivered list refuses the whole envelope');
+    }
+  });
+
   test('64 KiB means encoded JSON UTF-8 bytes and rejection preserves previous blob', () {
     final model = ValenceRestoration()..activate(1);
     model.save('a' * 65534); // quotes count too

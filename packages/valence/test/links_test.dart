@@ -103,6 +103,49 @@ void main() {
     await stream.close();
   });
 
+  test('only a drained launch-read link is reported as delivered; a stream link is never discarded',
+      () async {
+    final delivered = <String>[];
+    links.onLaunchDelivered = delivered.add;
+    final stream = StreamController<String>(sync: true);
+    await links.start(
+        getInitial: () async => 'myapp://app/auth-callback?x=1', stream: stream.stream);
+    expect(links.pendingLaunchUrl, 'myapp://app/auth-callback?x=1');
+    expect(links.initial()!.path, '/auth-callback?x=1');
+    expect(delivered, ['myapp://app/auth-callback?x=1']);
+    expect(links.pendingLaunchUrl, isNull);
+
+    final echoed = ValenceLinks(origins: {'myapp://app'}, onOpened: (_) {});
+    final echo = StreamController<String>(sync: true);
+    await echoed.start(getInitial: () async => 'myapp://app/cb', stream: echo.stream);
+    echo.add('myapp://app/cb');
+    expect(echoed.pendingLaunchUrl, 'myapp://app/cb',
+        reason: 'a late stream echo of the launch link is the same launch intent');
+    echoed.discardLaunch();
+    expect(echoed.initial(), isNull);
+    echo.add('myapp://app/cb');
+    expect(echoed.hasPending, isFalse, reason: 'listening now, so a repeat is a live event');
+    await echoed.close();
+    await echo.close();
+
+    final second = StreamController<String>(sync: true);
+    final fresh = ValenceLinks(origins: {'myapp://app'}, onOpened: (_) {})
+      ..onLaunchDelivered = delivered.add;
+    final initial = Completer<String?>();
+    final start = fresh.start(getInitial: () => initial.future, stream: second.stream);
+    second.add('myapp://app/old');
+    second.add('myapp://app/new-tap');
+    initial.complete('myapp://app/old');
+    await start;
+    expect(fresh.pendingLaunchUrl, isNull, reason: 'a newer stream link replaced the launch link');
+    fresh.discardLaunch();
+    expect(fresh.initial()!.path, '/new-tap');
+    expect(delivered, hasLength(1), reason: 'a stream link is not a launch intent');
+    await fresh.close();
+    await second.close();
+    await stream.close();
+  });
+
   test(
       'dispose during initial lookup drops the result and cancels native delivery',
       () async {

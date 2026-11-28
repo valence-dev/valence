@@ -213,6 +213,19 @@ final class Valence {
           'restoration: account could not be checked; starting with an empty task snapshot');
     }
     restoration.activate(seq);
+    // Android hands an Activity it recreates for a retained task the intent that first started it, so
+    // after a background process death the launch link or tap may be one this task already delivered.
+    // ponytail: push is not covered; its slot mixes launch and live taps (needs a device check).
+    final link = links.pendingLaunchUrl;
+    final tap = _notifications?.launchIdentity;
+    if (link != null && restoration.wasDelivered('link:$link')) {
+      links.discardLaunch();
+      _log('restoration: this task already delivered its launch link; not replaying it');
+    }
+    if (tap != null && restoration.wasDelivered('notification:$tap')) {
+      _notifications!.discardLaunch();
+      _log('restoration: this task already delivered its launch notification; not replaying it');
+    }
     final launch = launchDestination;
     if (launch != null && restoration.route != '/') {
       _log('restoration: a $launch launch destination pre-empts the restored route '
@@ -365,6 +378,8 @@ final class Valence {
       valence.links = links;
       links.onOpened = (link) => valence.emit(
           eventScript('link.opened', {'url': link.url, 'path': link.path}));
+      links.onLaunchDelivered =
+          (url) => valence.restoration.markDelivered('link:$url');
       // The widget attaches later, so route the urgent-update callback through the runtime.
       updater.onUpdateReady = (seq) => valence.onUpdateReady?.call(seq);
       updater.onChecked = () {
@@ -399,6 +414,8 @@ final class Valence {
           platform: notificationPlatform,
           log: log,
         );
+        valence._notifications!.onLaunchDelivered = (identity) =>
+            valence.restoration.markDelivered('notification:$identity');
         await valence._notifications!.initialize();
       }
       trace.start('seed');
