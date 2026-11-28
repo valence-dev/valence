@@ -139,10 +139,10 @@ function inspectWeb(root, dir) {
     : fw.dep !== '@sveltejs/kit' || !!deps['@sveltejs/adapter-static'];
   // A random build id (Next) or build timestamp (SvelteKit) changes files on every rebuild, so a rollback
   // rebuild of the last good commit becomes a fresh download instead of re-using blobs phones already have.
-  const svelteConfig = fw.dep === '@sveltejs/kit' && readdirSync(dir).find((f) => /^svelte\.config\.(js|mjs|cjs|ts)$/.test(f));
+  const svelteConfigs = fw.dep === '@sveltejs/kit' ? readdirSync(dir).filter((f) => /^(svelte|vite)\.config\.(js|mjs|cjs|ts|mts)$/.test(f)) : [];
   const stableBuild = fw.dep === 'next'
     ? !!nextConfig && /generateBuildId/.test(readFileSync(join(dir, nextConfig), 'utf8'))
-    : fw.dep !== '@sveltejs/kit' || (!!svelteConfig && /version\s*:\s*\{[^}]*\bname\b/.test(readFileSync(join(dir, svelteConfig), 'utf8')));
+    : fw.dep !== '@sveltejs/kit' || svelteConfigs.some((f) => /version\s*:\s*\{[^}]*\bname\b/.test(readFileSync(join(dir, f), 'utf8')));
   return { rank, dir: rel, framework: fw.name, version: String(deps[fw.dep]).replace(/^\D*/, ''), pm, name: pkg.name, out: at(fw.out), routes: routes && at(routes), lib: at(fw.lib), staticExport, stableBuild };
 }
 
@@ -419,7 +419,7 @@ async function init(o) {
       if (web.framework === 'Astro') warn('astro', 'Astro builds one HTML file per page, but inside the app every URL gets index.html, so a plain link to another page shows the home page. Route on the client from one page (getvalence.dev/docs/guides/web-app/)');
       if (!web.stableBuild) warn('rollback', web.framework === 'Next.js'
         ? "no generateBuildId in next.config; Next stamps a random build id into every page, so rebuilding the same commit re-downloads them. Add generateBuildId: () => execSync('git rev-parse HEAD').toString().trim() (getvalence.dev/docs/guides/releasing/#roll-back)"
-        : 'no kit.version.name in svelte.config; SvelteKit stamps the build time, so rebuilding the same commit changes files. Set it to the git commit (getvalence.dev/docs/guides/releasing/#roll-back)');
+        : 'no version.name in vite.config.ts/js (sveltekit options) or svelte.config.js (kit options); SvelteKit stamps the build time, so rebuilding the same commit changes files. Set it to a fixed release label or the source commit (getvalence.dev/docs/guides/releasing/#roll-back)');
       say(existingHost ? green('✓') : dim('·'), 'flutter host', existingHost ? `${existingHost}/` : `${host}/ (Claude creates it)`);
       say(git ? green('✓') : yellow('!'), 'git', git ? 'repository found' : 'not a git repo (recommended before generating code)');
       if (!interactive() && !o.yes) warn('prompts', 'no terminal: using detected defaults (pass --app-id/--ota/--sync to set them)');

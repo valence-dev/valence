@@ -98,16 +98,17 @@ the package rather than once in your repo. Keep any test of your *own* bridge me
 
 ## 4. Write the two small files
 
-`lib/main.dart` becomes about twenty lines:
+`lib/main.dart` becomes about twenty lines. Add its UI dependency to the host with `flutter pub add material_ui`:
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:valence/valence.dart';
 
 import 'valence/bridge.g.dart';
 import 'valence/config.g.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final valence = await Valence.open(valenceConfig, hostBuild: 1);
   final handlers = AppHandlers(valence);
   runApp(

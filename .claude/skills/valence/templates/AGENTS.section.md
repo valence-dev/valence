@@ -39,6 +39,8 @@ The spec is `valence` [contracts.md](https://github.com/valence-dev/valence/blob
 14. **Keep sync cursors and activation evidence separate.** Use package sync; push echoes do not advance pull cursors, and partial pulls do not satisfy a new required pair. The package migrates outbox insertion order without deleting queued writes. See contracts section 5 before changing adapters.
 15. **Run `node valence/valence.mjs doctor --tests` before a release.** Fix every FAIL; keep missing or device-only evidence as WARN. `host.database` names a file under app support, never a path. Local OTA requirements must fit the recorded store bridge; archive obsolete local bundles rather than rewriting the baseline.
 
+Static SPA assets: build with origin-root URLs (Vite `base: '/'`); use the SvelteKit config for your version at https://getvalence.dev/docs/guides/web-app/#sveltekit-static-build. Test a reload on a nested client route.
+
 Adaptive UI: use --valence-inset-top/right/bottom/left with 0px fallbacks and a width=device-width viewport. ValenceApp handles native Android text zoom; do not double-scale CSS. Subscribe to app.appearance during bootstrap, before ready(). Test semantic HTML with TalkBack and 200% text. See https://getvalence.dev/docs/guides/accessibility/.
 
 Task restoration follows the recorded account: switch/sign-out clears route and blob; refresh/adoption retains the live draft. Redraw account-owned page UI after a switch; do not put secrets in state.save.
